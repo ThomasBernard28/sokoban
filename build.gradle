@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group 'org.example'
@@ -7,13 +8,17 @@ version '1.0-SNAPSHOT'
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+    implementation 'com.sun.mail:javax.mail:1.6.2'
 }
-
+application {
+    mainClass = 'Sokoban.src.main.java.be.ac.umons.Sokoban'
+}
 test {
     useJUnitPlatform()
 }
