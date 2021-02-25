@@ -7,4 +7,5 @@
 package be.ac.umons.Sokoban.Player;
 
 public class Player {
+
 }
