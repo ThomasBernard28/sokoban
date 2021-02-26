@@ -17,7 +17,7 @@ dependencies {
     implementation 'com.sun.mail:javax.mail:1.6.2'
 }
 application {
-    mainClass = 'Sokoban.src.main.java.be.ac.umons.Sokoban'
+    mainClass = 'src.main.java.be.ac.umons.Sokoban'
 }
 test {
     useJUnitPlatform()
