@@ -1,11 +1,16 @@
 package be.ac.umons.Sokoban.Entities;
+/*
+This Class defines the grid and the different entities.
+With this class we can control the movements of the different entities and check if the movement
+we want to make is possible.
+ */
 
 public class Grid {
     private char movableObject;
     private char immovableObject;
     private int x;
     private int y;
-
+    // Defines the mobility of the objects
     public Grid(int x, int y, char content){
         if(content == 'w' || content == 'f'){
             this.immovableObject = content;
