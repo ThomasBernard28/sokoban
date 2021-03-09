@@ -19,6 +19,7 @@ dependencies {
 application {
     mainClass = 'src.main.java.be.ac.umons.Sokoban'
 }
+
 test {
     useJUnitPlatform()
 }

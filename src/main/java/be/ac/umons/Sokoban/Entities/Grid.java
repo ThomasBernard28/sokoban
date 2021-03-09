@@ -10,7 +10,9 @@ public class Grid {
         if(content == 'w' || content == 'f'){
             this.immovableObject = content;
         }
-        this.movableObject = content;
+        else{
+            this.movableObject = content;
+        }
         this.x = x;
         this.y = y;
     }
@@ -34,27 +36,27 @@ public class Grid {
     }
 
     public boolean isFlag(){
-        return immovableObject == 'f';
+        return immovableObject == 'f' && movableObject == '\u0000';
     }
 
     public boolean isBox(){
-        return movableObject == 'b' & immovableObject != 'f';
+        return movableObject == 'b' && immovableObject != 'f';
     }
 
     public boolean isFlaggedBox(){
-        return movableObject == 'b' & immovableObject == 'f';
+        return movableObject == 'b' && immovableObject == 'f';
     }
 
     public boolean isPlayer(){
-        return movableObject == 'p' & immovableObject != 'f';
+        return movableObject == 'p' && immovableObject != 'f';
     }
 
     public boolean isFlaggedPlayer(){
-        return movableObject == 'p' & immovableObject == 'f';
+        return movableObject == 'p' && immovableObject == 'f';
     }
 
     public boolean isEmpty(){
-        return movableObject == '\u0000' & immovableObject == '\u0000';
+        return movableObject == '\u0000' && immovableObject == '\u0000';
     }
 
     // mutator methods
@@ -98,6 +100,9 @@ public class Grid {
         return !grid[directionY + y][x + directionX].isWall();
     }
     public void MovePlayer(Grid[][] grid, int directionX, int directionY){
+        if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
+            grid[directionY + y][x + directionX].MoveBox(grid, directionX, directionY);
+        }
         grid[y + directionY][x + directionX].setMovableObject('b');
         System.out.println("player is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
         this.clearMovable();
