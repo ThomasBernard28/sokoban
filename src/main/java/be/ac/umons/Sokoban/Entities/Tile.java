@@ -5,13 +5,13 @@ With this class we can control the movements of the different entities and check
 we want to make is possible.
  */
 
-public class Grid {
+public class Tile {
     private char movableObject;
     private char immovableObject;
     private int x;
     private int y;
     // Defines the mobility of the objects
-    public Grid(int x, int y, char content){
+    public Tile(int x, int y, char content){
         if(content == 'w' || content == 'f'){
             this.immovableObject = content;
         }
@@ -22,7 +22,7 @@ public class Grid {
         this.y = y;
     }
 
-    public Grid(int x, int y){
+    public Tile(int x, int y){
         this.x = x;
         this.y = y;
     }
@@ -86,25 +86,25 @@ public class Grid {
     }
 
     // movement methods
-    public boolean checkMoveBox(Grid[][] grid, int directionX, int directionY){
+    public boolean checkMoveBox(Tile[][] grid, int directionX, int directionY){
         return !grid[directionY + y][x + directionX].isWall() &&
                 !grid[directionY + y][x + directionX].isBox() &&
                 !grid[directionY + y][x + directionX].isFlaggedBox();
     }
 
-    public void MoveBox(Grid[][] grid, int directionX, int directionY){
+    public void MoveBox(Tile[][] grid, int directionX, int directionY){
         grid[y + directionY][x + directionX].setMovableObject('b');
         System.out.println("box is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
         this.clearMovable();
     }
 
-    public boolean checkMovePlayer(Grid[][] grid, int directionX, int directionY){
+    public boolean checkMovePlayer(Tile[][] grid, int directionX, int directionY){
         if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
             return grid[directionY + y][x + directionX].checkMoveBox(grid, directionX, directionY);
         }
         return !grid[directionY + y][x + directionX].isWall();
     }
-    public void MovePlayer(Grid[][] grid, int directionX, int directionY){
+    public void MovePlayer(Tile[][] grid, int directionX, int directionY){
         if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
             grid[directionY + y][x + directionX].MoveBox(grid, directionX, directionY);
         }
