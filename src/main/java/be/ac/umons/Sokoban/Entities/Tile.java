@@ -26,6 +26,22 @@ public class Tile {
         this.x = x;
         this.y = y;
     }
+    @Override
+    public String toString(){
+        if(immovableObject == 'w'){
+            return "w";
+        }
+        if(immovableObject == 'f' && movableObject == '\u0000'){
+            return "f";
+        }
+        if(movableObject == 'p'){
+            return "p";
+        }
+        if(movableObject == 'b'){
+            return "b";
+        }
+        return " ";
+    }
 
 
     // accessor methods
@@ -109,7 +125,7 @@ public class Tile {
         if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
             grid[directionY + y][x + directionX].MoveBox(grid, directionX, directionY);
         }
-        grid[y + directionY][x + directionX].setMovableObject('b');
+        grid[y + directionY][x + directionX].setMovableObject('p');
         System.out.println("player is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
         this.clearMovable();
     }
