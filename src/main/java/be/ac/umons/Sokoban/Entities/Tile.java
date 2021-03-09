@@ -27,6 +27,7 @@ public class Tile {
         this.y = y;
     }
 
+
     // accessor methods
     public int getX() {
         return x;
