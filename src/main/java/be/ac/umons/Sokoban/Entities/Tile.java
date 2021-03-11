@@ -26,6 +26,9 @@ public class Tile {
         this.x = x;
         this.y = y;
     }
+    /* This method is used in ConsoleGrid for the console interface
+    The method gives each entity a letter to represent it
+     */
     @Override
     public String toString(){
         if(immovableObject == 'w'){

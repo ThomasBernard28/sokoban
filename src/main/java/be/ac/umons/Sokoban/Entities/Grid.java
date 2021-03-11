@@ -1,6 +1,11 @@
 package be.ac.umons.Sokoban.Entities;
 
+/*
+This class is made to initiate a grid, the class takes the different parameters of
+a classical grid and translate them into a representable grid
+ */
 public class Grid {
+    // A grid is a 2D Array of tiles
     public Tile [][] grid;
     public int col;
     public int row;
@@ -9,6 +14,7 @@ public class Grid {
         this.col = col;
         this.row = row;
 
+        //Create an instance of Grid that is an Array with a "row" width and "col" length
         grid = new Tile[row][col];
         // For each row
         for (int i = 0; i < row; i++){
@@ -19,6 +25,7 @@ public class Grid {
             }
         }
     }
+    // Set the border walls with loops and calling methods from Tile class to set mobility
     public void set_default_walls(){
         for (int i = 0; i < col; i++){
             grid[0][i].setImmovableObject('w');
@@ -29,6 +36,7 @@ public class Grid {
             grid[j][col -1].setImmovableObject('w');
         }
     }
+    // This method set the player at position (x,y)
     public void set_player(int x, int y){
         grid[y][x].setMovableObject('p');
         System.out.println(" player at " + x + " "+ y);
