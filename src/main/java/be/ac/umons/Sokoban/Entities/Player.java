@@ -16,10 +16,6 @@ public class Player implements  movableInterface{
             grid[directionY + y][x + directionX].Move(grid, directionX, directionY);
         }
         grid[y + directionY][x + directionX].setMovableObject('p');
-        // System.out.println("player is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
-
-        grid[y + directionY][x + directionX].clearMovable();
-        // System.out.println(grid[y + directionY][x + directionX] + " old: " + grid[y + directionY][x + directionX]);
     }
 
     @Override

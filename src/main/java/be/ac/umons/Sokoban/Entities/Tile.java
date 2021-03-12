@@ -131,7 +131,7 @@ public class Tile {
     }
     public void Move(Tile[][] grid, int directionX, int directionY){
         this.movableObject.Move(grid, x, y, directionX, directionY);
-        System.out.println("new player at" + x + " " + y + " "+ this);
+        grid[y][x].clearMovable();
     }
 
     public static void main(String[] args) {

@@ -31,8 +31,6 @@ public class Grid {
     }
     public void set_player(int x, int y){
         grid[y][x].setMovableObject('p');
-        System.out.println(" player at " + x + " "+ y);
-        System.out.println(grid[y][x]);
     }
     public void set_boxes(int x, int y){
         grid[y][x].setMovableObject('b');

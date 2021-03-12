@@ -14,8 +14,6 @@ public class Box  implements movableInterface{
     @Override
     public void Move(Tile[][] grid, int x, int y, int directionX, int directionY) {
         grid[y + directionY][x + directionX].setMovableObject('b');
-        System.out.println("box is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
-        grid[y + directionY][x + directionX].clearMovable();
     }
 
     @Override
