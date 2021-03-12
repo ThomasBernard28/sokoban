@@ -6,17 +6,25 @@ we want to make is possible.
  */
 
 public class Tile {
-    private char movableObject;
-    private char immovableObject;
+    private immovableInterface immovableObject = new EmptyImmovable();
+    private movableInterface movableObject = new EmptyMovable();
+
     private int x;
     private int y;
     // Defines the mobility of the objects
     public Tile(int x, int y, char content){
-        if(content == 'w' || content == 'f'){
-            this.immovableObject = content;
-        }
-        else{
-            this.movableObject = content;
+        switch (content){
+            case 'w':
+                this.immovableObject = new Wall();
+                break;
+            case 'f':
+                this.immovableObject = new Flag();
+                break;
+            case 'b':
+                this.movableObject = new Box();
+                break;
+            case 'p':
+                this.movableObject = new Player();
         }
         this.x = x;
         this.y = y;
@@ -28,19 +36,19 @@ public class Tile {
     }
     @Override
     public String toString(){
-        if(immovableObject == 'w'){
+        if(immovableObject.getNature() == 'w'){
             return "w";
         }
-        if(immovableObject == 'f' && movableObject == '\u0000'){
+        if(immovableObject.getNature() == 'f' && movableObject.getNature() == 'e'){
             return "f";
         }
-        if(movableObject == 'p'){
+        if(movableObject.getNature() == 'p'){
             return "p";
         }
-        if(movableObject == 'b'){
+        if(movableObject.getNature() == 'b'){
             return "b";
         }
-        return " ";
+        return ".";
     }
 
 
@@ -54,31 +62,31 @@ public class Tile {
     }
 
     public boolean isWall(){
-        return immovableObject == 'w';
+        return immovableObject.getNature() == 'w';
     }
 
     public boolean isFlag(){
-        return immovableObject == 'f' && movableObject == '\u0000';
+        return immovableObject.getNature() == 'f' && movableObject.getNature() == 'e';
     }
 
     public boolean isBox(){
-        return movableObject == 'b' && immovableObject != 'f';
+        return movableObject.getNature() == 'b' && immovableObject.getNature() != 'f';
     }
 
     public boolean isFlaggedBox(){
-        return movableObject == 'b' && immovableObject == 'f';
+        return movableObject.getNature() == 'b' && immovableObject.getNature() == 'f';
     }
 
     public boolean isPlayer(){
-        return movableObject == 'p' && immovableObject != 'f';
+        return movableObject.getNature() == 'p' && immovableObject.getNature() != 'f';
     }
 
     public boolean isFlaggedPlayer(){
-        return movableObject == 'p' && immovableObject == 'f';
+        return movableObject.getNature() == 'p' && immovableObject.getNature() == 'f';
     }
 
     public boolean isEmpty(){
-        return movableObject == '\u0000' && immovableObject == '\u0000';
+        return movableObject.getNature() == 'e' && immovableObject.getNature() == 'e';
     }
 
     // mutator methods
@@ -91,42 +99,53 @@ public class Tile {
     }
 
     public void setMovableObject(char movable){
-        this.movableObject = movable;
+        switch(movable){
+            case 'p':
+                this.movableObject = new Player();
+
+                break;
+            case 'b':
+                this.movableObject = new Box();
+                break;
+        }
     }
 
     public void setImmovableObject(char immovable){
-        this.immovableObject = immovable;
+        switch (immovable){
+            case 'w':
+                this.immovableObject = new Wall();
+                break;
+            case 'f':
+                this.immovableObject = new Flag();
+        }
     }
 
     public void clearMovable(){
-        this.movableObject = '\u0000';
+        this.movableObject = new EmptyMovable();
     }
 
     // movement methods
-    public boolean checkMoveBox(Tile[][] grid, int directionX, int directionY){
-        return !grid[directionY + y][x + directionX].isWall() &&
-                !grid[directionY + y][x + directionX].isBox() &&
-                !grid[directionY + y][x + directionX].isFlaggedBox();
+
+    public boolean checkMove(Tile[][] grid, int directionX, int directionY){
+        return this.movableObject.checkMove(grid, x, y, directionX, directionY);
+    }
+    public void Move(Tile[][] grid, int directionX, int directionY){
+        this.movableObject.Move(grid, x, y, directionX, directionY);
+        System.out.println("new player at" + x + " " + y + " "+ this);
     }
 
-    public void MoveBox(Tile[][] grid, int directionX, int directionY){
-        grid[y + directionY][x + directionX].setMovableObject('b');
-        System.out.println("box is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
-        this.clearMovable();
-    }
+    public static void main(String[] args) {
+        Tile myTile = new Tile(0, 0);
+        Tile tile = new Tile(1, 0);
+        myTile.setMovableObject('p');
 
-    public boolean checkMovePlayer(Tile[][] grid, int directionX, int directionY){
-        if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
-            return grid[directionY + y][x + directionX].checkMoveBox(grid, directionX, directionY);
-        }
-        return !grid[directionY + y][x + directionX].isWall();
-    }
-    public void MovePlayer(Tile[][] grid, int directionX, int directionY){
-        if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
-            grid[directionY + y][x + directionX].MoveBox(grid, directionX, directionY);
-        }
-        grid[y + directionY][x + directionX].setMovableObject('p');
-        System.out.println("player is now at (" + (x + directionX) +"," +  (y + directionY) + ")");
-        this.clearMovable();
+        Tile[][] tableau = new Tile[2][2];
+        tableau[0][0] = myTile;
+        tableau[0][1] = tile;
+
+        myTile.Move(tableau, 1, 0);
+        System.out.println(tableau[0][0]);
+        System.out.println(tableau[0][1]);
+
     }
 }

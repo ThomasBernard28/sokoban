@@ -40,4 +40,9 @@ public class Grid {
     public void set_flag(int x, int y){
         grid[y][x].setImmovableObject('f');
     }
+
+    public static void main(String[] args) {
+        Grid myGrid = new Grid(5, 5);
+        myGrid.set_default_walls();
+    }
 }

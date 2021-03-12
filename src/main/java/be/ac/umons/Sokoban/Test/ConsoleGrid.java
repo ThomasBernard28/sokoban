@@ -2,10 +2,12 @@ package be.ac.umons.Sokoban.Test;
 import java.util.*;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.Entities.Wall;
 
 public class ConsoleGrid{
 
     public static void main(String[] args){
+
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
 
 
@@ -25,26 +27,28 @@ public class ConsoleGrid{
             System.out.println("ok");
             switch (move){
                 case "z":
-                    if(grid.grid[pos[1]][pos[0]].checkMovePlayer(grid.grid, 0, -1)){
-                        grid.grid[pos[1]][pos[0]].MovePlayer(grid.grid, 0, -1);
+                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 0, -1)){
+                        grid.grid[pos[1]][pos[0]].Move(grid.grid, 0, -1);
+                        System.out.println(grid.grid[pos[1]][pos[0]] + "e");
                         pos[1] -= 1;
+                        System.out.println(grid.grid[pos[1]][pos[0]]);
                     }
                     break;
                 case "q":
-                    if(grid.grid[pos[1]][pos[0]].checkMovePlayer(grid.grid, -1, 0)){
-                        grid.grid[pos[1]][pos[0]].MovePlayer(grid.grid, -1, 0);
+                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, -1, 0)){
+                        grid.grid[pos[1]][pos[0]].Move(grid.grid, -1, 0);
                         pos[0] -= 1;
                     }
                     break;
                 case "s":
-                    if(grid.grid[pos[1]][pos[0]].checkMovePlayer(grid.grid, 0, 1)){
-                        grid.grid[pos[1]][pos[0]].MovePlayer(grid.grid, 0, 1);
+                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 0, 1)){
+                        grid.grid[pos[1]][pos[0]].Move(grid.grid, 0, 1);
                         pos[1] += 1;
                     }
                     break;
                 case "d":
-                    if(grid.grid[pos[1]][pos[0]].checkMovePlayer(grid.grid, 1, 0)){
-                        grid.grid[pos[1]][pos[0]].MovePlayer(grid.grid, 1, 0);
+                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 1, 0)){
+                        grid.grid[pos[1]][pos[0]].Move(grid.grid, 1, 0);
                         pos[0] += 1;
                     }
                     break;
