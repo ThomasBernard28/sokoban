@@ -5,6 +5,14 @@ With this class we can control the movements of the different entities and check
 we want to make is possible.
  */
 
+enum Load {
+    BOX,
+    PLAYER,
+    WALL,
+    FLAG,
+    EMPTY
+}
+
 public class Tile {
     private immovableInterface immovableObject = new EmptyImmovable();
     private movableInterface movableObject = new EmptyMovable();
@@ -12,18 +20,18 @@ public class Tile {
     private int x;
     private int y;
     // Defines the mobility of the objects
-    public Tile(int x, int y, char content){
+    public Tile(int x, int y, Load content){
         switch (content){
-            case 'w':
+            case WALL:
                 this.immovableObject = new Wall();
                 break;
-            case 'f':
+            case FLAG:
                 this.immovableObject = new Flag();
                 break;
-            case 'b':
+            case BOX:
                 this.movableObject = new Box();
                 break;
-            case 'p':
+            case PLAYER:
                 this.movableObject = new Player();
         }
         this.x = x;
@@ -36,16 +44,16 @@ public class Tile {
     }
     @Override
     public String toString(){
-        if(immovableObject.getNature() == 'w'){
+        if(immovableObject.getNature() == Load.WALL){
             return "w";
         }
-        if(immovableObject.getNature() == 'f' && movableObject.getNature() == 'e'){
+        if(immovableObject.getNature() == Load.FLAG && movableObject.getNature() == Load.EMPTY){
             return "f";
         }
-        if(movableObject.getNature() == 'p'){
+        if(movableObject.getNature() == Load.PLAYER){
             return "p";
         }
-        if(movableObject.getNature() == 'b'){
+        if(movableObject.getNature() == Load.BOX){
             return "b";
         }
         return ".";
@@ -62,31 +70,31 @@ public class Tile {
     }
 
     public boolean isWall(){
-        return immovableObject.getNature() == 'w';
+        return immovableObject.getNature() == Load.WALL;
     }
 
     public boolean isFlag(){
-        return immovableObject.getNature() == 'f' && movableObject.getNature() == 'e';
+        return immovableObject.getNature() == Load.FLAG && movableObject.getNature() == Load.EMPTY;
     }
 
     public boolean isBox(){
-        return movableObject.getNature() == 'b' && immovableObject.getNature() != 'f';
+        return movableObject.getNature() == Load.BOX && immovableObject.getNature() != Load.FLAG;
     }
 
     public boolean isFlaggedBox(){
-        return movableObject.getNature() == 'b' && immovableObject.getNature() == 'f';
+        return movableObject.getNature() == Load.BOX && immovableObject.getNature() == Load.FLAG;
     }
 
     public boolean isPlayer(){
-        return movableObject.getNature() == 'p' && immovableObject.getNature() != 'f';
+        return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() != Load.FLAG;
     }
 
     public boolean isFlaggedPlayer(){
-        return movableObject.getNature() == 'p' && immovableObject.getNature() == 'f';
+        return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() == Load.FLAG;
     }
 
     public boolean isEmpty(){
-        return movableObject.getNature() == 'e' && immovableObject.getNature() == 'e';
+        return movableObject.getNature() == Load.EMPTY && immovableObject.getNature() == Load.EMPTY;
     }
 
     // mutator methods
@@ -98,24 +106,24 @@ public class Tile {
         this.y = y;
     }
 
-    public void setMovableObject(char movable){
+    public void setMovableObject(Load movable){
         switch(movable){
-            case 'p':
+            case PLAYER:
                 this.movableObject = new Player();
 
                 break;
-            case 'b':
+            case BOX:
                 this.movableObject = new Box();
                 break;
         }
     }
 
-    public void setImmovableObject(char immovable){
+    public void setImmovableObject(Load immovable){
         switch (immovable){
-            case 'w':
+            case WALL:
                 this.immovableObject = new Wall();
                 break;
-            case 'f':
+            case FLAG:
                 this.immovableObject = new Flag();
         }
     }
@@ -137,7 +145,7 @@ public class Tile {
     public static void main(String[] args) {
         Tile myTile = new Tile(0, 0);
         Tile tile = new Tile(1, 0);
-        myTile.setMovableObject('p');
+        myTile.setMovableObject(Load.PLAYER);
 
         Tile[][] tableau = new Tile[2][2];
         tableau[0][0] = myTile;

@@ -4,6 +4,7 @@ import java.util.*;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.Entities.Wall;
 
+
 public class ConsoleGrid{
 
     public static void main(String[] args){
@@ -17,6 +18,8 @@ public class ConsoleGrid{
         grid.set_boxes(grid.col/2, grid.row/2);
         grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
 
+        System.out.println("To exit press 'e'");
+
 
         boolean playing = true;
         int[] pos = {1, 6};
@@ -24,14 +27,11 @@ public class ConsoleGrid{
         while(playing){
             printConsole(grid);
             move = sc.nextLine();
-            System.out.println("ok");
             switch (move){
                 case "z":
                     if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 0, -1)){
                         grid.grid[pos[1]][pos[0]].Move(grid.grid, 0, -1);
-                        System.out.println(grid.grid[pos[1]][pos[0]] + "e");
                         pos[1] -= 1;
-                        System.out.println(grid.grid[pos[1]][pos[0]]);
                     }
                     break;
                 case "q":
@@ -60,7 +60,7 @@ public class ConsoleGrid{
                     grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
                     pos = new int []{1, 6};
                     break;
-                case "p":
+                case "e":
                     playing = false;
                     break;
             }

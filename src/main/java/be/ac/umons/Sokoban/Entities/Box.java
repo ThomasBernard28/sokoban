@@ -13,11 +13,11 @@ public class Box  implements movableInterface{
 
     @Override
     public void Move(Tile[][] grid, int x, int y, int directionX, int directionY) {
-        grid[y + directionY][x + directionX].setMovableObject('b');
+        grid[y + directionY][x + directionX].setMovableObject(Load.BOX);
     }
 
     @Override
-    public char getNature() {
-        return 'b';
+    public Load getNature() {
+        return Load.BOX;
     }
 }

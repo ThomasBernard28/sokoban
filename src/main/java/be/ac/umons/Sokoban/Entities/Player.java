@@ -15,12 +15,12 @@ public class Player implements  movableInterface{
         if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox()){
             grid[directionY + y][x + directionX].Move(grid, directionX, directionY);
         }
-        grid[y + directionY][x + directionX].setMovableObject('p');
+        grid[y + directionY][x + directionX].setMovableObject(Load.PLAYER);
     }
 
     @Override
-    public char getNature() {
-        return 'p';
+    public Load getNature() {
+        return Load.PLAYER;
     }
 
 }

@@ -12,7 +12,7 @@ public class EmptyMovable implements movableInterface{
     }
 
     @Override
-    public char getNature() {
-        return 'e';
+    public Load getNature() {
+        return Load.EMPTY;
     }
 }
