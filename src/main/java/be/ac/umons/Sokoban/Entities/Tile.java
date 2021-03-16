@@ -44,16 +44,16 @@ public class Tile {
     }
     @Override
     public String toString(){
-        if(immovableObject.getNature() == Load.WALL){
+        if(this.isWall()){
             return "w";
         }
-        if(immovableObject.getNature() == Load.FLAG && movableObject.getNature() == Load.EMPTY){
+        if(this.isFlag()){
             return "f";
         }
-        if(movableObject.getNature() == Load.PLAYER){
+        if(this.isPlayer() || this.isFlaggedPlayer()){
             return "p";
         }
-        if(movableObject.getNature() == Load.BOX){
+        if(this.isBox()){
             return "b";
         }
         return ".";
