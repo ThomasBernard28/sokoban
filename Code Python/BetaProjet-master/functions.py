@@ -1,20 +1,22 @@
 import pygame
-from box_class import *
-from player_class import Player
+from Tile import Tile
 
 
-def setup_window(WIDTH=1280, HEIGHT=720):
+def setup_window(WIDTH=1920, HEIGHT=1080, sizeX=40, sizeY=40, marginX=0, marginY=0):
     """
-    1280//80 = 16
-    720 // 80 = 9
-    1920 // 80 = 24
-    1080 // 80 = 13
-    """
-    # window setup
+       1280 x 720 = 32 x 18
+       1920 x 1080 = 48 x 26
+       """
+    # win setup
     window = pygame.display.set_mode((WIDTH, HEIGHT))
     pygame.display.set_caption("Sokoban")
 
-    # loading images
+    Tile.sizeX = sizeX
+    Tile.sizeY = sizeY
+    Tile.marginX = marginX
+    Tile.marginY = marginY
+
+    # load images
     images = dict()
     if WIDTH == 1280:
         images["bg"] = pygame.image.load("images/bg_1280.png")
@@ -29,53 +31,88 @@ def setup_window(WIDTH=1280, HEIGHT=720):
     return window, images
 
 
-def setup(map_plan):
-    grid = list()
-    player_co = None
-    for i in map_plan:
-        grid.append([])
-
-    for i in range(len(map_plan)):
-        j = 0
-        for case in map_plan[i]:
-            if case == "w":
-                grid[i].append(Wall(j, i))
-            elif case == "b":
-                grid[i].append(Box(j, i))
-            elif case == "f":
-                grid[i].append(Flag(j, i))
-            elif case == "p":
-                grid[i].append(Player(j, i))
-                player_co = [j, i]
-            elif case == "o":
-                grid[i].append(None)
-            else:
-                raise ValueError("Bug in map plan")
-            j += 1
-
-    return grid, player_co
-
-
-def graphics_construction(window, grid, images, row, column):
-    size = pygame.display.get_window_size()
-    window.blit(images["bg"], (0, 0))
+def graphics_construction(window, grid, images):
+    """
+    for size and margin, put those in Tile class as class arguments
+    """
+    #size = pygame.display.get_window_size()
+    window.blit(images['bg'], (0, 0))
     for line in grid:
-        for case in line:
-            if isinstance(case, Wall):
-                window.blit(images["wall"], get_pixelco(case, row, column, size[0], size[1]))
-            elif isinstance(case, Box):
-                if case.isArrived:
-                    window.blit(images["box"], get_pixelco(case, row, column, size[0], size[1]))
-                else:
-                    window.blit(images["box_flagged"], get_pixelco(case, row, column, size[0], size[1]))
-            elif isinstance(case, Player):
-                window.blit(images["player"], get_pixelco(case, row, column, size[0], size[1]))
-            elif isinstance(case, Flag):
-                window.blit(images["flag"], get_pixelco(case, row, column, size[0], size[1]))
-
-    pygame.display.update()
+        for tile in line:
+            if tile.isWall():
+                window.blit(images["wall"], tile.get_pixelco())
+            elif tile.isFlag():
+                window.blit(images["flag"], tile.get_pixelco())
+            elif tile.isBox():
+                window.blit(images["box"], tile.get_pixelco())
+            elif tile.isFlaggedBox():
+                window.blit(images["box_flagged"], tile.get_pixelco())
+            elif tile.isPlayer() or tile.isFlaggedPlayer():
+                window.blit(images["player"], tile.get_pixelco())
 
 
-def get_pixelco(entity, row, column, width, height, size=40):
-    return entity.x * size, entity.y * size
-    # return tuple([(width // column) * entity.x, (height // row) * entity.y])
+# pattern functions
+def rotation(angle, matrix):
+    """
+    Take a pattern and return its rotation respecting the input angle
+    Rotation is clockwise
+    :param angle: integer either 90, 270 or 180
+    :param matrix: Pattern that is either 3x3 or 2x2
+    :return: a matrix with the rotation applied
+    """
+    assert angle in (0, 90, 180, 270, 360)
+    # recursive base, no rotation left
+    if angle == 0:
+        return matrix
+    # we find the transpose matrix to make a 90 degree rotation
+    res = list()
+    for i in range(len(matrix)):
+        res.append([])
+        for j in range(len(matrix)):
+            res[i].append(matrix[j][i])
+    for i in range(len(matrix)):
+        res[i][0], res[i][-1] = res[i][-1], res[i][0]
+    return rotation(angle - 90, res)
+
+
+def assemble(pattern):
+    """
+    Take a pattern and return a pattern with tile object instead of str
+    :param pattern: matrix 3x3 or 2x2 with str
+    :return: matrix 2x2 or 3x3 with tile object
+    """
+    res = list()
+    i = 0
+    for i in range(len(pattern)):
+        res.append([])
+        for j in range(len(pattern[0])):
+            if pattern[i][j] == "w":
+                res[i].append(Tile(j, i, "w"))
+            elif pattern[i][j] == "e":
+                res[i].append(Tile(j, i, "e"))
+            else:
+                # in case of problem
+                raise ValueError("Big trouble", pattern[i][j])
+    return res
+
+
+if __name__ == "__main__":
+    # assembled = assemble(PatternGenerator.empty)
+    # print("assembled:\n", assembled)
+    test = [["a", "b", "c"], ["d", "e", "f"], ["g", "h", "i"]]
+    print("original:")
+    for line in test:
+        print(line)
+
+    print("\nrotated 90:")
+    for line in rotation(90, test):
+        print(line)
+    print("gda\nheb\nifc")
+
+    print("\nrotated 180:")
+    for line in rotation(180, test):
+        print(line)
+
+    print("\nrotated 270:")
+    for line in rotation(270, test):
+        print(line)
