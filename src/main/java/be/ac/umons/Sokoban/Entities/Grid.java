@@ -28,24 +28,27 @@ public class Grid {
     // Set the border walls with loops and calling methods from Tile class to set mobility
     public void set_default_walls(){
         for (int i = 0; i < col; i++){
-            grid[0][i].setImmovableObject('w');
-            grid[row -1][i].setImmovableObject('w');
+            grid[0][i].setImmovableObject(Load.WALL);
+            grid[row -1][i].setImmovableObject(Load.WALL);
         }
         for (int j = 0; j< row; j++){
-            grid[j][0].setImmovableObject('w');
-            grid[j][col -1].setImmovableObject('w');
+            grid[j][0].setImmovableObject(Load.WALL);
+            grid[j][col -1].setImmovableObject(Load.WALL);
         }
     }
     // This method set the player at position (x,y)
     public void set_player(int x, int y){
-        grid[y][x].setMovableObject('p');
-        System.out.println(" player at " + x + " "+ y);
-        System.out.println(grid[y][x]);
+        grid[y][x].setMovableObject(Load.PLAYER);
     }
     public void set_boxes(int x, int y){
-        grid[y][x].setMovableObject('b');
+        grid[y][x].setMovableObject(Load.BOX);
     }
     public void set_flag(int x, int y){
-        grid[y][x].setImmovableObject('f');
+        grid[y][x].setImmovableObject(Load.FLAG);
+    }
+
+    public static void main(String[] args) {
+        Grid myGrid = new Grid(5, 5);
+        myGrid.set_default_walls();
     }
 }
