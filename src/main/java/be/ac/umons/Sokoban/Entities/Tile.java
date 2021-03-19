@@ -53,12 +53,19 @@ public class Tile {
         if(this.isFlag()){
             return "f";
         }
-        if(this.isPlayer() || this.isFlaggedPlayer()){
+        if(this.isPlayer()){
             return "p";
+        }
+        if (this.isFlaggedPlayer()){
+            return "P";
         }
         if(this.isBox()){
             return "b";
         }
+        if(this.isFlaggedBox()){
+            return "B";
+        }
+
         return ".";
     }
 
