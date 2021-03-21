@@ -1,4 +1,4 @@
-package be.ac.umons.Sokoban.Test;
+package be.ac.umons.Sokoban.JavaFX;
 
 public class FakeClass
 {

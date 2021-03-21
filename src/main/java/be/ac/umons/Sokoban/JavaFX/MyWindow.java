@@ -1,4 +1,4 @@
-package be.ac.umons.Sokoban.Test;
+package be.ac.umons.Sokoban.JavaFX;
 
 import javafx.application.Application;
 import javafx.scene.Group;
@@ -20,6 +20,7 @@ public class MyWindow extends Application
     {
         launch(args);
     }
+
     //Method to create an image and ;oad it with absolute path
     public static Image createImage(Object context, String resourceName)
     {
@@ -39,11 +40,13 @@ public class MyWindow extends Application
         root.getChildren().add(canvas);
 
         GraphicsContext gc = canvas.getGraphicsContext2D();
-        // The comments below are the previous method
-        //File file = new File("/Users/thomasbernard/IdeaProjects/sokoban/src/main/resources/images/player.png");
-        //String localUrl = file.toURI().toString();
-        //Image mario = new Image(localUrl);
+
         Image mario = new Image("images/player.png");
+        Image box = new Image("images/box.png");
+        Image flag = new Image("images/flag.png");
+        Image wall = new Image("images/wall.png");
+
+
 
         gc.drawImage(mario, 620, 340);
 
