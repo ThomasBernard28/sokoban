@@ -5,7 +5,8 @@ With this class we can control the movements of the different entities and check
 we want to make is possible.
  */
 
-enum Load {
+enum Load
+{
     BOX,
     PLAYER,
     WALL,
@@ -13,15 +14,18 @@ enum Load {
     EMPTY
 }
 
-public class Tile {
+public class Tile
+{
     private immovableInterface immovableObject = new EmptyImmovable();
     private movableInterface movableObject = new EmptyMovable();
 
     private int x;
     private int y;
     // Defines the mobility of the objects
-    public Tile(int x, int y, Load content){
-        switch (content){
+    public Tile(int x, int y, Load content)
+    {
+        switch (content)
+        {
             case WALL:
                 this.immovableObject = new Wall();
                 break;
@@ -38,7 +42,8 @@ public class Tile {
         this.y = y;
     }
 
-    public Tile(int x, int y){
+    public Tile(int x, int y)
+    {
         this.x = x;
         this.y = y;
     }
@@ -46,23 +51,30 @@ public class Tile {
     The method gives each entity a letter to represent it
      */
     @Override
-    public String toString(){
-        if(this.isWall()){
+    public String toString()
+    {
+        if(this.isWall())
+        {
             return "w";
         }
-        if(this.isFlag()){
+        if(this.isFlag())
+        {
             return "f";
         }
-        if(this.isPlayer()){
+        if(this.isPlayer())
+        {
             return "p";
         }
-        if (this.isFlaggedPlayer()){
+        if (this.isFlaggedPlayer())
+        {
             return "P";
         }
-        if(this.isBox()){
+        if(this.isBox())
+        {
             return "b";
         }
-        if(this.isFlaggedBox()){
+        if(this.isFlaggedBox())
+        {
             return "B";
         }
 
@@ -71,53 +83,66 @@ public class Tile {
 
 
     // accessor methods
-    public int getX() {
+    public int getX()
+    {
         return x;
     }
 
-    public int getY() {
+    public int getY()
+    {
         return y;
     }
 
-    public boolean isWall(){
+    public boolean isWall()
+    {
         return immovableObject.getNature() == Load.WALL;
     }
 
-    public boolean isFlag(){
+    public boolean isFlag()
+    {
         return immovableObject.getNature() == Load.FLAG && movableObject.getNature() == Load.EMPTY;
     }
 
-    public boolean isBox(){
+    public boolean isBox()
+    {
         return movableObject.getNature() == Load.BOX && immovableObject.getNature() != Load.FLAG;
     }
 
-    public boolean isFlaggedBox(){
+    public boolean isFlaggedBox()
+    {
         return movableObject.getNature() == Load.BOX && immovableObject.getNature() == Load.FLAG;
     }
 
-    public boolean isPlayer(){
+    public boolean isPlayer()
+    {
         return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() != Load.FLAG;
     }
 
-    public boolean isFlaggedPlayer(){
+    public boolean isFlaggedPlayer()
+    {
         return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() == Load.FLAG;
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty()
+    {
         return movableObject.getNature() == Load.EMPTY && immovableObject.getNature() == Load.EMPTY;
     }
 
     // mutator methods
-    public void setX(int x){
+    public void setX(int x)
+    {
         this.x = x;
     }
 
-    public void setY(int y){
+    public void setY(int y)
+    {
         this.y = y;
     }
 
-    public void setMovableObject(Load movable){
-        switch(movable){
+    public void setMovableObject(Load movable)
+    {
+        switch(movable)
+        {
             case PLAYER:
                 this.movableObject = new Player();
 
@@ -128,8 +153,10 @@ public class Tile {
         }
     }
 
-    public void setImmovableObject(Load immovable){
-        switch (immovable){
+    public void setImmovableObject(Load immovable)
+    {
+        switch (immovable)
+        {
             case WALL:
                 this.immovableObject = new Wall();
                 break;
@@ -138,21 +165,25 @@ public class Tile {
         }
     }
 
-    public void clearMovable(){
+    public void clearMovable()
+    {
         this.movableObject = new EmptyMovable();
     }
 
     // movement methods
 
-    public boolean checkMove(Tile[][] grid, int directionX, int directionY){
+    public boolean checkMove(Tile[][] grid, int directionX, int directionY)
+    {
         return this.movableObject.checkMove(grid, x, y, directionX, directionY);
     }
-    public void Move(Tile[][] grid, int directionX, int directionY){
+    public void Move(Tile[][] grid, int directionX, int directionY)
+    {
         this.movableObject.Move(grid, x, y, directionX, directionY);
         grid[y][x].clearMovable();
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
         Tile myTile = new Tile(0, 0);
         Tile tile = new Tile(1, 0);
         myTile.setMovableObject(Load.PLAYER);

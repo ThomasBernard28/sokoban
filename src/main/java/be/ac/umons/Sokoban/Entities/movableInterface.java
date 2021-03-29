@@ -1,7 +1,8 @@
 package be.ac.umons.Sokoban.Entities;
 
 
-public interface movableInterface {
+public interface movableInterface
+{
 
 
     boolean checkMove(Tile[][] grid, int x, int y, int directionX, int directionY);
