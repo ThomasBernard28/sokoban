@@ -4,23 +4,25 @@ public class Player implements  movableInterface
 {
 
     @Override
-    public boolean checkMove(Tile[][] grid, int x, int y, int directionX, int directionY)
+    public boolean checkMove(Grid grid, int x, int y, int directionX, int directionY)
     {
-        if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox())
+        if(grid.grid[directionY + y][x + directionX].isFlaggedBox() || grid.grid[directionY + y][x + directionX].isBox())
         {
-            return grid[directionY + y][x + directionX].checkMove(grid, directionX, directionY);
+            return grid.grid[directionY + y][x + directionX].checkMove(grid, directionX, directionY);
         }
-        return !grid[directionY + y][x + directionX].isWall();
+        return !grid.grid[directionY + y][x + directionX].isWall();
     }
 
     @Override
-    public void Move(Tile[][] grid, int x, int y, int directionX, int directionY)
+    public void Move(Grid grid, int x, int y, int directionX, int directionY)
     {
-        if(grid[directionY + y][x + directionX].isFlaggedBox() || grid[directionY + y][x + directionX].isBox())
+        if(grid.grid[directionY + y][x + directionX].isFlaggedBox() || grid.grid[directionY + y][x + directionX].isBox())
         {
-            grid[directionY + y][x + directionX].Move(grid, directionX, directionY);
+            grid.grid[directionY + y][x + directionX].Move(grid, directionX, directionY);
         }
-        grid[y + directionY][x + directionX].setMovableObject(Load.PLAYER);
+        grid.grid[y + directionY][x + directionX].setMovableObject(Load.PLAYER);
+        grid.player[0] += directionX;
+        grid.player[1] += directionY;
     }
 
     @Override

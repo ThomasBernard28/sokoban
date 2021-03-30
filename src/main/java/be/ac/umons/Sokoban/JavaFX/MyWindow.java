@@ -28,6 +28,14 @@ import java.net.URL;
 
 public class MyWindow extends Application
 {
+
+    private Image player;
+    private Image box;
+    private Image flag;
+    private Image wall;
+    private Image bg;
+
+
     public static void main(String[] args)
     {
         launch(args);
@@ -42,44 +50,32 @@ public class MyWindow extends Application
 
     public void start(Stage theStage){
         int size = 8;
+        // logic part
+
+        Grid gameGrid = logicGridGenesis(size);
+
+        // gui part
+
+        loadImages();
         theStage.setTitle("Sokoban");
         // GridPane group that will contain the Grid
         GridPane root = visualGridGenesis(size);
         // Scene with the game
-        Scene theScene = new Scene(root);
-        theStage.setScene(theScene);
-        /*
-         * // works when the only event handler
-        root.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+        Scene gameScene = new Scene(root);
+        theStage.setScene(gameScene);
+        theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gameGrid));
+
+        new AnimationTimer(){
             @Override
-            public void handle(MouseEvent event) {
-                System.out.println("print");
+            public void handle(long now) {
+                renderer(root, gameGrid);
             }
-        }); */
-        // need an button with and event handler to work
-        root.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                System.out.println("grid");
-            }
-        });
-
-        //loading images
-        Image mario = new Image("images/player.png");
-        Image box = new Image("images/box.png");
-        Image flag = new Image("images/flag.png");
-        Image wall = new Image("images/wall.png");
-        Image bg = new Image("images/bg_40.png");
-
-        // logic Grid init
-        Grid gameGrid = logicGridGenesis(size);
-
-        // creating visuals
-        renderer(root, gameGrid, mario, box, flag, wall, bg);
+        }.start();
 
         theStage.show();
     }
-    public void renderer(GridPane GUIGrid, Grid logicGrid, Image player, Image box, Image flag, Image wall, Image bg){
+
+    public void renderer(GridPane GUIGrid, Grid logicGrid){
         for (int i = 0; i < logicGrid.row; i++){
             for (int j = 0; j < logicGrid.col; j++){
                 if(logicGrid.grid[i][j].isBox() || logicGrid.grid[i][j].isFlaggedBox()){
@@ -99,14 +95,8 @@ public class MyWindow extends Application
                 }
             }
         }
-        /*
-         * // required for the key event on grid pane
-        Button button = new Button("Print");
-        button.setOnAction((ActionEvent event) -> {
-            System.out.println("button");
-        });
-        GUIGrid.add(button, 9, 9);*/
     }
+
     public GridPane visualGridGenesis(int size){
         GridPane gridpane = new GridPane();
         for (int i = 0; i < size; i++) {
@@ -125,5 +115,12 @@ public class MyWindow extends Application
         grid.set_boxes(grid.col/2, grid.row/2);
         grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
         return grid;
+    }
+    public void loadImages(){
+        player = new Image("images/player.png");
+        box = new Image("images/box.png");
+        flag = new Image("images/flag.png");
+        wall = new Image("images/wall.png");
+        bg = new Image("images/bg_40.png");
     }
 }

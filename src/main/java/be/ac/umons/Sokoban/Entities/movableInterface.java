@@ -5,10 +5,10 @@ public interface movableInterface
 {
 
 
-    boolean checkMove(Tile[][] grid, int x, int y, int directionX, int directionY);
+    boolean checkMove(Grid grid, int x, int y, int directionX, int directionY);
 
 
-    void Move(Tile[][] grid, int x, int y, int directionX, int directionY);
+    void Move(Grid grid, int x, int y, int directionX, int directionY);
 
 
     Load getNature();

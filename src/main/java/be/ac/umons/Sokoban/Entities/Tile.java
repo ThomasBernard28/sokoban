@@ -21,6 +21,7 @@ public class Tile
 
     private int x;
     private int y;
+
     // Defines the mobility of the objects
     public Tile(int x, int y, Load content)
     {
@@ -172,29 +173,13 @@ public class Tile
 
     // movement methods
 
-    public boolean checkMove(Tile[][] grid, int directionX, int directionY)
+    public boolean checkMove(Grid grid, int directionX, int directionY)
     {
         return this.movableObject.checkMove(grid, x, y, directionX, directionY);
     }
-    public void Move(Tile[][] grid, int directionX, int directionY)
+    public void Move(Grid grid, int directionX, int directionY)
     {
         this.movableObject.Move(grid, x, y, directionX, directionY);
-        grid[y][x].clearMovable();
-    }
-
-    public static void main(String[] args)
-    {
-        Tile myTile = new Tile(0, 0);
-        Tile tile = new Tile(1, 0);
-        myTile.setMovableObject(Load.PLAYER);
-
-        Tile[][] tableau = new Tile[2][2];
-        tableau[0][0] = myTile;
-        tableau[0][1] = tile;
-
-        myTile.Move(tableau, 1, 0);
-        System.out.println(tableau[0][0]);
-        System.out.println(tableau[0][1]);
-
+        grid.grid[y][x].clearMovable();
     }
 }

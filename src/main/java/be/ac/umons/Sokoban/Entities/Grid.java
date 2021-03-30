@@ -9,6 +9,7 @@ public class Grid {
     public Tile [][] grid;
     public int col;
     public int row;
+    public int [] player = new int[2];
 
     public Grid (int col, int row)
     {
@@ -46,6 +47,8 @@ public class Grid {
     public void set_player(int x, int y)
     {
         grid[y][x].setMovableObject(Load.PLAYER);
+        player[0] = x;
+        player[1] = y;
     }
     public void set_boxes(int x, int y)
     {

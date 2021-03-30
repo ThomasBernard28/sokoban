@@ -24,7 +24,6 @@ public class ConsoleGrid
 
 
         boolean playing = true;
-        int[] pos = {1, 6};
         String move;
         while(playing){
             printConsole(grid);
@@ -32,31 +31,27 @@ public class ConsoleGrid
             switch (move)
             {
                 case "z":
-                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 0, -1))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, 0, -1))
                     {
-                        grid.grid[pos[1]][pos[0]].Move(grid.grid, 0, -1);
-                        pos[1] -= 1;
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, 0, -1);
                     }
                     break;
                 case "q":
-                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, -1, 0))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, -1, 0))
                     {
-                        grid.grid[pos[1]][pos[0]].Move(grid.grid, -1, 0);
-                        pos[0] -= 1;
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, -1, 0);
                     }
                     break;
                 case "s":
-                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 0, 1))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, 0, 1))
                     {
-                        grid.grid[pos[1]][pos[0]].Move(grid.grid, 0, 1);
-                        pos[1] += 1;
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, 0, 1);
                     }
                     break;
                 case "d":
-                    if(grid.grid[pos[1]][pos[0]].checkMove(grid.grid, 1, 0))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, 1, 0))
                     {
-                        grid.grid[pos[1]][pos[0]].Move(grid.grid, 1, 0);
-                        pos[0] += 1;
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, 1, 0);
                     }
                     break;
                 case " ":
@@ -65,7 +60,6 @@ public class ConsoleGrid
                     grid.set_player(1,6);
                     grid.set_boxes(grid.col/2, grid.row/2);
                     grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
-                    pos = new int []{1, 6};
                     break;
                 case "e":
                     playing = false;
