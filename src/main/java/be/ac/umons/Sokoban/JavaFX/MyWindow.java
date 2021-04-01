@@ -29,12 +29,6 @@ import java.net.URL;
 public class MyWindow extends Application
 {
 
-    private Image player;
-    private Image box;
-    private Image flag;
-    private Image wall;
-    private Image bg;
-
 
     public static void main(String[] args)
     {
@@ -56,42 +50,37 @@ public class MyWindow extends Application
 
         // gui part
 
-        loadImages();
+        Resources resources = new Resources();
+        resources.loadImages();
         theStage.setTitle("Sokoban");
         // GridPane group that will contain the Grid
         GridPane root = visualGridGenesis(size);
         // Scene with the game
         Scene gameScene = new Scene(root);
         theStage.setScene(gameScene);
-        theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gameGrid));
-
-        new AnimationTimer(){
-            @Override
-            public void handle(long now) {
-                renderer(root, gameGrid);
-            }
-        }.start();
+        renderer(root, gameGrid, resources);
+        theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gameGrid, root, resources));
 
         theStage.show();
     }
 
-    public void renderer(GridPane GUIGrid, Grid logicGrid){
+    public void renderer(GridPane GUIGrid, Grid logicGrid, Resources re){
         for (int i = 0; i < logicGrid.row; i++){
             for (int j = 0; j < logicGrid.col; j++){
                 if(logicGrid.grid[i][j].isBox() || logicGrid.grid[i][j].isFlaggedBox()){
-                    GUIGrid.add(new ImageView(box), j, i);
+                    GUIGrid.add(new ImageView(re.getBox()), j, i);
                 }
                 if(logicGrid.grid[i][j].isPlayer() || logicGrid.grid[i][j].isFlaggedPlayer()){
-                    GUIGrid.add(new ImageView(player), j, i);
+                    GUIGrid.add(new ImageView(re.getPlayer()), j, i);
                 }
                 if(logicGrid.grid[i][j].isWall()){
-                    GUIGrid.add(new ImageView(wall), j, i);
+                    GUIGrid.add(new ImageView(re.getWall()), j, i);
                 }
                 if(logicGrid.grid[i][j].isFlag()){
-                    GUIGrid.add(new ImageView(flag), j, i);
+                    GUIGrid.add(new ImageView(re.getFlag()), j, i);
                 }
                 if(logicGrid.grid[i][j].isEmpty()){
-                        GUIGrid.add(new ImageView(bg), j, i);
+                        GUIGrid.add(new ImageView(re.getBg()), j, i);
                 }
             }
         }
@@ -115,12 +104,5 @@ public class MyWindow extends Application
         grid.set_boxes(grid.col/2, grid.row/2);
         grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
         return grid;
-    }
-    public void loadImages(){
-        player = new Image("images/player.png");
-        box = new Image("images/box.png");
-        flag = new Image("images/flag.png");
-        wall = new Image("images/wall.png");
-        bg = new Image("images/bg_40.png");
     }
 }
