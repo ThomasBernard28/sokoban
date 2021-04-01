@@ -51,9 +51,11 @@ public class PatternGenerator {
         },1);
 
         private final char[][] pattern;
+        public double weight;
 
         xProfile(char[][] pattern, double weight){
             this.pattern = pattern;
+            this.weight = weight;
         }
 
         public char[][] getPattern() {
@@ -77,9 +79,11 @@ public class PatternGenerator {
         },1);
 
         private final char[][] pattern;
+        public double weight;
 
         iProfile(char[][] pattern, double weight){
             this.pattern = pattern;
+            this.weight = weight;
         }
         public char[][] getPattern() {
             Random rand = new Random();
@@ -140,9 +144,11 @@ public class PatternGenerator {
         },1);
 
         private final char[][] pattern;
+        public double weight;
 
         eProfile(char[][] pattern, double weight) {
             this.pattern = pattern;
+            this.weight = weight;
         }
 
         public char[][] getPattern() {
