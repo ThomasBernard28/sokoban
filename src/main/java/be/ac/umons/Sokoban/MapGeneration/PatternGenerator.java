@@ -5,6 +5,12 @@ import java.util.Random;
 public class PatternGenerator {
 
     private static char[][] rotation(char[][] pattern, int angle){
+        /*
+        * This method rotate recursively a pattern. The goal behind the rotation
+        * is to find a possible pathway as we assemble the patterns together. If
+        * there is no pathway between two patterns we'll try to rotation the second one.
+        * If after all rotation there is no pathway we take a new pattern.
+        */
         if(angle == 0){
             return pattern;
         }
@@ -24,7 +30,7 @@ public class PatternGenerator {
         }
     }
 
-    enum xProfile{
+    enum xProfile{ //pattern that will not change after rotation like 'X'
 
         EMPTY (new char[][]{
                 {'e','e','e'},
@@ -45,9 +51,11 @@ public class PatternGenerator {
         },1);
 
         private final char[][] pattern;
+        public double weight;
 
         xProfile(char[][] pattern, double weight){
             this.pattern = pattern;
+            this.weight = weight;
         }
 
         public char[][] getPattern() {
@@ -56,7 +64,7 @@ public class PatternGenerator {
 
     }
 
-    enum iProfile{
+    enum iProfile{ // pattern that only change when rotated of 90 or 270 degrees
 
         CENTER_LINE(new char[][]{
                 {'e', 'w', 'e'},
@@ -71,9 +79,11 @@ public class PatternGenerator {
         },1);
 
         private final char[][] pattern;
+        public double weight;
 
         iProfile(char[][] pattern, double weight){
             this.pattern = pattern;
+            this.weight = weight;
         }
         public char[][] getPattern() {
             Random rand = new Random();
@@ -83,7 +93,7 @@ public class PatternGenerator {
         }
     }
 
-    enum eProfile {
+    enum eProfile { // Pattern that change at every rotation
 
         SQUARE(new char[][]{
                 {'w', 'w', 'e'},
@@ -134,9 +144,11 @@ public class PatternGenerator {
         },1);
 
         private final char[][] pattern;
+        public double weight;
 
         eProfile(char[][] pattern, double weight) {
             this.pattern = pattern;
+            this.weight = weight;
         }
 
         public char[][] getPattern() {
