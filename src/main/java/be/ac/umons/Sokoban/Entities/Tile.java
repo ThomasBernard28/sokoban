@@ -5,15 +5,6 @@ With this class we can control the movements of the different entities and check
 we want to make is possible.
  */
 
-enum Load
-{
-    BOX,
-    PLAYER,
-    WALL,
-    FLAG,
-    EMPTY
-}
-
 public class Tile
 {
     private immovableInterface immovableObject = new EmptyImmovable();
@@ -173,13 +164,13 @@ public class Tile
 
     // movement methods
 
-    public boolean checkMove(Grid grid, int directionX, int directionY)
+    public boolean checkMove(Grid grid, Direction direction)
     {
-        return this.movableObject.checkMove(grid, x, y, directionX, directionY);
+        return this.movableObject.checkMove(grid, x, y, direction);
     }
-    public void Move(Grid grid, int directionX, int directionY)
+    public void Move(Grid grid, Direction direction)
     {
-        this.movableObject.Move(grid, x, y, directionX, directionY);
+        this.movableObject.Move(grid, x, y, direction);
         grid.grid[y][x].clearMovable();
     }
 }

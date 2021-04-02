@@ -1,6 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -20,6 +21,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.awt.*;
 import java.io.File;
@@ -29,6 +31,8 @@ import java.net.URL;
 public class MyWindow extends Application
 {
 
+    private static final int COLUMNS  =   3;
+    private static final int COUNT    =  8;
 
     public static void main(String[] args)
     {
@@ -43,23 +47,31 @@ public class MyWindow extends Application
     }
 
     public void start(Stage theStage){
+        theStage.setTitle("Sokoban");
         int size = 8;
         // logic part
 
-        Grid gameGrid = logicGridGenesis(size);
+        Grid logicGrid = logicGridGenesis(size);
 
         // gui part
 
-        Resources resources = new Resources();
-        resources.loadImages();
-        theStage.setTitle("Sokoban");
         // GridPane group that will contain the Grid
-        GridPane root = visualGridGenesis(size);
+        Image sprite = new Image("images/sokoban_tilesheet.png");
+
+        SpecialPane gamePane = new SpecialPane(logicGrid, 64, sprite);
         // Scene with the game
-        Scene gameScene = new Scene(root);
+        Scene gameScene = new Scene(gamePane);
         theStage.setScene(gameScene);
-        renderer(root, gameGrid, resources);
-        theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gameGrid, root, resources));
+        gamePane.initiate();
+        // part with animation
+
+        final Animation animation = new SpriteAnimation(
+                Duration.millis(2000),
+                COUNT, COLUMNS,
+                0, 7,
+                64, 64, gamePane);
+
+        // theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gameGrid, root, resources));
 
         theStage.show();
     }

@@ -5,17 +5,17 @@ public class Box  implements movableInterface{
     char nature;
 
     @Override
-    public boolean checkMove(Grid grid, int x, int y, int directionX, int directionY)
+    public boolean checkMove(Grid grid, int x, int y, Direction direction)
     {
-        return !grid.grid[directionY + y][x + directionX].isWall() &&
-                !grid.grid[directionY + y][x + directionX].isBox() &&
-                !grid.grid[directionY + y][x + directionX].isFlaggedBox();
+        return !grid.grid[direction.y + y][x + direction.x].isWall() &&
+                !grid.grid[direction.y + y][x + direction.x].isBox() &&
+                !grid.grid[direction.y + y][x + direction.x].isFlaggedBox();
     }
 
     @Override
-    public void Move(Grid grid, int x, int y, int directionX, int directionY)
+    public void Move(Grid grid, int x, int y, Direction direction)
     {
-        grid.grid[y + directionY][x + directionX].setMovableObject(Load.BOX);
+        grid.grid[y + direction.y][x + direction.x].setMovableObject(Load.BOX);
     }
 
     @Override

@@ -18,7 +18,7 @@ dependencies {
     implementation 'com.sun.mail:javax.mail:1.6.2'
 }
 application {
-    mainClass = 'src.main.java.be.ac.umons.Sokoban'
+    mainClass = 'be.ac.umons.Sokoban'
 }
 
 test {

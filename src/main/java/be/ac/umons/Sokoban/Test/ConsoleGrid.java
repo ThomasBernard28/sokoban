@@ -1,6 +1,7 @@
 package be.ac.umons.Sokoban.Test;
 import java.util.*;
 
+import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.Entities.Wall;
 
@@ -31,27 +32,27 @@ public class ConsoleGrid
             switch (move)
             {
                 case "z":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, 0, -1))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.UP))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, 0, -1);
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.UP);
                     }
                     break;
                 case "q":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, -1, 0))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.LEFT))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, -1, 0);
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.LEFT);
                     }
                     break;
                 case "s":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, 0, 1))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.DOWN))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, 0, 1);
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.DOWN);
                     }
                     break;
                 case "d":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, 1, 0))
+                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.RIGHT))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, 1, 0);
+                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.RIGHT);
                     }
                     break;
                 case " ":
