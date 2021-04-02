@@ -45,14 +45,8 @@ public class Test extends Application {
 
         ImageView imageView = new ImageView(sprite);
 
-        final Animation animation = new SpriteAnimation(
-                Duration.millis(2000),
-                COUNT, COLUMNS,
-                0, 7,
-                64, 64, gamePane);
-
-        animation.setCycleCount(Animation.INDEFINITE);
-        animation.play();
+        // animation.setCycleCount(Animation.INDEFINITE);
+        // animation.play();
         // gamePane.translation(gamePane.getCell(ImageType.PLAYER), 1, 0, 64);
 
 

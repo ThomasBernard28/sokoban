@@ -92,11 +92,11 @@ public class SpecialPane extends Pane {
         }
     }
     public void translation(ImageView imageView, Direction direction, int length){
-        setAt(getCell(ImageType.EMPTY), logicGrid.player[1] + direction.y, logicGrid.player[0] + direction.x);
+        setAt(getCell(ImageType.EMPTY), logicGrid.player[1] - direction.y, logicGrid.player[0] - direction.x);
         setAt(getCell(ImageType.EMPTY), logicGrid.player[1], logicGrid.player[0]);
         setAt(
                 imageView,
-                new int[] {logicGrid.player[0] *SIZE + length * direction.x, logicGrid.player[1] * SIZE + length * direction.y}
+                new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
               );
     }
 

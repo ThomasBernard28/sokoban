@@ -65,13 +65,8 @@ public class MyWindow extends Application
         gamePane.initiate();
         // part with animation
 
-        final Animation animation = new SpriteAnimation(
-                Duration.millis(2000),
-                COUNT, COLUMNS,
-                0, 7,
-                64, 64, gamePane);
 
-        // theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gameGrid, root, resources));
+        theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(logicGrid, gamePane));
 
         theStage.show();
     }
