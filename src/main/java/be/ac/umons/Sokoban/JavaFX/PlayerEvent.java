@@ -15,16 +15,16 @@ import java.util.Arrays;
 
 public class PlayerEvent implements EventHandler<KeyEvent> {
     private final Grid grid;
-    private final SpecialPane gamePane;
+    private final SpecialPane gP;
     private final SpriteAnimation playerAnimation;
     private final SpriteAnimation boxAnimation;
 
     public PlayerEvent(Grid grid, SpecialPane gamePane){
         this.grid = grid;
-        this.gamePane = gamePane;
-        playerAnimation = new SpriteAnimation(Duration.millis(500), 8, 3,
+        this.gP = gamePane;
+        playerAnimation = new SpriteAnimation(Duration.millis(200), 8, 3,
                                                 gamePane.SIZE, gamePane.SIZE, gamePane);
-        boxAnimation = new SpriteAnimation(Duration.millis(1000), 8, 1,
+        boxAnimation = new SpriteAnimation(Duration.millis(200), 8, 1,
                                             gamePane.SIZE, gamePane.SIZE, gamePane);
         playerAnimation.setCycleCount(1);
         boxAnimation.setCycleCount(1);
@@ -38,6 +38,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
             case "z":
                 if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.UP))
                 {
+
                     playerAnimation.setDirection(Direction.UP);
                     grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.UP);
                     playerAnimation.play();

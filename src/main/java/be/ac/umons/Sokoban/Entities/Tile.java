@@ -105,6 +105,10 @@ public class Tile
         return movableObject.getNature() == Load.BOX && immovableObject.getNature() == Load.FLAG;
     }
 
+    public boolean hasBox(){
+        return movableObject.getNature() == Load.BOX;
+    }
+
     public boolean isPlayer()
     {
         return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() != Load.FLAG;

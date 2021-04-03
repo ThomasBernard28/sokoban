@@ -16,7 +16,7 @@ class SpriteAnimation extends Transition {
     private int offsetY;
     private final int width;
     private final int height;
-    private SpecialPane gamePane = null;
+    private SpecialPane gP;
     private Direction dir;
 
     private int lastIndex;
@@ -28,7 +28,7 @@ class SpriteAnimation extends Transition {
         this.columns   = columns;
         this.width     = width;
         this.height    = height;
-        this.gamePane = gamePane;
+        this.gP = gamePane;
         this.setDirection(Direction.DOWN);
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
@@ -40,10 +40,24 @@ class SpriteAnimation extends Transition {
             final int x = (index % columns) * width  + offsetX * width;
             final int y = offsetY * width;
 
-            ImageView cell = new ImageView(gamePane.SPRITE);
+            ImageView cell = new ImageView(gP.SPRITE);
             cell.setViewport(new Rectangle2D(x, y, width, height));
-            gamePane.translation(cell, dir, width - (width/ count) * (index + 1));
-            System.out.println("player translated of " + (width/ count) * (index + 1));
+
+            gP.translation(cell, dir, width - (width/ count) * (index + 1));
+            lastIndex = index;
+
+        }
+    }
+    protected void interpolated(double k){
+        final int index = Math.min((int) Math.floor(k * count), count - 1);
+        if (index != lastIndex) {
+            final int x = (index % columns) * width  + offsetX * width;
+            final int y = offsetY * width;
+
+            ImageView cell = new ImageView(gP.SPRITE);
+            cell.setViewport(new Rectangle2D(x, y, width, height));
+            //if(gP.logicGrid.grid[][])
+            gP.translation(cell, dir, width - (width/ count) * (index + 1));
             lastIndex = index;
 
         }

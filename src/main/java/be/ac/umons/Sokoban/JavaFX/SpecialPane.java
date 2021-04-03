@@ -91,13 +91,36 @@ public class SpecialPane extends Pane {
             }
         }
     }
-    public void translation(ImageView imageView, Direction direction, int length){
+    public void translationPlayer(ImageView imageView, Direction direction, int length){
+        // player has already been moved ie current visual coord = playerY - dirY, playerX - dirX
         setAt(getCell(ImageType.EMPTY), logicGrid.player[1] - direction.y, logicGrid.player[0] - direction.x);
         setAt(getCell(ImageType.EMPTY), logicGrid.player[1], logicGrid.player[0]);
         setAt(
                 imageView,
                 new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
               );
+    }
+    public void translation(ImageView imageView, Direction direction, int length){
+        setAt(getCell(ImageType.EMPTY), logicGrid.player[1] - direction.y, logicGrid.player[0] - direction.x);
+        setAt(getCell(ImageType.EMPTY), logicGrid.player[1], logicGrid.player[0]);
+        if(logicGrid.grid[logicGrid.player[1] + direction.y][logicGrid.player[0] + direction.x].hasBox()){
+            // player
+            setAt(
+                    imageView,
+                    new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
+            );
+            // box
+            setAt(
+                    getCell(ImageType.BOX),
+                    new int[] {(logicGrid.player[0] + direction.x) * SIZE - length * direction.x,
+                               (logicGrid.player[1] + direction.y) * SIZE - length * direction.y}
+            );
+        }else{
+            setAt(
+                    imageView,
+                    new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
+            );
+        }
     }
 
 }

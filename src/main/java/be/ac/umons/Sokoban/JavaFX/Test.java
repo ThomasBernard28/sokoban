@@ -1,5 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX;
 
+import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
 import javafx.animation.Animation;
 import javafx.application.Application;
@@ -40,8 +41,13 @@ public class Test extends Application {
         Scene gameScene = new Scene(gamePane);
 
         theStage.setScene(gameScene);
+        SpriteAnimation anim = new SpriteAnimation(Duration.millis(1000), 8, 1,
+                gamePane.SIZE, gamePane.SIZE, gamePane);
 
         gamePane.initiate();
+        anim.setDirection(Direction.LEFT);
+        anim.play();
+
 
         ImageView imageView = new ImageView(sprite);
 
