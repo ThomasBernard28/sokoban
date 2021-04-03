@@ -18,6 +18,7 @@ class SpriteAnimation extends Transition {
     private final int height;
     private SpecialPane gP;
     private Direction dir;
+    private boolean boxAnim;
 
     private int lastIndex;
 
@@ -43,25 +44,12 @@ class SpriteAnimation extends Transition {
             ImageView cell = new ImageView(gP.SPRITE);
             cell.setViewport(new Rectangle2D(x, y, width, height));
 
-            gP.translation(cell, dir, width - (width/ count) * (index + 1));
+            gP.translationFull(cell, dir, width - (width/ count) * (index + 1), boxAnim);
             lastIndex = index;
 
         }
     }
-    protected void interpolated(double k){
-        final int index = Math.min((int) Math.floor(k * count), count - 1);
-        if (index != lastIndex) {
-            final int x = (index % columns) * width  + offsetX * width;
-            final int y = offsetY * width;
 
-            ImageView cell = new ImageView(gP.SPRITE);
-            cell.setViewport(new Rectangle2D(x, y, width, height));
-            //if(gP.logicGrid.grid[][])*
-            gP.translation(cell, dir, width - (width/ count) * (index + 1));
-            lastIndex = index;
-
-        }
-    }
     public void setDirection(Direction direction){
         this.dir = direction;
         switch (dir){
@@ -82,5 +70,9 @@ class SpriteAnimation extends Transition {
                 offsetY = 7;
                 break;
         }
+
+    }
+    public void setAnimation(boolean box){
+        boxAnim = box;
     }
 }

@@ -40,6 +40,9 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 {
 
                     playerAnimation.setDirection(Direction.UP);
+                    playerAnimation.setAnimation(
+                            grid.grid[grid.player[1] + Direction.UP.y][grid.player[0] + Direction.UP.x].hasBox()
+                            );
                     grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.UP);
                     playerAnimation.play();
 
@@ -49,6 +52,9 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.LEFT))
                 {
                     playerAnimation.setDirection(Direction.LEFT);
+                    playerAnimation.setAnimation(
+                            grid.grid[grid.player[1] + Direction.LEFT.y][grid.player[0] + Direction.LEFT.x].hasBox()
+                    );
                     grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.LEFT);
                     playerAnimation.play();
                 }
@@ -57,6 +63,9 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.DOWN))
                 {
                     playerAnimation.setDirection(Direction.DOWN);
+                    playerAnimation.setAnimation(
+                            grid.grid[grid.player[1] + Direction.DOWN.y][grid.player[0] + Direction.DOWN.x].hasBox()
+                    );
                     grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.DOWN);
                     playerAnimation.play();
                 }
@@ -65,6 +74,9 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.RIGHT))
                 {
                     playerAnimation.setDirection(Direction.RIGHT);
+                    playerAnimation.setAnimation(
+                            grid.grid[grid.player[1] + Direction.RIGHT.y][grid.player[0] + Direction.RIGHT.x].hasBox()
+                    );
                     grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.RIGHT);
                     playerAnimation.play();
                 }

@@ -18,12 +18,13 @@ enum ImageType{
 public class SpecialPane extends Pane {
     public final int SIZE;
     public final Image SPRITE;
-    public final Grid logicGrid;
+    public final Grid lG;
+
 
     public SpecialPane(Grid grid, int SIZE, Image SPRITE){
         this.SIZE = SIZE;
         this.SPRITE = SPRITE;
-        this.logicGrid = grid;
+        this.lG = grid;
     }
 
     public ImageView getCell(ImageType type){
@@ -52,6 +53,13 @@ public class SpecialPane extends Pane {
         }
         return new ImageView(SPRITE);
     }
+    public ImageView getBgCell(int i, int j){
+        if(lG.grid[i][j].hasFlag()){
+            return getCell(ImageType.FLAG);
+        }else {
+            return getCell(ImageType.EMPTY);
+        }
+    }
 
     public void setAt(ImageView imageView, int row, int col){
         this.getChildren().add(imageView);
@@ -64,61 +72,68 @@ public class SpecialPane extends Pane {
     }
 
     public void initiate(){
-        for(int i = 0; i < logicGrid.row; i++){
-            for(int j = 0; j <logicGrid.col; j++){
-                if(logicGrid.grid[i][j].isBox()){
+        for(int i = 0; i < lG.row; i++){
+            for(int j = 0; j <lG.col; j++){
+                if(lG.grid[i][j].isBox()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.BOX), i, j);
                 }
-                else if(logicGrid.grid[i][j].isFlaggedBox()){
+                else if(lG.grid[i][j].isFlaggedBox()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.FLAGGED_BOX), i, j);
                 }
-                else if(logicGrid.grid[i][j].isWall()){
+                else if(lG.grid[i][j].isWall()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.WALL), i, j);
                 }
-                else if(logicGrid.grid[i][j].isPlayer()){
+                else if(lG.grid[i][j].isPlayer()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.PLAYER), i, j);
                 }
-                else if(logicGrid.grid[i][j].isFlag()){
+                else if(lG.grid[i][j].isFlag()){
                     setAt(getCell(ImageType.FLAG), i, j);
                 }
-                else if(logicGrid.grid[i][j].isEmpty()){
+                else if(lG.grid[i][j].isEmpty()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                 }
             }
         }
     }
-    public void translationPlayer(ImageView imageView, Direction direction, int length){
+    public void translationPlayer(ImageView imageView, Direction dir, int length){
         // player has already been moved ie current visual coord = playerY - dirY, playerX - dirX
-        setAt(getCell(ImageType.EMPTY), logicGrid.player[1] - direction.y, logicGrid.player[0] - direction.x);
-        setAt(getCell(ImageType.EMPTY), logicGrid.player[1], logicGrid.player[0]);
+        setAt(getCell(ImageType.EMPTY), lG.player[1] - dir.y, lG.player[0] - dir.x);
+        setAt(getCell(ImageType.EMPTY), lG.player[1], lG.player[0]);
         setAt(
                 imageView,
-                new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
+                new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
               );
     }
-    public void translation(ImageView imageView, Direction direction, int length){
-        setAt(getCell(ImageType.EMPTY), logicGrid.player[1] - direction.y, logicGrid.player[0] - direction.x);
-        setAt(getCell(ImageType.EMPTY), logicGrid.player[1], logicGrid.player[0]);
-        if(logicGrid.grid[logicGrid.player[1] + direction.y][logicGrid.player[0] + direction.x].hasBox()){
+    public void translationFull(ImageView imageView, Direction dir, int length, boolean withBox){
+        setAt(
+                getBgCell(lG.player[1] - dir.y, lG.player[0] - dir.x),
+                lG.player[1] - dir.y, lG.player[0] - dir.x
+        );
+        setAt(
+                getBgCell(lG.player[1], lG.player[0]),
+                lG.player[1], lG.player[0]
+        );
+        if(withBox){
+            System.out.println("Anim with box");
             // player
             setAt(
                     imageView,
-                    new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
+                    new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
             );
             // box
             setAt(
                     getCell(ImageType.BOX),
-                    new int[] {(logicGrid.player[0] + direction.x) * SIZE - length * direction.x,
-                               (logicGrid.player[1] + direction.y) * SIZE - length * direction.y}
+                    new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
+                               (lG.player[1] + dir.y) * SIZE - length * dir.y}
             );
         }else{
             setAt(
                     imageView,
-                    new int[] {logicGrid.player[0] *SIZE - length * direction.x, logicGrid.player[1] * SIZE - length * direction.y}
+                    new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
             );
         }
     }
