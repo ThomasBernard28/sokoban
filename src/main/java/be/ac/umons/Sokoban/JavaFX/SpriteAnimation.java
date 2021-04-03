@@ -56,7 +56,7 @@ class SpriteAnimation extends Transition {
 
             ImageView cell = new ImageView(gP.SPRITE);
             cell.setViewport(new Rectangle2D(x, y, width, height));
-            //if(gP.logicGrid.grid[][])
+            //if(gP.logicGrid.grid[][])*
             gP.translation(cell, dir, width - (width/ count) * (index + 1));
             lastIndex = index;
 
