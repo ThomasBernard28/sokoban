@@ -19,6 +19,7 @@ class SpriteAnimation extends Transition {
     private SpecialPane gP;
     private Direction dir;
     private boolean boxAnim;
+    private boolean running = false;
 
     private int lastIndex;
 
@@ -36,6 +37,7 @@ class SpriteAnimation extends Transition {
     }
     @Override
     protected void interpolate(double k) {
+        this.running = true;
         final int index = Math.min((int) Math.floor(k * count), count - 1);
         if (index != lastIndex) {
             final int x = (index % columns) * width  + offsetX * width;
@@ -48,7 +50,14 @@ class SpriteAnimation extends Transition {
             lastIndex = index;
 
         }
+
+        if(index == count - 1){
+            //last step
+            this.running = false;
+        }
+        System.out.println(index);
     }
+
 
     public void setDirection(Direction direction){
         this.dir = direction;
@@ -74,5 +83,8 @@ class SpriteAnimation extends Transition {
     }
     public void setAnimation(boolean box){
         boxAnim = box;
+    }
+    public boolean isRunning(){
+        return running;
     }
 }
