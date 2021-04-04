@@ -1,5 +1,9 @@
 package be.ac.umons.Sokoban.Entities;
 
+import be.ac.umons.Sokoban.MapGeneration.PatternGenerator;
+
+import java.util.Arrays;
+
 /*
 This class is made to initiate a grid, the class takes the different parameters of
 a classical grid and translate them into a representable grid
@@ -7,6 +11,8 @@ a classical grid and translate them into a representable grid
 public class Grid {
     // A grid is a 2D Array of tiles
     public Tile [][] grid;
+    private final boolean[][] walkable;
+
     public int col;
     public int row;
     public int [] player = new int[2];
@@ -28,6 +34,8 @@ public class Grid {
 
             }
         }
+
+        walkable = new boolean[row][col];
     }
     // Set the border walls with loops and calling methods from Tile class to set mobility
     public void set_default_walls()
@@ -41,6 +49,17 @@ public class Grid {
         {
             grid[j][0].setImmovableObject(Load.WALL);
             grid[j][col -1].setImmovableObject(Load.WALL);
+        }
+    }
+    public void resetGrid(){
+        for (Tile[] line : grid){
+            for (Tile tile : line){
+                tile.setImmovableObject(Load.EMPTY);
+                tile.setMovableObject(Load.EMPTY);
+            }
+        }
+        for (Tile[] line : grid){
+            System.out.println(Arrays.toString(line));
         }
     }
     // This method set the player at position (x,y)
@@ -59,9 +78,88 @@ public class Grid {
         grid[y][x].setImmovableObject(Load.FLAG);
     }
 
+    /*
+     *
+     * Generation Part
+     *
+     */
+
+    private Direction[] unexploredNeighbour(int startX, int startY){
+        Direction[] res = new Direction[4];
+        int i = 0;
+        for (Direction dir : Direction.values()){
+            if (inIndexRange(startX, startY, dir) && walkable[startY + dir.y][startX + dir.x]) {
+                res[i] = dir;
+            }
+        }
+        return res;
+    }
+
+    private boolean inIndexRange(int startX, int startY, Direction dir){
+        return (0 <= startX + dir.x && startX + dir.x < col) && (0 <= startY + dir.y && startY + dir.y <= row);
+    }
+
+    private void resetWalkable(){
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                walkable[i][j] = !grid[i][j].isWall();
+            }
+        }
+    }
+
+    private void pathFinder(int startX, int startY){
+        // https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_profondeur
+        walkable[startY][startX] = false;
+        for (Direction dir : unexploredNeighbour(startX, startY)){
+            if (dir != null && walkable[startY + dir.y][startX + dir.x]){
+                pathFinder(startX + dir.x, startY + dir.y);
+            }
+        }
+    }
+
+    private boolean solvable(int playerX, int playerY){
+        resetWalkable();
+        pathFinder(playerX, playerY);
+        for (boolean[] line : walkable){
+            for (boolean square : line){
+                if (square){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private void patternIntegration(int setX, int setY, char[][] matrix){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                if (matrix[i][j] == 'e') {
+                    grid[setY + i][setX + j].setImmovableObject(Load.EMPTY);
+                }else{
+                    grid[setY + i][setX + j].setImmovableObject(Load.WALL);
+                }
+            }
+        }
+    }
+
+    public void generateRandomWalls() {
+        PatternGenerator patternGiver = new PatternGenerator();
+        for (int i = 0; i < row / 3; i++) {
+            for (int j = 0; j < col / 3; j++) {
+                if(i == 0 && j == 0){
+                    patternIntegration(1, 1, PatternGenerator.getEmpty());
+                    continue;
+                }
+                patternIntegration(j * 3 + 1, i * 3 + 1, patternGiver.getRandomPattern());
+                if ( ! solvable(1, 1)){
+                    patternIntegration(j * 3 + 1, i * 3 + 1, PatternGenerator.getEmpty());
+                }
+            }
+        }
+    }
     public static void main(String[] args)
     {
         Grid myGrid = new Grid(5, 5);
-        myGrid.set_default_walls();
+        System.out.println(Arrays.deepToString(myGrid.walkable));
     }
 }

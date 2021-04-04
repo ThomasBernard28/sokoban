@@ -16,7 +16,7 @@ class SpriteAnimation extends Transition {
     private int offsetY;
     private final int width;
     private final int height;
-    private SpecialPane gP;
+    private final SpecialPane gP;
     private Direction dir;
     private boolean boxAnim;
     private boolean running = false;

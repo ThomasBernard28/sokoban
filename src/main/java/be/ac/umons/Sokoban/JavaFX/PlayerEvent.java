@@ -15,19 +15,13 @@ import java.util.Arrays;
 
 public class PlayerEvent implements EventHandler<KeyEvent> {
     private final Grid grid;
-    private final SpecialPane gP;
     private final SpriteAnimation playerAnimation;
-    private final SpriteAnimation boxAnimation;
 
     public PlayerEvent(Grid grid, SpecialPane gamePane){
         this.grid = grid;
-        this.gP = gamePane;
         playerAnimation = new SpriteAnimation(Duration.millis(300), 8, 3,
                                                 gamePane.SIZE, gamePane.SIZE, gamePane);
-        boxAnimation = new SpriteAnimation(Duration.millis(300), 8, 1,
-                                            gamePane.SIZE, gamePane.SIZE, gamePane);
         playerAnimation.setCycleCount(1);
-        boxAnimation.setCycleCount(1);
     }
 
     @Override

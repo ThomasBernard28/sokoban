@@ -71,40 +71,7 @@ public class MyWindow extends Application
         theStage.show();
     }
 
-    public void renderer(GridPane GUIGrid, Grid logicGrid, Resources re){
-        for (int i = 0; i < logicGrid.row; i++){
-            for (int j = 0; j < logicGrid.col; j++){
-                if(logicGrid.grid[i][j].isBox() || logicGrid.grid[i][j].isFlaggedBox()){
-                    GUIGrid.add(new ImageView(re.getBox()), j, i);
-                }
-                if(logicGrid.grid[i][j].isPlayer() || logicGrid.grid[i][j].isFlaggedPlayer()){
-                    GUIGrid.add(new ImageView(re.getPlayer()), j, i);
-                }
-                if(logicGrid.grid[i][j].isWall()){
-                    GUIGrid.add(new ImageView(re.getWall()), j, i);
-                }
-                if(logicGrid.grid[i][j].isFlag()){
-                    GUIGrid.add(new ImageView(re.getFlag()), j, i);
-                }
-                if(logicGrid.grid[i][j].isEmpty()){
-                        GUIGrid.add(new ImageView(re.getBg()), j, i);
-                }
-            }
-        }
-    }
-
-    public GridPane visualGridGenesis(int size){
-        GridPane gridpane = new GridPane();
-        for (int i = 0; i < size; i++) {
-            ColumnConstraints column = new ColumnConstraints(40);
-            RowConstraints row = new RowConstraints(40);
-            gridpane.getRowConstraints().add(row);
-            gridpane.getColumnConstraints().add(column);
-        }
-        return gridpane;
-    }
-
-    public Grid logicGridGenesis(int size){
+    public static Grid logicGridGenesis(int size){
         Grid grid = new Grid(size, size);
         grid.set_default_walls();
         grid.set_player(1,6);

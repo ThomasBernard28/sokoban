@@ -145,11 +145,12 @@ public class Tile
         {
             case PLAYER:
                 this.movableObject = new Player();
-
                 break;
             case BOX:
                 this.movableObject = new Box();
                 break;
+            case EMPTY:
+                this.movableObject = new EmptyMovable();
         }
     }
 
@@ -162,6 +163,10 @@ public class Tile
                 break;
             case FLAG:
                 this.immovableObject = new Flag();
+                break;
+            case EMPTY:
+                this.immovableObject = new EmptyImmovable();
+                break;
         }
     }
 
