@@ -22,9 +22,9 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
     public PlayerEvent(Grid grid, SpecialPane gamePane){
         this.grid = grid;
         this.gP = gamePane;
-        playerAnimation = new SpriteAnimation(Duration.millis(400), 8, 3,
+        playerAnimation = new SpriteAnimation(Duration.millis(300), 8, 3,
                                                 gamePane.SIZE, gamePane.SIZE, gamePane);
-        boxAnimation = new SpriteAnimation(Duration.millis(400), 8, 1,
+        boxAnimation = new SpriteAnimation(Duration.millis(300), 8, 1,
                                             gamePane.SIZE, gamePane.SIZE, gamePane);
         playerAnimation.setCycleCount(1);
         boxAnimation.setCycleCount(1);
@@ -36,7 +36,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
         {
             //TODO place the animation method an find a way to know if there's a box in the direction
             case "z":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.UP) && !playerAnimation.isRunning())
+                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.UP) && playerAnimation.isNotRunning())
                 {
 
                     playerAnimation.setDirection(Direction.UP);
@@ -49,7 +49,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 }
                 break;
             case "q":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.LEFT) && !playerAnimation.isRunning())
+                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.LEFT) && playerAnimation.isNotRunning())
                 {
                     playerAnimation.setDirection(Direction.LEFT);
                     playerAnimation.setAnimation(
@@ -60,7 +60,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 }
                 break;
             case "s":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.DOWN) && !playerAnimation.isRunning())
+                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.DOWN) && playerAnimation.isNotRunning())
                 {
                     playerAnimation.setDirection(Direction.DOWN);
                     playerAnimation.setAnimation(
@@ -71,7 +71,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 }
                 break;
             case "d":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.RIGHT) && !playerAnimation.isRunning())
+                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.RIGHT) && playerAnimation.isNotRunning())
                 {
                     playerAnimation.setDirection(Direction.RIGHT);
                     playerAnimation.setAnimation(
@@ -91,6 +91,5 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 (new MyWindow()).renderer(GUIGrid, grid, resources);*/
                 break;
         }
-        System.out.println(Arrays.toString(grid.player));
     }
 }

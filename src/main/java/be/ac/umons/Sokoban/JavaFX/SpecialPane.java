@@ -35,7 +35,7 @@ public class SpecialPane extends Pane {
                 sprite.setViewport(new Rectangle2D(SIZE * 6,0, SIZE, SIZE ));
                 return sprite;
             case FLAGGED_BOX:
-                sprite.setViewport(new Rectangle2D(SIZE * 6,SIZE, SIZE, SIZE ));
+                sprite.setViewport(new Rectangle2D(SIZE * 6,SIZE * 4, SIZE, SIZE ));
                 return sprite;
             case PLAYER:
                 sprite.setViewport(new Rectangle2D(0, SIZE * 5, SIZE, SIZE));
@@ -118,7 +118,6 @@ public class SpecialPane extends Pane {
                 lG.player[1], lG.player[0]
         );
         if(withBox){
-            System.out.println("Anim with box");
             // player
             setAt(
                     imageView,
@@ -134,6 +133,20 @@ public class SpecialPane extends Pane {
             setAt(
                     imageView,
                     new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
+            );
+        }
+    }
+    public void lastBoxPrint(Direction dir, int length){
+        if(lG.grid[lG.player[1] + dir.y][lG.player[0] + dir.x].isFlaggedBox()){
+            setAt(
+                    getCell(ImageType.EMPTY),
+                    new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
+                            (lG.player[1] + dir.y) * SIZE - length * dir.y}
+            );
+            setAt(
+                    getCell(ImageType.FLAGGED_BOX),
+                    new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
+                            (lG.player[1] + dir.y) * SIZE - length * dir.y}
             );
         }
     }

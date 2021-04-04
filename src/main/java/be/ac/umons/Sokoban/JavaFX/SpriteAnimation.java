@@ -46,16 +46,22 @@ class SpriteAnimation extends Transition {
             ImageView cell = new ImageView(gP.SPRITE);
             cell.setViewport(new Rectangle2D(x, y, width, height));
 
-            gP.translationFull(cell, dir, width - (width/ count) * (index + 1), boxAnim);
+            final int length = width - (width/ count) * (index + 1);
+
+            gP.translationFull(cell, dir, length, boxAnim);
             lastIndex = index;
+            if(index == count - 1){
+                //last step
+                if(boxAnim){
+                    gP.lastBoxPrint(dir, length);
+                }
+                this.running = false;
+                this.stop();
+            }
 
         }
 
-        if(index == count - 1){
-            //last step
-            this.running = false;
-        }
-        System.out.println(index);
+
     }
 
 
@@ -84,7 +90,7 @@ class SpriteAnimation extends Transition {
     public void setAnimation(boolean box){
         boxAnim = box;
     }
-    public boolean isRunning(){
-        return running;
+    public boolean isNotRunning(){
+        return !running;
     }
 }
