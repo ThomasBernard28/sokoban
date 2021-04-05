@@ -8,6 +8,7 @@ enum PatternType {
     I,
     E
 }
+
 public class PatternGenerator {
     private final Pattern[] patterns;
     private double[] weights;

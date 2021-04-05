@@ -8,14 +8,11 @@ public class EmptyMovable implements movableInterface{
     }
 
     @Override
-    public void Move(Grid grid, int x, int y, Direction direction)
-    {
-
+    public void Move(Grid grid, int x, int y, Direction direction) {
     }
 
     @Override
-    public Load getNature()
-    {
+    public Load getNature() {
         return Load.EMPTY;
     }
 }

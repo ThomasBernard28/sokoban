@@ -10,12 +10,12 @@ a classical grid and translate them into a representable grid
  */
 public class Grid {
     // A grid is a 2D Array of tiles
-    public Tile [][] grid;
+    public final Tile [][] grid;
     private final boolean[][] walkable;
 
-    public int col;
-    public int row;
-    public int [] player = new int[2];
+    public final int col;
+    public final int row;
+    public final int [] player = new int[2];
 
     public Grid (int col, int row)
     {

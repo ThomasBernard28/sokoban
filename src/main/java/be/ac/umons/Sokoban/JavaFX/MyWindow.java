@@ -48,6 +48,7 @@ public class MyWindow extends Application
 
     public void start(Stage theStage){
         theStage.setTitle("Sokoban");
+        theStage.getIcons().add(new Image("images/Head.png"));
         int size = 8;
         // logic part
 
@@ -56,9 +57,9 @@ public class MyWindow extends Application
         // gui part
 
         // GridPane group that will contain the Grid
-        Image sprite = new Image("images/sokoban_tilesheet.png");
+        Image sprite = new Image("images/tile_sheet_48.png");
 
-        SpecialPane gamePane = new SpecialPane(logicGrid, 64, sprite);
+        SpecialPane gamePane = new SpecialPane(logicGrid, 48, sprite);
         // Scene with the game
         Scene gameScene = new Scene(gamePane);
         theStage.setScene(gameScene);
@@ -66,7 +67,7 @@ public class MyWindow extends Application
         // part with animation
 
 
-        theStage.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(logicGrid, gamePane));
+        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(logicGrid, gamePane));
 
         theStage.show();
     }

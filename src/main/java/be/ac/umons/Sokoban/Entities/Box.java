@@ -2,14 +2,11 @@ package be.ac.umons.Sokoban.Entities;
 
 public class Box  implements movableInterface{
 
-    char nature;
-
     @Override
     public boolean checkMove(Grid grid, int x, int y, Direction direction)
     {
         return !grid.grid[direction.y + y][x + direction.x].isWall() &&
-                !grid.grid[direction.y + y][x + direction.x].isBox() &&
-                !grid.grid[direction.y + y][x + direction.x].isFlaggedBox();
+                !grid.grid[direction.y + y][x + direction.x].hasBox();
     }
 
     @Override
