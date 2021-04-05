@@ -75,6 +75,13 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 }
                 break;
             case " ":
+                /*
+                grid = new Grid(grid.grid.length, grid.grid.length);
+                grid.set_default_walls();
+                grid.set_player(1,6);
+                grid.set_boxes(grid.col/2, grid.row/2);
+                grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
+                (new MyWindow()).renderer(GUIGrid, grid, resources);*/
                 break;
         }
     }
