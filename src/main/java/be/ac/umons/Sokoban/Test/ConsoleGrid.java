@@ -1,9 +1,14 @@
 package be.ac.umons.Sokoban.Test;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.Entities.Wall;
+import be.ac.umons.Sokoban.Save.*;
 
 
 public class ConsoleGrid
@@ -26,6 +31,7 @@ public class ConsoleGrid
 
         boolean playing = true;
         String move;
+        String fileName;
         while(playing){
             printConsole(grid);
             move = sc.nextLine();
@@ -69,6 +75,7 @@ public class ConsoleGrid
         }
 
     }
+
     public static void printConsole(Grid grid)
     {
         for(int i = 0; i < grid.row; i++)

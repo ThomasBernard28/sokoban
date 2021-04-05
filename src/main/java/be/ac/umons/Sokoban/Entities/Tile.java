@@ -47,30 +47,30 @@ public class Tile
     {
         if(this.isWall())
         {
-            return "w";
+            return "#";
         }
         if(this.isFlag())
         {
-            return "f";
+            return ".";
         }
         if(this.isPlayer())
         {
-            return "p";
+            return "@";
         }
         if (this.isFlaggedPlayer())
         {
-            return "P";
+            return "+";
         }
         if(this.isBox())
         {
-            return "b";
+            return "$";
         }
         if(this.isFlaggedBox())
         {
-            return "B";
+            return "*";
         }
 
-        return ".";
+        return " ";
     }
 
 

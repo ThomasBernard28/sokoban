@@ -117,6 +117,7 @@ public class Grid {
         }
     }
 
+
     private boolean solvable(int playerX, int playerY){
         resetWalkable();
         pathFinder(playerX, playerY);
@@ -157,9 +158,20 @@ public class Grid {
             }
         }
     }
+    public char[][] toCharArray(){
+        char [][] charGrid = new char[row][col];
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                charGrid[i][j] = grid[i][j].toString().charAt(0);
+            }
+        }
+        return charGrid;
+    }
+
     public static void main(String[] args)
     {
         Grid myGrid = new Grid(5, 5);
         System.out.println(Arrays.deepToString(myGrid.walkable));
     }
+
 }
