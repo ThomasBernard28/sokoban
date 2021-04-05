@@ -54,7 +54,7 @@ public class SpecialPane extends Pane {
         return new ImageView(SPRITE);
     }
     public ImageView getBgCell(int i, int j){
-        if(lG.grid[i][j].hasFlag()){
+        if(lG.getGridAt(j, i).hasFlag()){
             return getCell(ImageType.FLAG);
         }else {
             return getCell(ImageType.EMPTY);
@@ -74,26 +74,26 @@ public class SpecialPane extends Pane {
     public void initiate(){
         for(int i = 0; i < lG.row; i++){
             for(int j = 0; j <lG.col; j++){
-                if(lG.grid[i][j].isBox()){
+                if(lG.getGridAt(j, i).isBox()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.BOX), i, j);
                 }
-                else if(lG.grid[i][j].isFlaggedBox()){
+                else if(lG.getGridAt(j, i).isFlaggedBox()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.FLAGGED_BOX), i, j);
                 }
-                else if(lG.grid[i][j].isWall()){
+                else if(lG.getGridAt(j, i).isWall()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.WALL), i, j);
                 }
-                else if(lG.grid[i][j].isPlayer()){
+                else if(lG.getGridAt(j, i).isPlayer()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                     setAt(getCell(ImageType.PLAYER), i, j);
                 }
-                else if(lG.grid[i][j].isFlag()){
+                else if(lG.getGridAt(j, i).isFlag()){
                     setAt(getCell(ImageType.FLAG), i, j);
                 }
-                else if(lG.grid[i][j].isEmpty()){
+                else if(lG.getGridAt(j, i).isEmpty()){
                     setAt(getCell(ImageType.EMPTY), i, j);
                 }
             }
@@ -137,7 +137,7 @@ public class SpecialPane extends Pane {
         }
     }
     public void lastBoxPrint(Direction dir, int length){
-        if(lG.grid[lG.player[1] + dir.y][lG.player[0] + dir.x].isFlaggedBox()){
+        if(lG.getGridFromPlayer(dir).isFlaggedBox()){
             setAt(
                     getCell(ImageType.EMPTY),
                     new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,

@@ -27,51 +27,50 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
     @Override
     public void handle(KeyEvent event) {
         switch (event.getText())
+
         {
             //TODO place the animation method an find a way to know if there's a box in the direction
             case "z":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.UP) && playerAnimation.isNotRunning())
+                if(grid.getGridFromPlayer().checkMove(grid, Direction.UP) && playerAnimation.isNotRunning())
                 {
 
                     playerAnimation.setDirection(Direction.UP);
-                    playerAnimation.setAnimation(
-                            grid.grid[grid.player[1] + Direction.UP.y][grid.player[0] + Direction.UP.x].hasBox()
-                            );
-                    grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.UP);
+                    playerAnimation.setAnimation(grid.getGridFromPlayer(Direction.UP).hasBox());
+                    grid.getGridFromPlayer().Move(grid, Direction.UP);
                     playerAnimation.play();
 
                 }
                 break;
             case "q":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.LEFT) && playerAnimation.isNotRunning())
+                if(grid.getGridFromPlayer().checkMove(grid, Direction.LEFT) && playerAnimation.isNotRunning())
                 {
                     playerAnimation.setDirection(Direction.LEFT);
                     playerAnimation.setAnimation(
-                            grid.grid[grid.player[1] + Direction.LEFT.y][grid.player[0] + Direction.LEFT.x].hasBox()
+                            grid.getGridFromPlayer(Direction.LEFT).hasBox()
                     );
-                    grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.LEFT);
+                    grid.getGridFromPlayer().Move(grid, Direction.LEFT);
                     playerAnimation.play();
                 }
                 break;
             case "s":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.DOWN) && playerAnimation.isNotRunning())
+                if(grid.getGridFromPlayer().checkMove(grid, Direction.DOWN) && playerAnimation.isNotRunning())
                 {
                     playerAnimation.setDirection(Direction.DOWN);
                     playerAnimation.setAnimation(
-                            grid.grid[grid.player[1] + Direction.DOWN.y][grid.player[0] + Direction.DOWN.x].hasBox()
+                            grid.getGridFromPlayer(Direction.DOWN).hasBox()
                     );
-                    grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.DOWN);
+                    grid.getGridFromPlayer().Move(grid, Direction.DOWN);
                     playerAnimation.play();
                 }
                 break;
             case "d":
-                if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.RIGHT) && playerAnimation.isNotRunning())
+                if(grid.getGridFromPlayer().checkMove(grid, Direction.RIGHT) && playerAnimation.isNotRunning())
                 {
                     playerAnimation.setDirection(Direction.RIGHT);
                     playerAnimation.setAnimation(
-                            grid.grid[grid.player[1] + Direction.RIGHT.y][grid.player[0] + Direction.RIGHT.x].hasBox()
+                            grid.getGridFromPlayer(Direction.RIGHT).hasBox()
                     );
-                    grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.RIGHT);
+                    grid.getGridFromPlayer().Move(grid, Direction.RIGHT);
                     playerAnimation.play();
                 }
                 break;
