@@ -40,7 +40,7 @@ public class Save {
                 caw.write(line);
             }
 
-            FileWriter fw = new FileWriter("src/main/resources/Saves/"+fileName+".xsb");
+            FileWriter fw = new FileWriter("src/main/resources/saves/"+fileName+".xsb");
             caw.writeTo(fw);
 
             fw.flush();
