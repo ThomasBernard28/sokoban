@@ -58,7 +58,7 @@ public class MyWindow extends Application
         final int sizeX = 16;
         final int sizeY = 9;
         final int SIZE = 32;
-        SpriteIcon iconGiver = new SpriteIcon("sheet_black1x.png", 32);
+        SpriteIcon iconGiver = new SpriteIcon("images/sheet_black1x.png", 50);
 
         // root
         BorderPane root = new BorderPane();
@@ -92,7 +92,7 @@ public class MyWindow extends Application
         //Bottom
         Pane bottomSide = new Pane();
 
-        Button generate = new Button("Generate");
+        Button generate = new Button();
         Button reset = new Button("Reset");
         Button validate = new Button("Validate");
         Button play = new Button("try");
@@ -104,17 +104,19 @@ public class MyWindow extends Application
         sizePicker.setFixedCellSize(29);
 
         ImageView btnImage = new ImageView(new Image("images/Head.png"));
-        play.setGraphic(btnImage);
+        play.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.PLAY));
 
         generate.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white; -fx-wrap-text: true;");
-        reset.setStyle("-fx-padding: 20 40 40 30; -fx-wrap-text: true;-fx-font-weight: 700;-fx-font-size: 43px;");
+        reset.setStyle("-fx-padding: 10 10 10 10; -fx-wrap-text: true;-fx-font-weight: 300;-fx-font-size: 23px;");
         validate.setStyle("-fx-border-width: 3;-fx-min-width: 90px;-fx-cursor: hand;" +
                 "-fx-border-color: transparent #E8E8E8 transparent transparent;");
 
+        generate.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RELOAD));
+
         setAt(generate, 50, 10, bottomSide);
-        setAt(reset, 50, 50, bottomSide);
+        setAt(reset, 50, 70, bottomSide);
         setAt(validate, 450, 10, bottomSide);
-        setAt(play, 450, 50, bottomSide);
+        setAt(play, 450, 70, bottomSide);
 
         setAt(sizePicker, 150, 10, bottomSide);
 
