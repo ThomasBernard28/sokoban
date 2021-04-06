@@ -4,6 +4,7 @@ import be.ac.umons.Sokoban.Entities.Grid;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -58,7 +59,20 @@ public class MyWindow extends Application
         final int sizeX = 16;
         final int sizeY = 9;
         final int SIZE = 32;
-        SpriteIcon iconGiver = new SpriteIcon("sheet_black1x.png", 32);
+
+        final Image imageHead = new Image("images/Head.png");
+
+        final Paint lightOrangePaint = Color.valueOf("#FA8132");
+        final Paint darkOrangePaint = Color.valueOf("#E86A17");
+        final Paint lightBluePaint = Color.valueOf("#1EA7E1");
+        final Paint darkBluePaint = Color.valueOf("#808080");
+
+        BackgroundFill bgFillLightBlue = new BackgroundFill(lightBluePaint, new CornerRadii(1), null);
+        BackgroundFill bgFillDarkOrange = new BackgroundFill(darkOrangePaint, new CornerRadii(1), null);
+        BackgroundFill bgFillDarkBlue = new BackgroundFill(darkBluePaint, new CornerRadii(1), null);
+
+        SpriteIcon iconGiver = new SpriteIcon("images/sheet_black1x.png", 50);
+        SpriteGame cellGiver = new SpriteGame("images/tile_sheet_" + SIZE + ".png", SIZE);
 
         // root
         BorderPane root = new BorderPane();
@@ -69,7 +83,9 @@ public class MyWindow extends Application
         visualPane.initiate();
 
         // Right
-        GridPane rightSide = new GridPane();
+        TilePane rightSide = new TilePane();
+        rightSide.setOrientation(Orientation.VERTICAL);
+        rightSide.setAlignment(Pos.CENTER);
 
         Button boxButton = new Button("Box   ");
         Button flagButton = new Button("Flag  ");
@@ -77,20 +93,15 @@ public class MyWindow extends Application
         Button wallButton = new Button("Wall  ");
         Button eraseButton = new Button("Erase ");
 
-        rightSide.add(playerButton, 1, 1);
-        rightSide.add(boxButton,1,2);
-        rightSide.add(wallButton,1,3);
-        rightSide.add(flagButton, 1, 4);
-        rightSide.add(eraseButton,1, 5);
+
+        rightSide.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
 
         rightSide.setVgap(20);
+        rightSide.setBackground(new Background(bgFillLightBlue));
         rightSide.setMinSize(80, 0);
-        BackgroundFill rightSideFill = new BackgroundFill(Color.CRIMSON, new CornerRadii(1), null);
-        rightSide.setBackground(new Background(rightSideFill));
-        rightSide.setAlignment(Pos.CENTER);
 
         //Bottom
-        Pane bottomSide = new Pane();
+        GridPane bottomSide = new GridPane();
 
         Button generate = new Button("Generate");
         Button reset = new Button("Reset");
@@ -103,32 +114,56 @@ public class MyWindow extends Application
         sizePicker.setMaxHeight(90);
         sizePicker.setFixedCellSize(29);
 
-        ImageView btnImage = new ImageView(new Image("images/Head.png"));
-        play.setGraphic(btnImage);
+        generate.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RELOAD));
+        reset.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RESET));
+        play.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.PLAY));
 
+        /*
         generate.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white; -fx-wrap-text: true;");
         reset.setStyle("-fx-padding: 20 40 40 30; -fx-wrap-text: true;-fx-font-weight: 700;-fx-font-size: 43px;");
         validate.setStyle("-fx-border-width: 3;-fx-min-width: 90px;-fx-cursor: hand;" +
                 "-fx-border-color: transparent #E8E8E8 transparent transparent;");
 
-        setAt(generate, 50, 10, bottomSide);
-        setAt(reset, 50, 50, bottomSide);
-        setAt(validate, 450, 10, bottomSide);
-        setAt(play, 450, 50, bottomSide);
+         */
 
-        setAt(sizePicker, 150, 10, bottomSide);
+        bottomSide.add(generate, 0, 0);
+        bottomSide.add(reset, 0, 1);
+        bottomSide.add(sizePicker, 1,1);
+        bottomSide.add(validate,2,0);
+        bottomSide.add(play,2, 1);
+
+
+        bottomSide.setBackground(new Background(bgFillLightBlue));
+
 
         //Left
         Rectangle leftSide = new Rectangle(0, 0, 20, visualGrid.getGrid().length * SIZE);
-        leftSide.setFill(Color.BLUE);
+        leftSide.setFill(lightBluePaint);
         //Top
-        Text title = new Text("    Level Build Tool");
-        title.setFont(new Font("arial", 20));
+        HBox topSide = new HBox();
 
-        HBox topSide = new HBox(title);
+        Label title = new Label("Level Build Tool");
+        title.setFont(Font.font("Impact", 25));
+        title.setStyle("-fx-padding: 20 20 20 20;");
 
-        BackgroundFill bgFill = new BackgroundFill(Color.CHARTREUSE, new CornerRadii(1), null);
-        topSide.setBackground(new Background(bgFill));
+        Button exitButton = new Button();
+        ImageView exitIcon = iconGiver.getIcon(SpriteIcon.IconType.EXIT);
+
+        exitButton.setScaleX(0.5);
+        exitButton.setScaleY(0.5);
+
+        exitButton.setGraphic(exitIcon);
+        exitButton.setBackground(new Background(bgFillDarkBlue));
+
+        ImageView playerHead = new ImageView(imageHead);
+        playerHead.setScaleY(0.8);
+        playerHead.setScaleX(0.8);
+        playerHead.setStyle("-fx-padding: 30 20 20 20;");
+
+        topSide.getChildren().addAll(exitButton, playerHead, title);
+        topSide.setSpacing(40);
+
+        topSide.setBackground(new Background(bgFillLightBlue));
         // Assembly
         root.setCenter(visualPane);
         root.setTop(topSide);
@@ -145,7 +180,7 @@ public class MyWindow extends Application
 
         // Stage part
         theStage.setTitle("Sokoban");
-        theStage.getIcons().add(new Image("images/Head.png"));
+        theStage.getIcons().add(imageHead);
 
         theStage.setScene(levelGenScene);
         theStage.show();

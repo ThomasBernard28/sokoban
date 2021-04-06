@@ -5,7 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class SpriteAbstract {
-    private final Image SPRITE;
+    protected Image SPRITE;
     private final int cellSize;
 
     public SpriteAbstract(String imagePath, int cellSize){

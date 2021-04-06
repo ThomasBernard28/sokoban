@@ -8,7 +8,8 @@ public class SpriteIcon extends SpriteAbstract{
         STOP,
         EXIT,
         RELOAD,
-        SAVE
+        SAVE,
+        RESET
     }
 
     public SpriteIcon(String imagePath, int cellSize) {
@@ -32,6 +33,9 @@ public class SpriteIcon extends SpriteAbstract{
                 break;
             case SAVE:
                 imgIcon = getCell(9,3);
+                break;
+            case RESET:
+                imgIcon = getCell(8,8);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + icon);

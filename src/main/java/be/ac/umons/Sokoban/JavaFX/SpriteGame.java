@@ -1,5 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX;
 
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class SpriteGame extends SpriteAbstract{
@@ -9,7 +10,8 @@ public class SpriteGame extends SpriteAbstract{
         PLAYER,
         WALL,
         FLAG,
-        EMPTY
+        EMPTY,
+        HEAD
     }
 
     public SpriteGame(String imagePath, int cellSize) {
@@ -37,9 +39,16 @@ public class SpriteGame extends SpriteAbstract{
             case WALL:
                 tileImg = getCell(7, 6);
                 break;
+            case HEAD:
+                tileImg = getCell(5,7);
+                break;
             default:
                 throw new IllegalStateException("Unexpected value");
         }
         return tileImg;
+    }
+
+    public void setSprite(int size){
+        this.SPRITE = new Image("tile_sheet_" + size +".png");
     }
 }
