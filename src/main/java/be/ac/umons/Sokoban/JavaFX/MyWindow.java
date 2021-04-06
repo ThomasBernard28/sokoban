@@ -57,9 +57,9 @@ public class MyWindow extends Application
         // gui part
 
         // GridPane group that will contain the Grid
-        Image sprite = new Image("images/tile_sheet_48.png");
+        Image sprite = new Image("images/tile_sheet_64.png");
 
-        SpecialPane gamePane = new SpecialPane(logicGrid, 48, sprite);
+        SpecialPane gamePane = new SpecialPane(logicGrid, 64, sprite);
         // Scene with the game
         Scene gameScene = new Scene(gamePane);
         theStage.setScene(gameScene);
