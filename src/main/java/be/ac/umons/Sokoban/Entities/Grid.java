@@ -191,8 +191,17 @@ public class Grid {
 
     public static void main(String[] args)
     {
-        Grid myGrid = new Grid(5, 5);
-        System.out.println(Arrays.deepToString(myGrid.walkable));
+        Grid myGrid = new Grid(11, 11);
+        PatternGenerator patternGiver = new PatternGenerator();
+
+        myGrid.patternIntegration(1,1, PatternGenerator.Pattern.CROSS.getPattern());
+        myGrid.solvable(5,5);
+        for (boolean[] line :
+                myGrid.walkable) {
+            System.out.println(Arrays.toString(line));
+        }
+
+
     }
 
 }

@@ -19,15 +19,17 @@ public class SpecialPane extends Pane {
     public final int SIZE;
     public final Image SPRITE;
     public final Grid lG;
+    public final SpriteGame imgGiver;
 
 
     public SpecialPane(Grid grid, int SIZE, Image SPRITE){
         this.SIZE = SIZE;
         this.SPRITE = SPRITE;
         this.lG = grid;
+        this.imgGiver = new SpriteGame("images/tile_sheet_" + SIZE + ".png", SIZE);
     }
 
-    public ImageView getCell(ImageType type){
+    private ImageView getCell(ImageType type){
         // TODO throw an error when no image has been located
         ImageView sprite = new ImageView(SPRITE);
         switch (type){
@@ -55,9 +57,11 @@ public class SpecialPane extends Pane {
     }
     public ImageView getBgCell(int i, int j){
         if(lG.getGridAt(j, i).hasFlag()){
-            return getCell(ImageType.FLAG);
+            // return getCell(ImageType.FLAG);
+            return imgGiver.getTileImg(SpriteGame.TileType.FLAG);
         }else {
-            return getCell(ImageType.EMPTY);
+            // return getCell(ImageType.EMPTY);
+            return imgGiver.getTileImg(SpriteGame.TileType.EMPTY);
         }
     }
 
@@ -75,34 +79,34 @@ public class SpecialPane extends Pane {
         for(int i = 0; i < lG.row; i++){
             for(int j = 0; j <lG.col; j++){
                 if(lG.getGridAt(j, i).isBox()){
-                    setAt(getCell(ImageType.EMPTY), i, j);
-                    setAt(getCell(ImageType.BOX), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.BOX), i, j);
                 }
                 else if(lG.getGridAt(j, i).isFlaggedBox()){
-                    setAt(getCell(ImageType.EMPTY), i, j);
-                    setAt(getCell(ImageType.FLAGGED_BOX), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX), i, j);
                 }
                 else if(lG.getGridAt(j, i).isWall()){
-                    setAt(getCell(ImageType.EMPTY), i, j);
-                    setAt(getCell(ImageType.WALL), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.WALL), i, j);
                 }
                 else if(lG.getGridAt(j, i).isPlayer()){
-                    setAt(getCell(ImageType.EMPTY), i, j);
-                    setAt(getCell(ImageType.PLAYER), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.PLAYER), i, j);
                 }
                 else if(lG.getGridAt(j, i).isFlag()){
-                    setAt(getCell(ImageType.FLAG), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAG), i, j);
                 }
                 else if(lG.getGridAt(j, i).isEmpty()){
-                    setAt(getCell(ImageType.EMPTY), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
                 }
             }
         }
     }
     public void translationPlayer(ImageView imageView, Direction dir, int length){
         // player has already been moved ie current visual coord = playerY - dirY, playerX - dirX
-        setAt(getCell(ImageType.EMPTY), lG.player[1] - dir.y, lG.player[0] - dir.x);
-        setAt(getCell(ImageType.EMPTY), lG.player[1], lG.player[0]);
+        setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), lG.player[1] - dir.y, lG.player[0] - dir.x);
+        setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), lG.player[1], lG.player[0]);
         setAt(
                 imageView,
                 new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
@@ -125,7 +129,7 @@ public class SpecialPane extends Pane {
             );
             // box
             setAt(
-                    getCell(ImageType.BOX),
+                    imgGiver.getTileImg(SpriteGame.TileType.BOX),
                     new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
                                (lG.player[1] + dir.y) * SIZE - length * dir.y}
             );
@@ -139,12 +143,12 @@ public class SpecialPane extends Pane {
     public void lastBoxPrint(Direction dir, int length){
         if(lG.getGridFromPlayer(dir).isFlaggedBox()){
             setAt(
-                    getCell(ImageType.EMPTY),
+                    imgGiver.getTileImg(SpriteGame.TileType.EMPTY),
                     new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
                             (lG.player[1] + dir.y) * SIZE - length * dir.y}
             );
             setAt(
-                    getCell(ImageType.FLAGGED_BOX),
+                    imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX),
                     new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
                             (lG.player[1] + dir.y) * SIZE - length * dir.y}
             );

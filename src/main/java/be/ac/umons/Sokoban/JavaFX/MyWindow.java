@@ -1,19 +1,18 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -59,6 +58,7 @@ public class MyWindow extends Application
         final int sizeX = 16;
         final int sizeY = 9;
         final int SIZE = 32;
+        SpriteIcon iconGiver = new SpriteIcon("sheet_black1x.png", 32);
 
         // root
         BorderPane root = new BorderPane();
@@ -97,13 +97,26 @@ public class MyWindow extends Application
         Button validate = new Button("Validate");
         Button play = new Button("try");
 
+
+        ObservableList<CellSize> diffSize = FXCollections.observableArrayList(CellSize.values());
+        ListView<CellSize> sizePicker = new ListView<CellSize>(diffSize);
+        sizePicker.setMaxHeight(90);
+        sizePicker.setFixedCellSize(29);
+
         ImageView btnImage = new ImageView(new Image("images/Head.png"));
         play.setGraphic(btnImage);
 
+        generate.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white; -fx-wrap-text: true;");
+        reset.setStyle("-fx-padding: 20 40 40 30; -fx-wrap-text: true;-fx-font-weight: 700;-fx-font-size: 43px;");
+        validate.setStyle("-fx-border-width: 3;-fx-min-width: 90px;-fx-cursor: hand;" +
+                "-fx-border-color: transparent #E8E8E8 transparent transparent;");
+
         setAt(generate, 50, 10, bottomSide);
         setAt(reset, 50, 50, bottomSide);
-        setAt(validate, 400, 10, bottomSide);
-        setAt(play, 400, 50, bottomSide);
+        setAt(validate, 450, 10, bottomSide);
+        setAt(play, 450, 50, bottomSide);
+
+        setAt(sizePicker, 150, 10, bottomSide);
 
         //Left
         Rectangle leftSide = new Rectangle(0, 0, 20, visualGrid.getGrid().length * SIZE);
@@ -123,7 +136,7 @@ public class MyWindow extends Application
         root.setRight(rightSide);
         root.setBottom(bottomSide);
 
-        Scene LevelGenScene = new Scene(root);
+        Scene levelGenScene = new Scene(root);
 
         /*
         // Game scene
@@ -134,7 +147,7 @@ public class MyWindow extends Application
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(new Image("images/Head.png"));
 
-        theStage.setScene(LevelGenScene);
+        theStage.setScene(levelGenScene);
         theStage.show();
     }
 
@@ -162,4 +175,9 @@ public class MyWindow extends Application
         thePane.getChildren().add(child);
         child.relocate(setX, setY);
     }
+}
+enum CellSize{
+    SMALL,
+    MEDIUM,
+    LARGE
 }

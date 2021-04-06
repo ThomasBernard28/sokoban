@@ -60,10 +60,7 @@ class SpriteAnimation extends Transition {
             }
 
         }
-
-
     }
-
 
     public void setDirection(Direction direction){
         this.dir = direction;

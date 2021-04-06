@@ -11,7 +11,7 @@ enum PatternType {
 
 public class PatternGenerator {
     private final Pattern[] patterns;
-    private double[] weights;
+    private final double[] weights;
 
     public PatternGenerator(){
         patterns = new Pattern[] {
@@ -51,7 +51,7 @@ public class PatternGenerator {
         return new char[][] {{'x'}, {'D'}};
     }
 
-    enum Pattern{
+    public enum Pattern{
         EMPTY (new char[][]{
                 {'e','e','e'},
                 {'e','e','e'},
