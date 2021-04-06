@@ -5,14 +5,14 @@ public class Box  implements movableInterface{
     @Override
     public boolean checkMove(Grid grid, int x, int y, Direction direction)
     {
-        return !grid.grid[direction.y + y][x + direction.x].isWall() &&
-                !grid.grid[direction.y + y][x + direction.x].hasBox();
+        return ! grid.getGridAt(x + direction.x, y + direction.y).isWall() &&
+                !grid.getGridAt(x + direction.x, y + direction.y).hasBox();
     }
 
     @Override
     public void Move(Grid grid, int x, int y, Direction direction)
     {
-        grid.grid[y + direction.y][x + direction.x].setMovableObject(Load.BOX);
+        grid.getGridAt(x + direction.x, y + direction.y).setMovableObject(Load.BOX);
     }
 
     @Override

@@ -38,27 +38,27 @@ public class ConsoleGrid
             switch (move)
             {
                 case "z":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.UP))
+                    if(grid.getGridFromPlayer().checkMove(grid, Direction.UP))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.UP);
+                        grid.getGridFromPlayer().Move(grid, Direction.UP);
                     }
                     break;
                 case "q":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.LEFT))
+                    if(grid.getGridFromPlayer().checkMove(grid, Direction.LEFT))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.LEFT);
+                        grid.getGridFromPlayer().Move(grid, Direction.LEFT);
                     }
                     break;
                 case "s":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.DOWN))
+                    if(grid.getGridFromPlayer().checkMove(grid, Direction.DOWN))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.DOWN);
+                        grid.getGridFromPlayer().Move(grid, Direction.DOWN);
                     }
                     break;
                 case "d":
-                    if(grid.grid[grid.player[1]][grid.player[0]].checkMove(grid, Direction.RIGHT))
+                    if(grid.getGridFromPlayer().checkMove(grid, Direction.RIGHT))
                     {
-                        grid.grid[grid.player[1]][grid.player[0]].Move(grid, Direction.RIGHT);
+                        grid.getGridFromPlayer().Move(grid, Direction.RIGHT);
                     }
                     break;
                 case " ":
@@ -82,7 +82,7 @@ public class ConsoleGrid
         {
             for (int j = 0; j < grid.col; j++)
             {
-                System.out.print(grid.grid[i][j]);
+                System.out.print(grid.getGridAt(j, i));
                 System.out.print(" ");
             }
             System.out.println();

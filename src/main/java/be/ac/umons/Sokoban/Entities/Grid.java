@@ -10,7 +10,7 @@ a classical grid and translate them into a representable grid
  */
 public class Grid {
     // A grid is a 2D Array of tiles
-    public final Tile [][] grid;
+    private final Tile [][] grid;
     private final boolean[][] walkable;
 
     public final int col;
@@ -37,6 +37,27 @@ public class Grid {
 
         walkable = new boolean[row][col];
     }
+
+    public Tile[][] getGrid(){
+        return grid;
+    }
+
+    public Tile getGridAt(int x, int y){
+        return grid[y][x];
+    }
+
+    public Tile getGridFromPlayer(int dX, int dY){
+        return grid[player[1] + dY][player[0] + dX];
+    }
+
+    public Tile getGridFromPlayer(){
+        return grid[player[1]][player[0]];
+    }
+
+    public Tile getGridFromPlayer(Direction direction){
+        return grid[player[1] + direction.y][player[0] + direction.x];
+    }
+
     // Set the border walls with loops and calling methods from Tile class to set mobility
     public void set_default_walls()
     {

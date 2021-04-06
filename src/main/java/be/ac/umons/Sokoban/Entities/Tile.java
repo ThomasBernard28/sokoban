@@ -10,8 +10,8 @@ public class Tile
     private immovableInterface immovableObject = new EmptyImmovable();
     private movableInterface movableObject = new EmptyMovable();
 
-    private int x;
-    private int y;
+    private final int x;
+    private final int y;
 
     // Defines the mobility of the objects
     public Tile(int x, int y, Load content)
@@ -75,15 +75,6 @@ public class Tile
 
 
     // accessor methods
-    public int getX()
-    {
-        return x;
-    }
-
-    public int getY()
-    {
-        return y;
-    }
 
     public boolean isWall()
     {
@@ -129,15 +120,6 @@ public class Tile
     }
 
     // mutator methods
-    public void setX(int x)
-    {
-        this.x = x;
-    }
-
-    public void setY(int y)
-    {
-        this.y = y;
-    }
 
     public void setMovableObject(Load movable)
     {
@@ -184,6 +166,6 @@ public class Tile
     public void Move(Grid grid, Direction direction)
     {
         this.movableObject.Move(grid, x, y, direction);
-        grid.grid[y][x].clearMovable();
+        grid.getGridAt(x, y).clearMovable();
     }
 }
