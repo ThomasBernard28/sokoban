@@ -16,45 +16,16 @@ enum ImageType{
 }
 
 public class SpecialPane extends Pane {
-    public final int SIZE;
-    public final Image SPRITE;
+    public final int SIZE = 64;
     public final Grid lG;
     public final SpriteGame imgGiver;
 
 
-    public SpecialPane(Grid grid, int SIZE, Image SPRITE){
-        this.SIZE = SIZE;
-        this.SPRITE = SPRITE;
+    public SpecialPane(Grid grid){
         this.lG = grid;
-        this.imgGiver = new SpriteGame("images/tile_sheet_" + SIZE + ".png", SIZE);
+        this.imgGiver = new SpriteGame();
     }
 
-    private ImageView getCell(ImageType type){
-        // TODO throw an error when no image has been located
-        ImageView sprite = new ImageView(SPRITE);
-        switch (type){
-            case BOX:
-                sprite.setViewport(new Rectangle2D(SIZE * 6,0, SIZE, SIZE ));
-                return sprite;
-            case FLAGGED_BOX:
-                sprite.setViewport(new Rectangle2D(SIZE * 6,SIZE * 4, SIZE, SIZE ));
-                return sprite;
-            case PLAYER:
-                sprite.setViewport(new Rectangle2D(0, SIZE * 5, SIZE, SIZE));
-                return sprite;
-            case FLAG:
-                sprite.setViewport(new Rectangle2D(SIZE * 11,SIZE * 7, SIZE, SIZE ));
-                return sprite;
-            case WALL:
-                sprite.setViewport(new Rectangle2D(SIZE * 6,SIZE * 7, SIZE, SIZE ));
-                return sprite;
-            case EMPTY:
-                sprite.setViewport(new Rectangle2D(SIZE * 11,SIZE * 6, SIZE, SIZE ));
-                return sprite;
-
-        }
-        return new ImageView(SPRITE);
-    }
     public ImageView getBgCell(int i, int j){
         if(lG.getGridAt(j, i).hasFlag()){
             // return getCell(ImageType.FLAG);
@@ -103,15 +74,7 @@ public class SpecialPane extends Pane {
             }
         }
     }
-    public void translationPlayer(ImageView imageView, Direction dir, int length){
-        // player has already been moved ie current visual coord = playerY - dirY, playerX - dirX
-        setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), lG.player[1] - dir.y, lG.player[0] - dir.x);
-        setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), lG.player[1], lG.player[0]);
-        setAt(
-                imageView,
-                new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
-              );
-    }
+
     public void translationFull(ImageView imageView, Direction dir, int length, boolean withBox){
         setAt(
                 getBgCell(lG.player[1] - dir.y, lG.player[0] - dir.x),

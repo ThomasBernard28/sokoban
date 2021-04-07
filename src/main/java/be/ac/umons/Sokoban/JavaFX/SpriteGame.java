@@ -14,8 +14,8 @@ public class SpriteGame extends SpriteAbstract{
         HEAD
     }
 
-    public SpriteGame(String imagePath, int cellSize) {
-        super(imagePath, cellSize);
+    public SpriteGame() {
+        super("images/tile_sheet_64.png", 64);
     }
 
     public ImageView getTileImg(TileType tile){
@@ -47,8 +47,10 @@ public class SpriteGame extends SpriteAbstract{
         }
         return tileImg;
     }
-
-    public void setSprite(int size){
-        this.SPRITE = new Image("tile_sheet_" + size +".png");
+    public ImageView getTileImg(TileType tile, double resizeFactor){
+        ImageView tileImg =  getTileImg(tile);
+        tileImg.setScaleX(resizeFactor);
+        tileImg.setScaleY(resizeFactor);
+        return tileImg;
     }
 }

@@ -43,7 +43,7 @@ class SpriteAnimation extends Transition {
             final int x = (index % columns) * width  + offsetX * width;
             final int y = offsetY * width;
 
-            ImageView cell = new ImageView(gP.SPRITE);
+            ImageView cell = new ImageView(gP.imgGiver.getSPRITE());
             cell.setViewport(new Rectangle2D(x, y, width, height));
 
             final int length = width - (width/ count) * (index + 1);

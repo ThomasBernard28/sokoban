@@ -42,5 +42,11 @@ public class SpriteIcon extends SpriteAbstract{
         }
         return imgIcon;
     }
+    public ImageView getIcon(IconType icon, double resizeFactor){
+        ImageView iconImg = getIcon(icon);
+        iconImg.setScaleX(resizeFactor);
+        iconImg.setScaleY(resizeFactor);
+        return iconImg;
+    }
 
 }
