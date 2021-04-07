@@ -11,7 +11,8 @@ public class SpriteGame extends SpriteAbstract{
         WALL,
         FLAG,
         EMPTY,
-        HEAD
+        HEAD,
+        BOX_ICON
     }
 
     public SpriteGame() {
@@ -41,6 +42,9 @@ public class SpriteGame extends SpriteAbstract{
                 break;
             case HEAD:
                 tileImg = getCell(5,7);
+                break;
+            case BOX_ICON:
+                tileImg = getCell(3, 1);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value");

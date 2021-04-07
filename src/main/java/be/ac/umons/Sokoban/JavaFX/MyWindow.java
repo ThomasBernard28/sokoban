@@ -51,15 +51,23 @@ public class MyWindow extends Application
     public void start(Stage theStage){
         final Image imageHead = new Image("images/Head.png");
 
-        Scene levelGenScene = LevelGenScene.genesis();
+        BorderPane root = LevelGenScene.genesis();
+
+        Scene levelGenScene = new Scene(root);
 
         Scene gameScene = makeGameScene(4, 4, 64);
+
+        LevelGenScene paneGiver = new LevelGenScene(theStage);
+        Scene test = new Scene(paneGiver.root);
 
 
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
-        theStage.setScene(levelGenScene);
+        SceneSwitcher.setStage(theStage);
+        SceneSwitcher.setScenes(gameScene, levelGenScene);
+
+        theStage.setScene(test);
         theStage.show();
     }
 
