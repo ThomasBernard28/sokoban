@@ -3,10 +3,7 @@ package be.ac.umons.Sokoban.Load;
 import be.ac.umons.Sokoban.Entities.Tile;
 import be.ac.umons.Sokoban.Save.Save;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 
 public class Load {
@@ -81,7 +78,7 @@ public class Load {
                 if (tempArray[i] == '_'){
                     //the number of column is fixed
                     nbrCol = i;
-                    nbrRow = (tempArray.length / nbrCol)-1;
+                    nbrRow = (tempArray.length / nbrCol);
                     break;
                 }
                 else{
@@ -108,6 +105,24 @@ public class Load {
                     }
                 }
             }
+
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+    public static void savingCharArray(char[][] test2, String fileName2){
+        try{
+            CharArrayWriter caw = new CharArrayWriter();
+            for (char[] line: charArray) {
+                caw.write(line);
+            }
+            FileWriter fw = new FileWriter("src/main/resources/saves/" + fileName2 + ".xsb");
+            caw.writeTo(fw);
+
+            fw.flush();
+            caw.flush();
+            caw.close();
+
         }catch(IOException e){
             e.printStackTrace();
         }
@@ -116,5 +131,6 @@ public class Load {
 
     public static void main(String[] args) {
         loadSavedFile("test");
+        savingCharArray(charArray, "test2");
     }
 }
