@@ -185,7 +185,7 @@ public class Grid {
             for (int j = 0; j < col; j++) {
                 if (j == col - 1) {
                     charGrid[i][j+1] = '_';
-                    charGrid[i][j+2] ='\n';
+                    charGrid[i][j+2] = '\n';
                 }
                 charGrid[i][j] = grid[i][j].toString().charAt(0);
             }
