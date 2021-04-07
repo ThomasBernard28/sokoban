@@ -180,7 +180,7 @@ public class Grid {
         }
     }
     public char[][] toCharArray(){
-        char [][] charGrid = new char[row][col+1];
+        char [][] charGrid = new char[row][col+2];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (j == col - 1) {
