@@ -182,7 +182,7 @@ public class MyWindow extends Application
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
-        theStage.setScene(levelGenScene);
+        theStage.setScene(gameScene);
         theStage.show();
     }
 
