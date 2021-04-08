@@ -3,8 +3,8 @@ package be.ac.umons.Sokoban.Entities;
 public class Flag implements immovableInterface
 {
     @Override
-    public Load getNature()
+    public TileType getNature()
     {
-        return Load.FLAG;
+        return TileType.FLAG;
     }
 }

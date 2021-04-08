@@ -1,24 +1,16 @@
 package be.ac.umons.Sokoban.JavaFX;
 
+import be.ac.umons.Sokoban.Entities.TileType;
 import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 
 public class SpriteGame extends SpriteAbstract{
-    public enum TileType {
-        BOX,
-        FLAGGED_BOX,
-        PLAYER,
-        WALL,
-        FLAG,
-        EMPTY,
-        HEAD,
-        BOX_ICON,
-    }
 
-    public SpriteGame() {
-        super("images/tile_sheet_64.png", 64);
+    public SpriteGame(int cellSize) {
+        super("images/tile_sheet_" + cellSize + ".png", cellSize);
+        this.cellSize = cellSize;
     }
 
     public ImageView getTileImg(TileType tile){

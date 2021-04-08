@@ -32,7 +32,7 @@ public abstract class BorderPaneScene {
             new BackgroundFill(greenPaint, new CornerRadii(1), null);
 
     protected final static SpriteIcon iconGiver = new SpriteIcon("images/sheet_black1x.png", 50);
-    protected final static SpriteGame cellGiver = new SpriteGame();
+    protected final static SpriteGame cellGiver = new SpriteGame(SIZE);
 
      public enum CellSize{
         SMALL,

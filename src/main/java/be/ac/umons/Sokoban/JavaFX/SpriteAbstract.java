@@ -21,6 +21,7 @@ public class SpriteAbstract {
     }
 
     protected ImageView getCell(int row, int col){
+        System.out.println("size " + cellSize);
         ImageView sprite = new ImageView(SPRITE);
         sprite.setViewport(new Rectangle2D(cellSize * col, cellSize * row, cellSize, cellSize));
         return sprite;

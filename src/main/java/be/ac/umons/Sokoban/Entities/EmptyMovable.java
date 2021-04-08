@@ -12,7 +12,7 @@ public class EmptyMovable implements movableInterface{
     }
 
     @Override
-    public Load getNature() {
-        return Load.EMPTY;
+    public TileType getNature() {
+        return TileType.EMPTY;
     }
 }

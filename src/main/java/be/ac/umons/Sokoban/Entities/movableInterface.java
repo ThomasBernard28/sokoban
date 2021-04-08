@@ -11,6 +11,6 @@ public interface movableInterface
     void Move(Grid grid, int x, int y, Direction direction);
 
 
-    Load getNature();
+    TileType getNature();
 
 }

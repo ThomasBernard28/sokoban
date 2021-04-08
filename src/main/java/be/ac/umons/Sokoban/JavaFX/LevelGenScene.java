@@ -1,6 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.Entities.TileType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -11,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -31,7 +33,7 @@ public class LevelGenScene extends BorderPaneScene {
 
     // Non static part
     private SpecialPane visualGrid = null;
-    private SpriteGame.TileType currModifier = SpriteGame.TileType.EMPTY;
+    private TileType currModifier = TileType.EMPTY;
 
     public LevelGenScene(){
         leftGenesis();
@@ -41,7 +43,7 @@ public class LevelGenScene extends BorderPaneScene {
         centerGenesis();
     }
 
-    public SpriteGame.TileType getCurrModifier(){
+    public TileType getCurrModifier(){
         return currModifier;
     }
 
@@ -54,6 +56,7 @@ public class LevelGenScene extends BorderPaneScene {
         visualPane.initiate();
         this.visualGrid = visualPane;
         this.root.setCenter(visualPane);
+        visualPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent(this));
     }
 
     private void rightGenesis(){
@@ -67,10 +70,10 @@ public class LevelGenScene extends BorderPaneScene {
         Button wallButton = new Button("Wall");
         Button eraseButton = new Button("Erase");
 
-        boxButton.setGraphic(cellGiver.getTileImg(SpriteGame.TileType.BOX));
-        flagButton.setGraphic(cellGiver.getTileImg(SpriteGame.TileType.FLAG));
-        playerButton.setGraphic(cellGiver.getTileImg(SpriteGame.TileType.PLAYER));
-        wallButton.setGraphic(cellGiver.getTileImg(SpriteGame.TileType.WALL));
+        boxButton.setGraphic(cellGiver.getTileImg(TileType.BOX));
+        flagButton.setGraphic(cellGiver.getTileImg(TileType.FLAG));
+        playerButton.setGraphic(cellGiver.getTileImg(TileType.PLAYER));
+        wallButton.setGraphic(cellGiver.getTileImg(TileType.WALL));
         eraseButton.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RESET));
 
         final String buttonCSS = "-fx-background-color: transparent;fx-border-style: solid;" +
@@ -83,15 +86,15 @@ public class LevelGenScene extends BorderPaneScene {
         eraseButton.setStyle(buttonCSS);
 
         // logic part
-        boxButton.setOnAction(event -> { currModifier = SpriteGame.TileType.BOX;
+        boxButton.setOnAction(event -> { currModifier = TileType.BOX;
         });
-        flagButton.setOnAction(event -> { currModifier = SpriteGame.TileType.FLAG;
+        flagButton.setOnAction(event -> { currModifier = TileType.FLAG;
         });
-        wallButton.setOnAction(event -> { currModifier = SpriteGame.TileType.WALL;
+        wallButton.setOnAction(event -> { currModifier = TileType.WALL;
         });
-        playerButton.setOnAction(event -> { currModifier = SpriteGame.TileType.PLAYER;
+        playerButton.setOnAction(event -> { currModifier = TileType.PLAYER;
         });
-        eraseButton.setOnAction(event -> { currModifier = SpriteGame.TileType.EMPTY;
+        eraseButton.setOnAction(event -> { currModifier = TileType.EMPTY;
         });
 
         // end of logic part
@@ -197,10 +200,10 @@ public class LevelGenScene extends BorderPaneScene {
         exitButton.setOnAction(event -> SceneSwitcher.switchScene(SceneSwitcher.gameScene));
         // making things pretty again
 
-        ImageView playerHead = cellGiver.getTileImg(SpriteGame.TileType.HEAD, 0.8);
+        ImageView playerHead = cellGiver.getTileImg(TileType.HEAD, 0.8);
         playerHead.setStyle("-fx-padding: 30 20 20 20;");
 
-        topSide.getChildren().addAll(exitButton, cellGiver.getTileImg(SpriteGame.TileType.HEAD), title);
+        topSide.getChildren().addAll(exitButton, cellGiver.getTileImg(TileType.HEAD), title);
         topSide.setSpacing(50);
 
         topSide.setBackground(new Background(bgFillLightBlue));

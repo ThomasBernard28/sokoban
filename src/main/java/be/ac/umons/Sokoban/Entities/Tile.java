@@ -14,7 +14,7 @@ public class Tile
     private final int y;
 
     // Defines the mobility of the objects
-    public Tile(int x, int y, Load content)
+    public Tile(int x, int y, TileType content)
     {
         switch (content)
         {
@@ -29,6 +29,9 @@ public class Tile
                 break;
             case PLAYER:
                 this.movableObject = new Player();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value");
         }
         this.x = x;
         this.y = y;
@@ -80,58 +83,74 @@ public class Tile
 
     public boolean isWall()
     {
-        return immovableObject.getNature() == Load.WALL;
+        return immovableObject.getNature() == TileType.WALL;
     }
 
     public boolean isFlag()
     {
-        return immovableObject.getNature() == Load.FLAG && movableObject.getNature() == Load.EMPTY;
+        return immovableObject.getNature() == TileType.FLAG && movableObject.getNature() == TileType.EMPTY;
     }
 
     public boolean hasFlag(){
-        return immovableObject.getNature() == Load.FLAG;
+        return immovableObject.getNature() == TileType.FLAG;
     }
 
     public boolean isBox()
     {
-        return movableObject.getNature() == Load.BOX && immovableObject.getNature() != Load.FLAG;
+        return movableObject.getNature() == TileType.BOX && immovableObject.getNature() != TileType.FLAG;
     }
 
     public boolean isFlaggedBox()
     {
-        return movableObject.getNature() == Load.BOX && immovableObject.getNature() == Load.FLAG;
+        return movableObject.getNature() == TileType.BOX && immovableObject.getNature() == TileType.FLAG;
     }
 
     public boolean hasBox(){
-        return movableObject.getNature() == Load.BOX;
+        return movableObject.getNature() == TileType.BOX;
     }
 
     public boolean isPlayer()
     {
-        return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() != Load.FLAG;
+        return movableObject.getNature() == TileType.PLAYER && immovableObject.getNature() != TileType.FLAG;
     }
 
     public boolean isFlaggedPlayer()
     {
-        return movableObject.getNature() == Load.PLAYER && immovableObject.getNature() == Load.FLAG;
+        return movableObject.getNature() == TileType.PLAYER && immovableObject.getNature() == TileType.FLAG;
     }
 
     public boolean isEmpty()
     {
-        return movableObject.getNature() == Load.EMPTY && immovableObject.getNature() == Load.EMPTY;
+        return movableObject.getNature() == TileType.EMPTY && immovableObject.getNature() == TileType.EMPTY;
     }
 
-    public movableInterface getMovableObject() {
-        return movableObject;
-    }
-
-    public immovableInterface getImmovableObject() {
-        return immovableObject;
+    public TileType getVisualType(){
+        if(this.isPlayer()){
+            return TileType.PLAYER;
+        }
+        else if(this.isBox()){
+            return TileType.BOX;
+        }
+        else if(this.isFlaggedBox()){
+            return TileType.FLAGGED_BOX;
+        }
+        else if(this.isWall()){
+            return TileType.WALL;
+        }
+        else if(this.isFlag()){
+            return TileType.FLAG;
+        }
+        else if(this.isEmpty()){
+            return TileType.EMPTY;
+        }
+        else {
+            throw new IllegalStateException("Unexpected value");
+        }
     }
 
     // mutator methods
 
-    public void setMovableObject(Load movable)
+    public void setMovableObject(TileType movable)
     {
         switch(movable)
         {
@@ -143,10 +162,13 @@ public class Tile
                 break;
             case EMPTY:
                 this.movableObject = new EmptyMovable();
+                break;
+            default:
+                throw new IllegalStateException("Unexpected value");
         }
     }
 
-    public void setImmovableObject(Load immovable)
+    public void setImmovableObject(TileType immovable)
     {
         switch (immovable)
         {
@@ -159,6 +181,8 @@ public class Tile
             case EMPTY:
                 this.immovableObject = new EmptyImmovable();
                 break;
+            default:
+                throw new IllegalStateException("Unexpected value");
         }
     }
 

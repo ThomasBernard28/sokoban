@@ -43,6 +43,7 @@ public class Grid {
     }
 
     public Tile getGridAt(int x, int y){
+        System.out.println("looking at " + x + "," + y);
         return grid[y][x];
     }
 
@@ -63,20 +64,20 @@ public class Grid {
     {
         for (int i = 0; i < col; i++)
         {
-            grid[0][i].setImmovableObject(Load.WALL);
-            grid[row -1][i].setImmovableObject(Load.WALL);
+            grid[0][i].setImmovableObject(TileType.WALL);
+            grid[row -1][i].setImmovableObject(TileType.WALL);
         }
         for (int j = 0; j< row; j++)
         {
-            grid[j][0].setImmovableObject(Load.WALL);
-            grid[j][col -1].setImmovableObject(Load.WALL);
+            grid[j][0].setImmovableObject(TileType.WALL);
+            grid[j][col -1].setImmovableObject(TileType.WALL);
         }
     }
     public void resetGrid(){
         for (Tile[] line : grid){
             for (Tile tile : line){
-                tile.setImmovableObject(Load.EMPTY);
-                tile.setMovableObject(Load.EMPTY);
+                tile.setImmovableObject(TileType.EMPTY);
+                tile.setMovableObject(TileType.EMPTY);
             }
         }
         for (Tile[] line : grid){
@@ -86,17 +87,17 @@ public class Grid {
     // This method set the player at position (x,y)
     public void set_player(int x, int y)
     {
-        grid[y][x].setMovableObject(Load.PLAYER);
+        grid[y][x].setMovableObject(TileType.PLAYER);
         player[0] = x;
         player[1] = y;
     }
     public void set_boxes(int x, int y)
     {
-        grid[y][x].setMovableObject(Load.BOX);
+        grid[y][x].setMovableObject(TileType.BOX);
     }
     public void set_flag(int x, int y)
     {
-        grid[y][x].setImmovableObject(Load.FLAG);
+        grid[y][x].setImmovableObject(TileType.FLAG);
     }
 
     /*
@@ -156,9 +157,9 @@ public class Grid {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == 'e') {
-                    grid[setY + i][setX + j].setImmovableObject(Load.EMPTY);
+                    grid[setY + i][setX + j].setImmovableObject(TileType.EMPTY);
                 }else{
-                    grid[setY + i][setX + j].setImmovableObject(Load.WALL);
+                    grid[setY + i][setX + j].setImmovableObject(TileType.WALL);
                 }
             }
         }

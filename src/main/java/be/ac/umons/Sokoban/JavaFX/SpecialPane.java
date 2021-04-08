@@ -2,6 +2,7 @@ package be.ac.umons.Sokoban.JavaFX;
 import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.Entities.Tile;
+import be.ac.umons.Sokoban.Entities.TileType;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -14,16 +15,16 @@ public class SpecialPane extends Pane {
 
     public SpecialPane(Grid grid){
         this.lG = grid;
-        this.imgGiver = new SpriteGame();
+        this.imgGiver = new SpriteGame(64);
     }
 
     public ImageView getBgCell(int i, int j){
         if(lG.getGridAt(j, i).hasFlag()){
             // return getCell(ImageType.FLAG);
-            return imgGiver.getTileImg(SpriteGame.TileType.FLAG);
+            return imgGiver.getTileImg(TileType.FLAG);
         }else {
             // return getCell(ImageType.EMPTY);
-            return imgGiver.getTileImg(SpriteGame.TileType.EMPTY);
+            return imgGiver.getTileImg(TileType.EMPTY);
         }
     }
     public Tile getLgGridAt(int row, int col){
@@ -40,30 +41,69 @@ public class SpecialPane extends Pane {
         imageView.relocate(pixel[0], pixel[1]);
     }
 
-    public void initiate(){
-        for(int i = 0; i < lG.row; i++){
-            for(int j = 0; j <lG.col; j++){
-                if(lG.getGridAt(j, i).isBox()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.BOX), i, j);
+    public void setAt(TileType img, int row, int col){
+        setAt(imgGiver.getTileImg(img), row, col);
+    }
+
+    public void initiate() {
+        for (int i = 0; i < lG.row; i++) {
+            for (int j = 0; j < lG.col; j++) {
+
+                setAt(imgGiver.getTileImg(TileType.EMPTY), i, j);
+
+                switch (lG.getGridAt(j, i).getVisualType()) {
+                    case BOX:
+                        setAt(imgGiver.getTileImg(TileType.BOX), i, j);
+                        break;
+                    case FLAGGED_BOX:
+                        setAt(imgGiver.getTileImg(TileType.FLAGGED_BOX), i, j);
+                        break;
+                    case WALL:
+                        setAt(imgGiver.getTileImg(TileType.WALL), i, j);
+                        break;
+                    case PLAYER:
+                        setAt(imgGiver.getTileImg(TileType.PLAYER), i, j);
+                        break;
+                    case FLAG:
+                        setAt(imgGiver.getTileImg(TileType.FLAG), i, j);
+                        break;
+                    case EMPTY:
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value");
+
                 }
-                else if(lG.getGridAt(j, i).isFlaggedBox()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX), i, j);
-                }
-                else if(lG.getGridAt(j, i).isWall()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.WALL), i, j);
-                }
-                else if(lG.getGridAt(j, i).isPlayer()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.PLAYER), i, j);
-                }
-                else if(lG.getGridAt(j, i).isFlag()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAG), i, j);
-                }
-                else if(lG.getGridAt(j, i).isEmpty()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY), i, j);
+            }
+        }
+    }
+
+    public void initiateLvlGen(){
+        for (int i = 0; i < lG.row; i++) {
+            for (int j = 0; j < lG.col; j++) {
+
+                setAt(imgGiver.getTileImg(TileType.EMPTY), i, j);
+
+                switch (lG.getGridAt(j, i).getVisualType()) {
+                    case BOX:
+                        setAt(imgGiver.getTileImg(TileType.BOX_ICON), i, j);
+                        break;
+                    case FLAGGED_BOX:
+                        setAt(imgGiver.getTileImg(TileType.FLAGGED_BOX), i, j);
+                        break;
+                    case WALL:
+                        setAt(imgGiver.getTileImg(TileType.WALL), i, j);
+                        break;
+                    case PLAYER:
+                        setAt(imgGiver.getTileImg(TileType.HEAD), i, j);
+                        break;
+                    case FLAG:
+                        setAt(imgGiver.getTileImg(TileType.FLAG), i, j);
+                        break;
+                    case EMPTY:
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value");
+
                 }
             }
         }
@@ -91,7 +131,7 @@ public class SpecialPane extends Pane {
             );
             // box
             setAt(
-                    imgGiver.getTileImg(SpriteGame.TileType.BOX),
+                    imgGiver.getTileImg(TileType.BOX),
                     new int[] {(lG.player[0] + dir.x) * imgGiver.getCellSize() - length * dir.x,
                                (lG.player[1] + dir.y) * imgGiver.getCellSize() - length * dir.y}
             );
@@ -106,12 +146,12 @@ public class SpecialPane extends Pane {
     public void lastBoxPrint(Direction dir, int length){
         if(lG.getGridFromPlayer(dir).isFlaggedBox()){
             setAt(
-                    imgGiver.getTileImg(SpriteGame.TileType.EMPTY),
+                    imgGiver.getTileImg(TileType.EMPTY),
                     new int[] {(lG.player[0] + dir.x) * imgGiver.getCellSize() - length * dir.x,
                             (lG.player[1] + dir.y) * imgGiver.getCellSize() - length * dir.y}
             );
             setAt(
-                    imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX),
+                    imgGiver.getTileImg(TileType.FLAGGED_BOX),
                     new int[] {(lG.player[0] + dir.x) * imgGiver.getCellSize() - length * dir.x,
                             (lG.player[1] + dir.y) * imgGiver.getCellSize() - length * dir.y}
             );

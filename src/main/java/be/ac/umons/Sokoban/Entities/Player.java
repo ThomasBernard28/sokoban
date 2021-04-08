@@ -20,15 +20,15 @@ public class Player implements  movableInterface
         {
             grid.getGridAt(x + direction.x, y + direction.y).Move(grid, direction);
         }
-        grid.getGridAt(x + direction.x, y + direction.y).setMovableObject(Load.PLAYER);
+        grid.getGridAt(x + direction.x, y + direction.y).setMovableObject(TileType.PLAYER);
         grid.player[0] += direction.x;
         grid.player[1] += direction.y;
     }
 
     @Override
-    public Load getNature()
+    public TileType getNature()
     {
-        return Load.PLAYER;
+        return TileType.PLAYER;
     }
 
 }

@@ -1,10 +1,12 @@
 package be.ac.umons.Sokoban.Entities;
 
-public enum Load {
+public enum TileType {
     BOX,
+    FLAGGED_BOX,
     PLAYER,
     WALL,
     FLAG,
-    EMPTY
+    EMPTY,
+    HEAD,
+    BOX_ICON
 }
-

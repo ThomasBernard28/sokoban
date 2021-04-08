@@ -12,12 +12,12 @@ public class Box  implements movableInterface{
     @Override
     public void Move(Grid grid, int x, int y, Direction direction)
     {
-        grid.getGridAt(x + direction.x, y + direction.y).setMovableObject(Load.BOX);
+        grid.getGridAt(x + direction.x, y + direction.y).setMovableObject(TileType.BOX);
     }
 
     @Override
-    public Load getNature()
+    public TileType getNature()
     {
-        return Load.BOX;
+        return TileType.BOX;
     }
 }
