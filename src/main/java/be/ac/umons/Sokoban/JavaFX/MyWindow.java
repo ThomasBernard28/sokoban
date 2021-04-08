@@ -51,21 +51,19 @@ public class MyWindow extends Application
     public void start(Stage theStage){
         final Image imageHead = new Image("images/Head.png");
 
-        BorderPane root = LevelGenScene.genesis();
+        //Scene gameScene = makeGameScene(4, 4, 64);
+        GameScene gamePaneGiver = new GameScene(3,3);
+        Scene gameScene = gamePaneGiver.rootScene;
 
-        Scene levelGenScene = new Scene(root);
-
-        Scene gameScene = makeGameScene(4, 4, 64);
-
-        LevelGenScene paneGiver = new LevelGenScene(theStage);
-        Scene test = new Scene(paneGiver.root);
+        LevelGenScene paneGiver = new LevelGenScene();
+        Scene test = paneGiver.rootScene;
 
 
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
         SceneSwitcher.setStage(theStage);
-        SceneSwitcher.setScenes(gameScene, levelGenScene);
+        SceneSwitcher.setScenes(gameScene, test);
 
         theStage.setScene(test);
         theStage.show();
@@ -81,6 +79,7 @@ public class MyWindow extends Application
     }
 
     public static Scene makeGameScene(int patRow, int patCol, int size){
+
         Grid logicGrid = logicGridGenesis(patRow * 3 + 2);
         SpecialPane gamePane = new SpecialPane(logicGrid);
         gamePane.initiate();

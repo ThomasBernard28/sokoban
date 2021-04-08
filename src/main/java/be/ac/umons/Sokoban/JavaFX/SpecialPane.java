@@ -74,6 +74,34 @@ public class SpecialPane extends Pane {
             }
         }
     }
+    public void initiate(double resizeFactor){
+        for(int i = 0; i < lG.row; i++){
+            for(int j = 0; j <lG.col; j++){
+                if(lG.getGridAt(j, i).isBox()){
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.BOX, resizeFactor), i, j);
+                }
+                else if(lG.getGridAt(j, i).isFlaggedBox()){
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX, resizeFactor), i, j);
+                }
+                else if(lG.getGridAt(j, i).isWall()){
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.WALL, resizeFactor), i, j);
+                }
+                else if(lG.getGridAt(j, i).isPlayer()){
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.PLAYER, resizeFactor), i, j);
+                }
+                else if(lG.getGridAt(j, i).isFlag()){
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAG, resizeFactor), i, j);
+                }
+                else if(lG.getGridAt(j, i).isEmpty()){
+                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
+                }
+            }
+        }
+    }
 
     public void translationFull(ImageView imageView, Direction dir, int length, boolean withBox){
         setAt(

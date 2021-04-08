@@ -5,8 +5,8 @@ import javafx.stage.Stage;
 
 public class SceneSwitcher {
     private static Stage WINDOW;
-    private static Scene gameScene;
-    private static Scene levelGenScene;
+    public static Scene gameScene;
+    public static Scene levelGenScene;
 
     public static void setScenes(Scene _gameScene, Scene _levelGenScene){
         gameScene = _gameScene;
