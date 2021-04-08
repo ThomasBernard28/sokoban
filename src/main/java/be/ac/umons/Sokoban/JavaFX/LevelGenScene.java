@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -35,6 +36,13 @@ public class LevelGenScene extends BorderPaneScene {
     private SpecialPane visualGrid = null;
     private TileType currModifier = TileType.EMPTY;
     private boolean containPlayer = false;
+
+    private SpecialPane gridToTry = null;
+    private PlayerEvent eventToTry = null;
+    private final EventHandler filter = (EventHandler<MouseEvent>) event -> {
+        System.out.println("Filtering out event " + event.getEventType());
+        event.consume();
+    };
 
     public LevelGenScene(){
         leftGenesis();
@@ -62,7 +70,7 @@ public class LevelGenScene extends BorderPaneScene {
 
     private void centerGenesis(){
         SpecialPane visualPane = new SpecialPane(new Grid(COLUMNS, ROWS));
-        visualPane.initiate();
+        visualPane.initiateLvlGen();
         this.visualGrid = visualPane;
         this.root.setCenter(visualPane);
         visualPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent(this));
@@ -158,6 +166,30 @@ public class LevelGenScene extends BorderPaneScene {
         play.setStyle(buttonCSS);
         stop.setStyle(buttonCSS);
 
+        // logic part
+        play.setOnAction(event -> {
+            gridToTry = copyOfSpecialPane(visualGrid);
+            eventToTry = new PlayerEvent(gridToTry.lG, gridToTry);
+
+            root.setCenter(gridToTry);
+            rootScene.addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+            rootScene.addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+
+            gridToTry.initiate();
+        });
+        stop.setOnAction(event -> {
+            rootScene.removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+            rootScene.removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+            root.setCenter(visualGrid);
+
+            gridToTry = null;
+            eventToTry = null;
+
+            visualGrid.initiateLvlGen();
+        });
+
+        //end of logic part
+
         bottomSide.add(generate,0,0);
         bottomSide.add(reset, 0,1);
         bottomSide.add(sizePicker,1,0);
@@ -220,5 +252,20 @@ public class LevelGenScene extends BorderPaneScene {
 
         topSide.setBackground(new Background(bgFillLightBlue));
         this.root.setTop(topSide);
+    }
+
+    private static Grid copyOfGrid(Grid old){
+        Grid copy = new Grid(old.col, old.row);
+        for (int i = 0; i < old.row; i++) {
+            for (int j = 0; j < old.col; j++) {
+                copy.getGridAt(j, i).setMovableObject(old.getGridAt(j, i).getMovableObject().getNature());
+                copy.getGridAt(j, i).setImmovableObject(old.getGridAt(j, i).getImmovableObject().getNature());
+            }
+        }
+        copy.setPlayerLocation();
+        return copy;
+    }
+    private static SpecialPane copyOfSpecialPane(SpecialPane old){
+        return new SpecialPane(copyOfGrid(old.lG));
     }
 }

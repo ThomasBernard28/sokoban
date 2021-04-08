@@ -43,7 +43,6 @@ public class Grid {
     }
 
     public Tile getGridAt(int x, int y){
-        System.out.println("looking at " + x + "," + y);
         return grid[y][x];
     }
 
@@ -57,6 +56,21 @@ public class Grid {
 
     public Tile getGridFromPlayer(Direction direction){
         return grid[player[1] + direction.y][player[0] + direction.x];
+    }
+
+    public void setPlayerLocation(){
+        for (int i = 0; i < row; i++) {
+            for (int j = 0; j < col; j++) {
+                if(getGridAt(j, i).isPlayer()){
+                    player[0] = j;
+                    player[1] = i;
+                }
+            }
+        }
+    }
+    public void setPlayerLocation(int x, int y){
+        player[0] = x;
+        player[1] = y;
     }
 
     // Set the border walls with loops and calling methods from Tile class to set mobility

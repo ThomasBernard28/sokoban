@@ -1,5 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX;
 
+import be.ac.umons.Sokoban.Entities.Grid;
 import javafx.scene.Scene;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
@@ -47,6 +48,8 @@ public abstract class BorderPaneScene {
     public Scene getScene() {
         return rootScene;
     }
+
+
 
     private void centerGenesis(int row, int col){}
     private void centerGenesis(){}

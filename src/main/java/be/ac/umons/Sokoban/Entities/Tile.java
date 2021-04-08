@@ -148,6 +148,14 @@ public class Tile
         }
     }
 
+    public movableInterface getMovableObject() {
+        return movableObject;
+    }
+
+    public immovableInterface getImmovableObject() {
+        return immovableObject;
+    }
+
     // mutator methods
 
     public void setMovableObject(TileType movable)
