@@ -34,6 +34,7 @@ public class LevelGenScene extends BorderPaneScene {
     // Non static part
     private SpecialPane visualGrid = null;
     private TileType currModifier = TileType.EMPTY;
+    private boolean containPlayer = false;
 
     public LevelGenScene(){
         leftGenesis();
@@ -49,6 +50,14 @@ public class LevelGenScene extends BorderPaneScene {
 
     public SpecialPane getVisualGrid() {
         return visualGrid;
+    }
+
+    public void setContainPlayer(boolean hasPlayer){
+        containPlayer = hasPlayer;
+    }
+
+    public void resetCurrModifier(){
+        currModifier = TileType.EMPTY;
     }
 
     private void centerGenesis(){
@@ -92,7 +101,10 @@ public class LevelGenScene extends BorderPaneScene {
         });
         wallButton.setOnAction(event -> { currModifier = TileType.WALL;
         });
-        playerButton.setOnAction(event -> { currModifier = TileType.PLAYER;
+        playerButton.setOnAction(event -> {
+            if(!containPlayer){
+                currModifier = TileType.PLAYER;
+            }
         });
         eraseButton.setOnAction(event -> { currModifier = TileType.EMPTY;
         });

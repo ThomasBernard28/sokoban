@@ -17,6 +17,9 @@ public class LevelGenEvent implements EventHandler<MouseEvent> {
         int row = (int) event.getY() / lvlScene.getVisualGrid().getSize();
         int col = (int) event.getX() / lvlScene.getVisualGrid().getSize();
         Tile aimedTile = lvlScene.getVisualGrid().getLgGridAt(row, col);
+        if(aimedTile.isPlayer()){
+            lvlScene.setContainPlayer(false);
+        }
         switch (lvlScene.getCurrModifier()){
             case BOX:
                 //logic
@@ -24,34 +27,33 @@ public class LevelGenEvent implements EventHandler<MouseEvent> {
                 aimedTile.setImmovableObject(TileType.EMPTY);
                 // visual
                 lvlScene.getVisualGrid().setAt(TileType.BOX, row, col);
-                System.out.println("Clicked for a box at " + row + "," + col);
                 break;
             case FLAG:
                 aimedTile.setImmovableObject(TileType.FLAG);
                 aimedTile.setMovableObject(TileType.EMPTY);
                 lvlScene.getVisualGrid().setAt(TileType.FLAG, row, col);
-                System.out.println("Clicked for a flag at " + row + "," + col);
                 break;
             case WALL:
                 aimedTile.setMovableObject(TileType.EMPTY);
                 aimedTile.setImmovableObject(TileType.WALL);
-                System.out.println("Clicked for a wall at " + row + "," + col);
                 break;
 
             case PLAYER:
                 aimedTile.setImmovableObject(TileType.EMPTY);
                 aimedTile.setMovableObject(TileType.PLAYER);
-                System.out.println("Clicked for a player at " + row + "," + col);
+                lvlScene.setContainPlayer(true);
                 break;
             case EMPTY:
                 aimedTile.setMovableObject(TileType.EMPTY);
                 aimedTile.setImmovableObject(TileType.EMPTY);
-                System.out.println("Clicked for a empty at " + row + "," + col);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value");
         }
         lvlScene.getVisualGrid().setAt(TileType.EMPTY, row, col);
         lvlScene.getVisualGrid().setAt(lvlScene.getCurrModifier(), row, col);
+        if(aimedTile.isPlayer()){
+            lvlScene.resetCurrModifier();
+        }
     }
 }
