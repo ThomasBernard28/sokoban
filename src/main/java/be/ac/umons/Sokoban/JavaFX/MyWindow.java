@@ -91,8 +91,3 @@ public class MyWindow extends Application
     }
 }
 
-enum CellSize{
-    SMALL,
-    MEDIUM,
-    LARGE
-}

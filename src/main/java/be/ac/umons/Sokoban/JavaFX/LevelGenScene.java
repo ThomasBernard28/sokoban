@@ -30,14 +30,23 @@ public class LevelGenScene extends BorderPaneScene {
 
 
     // Non static part
-    private SpecialPane visualGrid = new SpecialPane(null);
+    private SpecialPane visualGrid = null;
+    private SpriteGame.TileType currModifier = SpriteGame.TileType.EMPTY;
 
-public LevelGenScene(){
+    public LevelGenScene(){
         leftGenesis();
         topGenesis();
         bottomGenesis();
         rightGenesis();
         centerGenesis();
+    }
+
+    public SpriteGame.TileType getCurrModifier(){
+        return currModifier;
+    }
+
+    public SpecialPane getVisualGrid() {
+        return visualGrid;
     }
 
     private void centerGenesis(){
@@ -72,6 +81,20 @@ public LevelGenScene(){
         wallButton.setStyle(buttonCSS);
         playerButton.setStyle(buttonCSS);
         eraseButton.setStyle(buttonCSS);
+
+        // logic part
+        boxButton.setOnAction(event -> { currModifier = SpriteGame.TileType.BOX;
+        });
+        flagButton.setOnAction(event -> { currModifier = SpriteGame.TileType.FLAG;
+        });
+        wallButton.setOnAction(event -> { currModifier = SpriteGame.TileType.WALL;
+        });
+        playerButton.setOnAction(event -> { currModifier = SpriteGame.TileType.PLAYER;
+        });
+        eraseButton.setOnAction(event -> { currModifier = SpriteGame.TileType.EMPTY;
+        });
+
+        // end of logic part
 
         rightSide.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
 

@@ -121,6 +121,14 @@ public class Tile
         return movableObject.getNature() == Load.EMPTY && immovableObject.getNature() == Load.EMPTY;
     }
 
+    public movableInterface getMovableObject() {
+        return movableObject;
+    }
+
+    public immovableInterface getImmovableObject() {
+        return immovableObject;
+    }
+
     // mutator methods
 
     public void setMovableObject(Load movable)

@@ -1,7 +1,9 @@
 package be.ac.umons.Sokoban.JavaFX;
 
+import javafx.event.EventHandler;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 
 public class SpriteGame extends SpriteAbstract{
     public enum TileType {
@@ -12,7 +14,7 @@ public class SpriteGame extends SpriteAbstract{
         FLAG,
         EMPTY,
         HEAD,
-        BOX_ICON
+        BOX_ICON,
     }
 
     public SpriteGame() {
@@ -56,5 +58,10 @@ public class SpriteGame extends SpriteAbstract{
         tileImg.setScaleX(resizeFactor);
         tileImg.setScaleY(resizeFactor);
         return tileImg;
+    }
+
+    public void setSPRITE(int cellSize){
+        this.cellSize = cellSize;
+        this.SPRITE = new Image("images/tile_sheet_" + cellSize + ".png");
     }
 }

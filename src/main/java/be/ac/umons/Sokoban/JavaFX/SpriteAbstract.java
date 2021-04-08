@@ -5,8 +5,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 public class SpriteAbstract {
-    protected final Image SPRITE;
-    private final int cellSize;
+    protected Image SPRITE;
+    protected int cellSize;
 
     public SpriteAbstract(String imagePath, int cellSize){
         this.SPRITE = new Image(imagePath);

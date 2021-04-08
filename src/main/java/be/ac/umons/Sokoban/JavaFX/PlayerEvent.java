@@ -20,7 +20,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
     public PlayerEvent(Grid grid, SpecialPane gamePane){
         this.grid = grid;
         playerAnimation = new SpriteAnimation(Duration.millis(300), 8, 3,
-                                                gamePane.SIZE, gamePane.SIZE, gamePane);
+                                                gamePane.getSize(), gamePane.getSize(), gamePane);
         playerAnimation.setCycleCount(1);
     }
 

@@ -1,22 +1,13 @@
 package be.ac.umons.Sokoban.JavaFX;
 import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.Entities.Tile;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 
-enum ImageType{
-    BOX,
-    FLAGGED_BOX,
-    PLAYER,
-    WALL,
-    FLAG,
-    EMPTY
-}
-
 public class SpecialPane extends Pane {
-    public final int SIZE = 64;
     public final Grid lG;
     public final SpriteGame imgGiver;
 
@@ -35,10 +26,13 @@ public class SpecialPane extends Pane {
             return imgGiver.getTileImg(SpriteGame.TileType.EMPTY);
         }
     }
+    public Tile getLgGridAt(int row, int col){
+        return lG.getGridAt(col, row);
+    }
 
     public void setAt(ImageView imageView, int row, int col){
         this.getChildren().add(imageView);
-        imageView.relocate(col * SIZE, row * SIZE);
+        imageView.relocate(col * imgGiver.getCellSize(), row * imgGiver.getCellSize());
     }
 
     public void setAt(ImageView imageView, int [] pixel){
@@ -74,33 +68,9 @@ public class SpecialPane extends Pane {
             }
         }
     }
-    public void initiate(double resizeFactor){
-        for(int i = 0; i < lG.row; i++){
-            for(int j = 0; j <lG.col; j++){
-                if(lG.getGridAt(j, i).isBox()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.BOX, resizeFactor), i, j);
-                }
-                else if(lG.getGridAt(j, i).isFlaggedBox()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX, resizeFactor), i, j);
-                }
-                else if(lG.getGridAt(j, i).isWall()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.WALL, resizeFactor), i, j);
-                }
-                else if(lG.getGridAt(j, i).isPlayer()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.PLAYER, resizeFactor), i, j);
-                }
-                else if(lG.getGridAt(j, i).isFlag()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.FLAG, resizeFactor), i, j);
-                }
-                else if(lG.getGridAt(j, i).isEmpty()){
-                    setAt(imgGiver.getTileImg(SpriteGame.TileType.EMPTY, resizeFactor), i, j);
-                }
-            }
-        }
+    public void setScale(int cellSize){
+        imgGiver.setSPRITE(cellSize);
+        initiate();
     }
 
     public void translationFull(ImageView imageView, Direction dir, int length, boolean withBox){
@@ -116,18 +86,20 @@ public class SpecialPane extends Pane {
             // player
             setAt(
                     imageView,
-                    new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
+                    new int[] {lG.player[0] * imgGiver.getCellSize() - length * dir.x,
+                            lG.player[1] * imgGiver.getCellSize() - length * dir.y}
             );
             // box
             setAt(
                     imgGiver.getTileImg(SpriteGame.TileType.BOX),
-                    new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
-                               (lG.player[1] + dir.y) * SIZE - length * dir.y}
+                    new int[] {(lG.player[0] + dir.x) * imgGiver.getCellSize() - length * dir.x,
+                               (lG.player[1] + dir.y) * imgGiver.getCellSize() - length * dir.y}
             );
         }else{
             setAt(
                     imageView,
-                    new int[] {lG.player[0] *SIZE - length * dir.x, lG.player[1] * SIZE - length * dir.y}
+                    new int[] {lG.player[0] * imgGiver.getCellSize() - length * dir.x,
+                            lG.player[1] * imgGiver.getCellSize() - length * dir.y}
             );
         }
     }
@@ -135,15 +107,18 @@ public class SpecialPane extends Pane {
         if(lG.getGridFromPlayer(dir).isFlaggedBox()){
             setAt(
                     imgGiver.getTileImg(SpriteGame.TileType.EMPTY),
-                    new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
-                            (lG.player[1] + dir.y) * SIZE - length * dir.y}
+                    new int[] {(lG.player[0] + dir.x) * imgGiver.getCellSize() - length * dir.x,
+                            (lG.player[1] + dir.y) * imgGiver.getCellSize() - length * dir.y}
             );
             setAt(
                     imgGiver.getTileImg(SpriteGame.TileType.FLAGGED_BOX),
-                    new int[] {(lG.player[0] + dir.x) * SIZE - length * dir.x,
-                            (lG.player[1] + dir.y) * SIZE - length * dir.y}
+                    new int[] {(lG.player[0] + dir.x) * imgGiver.getCellSize() - length * dir.x,
+                            (lG.player[1] + dir.y) * imgGiver.getCellSize() - length * dir.y}
             );
         }
+    }
+    public int getSize(){
+        return imgGiver.getCellSize();
     }
 
 }

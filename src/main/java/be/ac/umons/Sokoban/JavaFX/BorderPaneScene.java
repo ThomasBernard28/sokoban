@@ -34,9 +34,19 @@ public abstract class BorderPaneScene {
     protected final static SpriteIcon iconGiver = new SpriteIcon("images/sheet_black1x.png", 50);
     protected final static SpriteGame cellGiver = new SpriteGame();
 
+     public enum CellSize{
+        SMALL,
+        MEDIUM,
+        LARGE
+    }
+
     // Non-static
-    public final BorderPane root = new BorderPane();
-    public final Scene rootScene = new Scene(root);
+    protected final BorderPane root = new BorderPane();
+    protected final Scene rootScene = new Scene(root);
+
+    public Scene getScene() {
+        return rootScene;
+    }
 
     private void centerGenesis(int row, int col){}
     private void centerGenesis(){}
