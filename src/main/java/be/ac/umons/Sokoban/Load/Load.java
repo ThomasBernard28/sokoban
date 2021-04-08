@@ -13,16 +13,20 @@ public class Load {
     static int nbrCol = 0;
     static int nbrRow = 0;
 
-    public static void loadSavedFile(String fileName){
-        try{
+    public static void loadSavedFile(String fileName) {
+        try {
             File file = new File("src/main/resources/saves/" + fileName + ".xsb");
             Scanner scanner = new Scanner(file);
 
             line = scanner.nextLine();
-            while (scanner.hasNextLine()){
+            while (scanner.hasNextLine()) {
                 line = line + "\n" + scanner.nextLine();
             }
+
+
             tempArray = line.toCharArray();
+
+
             //Get the nbr of row and column for the char[][]
             int i = 0;
             while(i < tempArray.length){
@@ -30,7 +34,7 @@ public class Load {
                 if (tempArray[i] == '_'){
                     //the number of column is fixed
                     nbrCol = i;
-                    nbrRow = (tempArray.length / nbrCol)-1;
+                    nbrRow = (tempArray.length / (nbrCol+1));
                     break;
                 }
                 else{
@@ -38,32 +42,42 @@ public class Load {
                 }
 
             }
-            charArray = new char[nbrRow][nbrCol];
+            charArray = new char[nbrRow][nbrCol+1];
             int row=0;
             int col =0;
 
-            while(row < nbrRow){
-                for (int j = 0; j < tempArray.length; j++){
-                    if(tempArray[j] == '_'){
-                        row ++;
+            for(int j = 0; j < tempArray.length; j++){
+                if (row == 0){
+                    if (tempArray[j] == '_'){
+                        charArray[row][col] = ' ';
+                        row++;
                         col = 0;
                     }
                     else{
-                        while(col < nbrCol){
-                            charArray[row][col] = tempArray[j];
-                            col ++;
-                            break;
-                        }
+                        charArray[row][col] = tempArray[j];
+                        col++;
+                    }
+                }
+                else{
+                    if (tempArray[j] == '_'){
+                        row++;
+                        col =0;
+                    }
+                    else{
+                        charArray[row][col] = tempArray[j];
+                        col++;
                     }
                 }
             }
+
+
         }catch(IOException e){
             e.printStackTrace();
         }
     }
     public static void loadLevelFile(String fileName){
         try{
-            File file = new File("src/main/resources/saves/" + fileName + ".xsb");
+            File file = new File("src/main/resources/levels/" + fileName + ".xsb");
             Scanner scanner = new Scanner(file);
 
             line = scanner.nextLine();
@@ -90,18 +104,26 @@ public class Load {
             int row=0;
             int col =0;
 
-            while(row < nbrRow){
-                for (int j = 0; j < tempArray.length; j++){
-                    if(tempArray[j] == '_'){
-                        row ++;
+            for(int j = 0; j < tempArray.length; j++){
+                if (row == 0){
+                    if (tempArray[j] == '_'){
+                        charArray[row][col] = ' ';
+                        row++;
                         col = 0;
                     }
                     else{
-                        while(col < nbrCol){
-                            charArray[row][col] = tempArray[j];
-                            col ++;
-                            break;
-                        }
+                        charArray[row][col] = tempArray[j];
+                        col++;
+                    }
+                }
+                else{
+                    if (tempArray[j] == '_'){
+                        row++;
+                        col =0;
+                    }
+                    else{
+                        charArray[row][col] = tempArray[j];
+                        col++;
                     }
                 }
             }
@@ -114,6 +136,7 @@ public class Load {
         try{
             CharArrayWriter caw = new CharArrayWriter();
             for (char[] line: charArray) {
+                System.out.println(line);
                 caw.write(line);
             }
             FileWriter fw = new FileWriter("src/main/resources/saves/" + fileName2 + ".xsb");
