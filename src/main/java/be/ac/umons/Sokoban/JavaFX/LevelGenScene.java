@@ -22,6 +22,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
 public class LevelGenScene extends BorderPaneScene {
     /*
         CSS code example:
@@ -239,8 +242,9 @@ public class LevelGenScene extends BorderPaneScene {
         });
 
         save.setOnAction(event -> {
-            String output = fileOutput.getCharacters().toString();
-            if (isValidAddress(output)){
+            CharSequence output = fileOutput.getCharacters();
+            // https://regex101.com/
+            if (Pattern.matches("^(\\w|_)+\\.(xsb)$", output)){
                 System.out.println("coooorrectttt");
             }
 
@@ -317,6 +321,19 @@ public class LevelGenScene extends BorderPaneScene {
     }
     //TODO this function
     private static boolean isValidAddress(String output){
-        return false;
+        /*
+        // assure its not empty
+        if(output.isBlank()){
+            return false;
+        }
+        char[] extension= {'.', 'x', 's', 'b'};
+        char[] outputToCharArray = output.toCharArray();
+        // check if the extension match
+        for (int i = 0; i < 4; i++) {
+            if(extension[i] != outputToCharArray[output.length() - 4 + i]){
+                return false;
+            }
+        }*/
+        return output.matches("/^.*\\.(xsb)$");
     }
 }

@@ -10,7 +10,8 @@ public class SpriteUI extends  SpriteAbstract{
     private final String GREEN = "green";
 
     public enum TYPE{
-        YELLOW_BUTTON02
+        YELLOW_BUTTON02,
+        RED_BUTTON01
     }
     public SpriteUI(String imagePath, int cellSize) {
         super(imagePath, cellSize);
@@ -25,6 +26,9 @@ public class SpriteUI extends  SpriteAbstract{
             case YELLOW_BUTTON02:
                 setSPRITE(YELLOW);
                 return getCell(0, 188, 190, 49);
+            case RED_BUTTON01:
+                setSPRITE(RED);
+                return getCell(0, 45, 190, 49);
             default:
                 throw new IllegalStateException("Wrong part of ui");
         }

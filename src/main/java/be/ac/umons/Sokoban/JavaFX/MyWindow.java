@@ -60,12 +60,15 @@ public class MyWindow extends Application
         MenuScene menuGiver = new MenuScene();
         Scene menuScene = menuGiver.getScene();
 
+        LevelSelectionScene lvlSelectionGiver = new LevelSelectionScene();
+        Scene lvlSelectionScene = lvlSelectionGiver.getScene();
+
 
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
         SceneSwitcher.setStage(theStage);
-        SceneSwitcher.setScenes(gameScene, test, menuScene);
+        SceneSwitcher.setScenes(gameScene, test, menuScene, lvlSelectionScene);
 
         theStage.setScene(menuScene);
         theStage.show();

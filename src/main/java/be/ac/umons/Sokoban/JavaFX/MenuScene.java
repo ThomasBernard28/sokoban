@@ -30,31 +30,40 @@ public class MenuScene extends BorderPaneScene{
 
         StackPane playButton = new StackPane();
         StackPane lvlGenButton = new StackPane();
+        StackPane quitButton = new StackPane();
 
         ImageView playButtonImg = UIGiver.getUiPart(SpriteUI.TYPE.YELLOW_BUTTON02);
         ImageView lvlGenButtonImg = UIGiver.getUiPart(SpriteUI.TYPE.YELLOW_BUTTON02);
+        ImageView quitButtonImg = UIGiver.getUiPart(SpriteUI.TYPE.RED_BUTTON01);
 
         playButtonImg.setScaleY(2);
         playButtonImg.setScaleX(2);
         lvlGenButtonImg.setScaleX(2);
         lvlGenButtonImg.setScaleY(2);
+        quitButtonImg.setScaleY(2);
+        quitButtonImg.setScaleX(2);
 
         Label playText = new Label("Play");
         Label lvlText = new Label("Level Creator");
+        Label quitText = new Label("Quit");
 
         playText.setFont(getFont(40));
         lvlText.setFont(getFont(40));
+        quitText.setFont(getFont(40));
 
         playButton.getChildren().addAll(playButtonImg, playText);
         lvlGenButton.getChildren().addAll(lvlGenButtonImg, lvlText);
+        quitButton.getChildren().addAll(quitButtonImg, quitText);
 
         playButton.setStyle("-fx-cursor: hand;");
         lvlGenButton.setStyle("-fx-cursor: hand;");
+        quitButton.setStyle("-fx-cursor: hand");
 
         playButton.setOnMouseClicked(event -> SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.GAME));
         lvlGenButton.setOnMouseClicked(event -> SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.LVL_GEN));
+        quitButton.setOnMouseClicked(event -> SceneSwitcher.quit());
 
-        centerSide.getChildren().addAll(playButton, lvlGenButton);
+        centerSide.getChildren().addAll(playButton, lvlGenButton, quitButton);
         centerSide.setOrientation(Orientation.VERTICAL);
         centerSide.setAlignment(Pos.CENTER);
         centerSide.setVgap(100);
