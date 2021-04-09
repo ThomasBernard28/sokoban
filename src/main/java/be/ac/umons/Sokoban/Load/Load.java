@@ -1,159 +1,88 @@
 package be.ac.umons.Sokoban.Load;
 
+import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.Entities.Tile;
+import be.ac.umons.Sokoban.Entities.TileType;
 import be.ac.umons.Sokoban.Save.Save;
 
 import java.io.*;
 import java.util.Scanner;
 
 public class Load {
-    static char[][] charArray;
-    static char[] tempArray;
-    static String line;
-    static int nbrCol = 0;
-    static int nbrRow = 0;
 
-    public static void loadSavedFile(String fileName) {
+    static String line;
+
+
+    public static Grid loadSavedFile(String fileName) {
         try {
             File file = new File("src/main/resources/saves/" + fileName + ".xsb");
+            int[] dimension = findMaxColAndRow(file);
+            Grid loadGrid = new Grid(dimension[0], dimension[1]);
             Scanner scanner = new Scanner(file);
+            int j;
 
-            line = scanner.nextLine();
-            while (scanner.hasNextLine()) {
-                line = line + "\n" + scanner.nextLine();
-            }
-
-
-            tempArray = line.toCharArray();
-
-
-            //Get the nbr of row and column for the char[][]
-            int i = 0;
-            while(i < tempArray.length){
-                // If the char is the symbol of end of line
-                if (tempArray[i] == '_'){
-                    //the number of column is fixed
-                    nbrCol = i;
-                    nbrRow = (tempArray.length / (nbrCol+1));
-                    break;
-                }
-                else{
-                    i++;
-                }
-
-            }
-            charArray = new char[nbrRow][nbrCol+1];
-            int row=0;
-            int col =0;
-
-            for(int j = 0; j < tempArray.length; j++){
-                if (row == 0){
-                    if (tempArray[j] == '_'){
-                        charArray[row][col] = ' ';
-                        row++;
-                        col = 0;
+            for (int i = 0; i < dimension[1]; i++) {
+                line = scanner.nextLine();
+                j = 0;
+                for (char tile : line.toCharArray()) {
+                    switch (tile) {
+                        case '#':
+                            loadGrid.getGridAt(j, i).setImmovableObject(TileType.WALL);
+                            break;
+                        case ' ':
+                            break;
+                        case '@':
+                            loadGrid.getGridAt(j, i).setMovableObject(TileType.PLAYER);
+                            break;
+                        case '$':
+                            loadGrid.getGridAt(j, i).setMovableObject(TileType.BOX);
+                            break;
+                        case '.':
+                            loadGrid.getGridAt(j, i).setImmovableObject(TileType.FLAG);
+                            break;
+                        case '+':
+                            loadGrid.getGridAt(j, i).setMovableObject(TileType.PLAYER);
+                            loadGrid.getGridAt(j, i).setImmovableObject(TileType.FLAG);
+                            break;
+                        case '*':
+                            loadGrid.getGridAt(j, i).setImmovableObject(TileType.FLAG);
+                            loadGrid.getGridAt(j, i).setMovableObject(TileType.BOX);
+                            break;
+                        default:
+                            throw new IllegalStateException("Bad file format must be .xsb");
                     }
-                    else{
-                        charArray[row][col] = tempArray[j];
-                        col++;
-                    }
-                }
-                else{
-                    if (tempArray[j] == '_'){
-                        row++;
-                        col =0;
-                    }
-                    else{
-                        charArray[row][col] = tempArray[j];
-                        col++;
-                    }
+                    j++;
                 }
             }
-
-
-        }catch(IOException e){
+            return loadGrid;
+        }catch (IOException e){
             e.printStackTrace();
         }
+        return null;
     }
-    public static void loadLevelFile(String fileName){
+
+    public static int[] findMaxColAndRow(File file){
+        int nbrCol = 0;
+        int nbrRow = 1;
+
         try{
-            File file = new File("src/main/resources/levels/" + fileName + ".xsb");
             Scanner scanner = new Scanner(file);
-
-            line = scanner.nextLine();
-            while (scanner.hasNextLine()){
-                line = line + "\n" + scanner.nextLine();
-            }
-            tempArray = line.toCharArray();
-            //Get the nbr of row and column for the char[][]
-            int i = 0;
-            while(i < tempArray.length){
-                // If the char is the symbol of end of line
-                if (tempArray[i] == '_'){
-                    //the number of column is fixed
-                    nbrCol = i;
-                    nbrRow = (tempArray.length / nbrCol);
-                    break;
-                }
-                else{
-                    i++;
-                }
-
-            }
-            charArray = new char[nbrRow][nbrCol];
-            int row=0;
-            int col =0;
-
-            for(int j = 0; j < tempArray.length; j++){
-                if (row == 0){
-                    if (tempArray[j] == '_'){
-                        charArray[row][col] = ' ';
-                        row++;
-                        col = 0;
-                    }
-                    else{
-                        charArray[row][col] = tempArray[j];
-                        col++;
-                    }
-                }
-                else{
-                    if (tempArray[j] == '_'){
-                        row++;
-                        col =0;
-                    }
-                    else{
-                        charArray[row][col] = tempArray[j];
-                        col++;
-                    }
-                }
+            line= scanner.nextLine();
+            nbrCol += line.length();
+            while(scanner.hasNextLine()){
+                line = scanner.nextLine();
+                nbrRow++;
             }
 
         }catch(IOException e){
             e.printStackTrace();
         }
-    }
-    public static void savingCharArray(char[][] test2, String fileName2){
-        try{
-            CharArrayWriter caw = new CharArrayWriter();
-            for (char[] line: charArray) {
-                System.out.println(line);
-                caw.write(line);
-            }
-            FileWriter fw = new FileWriter("src/main/resources/saves/" + fileName2 + ".xsb");
-            caw.writeTo(fw);
 
-            fw.flush();
-            caw.flush();
-            caw.close();
-
-        }catch(IOException e){
-            e.printStackTrace();
-        }
+        return new int[] {nbrCol, nbrRow};
     }
 
 
     public static void main(String[] args) {
-        loadSavedFile("test");
-        savingCharArray(charArray, "test2");
+        Save.saving(loadSavedFile("level1out"), "level1out2");
     }
 }

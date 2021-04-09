@@ -195,12 +195,11 @@ public class Grid {
         }
     }
     public char[][] toCharArray(){
-        char [][] charGrid = new char[row][col+2];
+        char [][] charGrid = new char[row][col+1];
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if (j == col - 1) {
-                    charGrid[i][j+1] = '_';
-                    charGrid[i][j+2] = '\n';
+                    charGrid[i][j+1] = '\n';
                 }
                 charGrid[i][j] = grid[i][j].toString().charAt(0);
             }
