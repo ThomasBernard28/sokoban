@@ -13,9 +13,22 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
 public abstract class BorderPaneScene {
-    protected final static int COLUMNS = 16;
-    protected final static int ROWS = 9;
-    protected final static int SIZE = 64;
+    /*
+    LARGE: 16, 9 pour 64 de cellSize
+    MEDIUM: 21, 12 pour 48 de cellSize
+    SMALL:32, 18 pour 32 de cellSize
+
+    PARAM to change:
+        this:
+            COLUMNS
+            ROWS
+            SIZE
+        reconstruct imgGive.setSPRITE(SIZE) in every container ie this and every SpecialPane
+
+     */
+    protected static int COLUMNS = 21;
+    protected static int ROWS = 12;
+    protected static int SIZE = 48;
     protected final static int LEFT_MARGIN = 30;
 
     protected final static Paint lightOrangePaint = Color.valueOf("#FA8132");
@@ -37,7 +50,7 @@ public abstract class BorderPaneScene {
             new BackgroundFill(greenPaint, new CornerRadii(1), null);
 
     protected final static SpriteIcon iconGiver = new SpriteIcon("images/sheet_black1x.png", 50);
-    protected final static SpriteGame cellGiver = new SpriteGame(SIZE);
+    protected final static SpriteGame cellGiver = new SpriteGame();
 
      public enum CellSize{
         SMALL,
@@ -48,6 +61,10 @@ public abstract class BorderPaneScene {
     // Non-static
     protected final BorderPane root = new BorderPane();
     protected final Scene rootScene = new Scene(root);
+
+    protected BorderPaneScene(){
+        root.setBackground(new Background(bgFillLightBlue));
+    }
 
     public Scene getScene() {
         return rootScene;

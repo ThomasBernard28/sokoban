@@ -40,6 +40,7 @@ public class LevelGenScene extends BorderPaneScene {
 
     private SpecialPane gridToTry = null;
     private PlayerEvent eventToTry = null;
+
     private final EventHandler filter = (EventHandler<MouseEvent>) event -> {
         System.out.println("Filtering out event " + event.getEventType());
         event.consume();
@@ -160,7 +161,6 @@ public class LevelGenScene extends BorderPaneScene {
         // end of logic part
 
         rightSide.setVgap(20);
-        rightSide.setBackground(new Background(bgFillLightBlue));
         rightSide.setMinSize(80, 0);
         rightSide.setStyle("-fx-padding: 10 10 10 10");
 
@@ -228,6 +228,11 @@ public class LevelGenScene extends BorderPaneScene {
 
             visualGrid.initiateLvlGen();
         });
+        reset.setOnAction(event -> {
+            stop.fire();
+            containPlayer = false;
+            centerGenesis();
+        });
 
         //end of logic part
 
@@ -250,7 +255,6 @@ public class LevelGenScene extends BorderPaneScene {
 
 
 
-        bottomSide.setBackground(new Background(bgFillLightBlue));
         this.root.setBottom(bottomSide);
     }
 
@@ -260,7 +264,6 @@ public class LevelGenScene extends BorderPaneScene {
 
         leftSide.setMinWidth(LEFT_MARGIN);
         leftSide.setMinHeight(ROWS * SIZE);
-        leftSide.setBackground(new Background(bgFillLightBlue));
         this.root.setLeft(leftSide);
     }
 
@@ -281,7 +284,6 @@ public class LevelGenScene extends BorderPaneScene {
         topSide.getChildren().addAll(exitButton, cellGiver.getTileImg(TileType.HEAD), title);
         topSide.setSpacing(50);
 
-        topSide.setBackground(new Background(bgFillLightBlue));
         this.root.setTop(topSide);
     }
 

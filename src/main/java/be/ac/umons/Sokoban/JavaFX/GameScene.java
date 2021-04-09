@@ -15,8 +15,6 @@ public class GameScene extends BorderPaneScene{
         leftGenesis();
         bottomGenesis();
         topGenesis();
-
-        root.setBackground(new Background(bgFillLightBlue));
     }
 
     @Override

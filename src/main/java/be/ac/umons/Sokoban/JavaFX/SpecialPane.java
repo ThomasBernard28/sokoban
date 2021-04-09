@@ -6,16 +6,22 @@ import be.ac.umons.Sokoban.Entities.TileType;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class SpecialPane extends Pane {
-    public final Grid lG;
+
+    public Grid lG;
     public final SpriteGame imgGiver;
 
 
     public SpecialPane(Grid grid){
         this.lG = grid;
-        this.imgGiver = new SpriteGame(64);
+        this.imgGiver = new SpriteGame();
+        //this.setBorder(new Border(new BorderStroke(
+                //Color.valueOf("#1989B8"), BorderStrokeStyle.SOLID,
+                //new CornerRadii(4), new BorderWidths(10))));
     }
 
     public ImageView getBgCell(int i, int j){
@@ -75,6 +81,7 @@ public class SpecialPane extends Pane {
                 }
             }
         }
+        clipChildren(this, 30);
     }
 
     public void initiateLvlGen(){
@@ -159,6 +166,19 @@ public class SpecialPane extends Pane {
     }
     public int getSize(){
         return imgGiver.getCellSize();
+    }
+
+    static void clipChildren(Region region, double arc) {
+
+        final Rectangle outputClip = new Rectangle();
+        outputClip.setArcWidth(arc);
+        outputClip.setArcHeight(arc);
+        region.setClip(outputClip);
+
+        region.layoutBoundsProperty().addListener((ov, oldValue, newValue) -> {
+            outputClip.setWidth(newValue.getWidth());
+            outputClip.setHeight(newValue.getHeight());
+        });
     }
 
 }

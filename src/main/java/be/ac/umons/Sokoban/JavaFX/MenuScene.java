@@ -20,7 +20,9 @@ public class MenuScene extends BorderPaneScene{
         bottomGenesis();
         topGenesis();
 
-        root.setBackground(new Background(bgFillLightBlue));
+        // root.setBackground(new Background(bgFillLightBlue));
+        root.setMinWidth(1280);
+        root.setMinHeight(720);
 
     }
     protected void centerGenesis(){
@@ -58,8 +60,6 @@ public class MenuScene extends BorderPaneScene{
         centerSide.setVgap(100);
 
         root.setCenter(centerSide);
-        root.setMinHeight(720);
-        root.setMinWidth(1280);
 
     }
     protected void rightGenesis(){

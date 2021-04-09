@@ -8,9 +8,12 @@ import javafx.scene.input.MouseEvent;
 
 public class SpriteGame extends SpriteAbstract{
 
-    public SpriteGame(int cellSize) {
+    private SpriteGame(int cellSize) {
         super("images/tile_sheet_" + cellSize + ".png", cellSize);
         this.cellSize = cellSize;
+    }
+    public SpriteGame(){
+        super("images/tile_sheet_48.png", 48);
     }
 
     public ImageView getTileImg(TileType tile){
