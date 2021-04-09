@@ -3,6 +3,7 @@ package be.ac.umons.Sokoban.JavaFX;
 import be.ac.umons.Sokoban.Entities.Tile;
 import be.ac.umons.Sokoban.Entities.TileType;
 import javafx.event.EventHandler;
+import javafx.scene.Node;
 import javafx.scene.input.MouseEvent;
 
 public class LevelGenEvent implements EventHandler<MouseEvent> {

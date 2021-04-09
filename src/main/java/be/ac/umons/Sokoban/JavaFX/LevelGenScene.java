@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -93,33 +94,69 @@ public class LevelGenScene extends BorderPaneScene {
         wallButton.setGraphic(cellGiver.getTileImg(TileType.WALL));
         eraseButton.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RESET));
 
-        final String buttonCSS = "-fx-background-color: transparent;fx-border-style: solid;" +
+        final String UnpressedButtonCSS = "-fx-background-color: transparent;fx-border-style: solid;" +
                 "-fx-border-width: 2; -fx-border-color: #1989B8;-fx-cursor: hand";
 
-        boxButton.setStyle(buttonCSS);
-        flagButton.setStyle(buttonCSS);
-        wallButton.setStyle(buttonCSS);
-        playerButton.setStyle(buttonCSS);
-        eraseButton.setStyle(buttonCSS);
+        final String PressedButtonCSS ="-fx-background-color: transparent;fx-border-style: solid;" +
+                "-fx-border-width: 2; -fx-border-color: #E86A17;-fx-cursor: hand";
+
+        boxButton.setStyle(UnpressedButtonCSS);
+        flagButton.setStyle(UnpressedButtonCSS);
+        wallButton.setStyle(UnpressedButtonCSS);
+        playerButton.setStyle(UnpressedButtonCSS);
+        eraseButton.setStyle(UnpressedButtonCSS);
+
+
+
+        rightSide.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
 
         // logic part
-        boxButton.setOnAction(event -> { currModifier = TileType.BOX;
+        // TODO change border style
+        boxButton.setOnAction(event -> {
+            currModifier = TileType.BOX;
+
+            for (Node child: rightSide.getChildren()) {
+                child.setStyle(UnpressedButtonCSS);
+            }
+            boxButton.setStyle(PressedButtonCSS);
+
         });
-        flagButton.setOnAction(event -> { currModifier = TileType.FLAG;
+        flagButton.setOnAction(event -> {
+            currModifier = TileType.FLAG;
+
+            for (Node child: rightSide.getChildren()) {
+                child.setStyle(UnpressedButtonCSS);
+            }
+            flagButton.setStyle(PressedButtonCSS);
         });
-        wallButton.setOnAction(event -> { currModifier = TileType.WALL;
+        wallButton.setOnAction(event -> {
+            currModifier = TileType.WALL;
+
+            for (Node child: rightSide.getChildren()) {
+                child.setStyle(UnpressedButtonCSS);
+            }
+            wallButton.setStyle(PressedButtonCSS);
+        });
+        eraseButton.setOnAction(event -> {
+            currModifier = TileType.EMPTY;
+
+            for (Node child: rightSide.getChildren()) {
+                child.setStyle(UnpressedButtonCSS);
+            }
+            eraseButton.setStyle(PressedButtonCSS);
         });
         playerButton.setOnAction(event -> {
             if(!containPlayer){
                 currModifier = TileType.PLAYER;
+                for (Node child: rightSide.getChildren()) {
+                    child.setStyle(UnpressedButtonCSS);
+                }
+                playerButton.setStyle(PressedButtonCSS);
+
             }
-        });
-        eraseButton.setOnAction(event -> { currModifier = TileType.EMPTY;
         });
 
         // end of logic part
-
-        rightSide.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
 
         rightSide.setVgap(20);
         rightSide.setBackground(new Background(bgFillLightBlue));
@@ -168,14 +205,16 @@ public class LevelGenScene extends BorderPaneScene {
 
         // logic part
         play.setOnAction(event -> {
-            gridToTry = copyOfSpecialPane(visualGrid);
-            eventToTry = new PlayerEvent(gridToTry.lG, gridToTry);
+            if(containPlayer) {
+                gridToTry = copyOfSpecialPane(visualGrid);
+                eventToTry = new PlayerEvent(gridToTry.lG, gridToTry);
 
-            root.setCenter(gridToTry);
-            rootScene.addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-            rootScene.addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                root.setCenter(gridToTry);
+                rootScene.addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                rootScene.addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
 
-            gridToTry.initiate();
+                gridToTry.initiate();
+            }
         });
         stop.setOnAction(event -> {
             rootScene.removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
