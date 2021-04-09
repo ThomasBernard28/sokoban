@@ -19,19 +19,6 @@ import java.util.List;
 
 public class Save {
 
-
-    public static void createNewFile(String fileName) throws IOException{
-        String fileSeparator = System.getProperty("file.separator");
-        String absoluteFilePath =  fileName+".xsb";
-        File file = new File(absoluteFilePath);
-        if(file.createNewFile()){
-            System.out.println(absoluteFilePath+" File Created");
-        }
-        else{
-            System.out.println("File " + absoluteFilePath + "already exists");
-        }
-    }
-
     public static void saving(Grid test, String fileName) {
         try {
 
