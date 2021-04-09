@@ -70,7 +70,7 @@ public class GameScene extends BorderPaneScene{
         title.setFont(getFont(30));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
-        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.LVL_GEN);
+        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.MENU);
 
         topSide.getChildren().addAll(exitButton, title);
         root.setTop(topSide);

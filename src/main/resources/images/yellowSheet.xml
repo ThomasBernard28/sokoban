@@ -4,7 +4,7 @@
 	<SubTexture name="yellow_boxTick.png" x="386" y="174" width="36" height="36"/>
 	<SubTexture name="yellow_button00.png" x="190" y="45" width="190" height="49"/>
 	<SubTexture name="yellow_button01.png" x="190" y="0" width="190" height="45"/>
-	<SubTexture name="yellow_button02.png" x="0" y="188" width="190" height="49"/>
+	<SubTexture name="yellow_button02.png" x="0" y="188" width="190" height="49"/> # Y_SHADE_DE
 	<SubTexture name="yellow_button03.png" x="0" y="49" width="190" height="45"/>
 	<SubTexture name="yellow_button04.png" x="0" y="139" width="190" height="49"/>
 	<SubTexture name="yellow_button05.png" x="0" y="94" width="190" height="45"/>

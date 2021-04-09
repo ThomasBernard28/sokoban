@@ -273,7 +273,7 @@ public class LevelGenScene extends BorderPaneScene {
         title.setFont(getFont(25));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
-        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.GAME);
+        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.MENU);
 
         ImageView playerHead = cellGiver.getTileImg(TileType.HEAD, 0.8);
         playerHead.setStyle("-fx-padding: 30 20 20 20;");

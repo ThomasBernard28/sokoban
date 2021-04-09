@@ -57,14 +57,17 @@ public class MyWindow extends Application
         LevelGenScene paneGiver = new LevelGenScene();
         Scene test = paneGiver.rootScene;
 
+        MenuScene menuGiver = new MenuScene();
+        Scene menuScene = menuGiver.getScene();
+
 
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
         SceneSwitcher.setStage(theStage);
-        SceneSwitcher.setScenes(gameScene, test);
+        SceneSwitcher.setScenes(gameScene, test, menuScene);
 
-        theStage.setScene(gameScene);
+        theStage.setScene(menuScene);
         theStage.show();
     }
 
