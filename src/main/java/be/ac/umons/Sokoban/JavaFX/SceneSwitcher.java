@@ -4,9 +4,13 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class SceneSwitcher {
+    public enum UniqueScene{
+        GAME,
+        LVL_GEN
+    }
     private static Stage WINDOW;
-    public static Scene gameScene;
-    public static Scene levelGenScene;
+    private static Scene gameScene;
+    private static Scene levelGenScene;
 
     public static void setScenes(Scene _gameScene, Scene _levelGenScene){
         gameScene = _gameScene;
@@ -15,7 +19,17 @@ public class SceneSwitcher {
     public static void setStage(Stage theStage){
         WINDOW = theStage;
     }
-    public static void switchScene(Scene newScene){
-        WINDOW.setScene(newScene);
+
+    public static void switchScene(UniqueScene newScene){
+        switch (newScene){
+            case GAME:
+                WINDOW.setScene(gameScene);
+                break;
+            case LVL_GEN:
+                WINDOW.setScene(levelGenScene);
+                break;
+            default:
+                throw new IllegalStateException("Wrong enum value");
+        }
     }
 }

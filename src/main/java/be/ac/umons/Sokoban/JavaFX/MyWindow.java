@@ -51,7 +51,6 @@ public class MyWindow extends Application
     public void start(Stage theStage){
         final Image imageHead = new Image("images/Head.png");
 
-        //Scene gameScene = makeGameScene(4, 4, 64);
         GameScene gamePaneGiver = new GameScene(3,3);
         Scene gameScene = gamePaneGiver.rootScene;
 
@@ -65,7 +64,7 @@ public class MyWindow extends Application
         SceneSwitcher.setStage(theStage);
         SceneSwitcher.setScenes(gameScene, test);
 
-        theStage.setScene(test);
+        theStage.setScene(gameScene);
         theStage.show();
     }
 
@@ -78,16 +77,5 @@ public class MyWindow extends Application
         return grid;
     }
 
-    public static Scene makeGameScene(int patRow, int patCol, int size){
-
-        Grid logicGrid = logicGridGenesis(patRow * 3 + 2);
-        SpecialPane gamePane = new SpecialPane(logicGrid);
-        gamePane.initiate();
-
-        Scene gameScene = new Scene(gamePane);
-        gameScene.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(logicGrid, gamePane));
-
-        return gameScene;
-    }
 }
 

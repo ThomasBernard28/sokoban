@@ -69,15 +69,16 @@ public class LevelGenScene extends BorderPaneScene {
         currModifier = TileType.EMPTY;
     }
 
-    private void centerGenesis(){
+    @Override
+    protected void centerGenesis(){
         SpecialPane visualPane = new SpecialPane(new Grid(COLUMNS, ROWS));
         visualPane.initiateLvlGen();
         this.visualGrid = visualPane;
         this.root.setCenter(visualPane);
         visualPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent(this));
     }
-
-    private void rightGenesis(){
+    @Override
+    protected void rightGenesis(){
         TilePane rightSide = new TilePane();
         rightSide.setOrientation(Orientation.VERTICAL);
         rightSide.setAlignment(Pos.CENTER);
@@ -166,7 +167,8 @@ public class LevelGenScene extends BorderPaneScene {
         this.root.setRight(rightSide);
     }
 
-    public void bottomGenesis(){
+    @Override
+    protected void bottomGenesis(){
         GridPane bottomSide = new GridPane();
 
         Button generate = new Button();
@@ -252,8 +254,8 @@ public class LevelGenScene extends BorderPaneScene {
         this.root.setBottom(bottomSide);
     }
 
-
-    public void leftGenesis(){
+    @Override
+    protected void leftGenesis(){
         VBox leftSide = new VBox();
 
         leftSide.setMinWidth(LEFT_MARGIN);
@@ -262,26 +264,16 @@ public class LevelGenScene extends BorderPaneScene {
         this.root.setLeft(leftSide);
     }
 
-    public void topGenesis(){
+    @Override
+    protected void topGenesis(){
         // Making things pretty
         HBox topSide = new HBox();
 
         Label title = new Label("Level Build Tool");
-        title.setFont(Font.font("Impact", 25));
+        title.setFont(getFont(25));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
-        Button exitButton = new Button();
-        ImageView exitIcon = iconGiver.getIcon(SpriteIcon.IconType.EXIT);
-
-        exitButton.setScaleX(0.5);
-        exitButton.setScaleY(0.5);
-
-        exitButton.setGraphic(exitIcon);
-        exitButton.setBackground(new Background(bgFillGray));
-        exitButton.setStyle("-fx-cursor: hand");
-        // little complexity
-        exitButton.setOnAction(event -> SceneSwitcher.switchScene(SceneSwitcher.gameScene));
-        // making things pretty again
+        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.GAME);
 
         ImageView playerHead = cellGiver.getTileImg(TileType.HEAD, 0.8);
         playerHead.setStyle("-fx-padding: 30 20 20 20;");

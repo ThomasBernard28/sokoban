@@ -2,11 +2,15 @@ package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 public abstract class BorderPaneScene {
     protected final static int COLUMNS = 16;
@@ -49,12 +53,29 @@ public abstract class BorderPaneScene {
         return rootScene;
     }
 
+    protected Font getFont(int size){
+        return Font.font("Impact", size);
+    }
 
+    protected Button makeExitButton(SceneSwitcher.UniqueScene destination){
+        Button exitButton = new Button();
+        ImageView exit = iconGiver.getIcon(SpriteIcon.IconType.EXIT);
 
-    private void centerGenesis(int row, int col){}
-    private void centerGenesis(){}
-    private void rightGenesis(){}
-    private void bottomGenesis(){}
-    private void leftGenesis(){}
-    private void topGenesis(){}
+        exitButton.setScaleX(0.5);
+        exitButton.setScaleY(0.5);
+
+        exitButton.setGraphic(exit);
+        exitButton.setBackground(new Background(bgFillGray));
+        exitButton.setStyle("-fx-cursor: hand");
+
+        exitButton.setOnAction(event -> SceneSwitcher.switchScene(destination));
+        return exitButton;
+    }
+
+    protected void centerGenesis(int row, int col){}
+    protected void centerGenesis(){}
+    protected void rightGenesis(){}
+    protected void bottomGenesis(){}
+    protected void leftGenesis(){}
+    protected void topGenesis(){}
 }
