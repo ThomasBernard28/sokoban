@@ -12,6 +12,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -176,6 +177,8 @@ public class LevelGenScene extends BorderPaneScene {
         Button save = new Button();
         Button play = new Button();
         Button stop = new Button();
+        TextField fileOutput = new TextField();
+        fileOutput.setFont(new Font("arial", 20));
 
         ObservableList<CellSize> diffSize = FXCollections.observableArrayList(CellSize.values());
         ListView<CellSize> sizePicker = new ListView<CellSize>(diffSize);
@@ -218,6 +221,7 @@ public class LevelGenScene extends BorderPaneScene {
                 gridToTry.initiate();
             }
         });
+        // TODO cannot stop if not in play
         stop.setOnAction(event -> {
             rootScene.removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
             rootScene.removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
@@ -234,6 +238,14 @@ public class LevelGenScene extends BorderPaneScene {
             centerGenesis();
         });
 
+        save.setOnAction(event -> {
+            String output = fileOutput.getCharacters().toString();
+            if (isValidAddress(output)){
+                System.out.println("coooorrectttt");
+            }
+
+        });
+
         //end of logic part
 
         bottomSide.add(generate,0,0);
@@ -241,6 +253,7 @@ public class LevelGenScene extends BorderPaneScene {
         bottomSide.add(sizePicker,1,0);
         bottomSide.add(save,2,0);
         bottomSide.add(play,2,1);
+        bottomSide.add(fileOutput, 3, 0);
         bottomSide.add(stop,3,1);
 
         bottomSide.getColumnConstraints().add(new ColumnConstraints());
@@ -249,9 +262,10 @@ public class LevelGenScene extends BorderPaneScene {
         bottomSide.setHgap(20);
 
         GridPane.setHalignment(sizePicker, HPos.CENTER);
-        GridPane.setHalignment(stop, HPos.CENTER);
+        GridPane.setHalignment(stop, HPos.LEFT);
         GridPane.setHalignment(play, HPos.CENTER);
         GridPane.setHalignment(save, HPos.CENTER);
+        GridPane.setHalignment(fileOutput, HPos.LEFT);
 
 
 
@@ -273,7 +287,7 @@ public class LevelGenScene extends BorderPaneScene {
         HBox topSide = new HBox();
 
         Label title = new Label("Level Build Tool");
-        title.setFont(getFont(25));
+        title.setFont(getFont(35));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
         Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.MENU);
@@ -300,5 +314,9 @@ public class LevelGenScene extends BorderPaneScene {
     }
     private static SpecialPane copyOfSpecialPane(SpecialPane old){
         return new SpecialPane(copyOfGrid(old.lG));
+    }
+    //TODO this function
+    private static boolean isValidAddress(String output){
+        return false;
     }
 }
