@@ -1,42 +1,28 @@
 package be.ac.umons.Sokoban.Entities;
-/*
-This Class defines the grid and the different entities.
-With this class we can control the movements of the different entities and check if the movement
-we want to make is possible.
+/**
+This class defines a tile in the game grid
+It can handle the movement from a tile to an other if given a matrix of this instance
  */
 
 public class Tile
 {
+    /**
+     * @param immovableObject Default value is set to empty
+     * @param movableObject Default value is set to empty
+     * @param x x coordinates of the tile (equivalent to col and j)
+     * @param y y coordinates of the tile (equivalent to row and y)
+     */
     private immovableInterface immovableObject = new EmptyImmovable();
     private movableInterface movableObject = new EmptyMovable();
 
     private final int x;
     private final int y;
 
-    // Defines the mobility of the objects
-    public Tile(int x, int y, TileType content)
-    {
-        switch (content)
-        {
-            case WALL:
-                this.immovableObject = new Wall();
-                break;
-            case FLAG:
-                this.immovableObject = new Flag();
-                break;
-            case BOX:
-                this.movableObject = new Box();
-                break;
-            case PLAYER:
-                this.movableObject = new Player();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value");
-        }
-        this.x = x;
-        this.y = y;
-    }
-
+    /**
+     * This constructor initiate a tile with a coordinate of (x,y)
+     * @param x x coordinate
+     * @param y y coordinate
+     */
     public Tile(int x, int y)
     {
         this.x = x;
@@ -44,8 +30,16 @@ public class Tile
     }
 
 
-    /* This method is used in ConsoleGrid for the console interface
-    The method gives each entity a letter to represent it
+    /**
+     * The tile is converted to a string of 1 char depending on its content
+     * It follows the convention for the xsb file format
+     * '#' for a wall
+     * '.' for a flag
+     * '@' for a player
+     * '+' for a player above a flag
+     * '$' for a box
+     * '*' for a box over a flag
+     * ' ' for an empty tile
      */
     @Override
     public String toString()
@@ -124,6 +118,9 @@ public class Tile
         return movableObject.getNature() == TileType.EMPTY && immovableObject.getNature() == TileType.EMPTY;
     }
 
+    /**
+     * @return an enumerate depending of the content of the tile
+     */
     public TileType getVisualType(){
         if(this.isPlayer()){
             return TileType.PLAYER;
@@ -148,16 +145,26 @@ public class Tile
         }
     }
 
+    /**
+     * @return The movable content of the tile
+     */
     public movableInterface getMovableObject() {
         return movableObject;
     }
 
+    /**
+     * @return The immovable content of the tile
+     */
     public immovableInterface getImmovableObject() {
         return immovableObject;
     }
 
     // mutator methods
 
+    /**
+     * Change the movable content of this tile
+     * @param movable New value of the tile the value must either be PLAYER, BOX or EMPTY
+     */
     public void setMovableObject(TileType movable)
     {
         switch(movable)
@@ -176,6 +183,10 @@ public class Tile
         }
     }
 
+    /**
+     * Change the immovable content of the tile
+     * @param immovable New value of the tile the value must either be WALL, FLAG or EMPTY
+     */
     public void setImmovableObject(TileType immovable)
     {
         switch (immovable)
@@ -194,20 +205,25 @@ public class Tile
         }
     }
 
-    public void clearMovable()
-    {
-        this.movableObject = new EmptyMovable();
-    }
-
-    // movement methods
-
+    /**
+     * Uses the method of the same name of its movable content
+     * @param grid Grid object containing the matrix of tile
+     * @param direction tells which direction to check (UP, DOWN, LEFT or RIGHT)
+     * @return boolean telling if the movement is valid
+     */
     public boolean checkMove(Grid grid, Direction direction)
     {
         return this.movableObject.checkMove(grid, x, y, direction);
     }
+
+    /**
+     * Execute the movement method of its movable content and erase this tile movable content
+     * @param grid Grid object containing the matrix of tile
+     * @param direction tells which direction to go (UP, DOWN, LEFT or RIGHT)
+     */
     public void Move(Grid grid, Direction direction)
     {
         this.movableObject.Move(grid, x, y, direction);
-        grid.getGridAt(x, y).clearMovable();
+        grid.getGridAt(x, y).setMovableObject(TileType.EMPTY);
     }
 }
