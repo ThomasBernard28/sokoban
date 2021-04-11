@@ -51,4 +51,25 @@ public class Test extends Application {
         });
         theStage.show();
     }
+
+    public void startl(Stage theStage){
+        GameScene gamePaneGiver = new GameScene(3,3);
+        Scene gameScene = gamePaneGiver.rootScene;
+
+        GamePane testPane = new GamePane(new Grid(5, 5));
+
+        GridPane testBis = new GridPane();
+        testBis.add(SpriteTile.getTileImg(TileImg.EMPTY), 0, 0);
+
+        Scene test = new Scene(testPane);
+        for (int i = 0; i < 5; i++) {
+            testPane.setAt(SpriteTile.getTileImg(TileImg.EMPTY), i, 0);
+        }
+
+
+        testPane.initiate();
+
+        theStage.setScene(gameScene);
+        theStage.show();
+    }
 }

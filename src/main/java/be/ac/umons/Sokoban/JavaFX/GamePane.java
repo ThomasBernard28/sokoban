@@ -38,12 +38,12 @@ public class GamePane extends Pane {
 
     public void setAt(ImageView imageView, int x, int y){
         this.getChildren().add(imageView);
-        this.relocate(SpriteTile.getSize() * x, SpriteTile.getSize() * y);
+        imageView.relocate(SpriteTile.getSize() * x, SpriteTile.getSize() * y);
     }
 
     public void setAt(ImageView imageView, int[] pixel){
         this.getChildren().add(imageView);
-        this.relocate(pixel[0], pixel [1]);
+        imageView.relocate(pixel[0], pixel [1]);
     }
 
     public void setTileBg(int x, int y){

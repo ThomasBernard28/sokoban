@@ -42,7 +42,7 @@ public class LevelGenEvent implements EventHandler<MouseEvent> {
                     aimedTile.setMovableContent(MovableContent.EMPTY);
                     aimedTile.setImmovableContent(ImmovableContent.WALL);
 
-                    lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.FLAG), col, row);
+                    lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.WALL), col, row);
                     break;
                 case PLAYER:
                     aimedTile.setImmovableContent(ImmovableContent.EMPTY);

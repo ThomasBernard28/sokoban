@@ -84,7 +84,6 @@ public class Tile
     }
 
     public boolean hasBox(){
-        System.out.println(movableContent == MovableContent.BOX);
         return movableContent == MovableContent.BOX;
     }
 

@@ -15,7 +15,7 @@ public enum TileImg {
     private final int col;
     private final int row;
 
-    private static int cellSize;
+    private static int cellSize = SpriteTile.getSize();
 
     TileImg(int row, int col){
         this.col = col;
@@ -24,5 +24,9 @@ public enum TileImg {
 
     public Rectangle2D getLocation() {
         return new Rectangle2D(cellSize * col, cellSize * row, cellSize, cellSize);
+    }
+
+    public static void setCellSize(SpriteTile.Size size){
+        cellSize = size.getSize();
     }
 }

@@ -25,7 +25,7 @@ public class SpriteTile {
 
 
     private static Image gameSheet = new Image("images/tile_sheet_48.png");
-    private static Size cellSize;
+    private static Size cellSize = Size.MEDIUM;
 
     public static int getSize(){
         return cellSize.getSize();
@@ -54,5 +54,6 @@ public class SpriteTile {
     public static void setGameSheet(Size size){
         gameSheet = new Image("images/tile_sheet_" + size.getSize() + ".png");
         cellSize = size;
+        TileImg.setCellSize(size);
     }
 }
