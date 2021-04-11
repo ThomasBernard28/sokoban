@@ -100,7 +100,6 @@ public class Grid {
             grid[j][col -1].setImmovableContent(ImmovableContent.WALL);
         }
     }
-    //TODO upgrade reset function
     public void resetGrid(){
         for (Tile[] line : grid){
             for (Tile tile : line){
@@ -133,21 +132,41 @@ public class Grid {
      *
      */
 
+    /**
+     * Find which of the four neighbour aren't yet explored by the pathfinding process
+     * @param startX x coordinate of the tile
+     * @param startY y coordinate of the tile
+     * @return Array of Direction that aren't yet explored. The array is of length 4 and may contain null values
+     */
     private Direction[] unexploredNeighbour(int startX, int startY){
         Direction[] res = new Direction[4];
         int i = 0;
         for (Direction dir : Direction.values()){
-            if (inIndexRange(startX, startY, dir) && walkable[startY + dir.y][startX + dir.x]) {
-                res[i] = dir;
+            if (inIndexRange(startX, startY, dir)){
+                if(walkable[startY + dir.y][startX + dir.x]){
+                    res[i] = dir;
+                }
             }
+            i++;
         }
         return res;
     }
 
+    /**
+     * Tells whether the direction is in range of the array
+     * @param startX x coordinate of the tile
+     * @param startY y coordinate of the tile
+     * @param dir direction to check
+     * @return boolean indicating if it's within range
+     */
     private boolean inIndexRange(int startX, int startY, Direction dir){
-        return (0 <= startX + dir.x && startX + dir.x < col) && (0 <= startY + dir.y && startY + dir.y <= row);
+        return (0 <= startX + dir.x && startX + dir.x < col) && (0 <= startY + dir.y && startY + dir.y < row);
     }
 
+    /**
+     * Set the walkable grid according to the tile grid
+     * Every wall will correspond to a false and empty will be true
+     */
     private void resetWalkable(){
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
@@ -156,8 +175,16 @@ public class Grid {
         }
     }
 
+    /**
+     * https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_profondeur
+     * (Source wikipedia)
+     * Find every explorable tile in the grid, if a tile is not explorable its value will stay true in the
+     * walkable grid
+     * @param startX x coordinate of the start of the pathfinding
+     * @param startY y coordinate of the start of the pathfinding
+     */
     private void pathFinder(int startX, int startY){
-        // https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_profondeur
+        //
         walkable[startY][startX] = false;
         for (Direction dir : unexploredNeighbour(startX, startY)){
             if (dir != null && walkable[startY + dir.y][startX + dir.x]){
@@ -166,7 +193,12 @@ public class Grid {
         }
     }
 
-
+    /**
+     * Check if a grid is walkable by using the pathfinding method
+     * @param playerX x coordinate of the start of the pathfinding
+     * @param playerY y coordinate of the start of the pathfinding
+     * @return boolean telling whether a grid is solvable
+     */
     private boolean solvable(int playerX, int playerY){
         resetWalkable();
         pathFinder(playerX, playerY);
@@ -180,6 +212,13 @@ public class Grid {
         return true;
     }
 
+    /**
+     * Takes a given pattern of char (value must be 'w' or 'e') an copy it into the tile grid
+     * with a wall for a 'w' and and empty for 'e'
+     * @param setX x coordinate of the top left corner of where the pattern will be implemented
+     * @param setY y coordinate of the top left corner of where the pattern will be implemented
+     * @param matrix pattern which is a matrix of char either 'w' or 'e'
+     */
     private void patternIntegration(int setX, int setY, char[][] matrix){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
@@ -192,6 +231,10 @@ public class Grid {
         }
     }
 
+    /**
+     * Repetitively integrate randomly generated pattern into the grid and check at each iteration
+     * if there's a contradiction(when the map is not solvable)
+     */
     public void generateRandomWalls() {
         PatternGenerator patternGiver = new PatternGenerator();
         for (int i = 0; i < row / 3; i++) {
@@ -207,6 +250,12 @@ public class Grid {
             }
         }
     }
+
+    /**
+     * Convert the Tile grid into a char grid the char representing the tile is the same used in the toString method
+     * of the class Tile
+     * @return a char matrix representing the current tile grid
+     */
     public char[][] toCharArray(){
         char [][] charGrid = new char[row][col+1];
         for (int i = 0; i < row; i++) {
@@ -222,15 +271,30 @@ public class Grid {
 
     public static void main(String[] args)
     {
-        Grid myGrid = new Grid(5, 5);
-        myGrid.set_default_walls();
-        myGrid.set_boxes(1,1);
-        for (Tile[] line :
-                myGrid.grid) {
+        Grid myGrid = new Grid(8, 8);
+        PatternGenerator patternGiver = new PatternGenerator();
+
+        myGrid.patternIntegration(0, 0, PatternGenerator.Pattern.CROSS.getPattern());
+        myGrid.resetWalkable();
+        printWalkable(myGrid.walkable);
+        myGrid.pathFinder(6, 6);
+        printWalkable(myGrid.walkable);
+
+    }
+
+    public static void printWalkable(boolean[][] matrix){
+        for (boolean[] line :
+                matrix) {
             System.out.println(Arrays.toString(line));
         }
+        System.out.println();
+    }
 
-
+    public static void printGrid(Tile[][] matrix){
+        for (Tile[] line:
+             matrix) {
+            System.out.println(Arrays.toString(line));
+        }
     }
 
 }
