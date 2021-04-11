@@ -7,53 +7,53 @@ import javafx.geometry.Rectangle2D;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-
-class SpriteAnimation extends Transition {
-
-    private final int count;
-    private final int columns;
+public class AnimationPlayerMove extends Transition {
+    private final int count = 8;
+    private final int column = 3;
     private int offsetX;
     private int offsetY;
-    private final int width;
-    private final int height;
-    private final SpecialPane gP;
+
+    private final GamePane gamePane;
     private Direction dir;
+
     private boolean boxAnim;
     private boolean running = false;
 
     private int lastIndex;
 
+    public AnimationPlayerMove(GamePane gamePane, Duration duration){
+        this.gamePane = gamePane;
 
-    public SpriteAnimation(Duration duration, int count,   int columns,
-                           int width,   int height, SpecialPane gamePane) {
-        this.count     = count;
-        this.columns   = columns;
-        this.width     = width;
-        this.height    = height;
-        this.gP = gamePane;
-        this.setDirection(Direction.DOWN);
+        setDirection(Direction.DOWN);
+
         setCycleDuration(duration);
         setInterpolator(Interpolator.LINEAR);
     }
+
     @Override
     protected void interpolate(double k) {
         this.running = true;
         final int index = Math.min((int) Math.floor(k * count), count - 1);
         if (index != lastIndex) {
-            final int x = (index % columns) * width  + offsetX * width;
-            final int y = offsetY * width;
+            final int x = (index % column) * SpriteTile.getSize()  + offsetX * SpriteTile.getSize();
+            final int y = offsetY * SpriteTile.getSize();
 
-            ImageView cell = new ImageView(gP.imgGiver.getSPRITE());
-            cell.setViewport(new Rectangle2D(x, y, width, height));
+            ImageView cell = new ImageView(SpriteTile.getGameSheet());
+            cell.setViewport(new Rectangle2D(x, y, SpriteTile.getSize(), SpriteTile.getSize()));
 
-            final int length = width - (width/ count) * (index + 1);
+            final int length = SpriteTile.getSize() - (SpriteTile.getSize()/ count) * (index + 1);
 
-            gP.translationFull(cell, dir, length, boxAnim);
+            gamePane.translation(cell, dir, length, boxAnim);
             lastIndex = index;
             if(index == count - 1){
                 //last step
-                if(boxAnim){
-                    gP.lastBoxPrint(dir, length);
+                if(boxAnim && gamePane.getGridFromPlayer(dir).isFlaggedBox()){
+                    gamePane.setTileBg(gamePane.getPlayerX() + dir.x, gamePane.getPlayerY() + dir.y);
+                    gamePane.setAt(
+                            SpriteTile.getTileImg(TileImg.FLAGGED_BOX),
+                            gamePane.getPlayerX() + dir.x,
+                            gamePane.getPlayerY() +dir.y
+                    );
                 }
                 this.running = false;
                 this.stop();
@@ -61,6 +61,8 @@ class SpriteAnimation extends Transition {
 
         }
     }
+
+
 
     public void setDirection(Direction direction){
         this.dir = direction;
@@ -84,6 +86,7 @@ class SpriteAnimation extends Transition {
         }
 
     }
+
     public void setAnimation(boolean box){
         boxAnim = box;
     }

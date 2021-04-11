@@ -26,7 +26,7 @@ public class GameScene extends BorderPaneScene{
         grid.set_boxes(grid.col/2, grid.row/2);
         grid.set_flag((grid.col/2) + 1, (grid.row/2) + 1);
 
-        SpecialPane gamePane = new SpecialPane(grid);
+        GamePane gamePane = new GamePane(grid);
         gamePane.initiate();
 
         root.setCenter(gamePane);
@@ -68,7 +68,7 @@ public class GameScene extends BorderPaneScene{
         title.setFont(getFont(30));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
-        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.MENU);
+        Button exitButton = makeToMenuButton();
 
         topSide.getChildren().addAll(exitButton, title);
         root.setTop(topSide);

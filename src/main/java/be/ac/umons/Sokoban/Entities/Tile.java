@@ -5,37 +5,15 @@ With this class we can control the movements of the different entities and check
 we want to make is possible.
  */
 
+import be.ac.umons.Sokoban.JavaFX.TileImg;
+
 public class Tile
 {
-    private immovableInterface immovableObject = new EmptyImmovable();
-    private movableInterface movableObject = new EmptyMovable();
+    private ImmovableContent immovableContent = ImmovableContent.EMPTY;
+    private MovableContent movableContent = MovableContent.EMPTY;
 
     private final int x;
     private final int y;
-
-    // Defines the mobility of the objects
-    public Tile(int x, int y, TileType content)
-    {
-        switch (content)
-        {
-            case WALL:
-                this.immovableObject = new Wall();
-                break;
-            case FLAG:
-                this.immovableObject = new Flag();
-                break;
-            case BOX:
-                this.movableObject = new Box();
-                break;
-            case PLAYER:
-                this.movableObject = new Player();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value");
-        }
-        this.x = x;
-        this.y = y;
-    }
 
     public Tile(int x, int y)
     {
@@ -83,131 +61,107 @@ public class Tile
 
     public boolean isWall()
     {
-        return immovableObject.getNature() == TileType.WALL;
+        return immovableContent == ImmovableContent.WALL;
     }
 
     public boolean isFlag()
     {
-        return immovableObject.getNature() == TileType.FLAG && movableObject.getNature() == TileType.EMPTY;
+        return immovableContent == ImmovableContent.FLAG && movableContent == MovableContent.EMPTY;
     }
 
     public boolean hasFlag(){
-        return immovableObject.getNature() == TileType.FLAG;
+        return immovableContent == ImmovableContent.FLAG;
     }
 
     public boolean isBox()
     {
-        return movableObject.getNature() == TileType.BOX && immovableObject.getNature() != TileType.FLAG;
+        return movableContent == MovableContent.BOX && immovableContent == ImmovableContent.EMPTY;
     }
 
     public boolean isFlaggedBox()
     {
-        return movableObject.getNature() == TileType.BOX && immovableObject.getNature() == TileType.FLAG;
+        return movableContent == MovableContent.BOX && immovableContent == ImmovableContent.FLAG;
     }
 
     public boolean hasBox(){
-        return movableObject.getNature() == TileType.BOX;
+        System.out.println(movableContent == MovableContent.BOX);
+        return movableContent == MovableContent.BOX;
     }
 
     public boolean isPlayer()
     {
-        return movableObject.getNature() == TileType.PLAYER && immovableObject.getNature() != TileType.FLAG;
+        return movableContent == MovableContent.PLAYER && immovableContent == ImmovableContent.EMPTY;
     }
 
     public boolean isFlaggedPlayer()
     {
-        return movableObject.getNature() == TileType.PLAYER && immovableObject.getNature() == TileType.FLAG;
+        return movableContent == MovableContent.PLAYER && immovableContent == ImmovableContent.FLAG;
     }
 
     public boolean isEmpty()
     {
-        return movableObject.getNature() == TileType.EMPTY && immovableObject.getNature() == TileType.EMPTY;
+        return movableContent == MovableContent.EMPTY && immovableContent == ImmovableContent.EMPTY;
     }
 
-    public TileType getVisualType(){
+    public TileImg getVisualType(){
         if(this.isPlayer()){
-            return TileType.PLAYER;
+            return TileImg.PLAYER;
         }
         else if(this.isBox()){
-            return TileType.BOX;
+            return TileImg.BOX;
         }
         else if(this.isFlaggedBox()){
-            return TileType.FLAGGED_BOX;
+            return TileImg.FLAGGED_BOX;
         }
         else if(this.isWall()){
-            return TileType.WALL;
+            return TileImg.WALL;
         }
         else if(this.isFlag()){
-            return TileType.FLAG;
+            return TileImg.FLAG;
         }
         else if(this.isEmpty()){
-            return TileType.EMPTY;
+            return TileImg.EMPTY;
         }
         else {
             throw new IllegalStateException("Unexpected value");
         }
     }
 
-    public movableInterface getMovableObject() {
-        return movableObject;
+    public ImmovableContent getImmovableContent(){
+        return immovableContent;
     }
 
-    public immovableInterface getImmovableObject() {
-        return immovableObject;
+    public MovableContent getMovableContent() {
+        return movableContent;
     }
 
     // mutator methods
 
-    public void setMovableObject(TileType movable)
+    public void setMovableContent(MovableContent content)
     {
-        switch(movable)
-        {
-            case PLAYER:
-                this.movableObject = new Player();
-                break;
-            case BOX:
-                this.movableObject = new Box();
-                break;
-            case EMPTY:
-                this.movableObject = new EmptyMovable();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value");
-        }
+        movableContent = content;
     }
 
-    public void setImmovableObject(TileType immovable)
+    public void setImmovableContent(ImmovableContent content)
     {
-        switch (immovable)
-        {
-            case WALL:
-                this.immovableObject = new Wall();
-                break;
-            case FLAG:
-                this.immovableObject = new Flag();
-                break;
-            case EMPTY:
-                this.immovableObject = new EmptyImmovable();
-                break;
-            default:
-                throw new IllegalStateException("Unexpected value");
-        }
-    }
-
-    public void clearMovable()
-    {
-        this.movableObject = new EmptyMovable();
+        immovableContent = content;
     }
 
     // movement methods
 
     public boolean checkMove(Grid grid, Direction direction)
     {
-        return this.movableObject.checkMove(grid, x, y, direction);
+        return movableContent.checkMove(grid,direction);
     }
-    public void Move(Grid grid, Direction direction)
+    public void move(Grid grid, Direction direction)
     {
-        this.movableObject.Move(grid, x, y, direction);
-        grid.getGridAt(x, y).clearMovable();
+        movableContent.move(grid, direction);
+        grid.getGridAt(x, y).setMovableContent(MovableContent.EMPTY);
+    }
+
+    public static void main(String[] args) {
+        Tile myTile = new Tile(0, 0);
+        myTile.setMovableContent(MovableContent.PLAYER);
+        System.out.println(myTile);
     }
 }

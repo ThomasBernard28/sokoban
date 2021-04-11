@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
-public abstract class BorderPaneScene {
+public abstract class BorderPaneScene extends SceneSwitcher {
     /*
     LARGE: 16, 9 pour 64 de cellSize
     MEDIUM: 21, 12 pour 48 de cellSize
@@ -28,7 +28,6 @@ public abstract class BorderPaneScene {
      */
     protected static int COLUMNS = 21;
     protected static int ROWS = 12;
-    protected static int SIZE = 48;
     protected final static int LEFT_MARGIN = 30;
 
     protected final static Paint lightOrangePaint = Color.valueOf("#FA8132");
@@ -49,14 +48,6 @@ public abstract class BorderPaneScene {
     protected final static BackgroundFill bgFillGreen =
             new BackgroundFill(greenPaint, new CornerRadii(1), null);
 
-    protected final static SpriteIcon iconGiver = new SpriteIcon("images/sheet_black1x.png", 50);
-    protected final static SpriteGame cellGiver = new SpriteGame();
-
-     public enum CellSize{
-        SMALL,
-        MEDIUM,
-        LARGE
-    }
 
     // Non-static
     protected final BorderPane root = new BorderPane();
@@ -74,9 +65,9 @@ public abstract class BorderPaneScene {
         return Font.font("Impact", size);
     }
 
-    protected Button makeExitButton(SceneSwitcher.UniqueScene destination){
+    protected Button makeToMenuButton(){
         Button exitButton = new Button();
-        ImageView exit = iconGiver.getIcon(SpriteIcon.IconType.EXIT);
+        ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
 
         exitButton.setScaleX(0.5);
         exitButton.setScaleY(0.5);
@@ -85,7 +76,7 @@ public abstract class BorderPaneScene {
         exitButton.setBackground(new Background(bgFillGray));
         exitButton.setStyle("-fx-cursor: hand");
 
-        exitButton.setOnAction(event -> SceneSwitcher.switchScene(destination));
+        exitButton.setOnAction(event -> switchScene(UniqueScene.MENU));
         return exitButton;
     }
 

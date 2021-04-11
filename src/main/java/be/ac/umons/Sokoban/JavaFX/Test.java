@@ -37,16 +37,16 @@ public class Test extends Application {
         // gui part
 
         // GridPane group that will contain the Grid
-        SpecialPane gamePane = new SpecialPane(logicGrid);
+        GamePane gamePane = new GamePane(logicGrid);
         // Scene with the game
         Scene gameScene = new Scene(gamePane);
         theStage.setScene(gameScene);
         gamePane.initiate();
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            gamePane.lG.resetGrid();
-            gamePane.lG.set_default_walls();
-            gamePane.lG.generateRandomWalls();
+            gamePane.getGrid().resetGrid();
+            gamePane.getGrid().set_default_walls();
+            gamePane.getGrid().generateRandomWalls();
             gamePane.initiate();
         });
         theStage.show();

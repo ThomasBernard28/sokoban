@@ -1,14 +1,11 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.Entities.TileType;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -17,12 +14,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
-import java.util.Arrays;
 import java.util.regex.Pattern;
 
 public class LevelGenScene extends BorderPaneScene {
@@ -38,11 +31,11 @@ public class LevelGenScene extends BorderPaneScene {
 
 
     // Non static part
-    private SpecialPane visualGrid = null;
-    private TileType currModifier = TileType.EMPTY;
+    private GamePane visualGrid = null;
+    private TileImg currModifier = TileImg.EMPTY;
     private boolean containPlayer = false;
 
-    private SpecialPane gridToTry = null;
+    private GamePane gridToTry = null;
     private PlayerEvent eventToTry = null;
 
     private final EventHandler filter = (EventHandler<MouseEvent>) event -> {
@@ -58,11 +51,11 @@ public class LevelGenScene extends BorderPaneScene {
         centerGenesis();
     }
 
-    public TileType getCurrModifier(){
+    public TileImg getCurrModifier(){
         return currModifier;
     }
 
-    public SpecialPane getVisualGrid() {
+    public GamePane getVisualGrid() {
         return visualGrid;
     }
 
@@ -71,12 +64,12 @@ public class LevelGenScene extends BorderPaneScene {
     }
 
     public void resetCurrModifier(){
-        currModifier = TileType.EMPTY;
+        currModifier = TileImg.EMPTY;
     }
 
     @Override
     protected void centerGenesis(){
-        SpecialPane visualPane = new SpecialPane(new Grid(COLUMNS, ROWS));
+        GamePane visualPane = new GamePane(new Grid(COLUMNS, ROWS));
         visualPane.initiateLvlGen();
         this.visualGrid = visualPane;
         this.root.setCenter(visualPane);
@@ -94,11 +87,11 @@ public class LevelGenScene extends BorderPaneScene {
         Button wallButton = new Button("Wall");
         Button eraseButton = new Button("Erase");
 
-        boxButton.setGraphic(cellGiver.getTileImg(TileType.BOX));
-        flagButton.setGraphic(cellGiver.getTileImg(TileType.FLAG));
-        playerButton.setGraphic(cellGiver.getTileImg(TileType.PLAYER));
-        wallButton.setGraphic(cellGiver.getTileImg(TileType.WALL));
-        eraseButton.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RESET));
+        boxButton.setGraphic(SpriteTile.getTileImg(TileImg.BOX));
+        flagButton.setGraphic(SpriteTile.getTileImg(TileImg.FLAG));
+        playerButton.setGraphic(SpriteTile.getTileImg(TileImg.PLAYER));
+        wallButton.setGraphic(SpriteTile.getTileImg(TileImg.WALL));
+        eraseButton.setGraphic(SpriteIcon.getIconImg(IconImg.RESET));
 
         final String UnpressedButtonCSS = "-fx-background-color: transparent;fx-border-style: solid;" +
                 "-fx-border-width: 2; -fx-border-color: #1989B8;-fx-cursor: hand";
@@ -117,9 +110,8 @@ public class LevelGenScene extends BorderPaneScene {
         rightSide.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
 
         // logic part
-        // TODO change border style
         boxButton.setOnAction(event -> {
-            currModifier = TileType.BOX;
+            currModifier = TileImg.BOX;
 
             for (Node child: rightSide.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
@@ -128,7 +120,7 @@ public class LevelGenScene extends BorderPaneScene {
 
         });
         flagButton.setOnAction(event -> {
-            currModifier = TileType.FLAG;
+            currModifier = TileImg.FLAG;
 
             for (Node child: rightSide.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
@@ -136,7 +128,7 @@ public class LevelGenScene extends BorderPaneScene {
             flagButton.setStyle(PressedButtonCSS);
         });
         wallButton.setOnAction(event -> {
-            currModifier = TileType.WALL;
+            currModifier = TileImg.WALL;
 
             for (Node child: rightSide.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
@@ -144,7 +136,7 @@ public class LevelGenScene extends BorderPaneScene {
             wallButton.setStyle(PressedButtonCSS);
         });
         eraseButton.setOnAction(event -> {
-            currModifier = TileType.EMPTY;
+            currModifier = TileImg.EMPTY;
 
             for (Node child: rightSide.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
@@ -153,7 +145,7 @@ public class LevelGenScene extends BorderPaneScene {
         });
         playerButton.setOnAction(event -> {
             if(!containPlayer){
-                currModifier = TileType.PLAYER;
+                currModifier = TileImg.PLAYER;
                 for (Node child: rightSide.getChildren()) {
                     child.setStyle(UnpressedButtonCSS);
                 }
@@ -183,8 +175,8 @@ public class LevelGenScene extends BorderPaneScene {
         TextField fileOutput = new TextField();
         fileOutput.setFont(new Font("arial", 20));
 
-        ObservableList<CellSize> diffSize = FXCollections.observableArrayList(CellSize.values());
-        ListView<CellSize> sizePicker = new ListView<CellSize>(diffSize);
+        ObservableList<String> diffSize = FXCollections.observableArrayList("Small", "Medium", "Large");
+        ListView<String> sizePicker = new ListView<String>(diffSize);
         sizePicker.setMaxHeight(90);
         sizePicker.setFixedCellSize(29);
         sizePicker.setMaxWidth(200);
@@ -192,11 +184,11 @@ public class LevelGenScene extends BorderPaneScene {
         sizePicker.setScaleX(1.2);
         sizePicker.setStyle("-fx-border-insets: 1000");
 
-        generate.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RELOAD));
-        reset.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.RESET));
-        play.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.PLAY));
-        save.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.SAVE));
-        stop.setGraphic(iconGiver.getIcon(SpriteIcon.IconType.STOP));
+        generate.setGraphic(SpriteIcon.getIconImg(IconImg.RELOAD));
+        reset.setGraphic(SpriteIcon.getIconImg(IconImg.RESET));
+        play.setGraphic(SpriteIcon.getIconImg(IconImg.PLAY));
+        save.setGraphic(SpriteIcon.getIconImg(IconImg.SAVE));
+        stop.setGraphic(SpriteIcon.getIconImg(IconImg.STOP));
 
         generate.setBackground(new Background(bgFillGray));
         reset.setBackground(new Background(bgFillDarkOrange));
@@ -215,7 +207,7 @@ public class LevelGenScene extends BorderPaneScene {
         play.setOnAction(event -> {
             if(containPlayer) {
                 gridToTry = copyOfSpecialPane(visualGrid);
-                eventToTry = new PlayerEvent(gridToTry.lG, gridToTry);
+                eventToTry = new PlayerEvent(gridToTry.getGrid(), gridToTry);
 
                 root.setCenter(gridToTry);
                 rootScene.addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
@@ -236,9 +228,10 @@ public class LevelGenScene extends BorderPaneScene {
             visualGrid.initiateLvlGen();
         });
         reset.setOnAction(event -> {
+            /*
             stop.fire();
             containPlayer = false;
-            centerGenesis();
+            centerGenesis();*/ //TODO change this
         });
 
         save.setOnAction(event -> {
@@ -261,7 +254,7 @@ public class LevelGenScene extends BorderPaneScene {
         bottomSide.add(stop,3,1);
 
         bottomSide.getColumnConstraints().add(new ColumnConstraints());
-        bottomSide.getColumnConstraints().add(new ColumnConstraints((COLUMNS * SIZE)/ 2.0));
+        bottomSide.getColumnConstraints().add(new ColumnConstraints((COLUMNS * SpriteTile.getSize())/ 2.0));
         bottomSide.setPadding(new Insets(LEFT_MARGIN, LEFT_MARGIN, LEFT_MARGIN, LEFT_MARGIN));
         bottomSide.setHgap(20);
 
@@ -281,7 +274,7 @@ public class LevelGenScene extends BorderPaneScene {
         VBox leftSide = new VBox();
 
         leftSide.setMinWidth(LEFT_MARGIN);
-        leftSide.setMinHeight(ROWS * SIZE);
+        leftSide.setMinHeight(ROWS * SpriteTile.getSize());
         this.root.setLeft(leftSide);
     }
 
@@ -294,12 +287,12 @@ public class LevelGenScene extends BorderPaneScene {
         title.setFont(getFont(35));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
-        Button exitButton = makeExitButton(SceneSwitcher.UniqueScene.MENU);
+        Button exitButton = makeToMenuButton();
 
-        ImageView playerHead = cellGiver.getTileImg(TileType.HEAD, 0.8);
+        ImageView playerHead = SpriteTile.getTileImg(TileImg.HEAD, 0.8);
         playerHead.setStyle("-fx-padding: 30 20 20 20;");
 
-        topSide.getChildren().addAll(exitButton, cellGiver.getTileImg(TileType.HEAD), title);
+        topSide.getChildren().addAll(exitButton, SpriteTile.getTileImg(TileImg.HEAD), title);
         topSide.setSpacing(50);
 
         this.root.setTop(topSide);
@@ -309,31 +302,14 @@ public class LevelGenScene extends BorderPaneScene {
         Grid copy = new Grid(old.col, old.row);
         for (int i = 0; i < old.row; i++) {
             for (int j = 0; j < old.col; j++) {
-                copy.getGridAt(j, i).setMovableObject(old.getGridAt(j, i).getMovableObject().getNature());
-                copy.getGridAt(j, i).setImmovableObject(old.getGridAt(j, i).getImmovableObject().getNature());
+                copy.getGridAt(j, i).setMovableContent(old.getGridAt(j, i).getMovableContent());
+                copy.getGridAt(j, i).setImmovableContent(old.getGridAt(j, i).getImmovableContent());
             }
         }
-        copy.setPlayerLocation();
+        copy.set_player(old.getPlayerX(), old.getPlayerY());
         return copy;
     }
-    private static SpecialPane copyOfSpecialPane(SpecialPane old){
-        return new SpecialPane(copyOfGrid(old.lG));
-    }
-    //TODO this function
-    private static boolean isValidAddress(String output){
-        /*
-        // assure its not empty
-        if(output.isBlank()){
-            return false;
-        }
-        char[] extension= {'.', 'x', 's', 'b'};
-        char[] outputToCharArray = output.toCharArray();
-        // check if the extension match
-        for (int i = 0; i < 4; i++) {
-            if(extension[i] != outputToCharArray[output.length() - 4 + i]){
-                return false;
-            }
-        }*/
-        return output.matches("/^.*\\.(xsb)$");
+    private static GamePane copyOfSpecialPane(GamePane old){
+        return new GamePane(copyOfGrid(old.getGrid()));
     }
 }
