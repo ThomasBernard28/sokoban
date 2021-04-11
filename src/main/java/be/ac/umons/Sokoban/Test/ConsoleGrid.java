@@ -1,14 +1,8 @@
 package be.ac.umons.Sokoban.Test;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.*;
 
 import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.Entities.Wall;
-import be.ac.umons.Sokoban.Save.*;
 
 
 public class ConsoleGrid
@@ -40,25 +34,25 @@ public class ConsoleGrid
                 case "z":
                     if(grid.getGridFromPlayer().checkMove(grid, Direction.UP))
                     {
-                        grid.getGridFromPlayer().Move(grid, Direction.UP);
+                        grid.getGridFromPlayer().move(grid, Direction.UP);
                     }
                     break;
                 case "q":
                     if(grid.getGridFromPlayer().checkMove(grid, Direction.LEFT))
                     {
-                        grid.getGridFromPlayer().Move(grid, Direction.LEFT);
+                        grid.getGridFromPlayer().move(grid, Direction.LEFT);
                     }
                     break;
                 case "s":
                     if(grid.getGridFromPlayer().checkMove(grid, Direction.DOWN))
                     {
-                        grid.getGridFromPlayer().Move(grid, Direction.DOWN);
+                        grid.getGridFromPlayer().move(grid, Direction.DOWN);
                     }
                     break;
                 case "d":
                     if(grid.getGridFromPlayer().checkMove(grid, Direction.RIGHT))
                     {
-                        grid.getGridFromPlayer().Move(grid, Direction.RIGHT);
+                        grid.getGridFromPlayer().move(grid, Direction.RIGHT);
                     }
                     break;
                 case " ":
@@ -76,7 +70,7 @@ public class ConsoleGrid
 
     }
 
-    public static void printConsole(Grid grid)
+    private static void printConsole(Grid grid)
     {
         for(int i = 0; i < grid.row; i++)
         {

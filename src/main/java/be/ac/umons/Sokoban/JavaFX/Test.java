@@ -37,18 +37,39 @@ public class Test extends Application {
         // gui part
 
         // GridPane group that will contain the Grid
-        SpecialPane gamePane = new SpecialPane(logicGrid);
+        GamePane gamePane = new GamePane(logicGrid);
         // Scene with the game
         Scene gameScene = new Scene(gamePane);
         theStage.setScene(gameScene);
         gamePane.initiate();
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            gamePane.lG.resetGrid();
-            gamePane.lG.set_default_walls();
-            gamePane.lG.generateRandomWalls();
+            gamePane.getGrid().resetGrid();
+            gamePane.getGrid().set_default_walls();
+            gamePane.getGrid().generateRandomWalls();
             gamePane.initiate();
         });
+        theStage.show();
+    }
+
+    public void startl(Stage theStage){
+        GameScene gamePaneGiver = new GameScene(3,3);
+        Scene gameScene = gamePaneGiver.rootScene;
+
+        GamePane testPane = new GamePane(new Grid(5, 5));
+
+        GridPane testBis = new GridPane();
+        testBis.add(SpriteTile.getTileImg(TileImg.EMPTY), 0, 0);
+
+        Scene test = new Scene(testPane);
+        for (int i = 0; i < 5; i++) {
+            testPane.setAt(SpriteTile.getTileImg(TileImg.EMPTY), i, 0);
+        }
+
+
+        testPane.initiate();
+
+        theStage.setScene(gameScene);
         theStage.show();
     }
 }

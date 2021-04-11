@@ -15,7 +15,8 @@ public class Grid {
 
     public final int col;
     public final int row;
-    public final int [] player = new int[2];
+
+    private final int [] player = new int[2];
 
     public Grid (int col, int row)
     {
@@ -58,7 +59,15 @@ public class Grid {
         return grid[player[1] + direction.y][player[0] + direction.x];
     }
 
-    public void setPlayerLocation(){
+    public int getPlayerX(){
+        return player[0];
+    }
+
+    public int getPlayerY(){
+        return player[1];
+    }
+
+    private void setPlayerLocation(){
         for (int i = 0; i < row; i++) {
             for (int j = 0; j < col; j++) {
                 if(getGridAt(j, i).isPlayer()){
@@ -72,26 +81,31 @@ public class Grid {
         player[0] = x;
         player[1] = y;
     }
+    public void movePlayer(Direction direction){
+        player[0] += direction.x;
+        player[1] += direction.y;
+    }
 
     // Set the border walls with loops and calling methods from Tile class to set mobility
     public void set_default_walls()
     {
         for (int i = 0; i < col; i++)
         {
-            grid[0][i].setImmovableObject(TileType.WALL);
-            grid[row -1][i].setImmovableObject(TileType.WALL);
+            grid[0][i].setImmovableContent(ImmovableContent.WALL);
+            grid[row -1][i].setImmovableContent(ImmovableContent.WALL);
         }
         for (int j = 0; j< row; j++)
         {
-            grid[j][0].setImmovableObject(TileType.WALL);
-            grid[j][col -1].setImmovableObject(TileType.WALL);
+            grid[j][0].setImmovableContent(ImmovableContent.WALL);
+            grid[j][col -1].setImmovableContent(ImmovableContent.WALL);
         }
     }
+    //TODO upgrade reset function
     public void resetGrid(){
         for (Tile[] line : grid){
             for (Tile tile : line){
-                tile.setImmovableObject(TileType.EMPTY);
-                tile.setMovableObject(TileType.EMPTY);
+                tile.setImmovableContent(ImmovableContent.EMPTY);
+                tile.setImmovableContent(ImmovableContent.EMPTY);
             }
         }
         for (Tile[] line : grid){
@@ -101,17 +115,17 @@ public class Grid {
     // This method set the player at position (x,y)
     public void set_player(int x, int y)
     {
-        grid[y][x].setMovableObject(TileType.PLAYER);
+        grid[y][x].setMovableContent(MovableContent.PLAYER);
         player[0] = x;
         player[1] = y;
     }
     public void set_boxes(int x, int y)
     {
-        grid[y][x].setMovableObject(TileType.BOX);
+        grid[y][x].setMovableContent(MovableContent.BOX);
     }
     public void set_flag(int x, int y)
     {
-        grid[y][x].setImmovableObject(TileType.FLAG);
+        grid[y][x].setImmovableContent(ImmovableContent.FLAG);
     }
 
     /*
@@ -171,9 +185,9 @@ public class Grid {
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == 'e') {
-                    grid[setY + i][setX + j].setImmovableObject(TileType.EMPTY);
+                    grid[setY + i][setX + j].setImmovableContent(ImmovableContent.EMPTY);
                 }else{
-                    grid[setY + i][setX + j].setImmovableObject(TileType.WALL);
+                    grid[setY + i][setX + j].setImmovableContent(ImmovableContent.WALL);
                 }
             }
         }
@@ -209,13 +223,11 @@ public class Grid {
 
     public static void main(String[] args)
     {
-        Grid myGrid = new Grid(11, 11);
-        PatternGenerator patternGiver = new PatternGenerator();
-
-        myGrid.patternIntegration(1,1, PatternGenerator.Pattern.CROSS.getPattern());
-        myGrid.solvable(5,5);
-        for (boolean[] line :
-                myGrid.walkable) {
+        Grid myGrid = new Grid(5, 5);
+        myGrid.set_default_walls();
+        myGrid.set_boxes(1,1);
+        for (Tile[] line :
+                myGrid.grid) {
             System.out.println(Arrays.toString(line));
         }
 

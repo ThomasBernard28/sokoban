@@ -1,6 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.Test.ConsoleGrid;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -69,6 +70,8 @@ public class MyWindow extends Application
 
         SceneSwitcher.setStage(theStage);
         SceneSwitcher.setScenes(gameScene, test, menuScene, lvlSelectionScene);
+
+
 
         theStage.setScene(menuScene);
         theStage.show();

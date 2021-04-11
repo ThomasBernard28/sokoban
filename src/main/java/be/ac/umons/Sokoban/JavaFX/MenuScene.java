@@ -10,8 +10,6 @@ import javafx.scene.layout.*;
 
 public class MenuScene extends BorderPaneScene{
 
-    private final SpriteUI UIGiver = new SpriteUI("images/yellowSheet.png", 0);
-
     public MenuScene(){
         centerGenesis();
 
@@ -32,9 +30,9 @@ public class MenuScene extends BorderPaneScene{
         StackPane lvlGenButton = new StackPane();
         StackPane quitButton = new StackPane();
 
-        ImageView playButtonImg = UIGiver.getUiPart(SpriteUI.TYPE.YELLOW_BUTTON02);
-        ImageView lvlGenButtonImg = UIGiver.getUiPart(SpriteUI.TYPE.YELLOW_BUTTON02);
-        ImageView quitButtonImg = UIGiver.getUiPart(SpriteUI.TYPE.RED_BUTTON01);
+        ImageView playButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
+        ImageView lvlGenButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
+        ImageView quitButtonImg = SpriteUI.getUIImg(UIImg.RED_BUTTON01);
 
         playButtonImg.setScaleY(2);
         playButtonImg.setScaleX(2);
