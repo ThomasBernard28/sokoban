@@ -6,6 +6,6 @@ public class FakeClass
 {
     public static void main(String[] args)
     {
-        Test.main(args);
+        MyWindow.main(args);
     }
 }

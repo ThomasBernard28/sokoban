@@ -14,7 +14,7 @@ public class SceneSwitcher {
         LVL_SELECTION
     }
 
-    private static Stage WINDOW;
+    protected static Stage WINDOW;
 
     private static Scene menuScene;
     private static Scene gameScene;

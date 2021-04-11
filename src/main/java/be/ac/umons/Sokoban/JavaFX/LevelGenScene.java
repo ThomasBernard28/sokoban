@@ -32,6 +32,8 @@ public class LevelGenScene extends BorderPaneScene {
 
 
     // Non static part
+    private final static BorderPane root = new BorderPane();
+
     private GamePane visualGrid = null;
     private TileImg currModifier = TileImg.EMPTY;
     private boolean containPlayer = false;
@@ -45,11 +47,15 @@ public class LevelGenScene extends BorderPaneScene {
     };
 
     public LevelGenScene(){
+        super(root);
+        root.setBackground(new Background(bgFillLightBlue));
+
         leftGenesis();
         topGenesis();
         bottomGenesis();
         rightGenesis();
         centerGenesis();
+
     }
 
     public TileImg getCurrModifier(){
@@ -71,13 +77,18 @@ public class LevelGenScene extends BorderPaneScene {
     @Override
     protected void centerGenesis(){
         GamePane visualPane = new GamePane(new Grid(COLUMNS, ROWS));
+
         visualPane.initiateLvlGen();
-        this.visualGrid = visualPane;
-        this.root.setCenter(visualPane);
         visualPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent(this));
+
+        HBox centerSide = new HBox();
+        centerSide.getChildren().addAll(visualPane, rightGenesis());
+
+        this.visualGrid = visualPane;
+        this.root.setCenter(centerSide);
     }
-    @Override
-    protected void rightGenesis(){
+
+    protected TilePane rightGenesis(){
         TilePane rightSide = new TilePane();
         rightSide.setOrientation(Orientation.VERTICAL);
         rightSide.setAlignment(Pos.CENTER);
@@ -161,7 +172,11 @@ public class LevelGenScene extends BorderPaneScene {
         rightSide.setMinSize(80, 0);
         rightSide.setStyle("-fx-padding: 10 10 10 10");
 
-        this.root.setRight(rightSide);
+        rightSide.setAlignment(Pos.CENTER);
+
+
+        //root.setRight(rightSide);
+        return rightSide;
     }
 
     @Override

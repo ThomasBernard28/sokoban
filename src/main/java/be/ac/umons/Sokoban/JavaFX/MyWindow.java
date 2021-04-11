@@ -50,6 +50,7 @@ public class MyWindow extends Application
     }
 
     public void start(Stage theStage){
+        SceneSwitcher.setStage(theStage);
         final Image imageHead = new Image("images/Head.png");
 
         GameScene gamePaneGiver = new GameScene(3,3);
@@ -62,14 +63,14 @@ public class MyWindow extends Application
         Scene menuScene = menuGiver.getScene();
 
         LevelSelectionScene lvlSelectionGiver = new LevelSelectionScene();
-        Scene lvlSelectionScene = lvlSelectionGiver.getScene();
+        //Scene lvlSelectionScene = lvlSelectionGiver.getScene();
 
 
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
-        SceneSwitcher.setStage(theStage);
-        SceneSwitcher.setScenes(gameScene, test, menuScene, lvlSelectionScene);
+
+        SceneSwitcher.setScenes(gameScene, test, menuScene, new Scene(new Pane()));
 
 
 

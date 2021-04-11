@@ -10,7 +10,10 @@ import javafx.scene.layout.*;
 
 public class MenuScene extends BorderPaneScene{
 
+    public final static BorderPane root = new BorderPane();
+
     public MenuScene(){
+        super(root);
         centerGenesis();
 
         rightGenesis();
@@ -57,8 +60,14 @@ public class MenuScene extends BorderPaneScene{
         lvlGenButton.setStyle("-fx-cursor: hand;");
         quitButton.setStyle("-fx-cursor: hand");
 
-        playButton.setOnMouseClicked(event -> SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.GAME));
-        lvlGenButton.setOnMouseClicked(event -> SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.LVL_GEN));
+        playButton.setOnMouseClicked(event -> {
+            SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.GAME);
+            WINDOW.setFullScreen(true);
+        });
+        lvlGenButton.setOnMouseClicked(event -> {
+            SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.LVL_GEN);
+            WINDOW.setFullScreen(true);
+        });
         quitButton.setOnMouseClicked(event -> SceneSwitcher.quit());
 
         centerSide.getChildren().addAll(playButton, lvlGenButton, quitButton);

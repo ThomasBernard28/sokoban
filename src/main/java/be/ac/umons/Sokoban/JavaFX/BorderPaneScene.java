@@ -1,13 +1,13 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
+import javafx.geometry.VPos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -50,11 +50,10 @@ public abstract class BorderPaneScene extends SceneSwitcher {
 
 
     // Non-static
-    protected final BorderPane root = new BorderPane();
-    protected final Scene rootScene = new Scene(root);
+    protected final Scene rootScene;
 
-    protected BorderPaneScene(){
-        root.setBackground(new Background(bgFillLightBlue));
+    protected BorderPaneScene(Pane root){
+        rootScene = new Scene(root);
     }
 
     public Scene getScene(){
@@ -82,7 +81,6 @@ public abstract class BorderPaneScene extends SceneSwitcher {
 
     protected void centerGenesis(int row, int col){}
     protected void centerGenesis(){}
-    protected void rightGenesis(){}
     protected void bottomGenesis(){}
     protected void leftGenesis(){}
     protected void topGenesis(){}
