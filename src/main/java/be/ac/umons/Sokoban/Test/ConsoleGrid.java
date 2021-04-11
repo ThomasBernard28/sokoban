@@ -70,7 +70,7 @@ public class ConsoleGrid
 
     }
 
-    private static void printConsole(Grid grid)
+    public static void printConsole(Grid grid)
     {
         for(int i = 0; i < grid.row; i++)
         {

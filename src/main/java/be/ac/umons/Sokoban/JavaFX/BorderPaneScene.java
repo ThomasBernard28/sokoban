@@ -57,7 +57,7 @@ public abstract class BorderPaneScene extends SceneSwitcher {
         root.setBackground(new Background(bgFillLightBlue));
     }
 
-    public Scene getScene() {
+    public Scene getScene(){
         return rootScene;
     }
 

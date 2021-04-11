@@ -105,12 +105,11 @@ public class Grid {
         for (Tile[] line : grid){
             for (Tile tile : line){
                 tile.setImmovableContent(ImmovableContent.EMPTY);
-                tile.setImmovableContent(ImmovableContent.EMPTY);
+                tile.setMovableContent(MovableContent.EMPTY);
             }
         }
-        for (Tile[] line : grid){
-            System.out.println(Arrays.toString(line));
-        }
+        player[0] = 0;
+        player[1] = 0;
     }
     // This method set the player at position (x,y)
     public void set_player(int x, int y)

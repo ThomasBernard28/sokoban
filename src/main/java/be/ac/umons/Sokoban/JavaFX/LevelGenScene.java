@@ -1,6 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.Test.ConsoleGrid;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -216,22 +217,25 @@ public class LevelGenScene extends BorderPaneScene {
                 gridToTry.initiate();
             }
         });
-        // TODO cannot stop if not in play
         stop.setOnAction(event -> {
-            rootScene.removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-            rootScene.removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
-            root.setCenter(visualGrid);
+            // if not null then play mode is active
+            if(gridToTry != null){
+                rootScene.removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                rootScene.removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                root.setCenter(visualGrid);
 
-            gridToTry = null;
-            eventToTry = null;
+                gridToTry = null;
+                eventToTry = null;
 
-            visualGrid.initiateLvlGen();
+                visualGrid.initiateLvlGen();
+            }
         });
         reset.setOnAction(event -> {
-            /*
             stop.fire();
             containPlayer = false;
-            centerGenesis();*/ //TODO change this
+            visualGrid.getGrid().resetGrid();
+            visualGrid.initiate();
+            ConsoleGrid.printConsole(visualGrid.getGrid());
         });
 
         save.setOnAction(event -> {
