@@ -73,7 +73,7 @@ public class MenuScene extends SceneTool{
             SceneList.LVL_GEN.setOnActive();
             WINDOW.setFullScreen(true);
         });
-        quitButton.setOnMouseClicked(event -> SceneSwitcher.quit());
+        quitButton.setOnMouseClicked(event -> quit());
 
         centerSide.getChildren().addAll(playButton, lvlGenButton, quitButton);
         centerSide.setOrientation(Orientation.VERTICAL);
