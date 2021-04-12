@@ -11,15 +11,14 @@ import javafx.scene.text.Font;
 
 public class GameScene extends SceneTool{
 
-    private final static VBox V_ROOT = new VBox();
-    private final static HBox root = new HBox(V_ROOT);
+    public static void makeScene(){
+        VBox V_ROOT = new VBox();
+        HBox root = new HBox(V_ROOT);
 
-
-    public static void makeScene(Size size){
         Scene scene = new Scene(root);
         SceneList.GAME.setScene(scene);
 
-        V_ROOT.getChildren().addAll(topRowGenesis(), bottomRowGenesis(size));
+        V_ROOT.getChildren().addAll(topRowGenesis(), bottomRowGenesis(currSize));
 
         V_ROOT.setStyle("-fx-padding: 0 100 100 100");
         V_ROOT.setSpacing(100);
@@ -33,8 +32,8 @@ public class GameScene extends SceneTool{
         Grid logicGrid = new Grid(size);
         logicGrid.set_default_walls();
         logicGrid.set_player(1,1);
-        logicGrid.set_boxes(logicGrid.col/2, logicGrid.row/2);
-        logicGrid.set_flag((logicGrid.col/2) + 1, (logicGrid.row/2) + 1);
+        logicGrid.set_boxes(logicGrid.getSize().getCol()/2, logicGrid.getSize().getRow()/2);
+        logicGrid.set_flag((logicGrid.getSize().getCol()/2) + 1, (logicGrid.getSize().getRow()/2) + 1);
 
         GamePane gamePane = new GamePane(logicGrid);
         gamePane.initiate();

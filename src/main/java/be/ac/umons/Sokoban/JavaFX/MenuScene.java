@@ -66,6 +66,7 @@ public class MenuScene extends SceneTool{
         quitButton.setStyle("-fx-cursor: hand");
 
         playButton.setOnMouseClicked(event -> {
+            GameScene.makeScene();
             SceneList.GAME.setOnActive();
             WINDOW.setFullScreen(true);
         });

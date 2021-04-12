@@ -18,8 +18,8 @@ public class ConsoleGrid
         Grid grid = new Grid(Size.LARGE);
         grid.set_default_walls();
         grid.set_player(1,6);
-        grid.set_boxes(grid.col/2, grid.row/2);
-        grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
+        grid.set_boxes(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
+        grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
 
         System.out.println("To exit press 'e'");
 
@@ -60,8 +60,8 @@ public class ConsoleGrid
                     grid = new Grid(Size.LARGE);
                     grid.set_default_walls();
                     grid.set_player(1,6);
-                    grid.set_boxes(grid.col/2, grid.row/2);
-                    grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
+                    grid.set_boxes(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
+                    grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
                     break;
                 case "e":
                     playing = false;
@@ -73,9 +73,9 @@ public class ConsoleGrid
 
     public static void printConsole(Grid grid)
     {
-        for(int i = 0; i < grid.row; i++)
+        for(int i = 0; i < grid.getSize().getRow(); i++)
         {
-            for (int j = 0; j < grid.col; j++)
+            for (int j = 0; j < grid.getSize().getCol(); j++)
             {
                 System.out.print(grid.getGridAt(j, i));
                 System.out.print(" ");

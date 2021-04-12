@@ -61,8 +61,8 @@ public class GamePane extends Pane {
         if(SpriteTile.getSize(true) != logicGrid.getSize()){
             SpriteTile.setGameSheet(logicGrid.getSize());
         }
-        for (int i = 0; i < logicGrid.row; i++) {
-            for (int j = 0; j < logicGrid.col; j++) {
+        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
+            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
 
                 setAt(SpriteTile.getTileImg(TileImg.EMPTY), j, i);
 
@@ -97,8 +97,8 @@ public class GamePane extends Pane {
         if(SpriteTile.getSize(true) != logicGrid.getSize()){
             SpriteTile.setGameSheet(logicGrid.getSize());
         }
-        for (int i = 0; i < logicGrid.row; i++) {
-            for (int j = 0; j < logicGrid.col; j++) {
+        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
+            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
 
                 setAt(SpriteTile.getTileImg(TileImg.EMPTY), j, i);
 

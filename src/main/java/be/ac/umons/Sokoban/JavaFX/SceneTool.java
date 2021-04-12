@@ -95,4 +95,11 @@ public class SceneTool {
         exitButton.setOnAction(event -> SceneList.MENU.setOnActive());
         return exitButton;
     }
+
+    protected static Size currSize;
+
+    public static void setCurrSize(Size newSize){
+        currSize = newSize;
+        SpriteTile.setGameSheet(newSize);
+    }
 }

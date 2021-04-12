@@ -51,10 +51,11 @@ public class MyWindow extends Application
 
     public void start(Stage theStage){
         SceneTool.setStage(theStage);
+        SceneTool.setCurrSize(Size.LARGE);
         final Image imageHead = new Image("images/Head.png");
 
-        GameScene.makeScene(Size.LARGE);
-        LevelGenScene.makeScene(Size.LARGE);
+        GameScene.makeScene();
+        LevelGenScene.makeScene();
         MenuScene.makeScene();
 
 
@@ -70,8 +71,8 @@ public class MyWindow extends Application
         Grid grid = new Grid(size);
         grid.set_default_walls();
         grid.set_player(1,6);
-        grid.set_boxes(grid.col/2, grid.row/2);
-        grid.set_flag((grid.col/2)+1, (grid.row/2)+1);
+        grid.set_boxes(size.getCol()/2, size.getRow()/2);
+        grid.set_flag((size.getCol()/2)+1, (size.getRow()/2)+1);
         return grid;
     }
 

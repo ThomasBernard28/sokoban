@@ -14,33 +14,51 @@ public class Grid {
     private final Tile [][] grid;
     private final boolean[][] walkable;
 
-    public final int col;
-    public final int row;
+    //private final int col;
+    //public final int row;
 
-    private Size size;
+    private final Size size;
 
     private final int [] player = new int[2];
 
     public Grid (Size size)
     {
-        this.col = size.getCol();
-        this.row = size.getRow();
         this.size = size;
 
         //Create an instance of Grid that is an Array with a "row" width and "col" length
-        grid = new Tile[row][col];
+        grid = new Tile[size.getRow()][size.getCol()];
         // For each row
-        for (int i = 0; i < row; i++)
+        for (int i = 0; i < size.getRow(); i++)
         {
          // For each column fill with a Tile
-            for (int j =0; j < col; j++)
+            for (int j =0; j < size.getCol(); j++)
             {
                 grid[i][j] = new Tile(j, i);
 
             }
         }
 
-        walkable = new boolean[row][col];
+        walkable = new boolean[size.getRow()][size.getCol()];
+    }
+
+    public Grid (int row, int col){
+        size = Size.determineSize(row, col);
+
+        assert size != null;
+        grid = new Tile[size.getRow()][size.getCol()];
+
+        for (int i = 0; i < size.getRow(); i++)
+        {
+            // For each column fill with a Tile
+            for (int j =0; j < size.getCol(); j++)
+            {
+                grid[i][j] = new Tile(j, i);
+
+            }
+        }
+
+        walkable = new boolean[size.getRow()][size.getCol()];
+
     }
 
     public Tile[][] getGrid(){
@@ -72,8 +90,8 @@ public class Grid {
     }
 
     private void setPlayerLocation(){
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < size.getRow(); i++) {
+            for (int j = 0; j < size.getCol(); j++) {
                 if(getGridAt(j, i).isPlayer()){
                     player[0] = j;
                     player[1] = i;
@@ -98,15 +116,15 @@ public class Grid {
     // Set the border walls with loops and calling methods from Tile class to set mobility
     public void set_default_walls()
     {
-        for (int i = 0; i < col; i++)
+        for (int i = 0; i < size.getCol(); i++)
         {
             grid[0][i].setImmovableContent(ImmovableContent.WALL);
-            grid[row -1][i].setImmovableContent(ImmovableContent.WALL);
+            grid[size.getRow() -1][i].setImmovableContent(ImmovableContent.WALL);
         }
-        for (int j = 0; j< row; j++)
+        for (int j = 0; j< size.getRow(); j++)
         {
             grid[j][0].setImmovableContent(ImmovableContent.WALL);
-            grid[j][col -1].setImmovableContent(ImmovableContent.WALL);
+            grid[j][size.getCol() -1].setImmovableContent(ImmovableContent.WALL);
         }
     }
     public void resetGrid(){
@@ -169,7 +187,8 @@ public class Grid {
      * @return boolean indicating if it's within range
      */
     private boolean inIndexRange(int startX, int startY, Direction dir){
-        return (0 <= startX + dir.x && startX + dir.x < col) && (0 <= startY + dir.y && startY + dir.y < row);
+        return (0 <= startX + dir.x && startX + dir.x < size.getCol()) &&
+                (0 <= startY + dir.y && startY + dir.y < size.getRow());
     }
 
     /**
@@ -177,8 +196,8 @@ public class Grid {
      * Every wall will correspond to a false and empty will be true
      */
     private void resetWalkable(){
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
+        for (int i = 0; i < size.getRow(); i++) {
+            for (int j = 0; j < size.getCol(); j++) {
                 walkable[i][j] = !grid[i][j].isWall();
             }
         }
@@ -246,8 +265,8 @@ public class Grid {
      */
     public void generateRandomWalls() {
         PatternGenerator patternGiver = new PatternGenerator();
-        for (int i = 0; i < row / 3; i++) {
-            for (int j = 0; j < col / 3; j++) {
+        for (int i = 0; i < size.getRow() / 3; i++) {
+            for (int j = 0; j < size.getCol() / 3; j++) {
                 if(i == 0 && j == 0){
                     patternIntegration(1, 1, PatternGenerator.getEmpty());
                     continue;
@@ -266,10 +285,10 @@ public class Grid {
      * @return a char matrix representing the current tile grid
      */
     public char[][] toCharArray(){
-        char [][] charGrid = new char[row][col+1];
-        for (int i = 0; i < row; i++) {
-            for (int j = 0; j < col; j++) {
-                if (j == col - 1) {
+        char [][] charGrid = new char[size.getRow()][size.getCol() + 1];
+        for (int i = 0; i < size.getRow(); i++) {
+            for (int j = 0; j < size.getCol(); j++) {
+                if (j == size.getCol() - 1) {
                     charGrid[i][j+1] = '\n';
                 }
                 charGrid[i][j] = grid[i][j].toString().charAt(0);
@@ -288,7 +307,6 @@ public class Grid {
         printWalkable(myGrid.walkable);
         myGrid.pathFinder(6, 6);
         printWalkable(myGrid.walkable);
-
     }
 
     public static void printWalkable(boolean[][] matrix){

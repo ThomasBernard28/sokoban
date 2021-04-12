@@ -40,8 +40,6 @@ public class LevelGenScene extends SceneTool {
     private static GamePane gridToTry = null;
     private static PlayerEvent eventToTry = null;
 
-    private static Size currSize = Size.MEDIUM;
-
     private final static EventHandler<MouseEvent> filter = event -> {
         System.out.println("Filtering out event " + event.getEventType());
         event.consume();
@@ -49,11 +47,9 @@ public class LevelGenScene extends SceneTool {
 
     private final static int MARGIN = 30;
 
-    public static void makeScene(Size size){
+    public static void makeScene(){
         Scene scene = new Scene(root);
         SceneList.LVL_GEN.setScene(scene);
-
-        currSize = size;
 
         root.setBackground(new Background(bgFillLightBlue));
 
@@ -80,10 +76,6 @@ public class LevelGenScene extends SceneTool {
 
     public static void resetCurrModifier(){
         currModifier = TileImg.EMPTY;
-    }
-
-    public static void setCurrSize(Size newSize){
-        currSize = newSize;
     }
 
 
@@ -274,6 +266,15 @@ public class LevelGenScene extends SceneTool {
 
         });
 
+        sizePicker.setOnMouseClicked(event -> {
+            stop.fire();
+            containPlayer = false;
+            Size selectedSize = sizePicker.getSelectionModel().getSelectedItem();
+            setCurrSize(selectedSize);
+
+            root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+        });
+
         //end of logic part
 
         bottomSide.add(generate,0,0);
@@ -329,8 +330,8 @@ public class LevelGenScene extends SceneTool {
 
     private static Grid copyOfGrid(Grid old){
         Grid copy = new Grid(old.getSize());
-        for (int i = 0; i < old.row; i++) {
-            for (int j = 0; j < old.col; j++) {
+        for (int i = 0; i < old.getSize().getRow(); i++) {
+            for (int j = 0; j < old.getSize().getCol(); j++) {
                 copy.getGridAt(j, i).setMovableContent(old.getGridAt(j, i).getMovableContent());
                 copy.getGridAt(j, i).setImmovableContent(old.getGridAt(j, i).getImmovableContent());
             }
