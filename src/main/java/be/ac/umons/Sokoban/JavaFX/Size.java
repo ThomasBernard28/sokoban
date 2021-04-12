@@ -26,4 +26,16 @@ public enum Size {
     public int getCol() {
         return col;
     }
+
+    public static Size determineSize(int row, int col){
+        if(row <= LARGE.row && col <= LARGE.col){
+            return LARGE;
+        }else if(row <= MEDIUM.row && col <= MEDIUM.col){
+            return MEDIUM;
+        }else if(row < SMALL.row && col <= SMALL.col){
+            return SMALL;
+        }else{
+            return null;
+        }
+    }
 }
