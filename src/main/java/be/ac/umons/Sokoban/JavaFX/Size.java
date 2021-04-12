@@ -32,9 +32,10 @@ public enum Size {
             return LARGE;
         }else if(row <= MEDIUM.row && col <= MEDIUM.col){
             return MEDIUM;
-        }else if(row < SMALL.row && col <= SMALL.col){
+        }else if(row <= SMALL.row && col <= SMALL.col){
             return SMALL;
         }else{
+            System.out.println("null");
             return null;
         }
     }

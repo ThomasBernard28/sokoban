@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Load {
 
-    public static Grid loadSavedFileBis(String fileName) throws FileNotFoundException {
+    public static Grid loadSavedFile(String fileName) throws FileNotFoundException {
         Grid loadGrid = null;
 
         File file = new File("src/main/resources/saves/" + fileName);
@@ -79,9 +79,17 @@ public class Load {
                 nbCol = line.length();
             }
         }
+        System.out.println( "size : " + nbCol + ','+ nbRow);
 
         return Size.determineSize(nbRow, nbCol);
     }
     public static void main(String[] args) {
+        try {
+            Grid test = loadSavedFile("testBis.xsb");
+            Save.savingBis(test,"testBis2.xsb");
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+
     }
 }
