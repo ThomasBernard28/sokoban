@@ -26,11 +26,9 @@ public class Test extends Application {
 
     public void start(Stage theStage){
         theStage.setTitle("MapTest");
-        int size = 5;
-        size = size * 3 + 2;
         // logic part
 
-        Grid logicGrid = new Grid(size, size);
+        Grid logicGrid = new Grid(Size.SMALL);
         logicGrid.set_default_walls();
         logicGrid.generateRandomWalls();
 
@@ -49,10 +47,12 @@ public class Test extends Application {
             gamePane.getGrid().generateRandomWalls();
             gamePane.initiate();
         });
+
         theStage.show();
     }
 
     public void startl(Stage theStage){
+        /*
         GameScene gamePaneGiver = new GameScene(3,3);
         Scene gameScene = gamePaneGiver.rootScene;
 
@@ -70,6 +70,6 @@ public class Test extends Application {
         testPane.initiate();
 
         theStage.setScene(gameScene);
-        theStage.show();
+        theStage.show();*/
     }
 }

@@ -50,36 +50,24 @@ public class MyWindow extends Application
     }
 
     public void start(Stage theStage){
-        SceneSwitcher.setStage(theStage);
+        SceneTool.setStage(theStage);
         final Image imageHead = new Image("images/Head.png");
 
-        GameScene gamePaneGiver = new GameScene(3,3);
-        Scene gameScene = gamePaneGiver.rootScene;
-
-        LevelGenScene paneGiver = new LevelGenScene();
-        Scene test = paneGiver.rootScene;
-
-        MenuScene menuGiver = new MenuScene();
-        Scene menuScene = menuGiver.getScene();
-
-        LevelSelectionScene lvlSelectionGiver = new LevelSelectionScene();
-        //Scene lvlSelectionScene = lvlSelectionGiver.getScene();
+        GameScene.makeScene(Size.LARGE);
+        LevelGenScene.makeScene(Size.LARGE);
+        MenuScene.makeScene();
 
 
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 
+        SceneTool.SceneList.MENU.setOnActive();
 
-        SceneSwitcher.setScenes(gameScene, test, menuScene, new Scene(new Pane()));
-
-
-
-        theStage.setScene(menuScene);
-        theStage.show();
+        SceneTool.start();
     }
 
-    public static Grid logicGridGenesis(int size){
-        Grid grid = new Grid(size, size);
+    public static Grid logicGridGenesis(Size size){
+        Grid grid = new Grid(size);
         grid.set_default_walls();
         grid.set_player(1,6);
         grid.set_boxes(grid.col/2, grid.row/2);

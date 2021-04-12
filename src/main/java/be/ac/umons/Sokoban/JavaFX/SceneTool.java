@@ -1,34 +1,67 @@
 package be.ac.umons.Sokoban.JavaFX;
 
-import be.ac.umons.Sokoban.Entities.Grid;
-import javafx.geometry.HPos;
-import javafx.geometry.Pos;
-import javafx.geometry.VPos;
+import javafx.event.EventHandler;
+import javafx.event.EventType;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.stage.Stage;
 
-public abstract class BorderPaneScene extends SceneSwitcher {
-    /*
-    LARGE: 16, 9 pour 64 de cellSize
-    MEDIUM: 21, 12 pour 48 de cellSize
-    SMALL:32, 18 pour 32 de cellSize
-
-    PARAM to change:
-        this:
-            COLUMNS
-            ROWS
-            SIZE
-        reconstruct imgGive.setSPRITE(SIZE) in every container ie this and every SpecialPane
-
+public class SceneTool {
+    /**
+     * This enum contains every scene and allows to switch the current scene
      */
-    protected static int COLUMNS = 21;
-    protected static int ROWS = 12;
-    protected final static int LEFT_MARGIN = 30;
+    protected enum SceneList{
+        GAME,
+        LVL_GEN,
+        MENU,
+        LVL_SELECTION;
+
+        private Scene scene = null;
+
+        protected void setScene(Scene scene){
+            this.scene = scene;
+        }
+
+        /**
+         * Change the scene of the window by the one contained in the enum
+         */
+        public void setOnActive(){
+            WINDOW.setScene(this.scene);
+        }
+
+        protected Scene getScene(){
+            return scene;
+        }
+    }
+
+    protected static Stage WINDOW;
+
+    public static void setStage(Stage theStage){
+        WINDOW = theStage;
+    }
+
+    /**
+     *Close the window
+     */
+    protected static void quit(){
+        WINDOW.close();
+    }
+
+    public static void start(){
+        WINDOW.show();
+    }
+
+    /*
+    Here we have some design constant that are used in several scenes
+     */
 
     protected final static Paint lightOrangePaint = Color.valueOf("#FA8132");
     protected final static Paint darkOrangePaint = Color.valueOf("#E86A17");
@@ -48,23 +81,7 @@ public abstract class BorderPaneScene extends SceneSwitcher {
     protected final static BackgroundFill bgFillGreen =
             new BackgroundFill(greenPaint, new CornerRadii(1), null);
 
-
-    // Non-static
-    protected final Scene rootScene;
-
-    protected BorderPaneScene(Pane root){
-        rootScene = new Scene(root);
-    }
-
-    public Scene getScene(){
-        return rootScene;
-    }
-
-    protected Font getFont(int size){
-        return Font.font("Impact", size);
-    }
-
-    protected Button makeToMenuButton(){
+    protected static Button makeToMenuButton(){
         Button exitButton = new Button();
         ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
 
@@ -75,7 +92,7 @@ public abstract class BorderPaneScene extends SceneSwitcher {
         exitButton.setBackground(new Background(bgFillGray));
         exitButton.setStyle("-fx-cursor: hand");
 
-        exitButton.setOnAction(event -> switchScene(UniqueScene.MENU));
+        exitButton.setOnAction(event -> SceneList.MENU.setOnActive());
         return exitButton;
     }
 }

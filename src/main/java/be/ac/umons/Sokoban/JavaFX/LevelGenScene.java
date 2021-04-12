@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -19,7 +20,7 @@ import javafx.scene.text.Font;
 
 import java.util.regex.Pattern;
 
-public class LevelGenScene extends BorderPaneScene {
+public class LevelGenScene extends SceneTool {
     /*
         CSS code example:
         generate.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white; -fx-wrap-text: true;");
@@ -30,68 +31,83 @@ public class LevelGenScene extends BorderPaneScene {
 
          */
 
-
-    // Non static part
     private final static BorderPane root = new BorderPane();
 
-    private GamePane visualGrid = null;
-    private TileImg currModifier = TileImg.EMPTY;
-    private boolean containPlayer = false;
+    private static GamePane visualGrid = null;
+    private static TileImg currModifier = TileImg.EMPTY;
+    private static boolean containPlayer = false;
 
-    private GamePane gridToTry = null;
-    private PlayerEvent eventToTry = null;
+    private static GamePane gridToTry = null;
+    private static PlayerEvent eventToTry = null;
 
-    private final EventHandler filter = (EventHandler<MouseEvent>) event -> {
+    private static Size currSize = Size.MEDIUM;
+
+    private final static EventHandler<MouseEvent> filter = event -> {
         System.out.println("Filtering out event " + event.getEventType());
         event.consume();
     };
 
-    public LevelGenScene(){
-        super(root);
+    private final static int MARGIN = 30;
+
+    public static void makeScene(Size size){
+        Scene scene = new Scene(root);
+        SceneList.LVL_GEN.setScene(scene);
+
+        currSize = size;
+
         root.setBackground(new Background(bgFillLightBlue));
 
-        leftGenesis();
-        topGenesis();
-        bottomGenesis();
-        rightGenesis();
-        centerGenesis();
+        root.setTop(topGenesis());
+        root.setBottom(bottomGenesis());
+        root.setLeft(leftGenesis());
 
+
+
+        root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
     }
 
-    public TileImg getCurrModifier(){
+    public static TileImg getCurrModifier(){
         return currModifier;
     }
 
-    public GamePane getVisualGrid() {
+    public static GamePane getVisualGrid() {
         return visualGrid;
     }
 
-    public void setContainPlayer(boolean hasPlayer){
+    public static void setContainPlayer(boolean hasPlayer){
         containPlayer = hasPlayer;
     }
 
-    public void resetCurrModifier(){
+    public static void resetCurrModifier(){
         currModifier = TileImg.EMPTY;
     }
 
-    @Override
-    protected void centerGenesis(){
-        GamePane visualPane = new GamePane(new Grid(COLUMNS, ROWS));
-
-        visualPane.initiateLvlGen();
-        visualPane.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent(this));
-
-        HBox centerSide = new HBox();
-        centerSide.getChildren().addAll(visualPane, rightGenesis());
-
-        this.visualGrid = visualPane;
-        this.root.setCenter(centerSide);
+    public static void setCurrSize(Size newSize){
+        currSize = newSize;
     }
 
-    protected TilePane rightGenesis(){
-        TilePane rightSide = new TilePane();
-        rightSide.setOrientation(Orientation.VERTICAL);
-        rightSide.setAlignment(Pos.CENTER);
+
+    private static HBox centerRowGenesis(GamePane gamePane, TilePane tilePane){
+        HBox centerRow = new HBox();
+
+        centerRow.getChildren().addAll(gamePane, tilePane);
+        return centerRow;
+    }
+
+    private static GamePane centerLeftGenesis(){
+        GamePane centerLeft = new GamePane(new Grid(currSize));
+        centerLeft.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent());
+        visualGrid = centerLeft;
+        centerLeft.initiateLvlGen();
+
+        return centerLeft;
+    }
+
+    private static TilePane centerRightGenesis(){
+
+        TilePane centerRight = new TilePane();
+        centerRight.setOrientation(Orientation.VERTICAL);
+        centerRight.setAlignment(Pos.CENTER);
 
         Button boxButton = new Button("Box");
         Button flagButton = new Button("Flag");
@@ -117,15 +133,11 @@ public class LevelGenScene extends BorderPaneScene {
         playerButton.setStyle(UnpressedButtonCSS);
         eraseButton.setStyle(UnpressedButtonCSS);
 
-
-
-        rightSide.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
-
         // logic part
         boxButton.setOnAction(event -> {
             currModifier = TileImg.BOX;
 
-            for (Node child: rightSide.getChildren()) {
+            for (Node child: centerRight.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
             }
             boxButton.setStyle(PressedButtonCSS);
@@ -134,7 +146,7 @@ public class LevelGenScene extends BorderPaneScene {
         flagButton.setOnAction(event -> {
             currModifier = TileImg.FLAG;
 
-            for (Node child: rightSide.getChildren()) {
+            for (Node child: centerRight.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
             }
             flagButton.setStyle(PressedButtonCSS);
@@ -142,7 +154,7 @@ public class LevelGenScene extends BorderPaneScene {
         wallButton.setOnAction(event -> {
             currModifier = TileImg.WALL;
 
-            for (Node child: rightSide.getChildren()) {
+            for (Node child: centerRight.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
             }
             wallButton.setStyle(PressedButtonCSS);
@@ -150,7 +162,7 @@ public class LevelGenScene extends BorderPaneScene {
         eraseButton.setOnAction(event -> {
             currModifier = TileImg.EMPTY;
 
-            for (Node child: rightSide.getChildren()) {
+            for (Node child: centerRight.getChildren()) {
                 child.setStyle(UnpressedButtonCSS);
             }
             eraseButton.setStyle(PressedButtonCSS);
@@ -158,7 +170,7 @@ public class LevelGenScene extends BorderPaneScene {
         playerButton.setOnAction(event -> {
             if(!containPlayer){
                 currModifier = TileImg.PLAYER;
-                for (Node child: rightSide.getChildren()) {
+                for (Node child: centerRight.getChildren()) {
                     child.setStyle(UnpressedButtonCSS);
                 }
                 playerButton.setStyle(PressedButtonCSS);
@@ -168,19 +180,18 @@ public class LevelGenScene extends BorderPaneScene {
 
         // end of logic part
 
-        rightSide.setVgap(20);
-        rightSide.setMinSize(80, 0);
-        rightSide.setStyle("-fx-padding: 10 10 10 10");
+        centerRight.setVgap(20);
+        centerRight.setMinSize(80, 0);
+        centerRight.setStyle("-fx-padding: 10 10 10 10");
 
-        rightSide.setAlignment(Pos.CENTER);
+        centerRight.setAlignment(Pos.CENTER);
 
+        centerRight.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
 
-        //root.setRight(rightSide);
-        return rightSide;
+        return centerRight;
     }
 
-    @Override
-    protected void bottomGenesis(){
+    private static GridPane bottomGenesis(){
         GridPane bottomSide = new GridPane();
 
         Button generate = new Button();
@@ -190,9 +201,9 @@ public class LevelGenScene extends BorderPaneScene {
         Button stop = new Button();
         TextField fileOutput = new TextField();
         fileOutput.setFont(new Font("arial", 20));
-
-        ObservableList<String> diffSize = FXCollections.observableArrayList("Small", "Medium", "Large");
-        ListView<String> sizePicker = new ListView<String>(diffSize);
+        //TODO adapt list view to size enum
+        ObservableList<Size> diffSize = FXCollections.observableArrayList(Size.values());
+        ListView<Size> sizePicker = new ListView<Size>(diffSize);
         sizePicker.setMaxHeight(90);
         sizePicker.setFixedCellSize(29);
         sizePicker.setMaxWidth(200);
@@ -221,23 +232,24 @@ public class LevelGenScene extends BorderPaneScene {
 
         // logic part
         play.setOnAction(event -> {
-            if(containPlayer) {
+            if(containPlayer && gridToTry == null) {
                 gridToTry = copyOfSpecialPane(visualGrid);
                 eventToTry = new PlayerEvent(gridToTry.getGrid(), gridToTry);
 
-                root.setCenter(gridToTry);
-                rootScene.addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-                rootScene.addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                root.setCenter(centerRowGenesis(gridToTry, centerRightGenesis()));
+                SceneList.LVL_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.LVL_GEN.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
 
                 gridToTry.initiate();
             }
         });
+
         stop.setOnAction(event -> {
             // if not null then play mode is active
             if(gridToTry != null){
-                rootScene.removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-                rootScene.removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
-                root.setCenter(visualGrid);
+                SceneList.LVL_GEN.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.LVL_GEN.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                root.setCenter(centerRowGenesis(visualGrid, centerRightGenesis()));
 
                 gridToTry = null;
                 eventToTry = null;
@@ -245,12 +257,12 @@ public class LevelGenScene extends BorderPaneScene {
                 visualGrid.initiateLvlGen();
             }
         });
+
         reset.setOnAction(event -> {
             stop.fire();
             containPlayer = false;
             visualGrid.getGrid().resetGrid();
             visualGrid.initiate();
-            ConsoleGrid.printConsole(visualGrid.getGrid());
         });
 
         save.setOnAction(event -> {
@@ -273,8 +285,8 @@ public class LevelGenScene extends BorderPaneScene {
         bottomSide.add(stop,3,1);
 
         bottomSide.getColumnConstraints().add(new ColumnConstraints());
-        bottomSide.getColumnConstraints().add(new ColumnConstraints((COLUMNS * SpriteTile.getSize())/ 2.0));
-        bottomSide.setPadding(new Insets(LEFT_MARGIN, LEFT_MARGIN, LEFT_MARGIN, LEFT_MARGIN));
+        bottomSide.getColumnConstraints().add(new ColumnConstraints((currSize.getCol() * SpriteTile.getSize())/ 2.0));
+        bottomSide.setPadding(new Insets(MARGIN, MARGIN, MARGIN, MARGIN));
         bottomSide.setHgap(20);
 
         GridPane.setHalignment(sizePicker, HPos.CENTER);
@@ -285,25 +297,23 @@ public class LevelGenScene extends BorderPaneScene {
 
 
 
-        this.root.setBottom(bottomSide);
+        return bottomSide;
     }
 
-    @Override
-    protected void leftGenesis(){
+    private static VBox leftGenesis(){
         VBox leftSide = new VBox();
 
-        leftSide.setMinWidth(LEFT_MARGIN);
-        leftSide.setMinHeight(ROWS * SpriteTile.getSize());
-        this.root.setLeft(leftSide);
+        leftSide.setMinWidth(MARGIN);
+        leftSide.setMinHeight(currSize.getRow() * SpriteTile.getSize());
+        return leftSide;
     }
 
-    @Override
-    protected void topGenesis(){
+    private static HBox topGenesis(){
         // Making things pretty
         HBox topSide = new HBox();
 
         Label title = new Label("Level Build Tool");
-        title.setFont(getFont(35));
+        title.setFont(Font.font("impact", 35));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
         Button exitButton = makeToMenuButton();
@@ -314,11 +324,11 @@ public class LevelGenScene extends BorderPaneScene {
         topSide.getChildren().addAll(exitButton, SpriteTile.getTileImg(TileImg.HEAD), title);
         topSide.setSpacing(50);
 
-        this.root.setTop(topSide);
+        return topSide;
     }
 
     private static Grid copyOfGrid(Grid old){
-        Grid copy = new Grid(old.col, old.row);
+        Grid copy = new Grid(old.getSize());
         for (int i = 0; i < old.row; i++) {
             for (int j = 0; j < old.col; j++) {
                 copy.getGridAt(j, i).setMovableContent(old.getGridAt(j, i).getMovableContent());
@@ -328,6 +338,7 @@ public class LevelGenScene extends BorderPaneScene {
         copy.set_player(old.getPlayerX(), old.getPlayerY());
         return copy;
     }
+
     private static GamePane copyOfSpecialPane(GamePane old){
         return new GamePane(copyOfGrid(old.getGrid()));
     }

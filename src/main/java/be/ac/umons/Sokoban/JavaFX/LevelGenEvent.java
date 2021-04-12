@@ -8,49 +8,43 @@ import javafx.scene.input.MouseEvent;
 
 public class LevelGenEvent implements EventHandler<MouseEvent> {
 
-    private final LevelGenScene lvlScene;
-
-    public LevelGenEvent(LevelGenScene levelGenScene){
-        this.lvlScene = levelGenScene;
-    }
-
     @Override
     public void handle(MouseEvent event) {
-        if (event.getY() < lvlScene.getVisualGrid().getHeight()) {
+        if (event.getY() < LevelGenScene.getVisualGrid().getHeight()) {
             int row = (int) event.getY() / SpriteTile.getSize();
             int col = (int) event.getX() / SpriteTile.getSize();
-            Tile aimedTile = lvlScene.getVisualGrid().getGridAt(col, row);
+            Tile aimedTile = LevelGenScene.getVisualGrid().getGridAt(col, row);
             if (aimedTile.isPlayer()) {
-                lvlScene.setContainPlayer(false);
+                LevelGenScene.setContainPlayer(false);
             }
-            lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.EMPTY), col, row);
-            switch (lvlScene.getCurrModifier()) {
+            LevelGenScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.EMPTY), col, row);
+            switch (LevelGenScene.getCurrModifier()) {
                 case BOX:
                     //logic
                     aimedTile.setMovableContent(MovableContent.BOX);
                     aimedTile.setImmovableContent(ImmovableContent.EMPTY);
                     // visual
-                    lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.BOX), col, row);
+                    LevelGenScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.BOX_ICON), col, row);
                     break;
                 case FLAG:
                     aimedTile.setImmovableContent(ImmovableContent.FLAG);
                     aimedTile.setMovableContent(MovableContent.EMPTY);
 
-                    lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.FLAG), col, row);
+                    LevelGenScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.FLAG), col, row);
                     break;
                 case WALL:
                     aimedTile.setMovableContent(MovableContent.EMPTY);
                     aimedTile.setImmovableContent(ImmovableContent.WALL);
 
-                    lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.WALL), col, row);
+                    LevelGenScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.WALL), col, row);
                     break;
                 case PLAYER:
                     aimedTile.setImmovableContent(ImmovableContent.EMPTY);
                     aimedTile.setMovableContent(MovableContent.PLAYER);
-                    lvlScene.setContainPlayer(true);
-                    lvlScene.getVisualGrid().getGrid().setPlayerLocation(col, row);
+                    LevelGenScene.setContainPlayer(true);
+                    LevelGenScene.getVisualGrid().getGrid().setPlayerLocation(col, row);
 
-                    lvlScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.HEAD), col, row);
+                    LevelGenScene.getVisualGrid().setAt(SpriteTile.getTileImg(TileImg.HEAD), col, row);
                     break;
                 case EMPTY:
                     aimedTile.setMovableContent(MovableContent.EMPTY);
@@ -61,7 +55,7 @@ public class LevelGenEvent implements EventHandler<MouseEvent> {
             }
 
             if (aimedTile.isPlayer()) {
-                lvlScene.resetCurrModifier();
+                LevelGenScene.resetCurrModifier();
             }
         }
     }

@@ -3,30 +3,35 @@ package be.ac.umons.Sokoban.JavaFX;
 
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
-public class MenuScene extends BorderPaneScene{
+public class MenuScene extends SceneTool{
 
     public final static BorderPane root = new BorderPane();
+    private final static int MARGIN = 30;
 
-    public MenuScene(){
-        super(root);
-        centerGenesis();
+    public static void makeScene(){
+        root.setTop(topGenesis());
+        root.setCenter(centerGenesis());
+        root.setLeft(leftGenesis());
+        root.setRight(rightGenesis());
+        root.setBottom(bottomGenesis());
 
-        rightGenesis();
-        leftGenesis();
-        bottomGenesis();
-        topGenesis();
-
-        // root.setBackground(new Background(bgFillLightBlue));
-        root.setMinWidth(1280);
+        root.setBackground(new Background(bgFillLightBlue));
         root.setMinHeight(720);
+        root.setMinWidth(1280);
 
+        Scene scene = new Scene(root);
+
+        SceneList.MENU.setScene(scene);
     }
-    protected void centerGenesis(){
+
+    private static TilePane centerGenesis(){
         TilePane centerSide = new TilePane();
 
         StackPane playButton = new StackPane();
@@ -48,9 +53,9 @@ public class MenuScene extends BorderPaneScene{
         Label lvlText = new Label("Level Creator");
         Label quitText = new Label("Quit");
 
-        playText.setFont(getFont(40));
-        lvlText.setFont(getFont(40));
-        quitText.setFont(getFont(40));
+        playText.setFont(Font.font("impact",40));
+        lvlText.setFont(Font.font("impact",40));
+        quitText.setFont(Font.font("impact",40));
 
         playButton.getChildren().addAll(playButtonImg, playText);
         lvlGenButton.getChildren().addAll(lvlGenButtonImg, lvlText);
@@ -61,11 +66,11 @@ public class MenuScene extends BorderPaneScene{
         quitButton.setStyle("-fx-cursor: hand");
 
         playButton.setOnMouseClicked(event -> {
-            SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.GAME);
+            SceneList.GAME.setOnActive();
             WINDOW.setFullScreen(true);
         });
         lvlGenButton.setOnMouseClicked(event -> {
-            SceneSwitcher.switchScene(SceneSwitcher.UniqueScene.LVL_GEN);
+            SceneList.LVL_GEN.setOnActive();
             WINDOW.setFullScreen(true);
         });
         quitButton.setOnMouseClicked(event -> SceneSwitcher.quit());
@@ -75,40 +80,44 @@ public class MenuScene extends BorderPaneScene{
         centerSide.setAlignment(Pos.CENTER);
         centerSide.setVgap(100);
 
-        root.setCenter(centerSide);
+        return centerSide;
 
     }
-    protected void rightGenesis(){
+
+    private static VBox rightGenesis(){
         VBox rightSide = new VBox();
 
-        rightSide.setMinWidth(LEFT_MARGIN);
+        rightSide.setMinWidth(MARGIN);
 
-        root.setRight(rightSide);
+        return rightSide;
     }
-    protected void bottomGenesis(){
+
+    private static TilePane bottomGenesis(){
         TilePane bottomSide = new TilePane();
 
-        bottomSide.setMinHeight(LEFT_MARGIN);
+        bottomSide.setMinHeight(MARGIN);
 
-        root.setBottom(bottomSide);
+        return bottomSide;
     }
-    protected void leftGenesis(){
+
+    private static VBox leftGenesis(){
         VBox leftSide = new VBox();
 
-        leftSide.setMinWidth(LEFT_MARGIN);
+        leftSide.setMinWidth(MARGIN);
 
-        root.setLeft(leftSide);
+        return leftSide;
     }
-    protected void topGenesis(){
+
+    private static HBox topGenesis(){
         HBox topSide = new HBox();
 
         Label title = new Label("Menu");
-        title.setFont(getFont(70));
+        title.setFont(Font.font("impact",70));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
 
         topSide.getChildren().add(title);
         topSide.setAlignment(Pos.CENTER);
-        root.setTop(topSide);
+        return topSide;
     }
 }

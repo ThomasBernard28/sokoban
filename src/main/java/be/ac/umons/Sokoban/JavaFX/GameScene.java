@@ -1,93 +1,65 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.Test.ConsoleGrid;
-import javafx.collections.ObservableList;
-import javafx.geometry.HPos;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Font;
 
-public class GameScene extends BorderPaneScene{
+public class GameScene extends SceneTool{
 
-    private final static VBox root = new VBox();
-    private final static HBox superRoot = new HBox(root);
+    private final static VBox V_ROOT = new VBox();
+    private final static HBox root = new HBox(V_ROOT);
 
-    public GameScene(int patRow, int patCol){
-        super(superRoot);
-        topGenesis();
-        centerGenesis(patRow * 3 + 2, patCol * 3 + 2);
-        root.setStyle("-fx-padding: 0 100 100 100");
-        superRoot.setBackground(new Background(bgFillLightBlue));
-        superRoot.setAlignment(Pos.CENTER);
-        root.setSpacing(100);
 
+    public static void makeScene(Size size){
+        Scene scene = new Scene(root);
+        SceneList.GAME.setScene(scene);
+
+        V_ROOT.getChildren().addAll(topRowGenesis(), bottomRowGenesis(size));
+
+        V_ROOT.setStyle("-fx-padding: 0 100 100 100");
+        V_ROOT.setSpacing(100);
+
+        root.setBackground(new Background(bgFillLightBlue));
+        root.setAlignment(Pos.CENTER);
     }
 
-    @Override
-    protected void centerGenesis(int row, int col){
+    private static GamePane bottomRowGenesis(Size size){
         // TODO change the resize factor of initiate method
-        Grid grid = new Grid(col, row);
-        grid.set_default_walls();
-        grid.set_player(1,1);
-        grid.set_boxes(grid.col/2, grid.row/2);
-        grid.set_flag((grid.col/2) + 1, (grid.row/2) + 1);
+        Grid logicGrid = new Grid(size);
+        logicGrid.set_default_walls();
+        logicGrid.set_player(1,1);
+        logicGrid.set_boxes(logicGrid.col/2, logicGrid.row/2);
+        logicGrid.set_flag((logicGrid.col/2) + 1, (logicGrid.row/2) + 1);
 
-        GamePane gamePane = new GamePane(grid);
+        GamePane gamePane = new GamePane(logicGrid);
         gamePane.initiate();
 
-        root.getChildren().add(gamePane);
-        rootScene.addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(grid, gamePane));
+        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(logicGrid, gamePane));
+        return gamePane;
     }
 
-
-    protected void rightGenesis(){
-        VBox rightSide = new VBox();
-
-        rightSide.setMinWidth(LEFT_MARGIN);
-
-        //root.setRight(rightSide);
-    }
-
-    @Override
-    protected void leftGenesis(){
-        VBox leftSide = new VBox();
-
-        leftSide.setMinWidth(LEFT_MARGIN);
-
-        //root.setLeft(leftSide);
-    }
-
-    @Override
-    protected void bottomGenesis(){
-        TilePane bottomSide = new TilePane();
-
-        bottomSide.setMinHeight(LEFT_MARGIN);
-
-        //root.setBottom(bottomSide);
-    }
-
-    @Override
-    protected void topGenesis(){
+    private static HBox topRowGenesis(){
         HBox topSide = new HBox();
-
+        //TODO this label will display the current lvl playing
         Label title = new Label("Sokoban");
-        title.setFont(getFont(50));
+
+        title.setFont(Font.font("impact", 50));
         title.setStyle("-fx-padding: 20 20 20 20;");
-        topSide.setStyle("-fx-padding: 70 50 20 50");
 
         Button exitButton = makeToMenuButton();
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);
 
-        topSide.getChildren().addAll(exitButton, title);
+        topSide.setStyle("-fx-padding: 70 50 20 50");
         topSide.setSpacing(50);
-        root.getChildren().add(topSide);
+
+        topSide.getChildren().addAll(exitButton, title);
+        return topSide;
 
     }
 }

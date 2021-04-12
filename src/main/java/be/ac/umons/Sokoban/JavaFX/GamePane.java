@@ -58,6 +58,9 @@ public class GamePane extends Pane {
     }
 
     public void initiate() {
+        if(SpriteTile.getSize(true) != logicGrid.getSize()){
+            SpriteTile.setGameSheet(logicGrid.getSize());
+        }
         for (int i = 0; i < logicGrid.row; i++) {
             for (int j = 0; j < logicGrid.col; j++) {
 
@@ -87,10 +90,13 @@ public class GamePane extends Pane {
                 }
             }
         }
-        // clipChildren(this, 30);
+        // clip
     }
 
     public void initiateLvlGen(){
+        if(SpriteTile.getSize(true) != logicGrid.getSize()){
+            SpriteTile.setGameSheet(logicGrid.getSize());
+        }
         for (int i = 0; i < logicGrid.row; i++) {
             for (int j = 0; j < logicGrid.col; j++) {
 

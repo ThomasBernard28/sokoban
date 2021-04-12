@@ -2,6 +2,7 @@ package be.ac.umons.Sokoban.Save;
 
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.MyWindow;
+import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.Test.ConsoleGrid;
 import be.ac.umons.Sokoban.Entities.Tile;
 
@@ -42,7 +43,7 @@ public class Save {
     }
 
     public static void main(String[] args) {
-        saving(MyWindow.logicGridGenesis(10), "test");
+        saving(MyWindow.logicGridGenesis(Size.SMALL), "test");
     }
 }
 

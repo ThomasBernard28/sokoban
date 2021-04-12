@@ -26,7 +26,7 @@ public enum TileImg {
         return new Rectangle2D(cellSize * col, cellSize * row, cellSize, cellSize);
     }
 
-    public static void setCellSize(SpriteTile.Size size){
+    public static void setCellSize(Size size){
         cellSize = size.getSize();
     }
 }

@@ -3,6 +3,7 @@ package be.ac.umons.Sokoban.Load;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.Entities.ImmovableContent;
 import be.ac.umons.Sokoban.Entities.MovableContent;
+import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.Save.Save;
 
 import java.io.*;
@@ -12,12 +13,13 @@ public class Load {
 
     static String line;
 
-
+    // TODO make size adaptive
     public static Grid loadSavedFile(String fileName) {
         try {
             File file = new File("src/main/resources/saves/" + fileName + ".xsb");
             int[] dimension = findMaxColAndRow(file);
-            Grid loadGrid = new Grid(dimension[0], dimension[1]);
+            //Grid loadGrid = new Grid(dimension[0], dimension[1]);
+            Grid loadGrid = new Grid(Size.SMALL);
             Scanner scanner = new Scanner(file);
             int j;
 
@@ -64,7 +66,8 @@ public class Load {
         try {
             File file = new File("src/main/resources/levels/" + fileName + ".xsb");
             int[] dimension = findMaxColAndRow(file);
-            Grid loadGrid = new Grid(dimension[0], dimension[1]);
+            //Grid loadGrid = new Grid(dimension[0], dimension[1]);
+            Grid loadGrid = new Grid(Size.SMALL);
             Scanner scanner = new Scanner(file);
             int j;
 

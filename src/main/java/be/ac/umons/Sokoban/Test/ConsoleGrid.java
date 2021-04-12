@@ -3,6 +3,7 @@ import java.util.*;
 
 import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.JavaFX.Size;
 
 
 public class ConsoleGrid
@@ -14,7 +15,7 @@ public class ConsoleGrid
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
 
 
-        Grid grid = new Grid(7,8);
+        Grid grid = new Grid(Size.LARGE);
         grid.set_default_walls();
         grid.set_player(1,6);
         grid.set_boxes(grid.col/2, grid.row/2);
@@ -56,7 +57,7 @@ public class ConsoleGrid
                     }
                     break;
                 case " ":
-                    grid = new Grid(7,8);
+                    grid = new Grid(Size.LARGE);
                     grid.set_default_walls();
                     grid.set_player(1,6);
                     grid.set_boxes(grid.col/2, grid.row/2);

@@ -1,5 +1,6 @@
 package be.ac.umons.Sokoban.Entities;
 
+import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.MapGeneration.PatternGenerator;
 
 import java.util.Arrays;
@@ -16,12 +17,15 @@ public class Grid {
     public final int col;
     public final int row;
 
+    private Size size;
+
     private final int [] player = new int[2];
 
-    public Grid (int col, int row)
+    public Grid (Size size)
     {
-        this.col = col;
-        this.row = row;
+        this.col = size.getCol();
+        this.row = size.getRow();
+        this.size = size;
 
         //Create an instance of Grid that is an Array with a "row" width and "col" length
         grid = new Tile[row][col];
@@ -77,6 +81,11 @@ public class Grid {
             }
         }
     }
+
+    public Size getSize() {
+        return size;
+    }
+
     public void setPlayerLocation(int x, int y){
         player[0] = x;
         player[1] = y;
@@ -271,7 +280,7 @@ public class Grid {
 
     public static void main(String[] args)
     {
-        Grid myGrid = new Grid(8, 8);
+        Grid myGrid = new Grid(Size.SMALL);
         PatternGenerator patternGiver = new PatternGenerator();
 
         myGrid.patternIntegration(0, 0, PatternGenerator.Pattern.CROSS.getPattern());
