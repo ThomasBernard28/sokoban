@@ -38,6 +38,7 @@ public class LevelGenScene extends SceneTool {
          */
 
     private final static BorderPane root = new BorderPane();
+    private final static GridPane superRoot = new GridPane();
 
     private static GamePane visualGrid = null;
     private static TileImg currModifier = TileImg.EMPTY;
@@ -54,10 +55,10 @@ public class LevelGenScene extends SceneTool {
     private final static int MARGIN = 30;
 
     public static void makeScene(){
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(superRoot);
         SceneList.LVL_GEN.setScene(scene);
 
-        root.setBackground(new Background(bgFillLightBlue));
+        superRoot.setBackground(new Background(bgFillLightBlue));
 
         root.setTop(topGenesis());
         root.setBottom(bottomGenesis());
