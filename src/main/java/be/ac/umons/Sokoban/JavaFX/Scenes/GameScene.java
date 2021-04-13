@@ -1,6 +1,8 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
+import be.ac.umons.Sokoban.JavaFX.Size;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -9,7 +11,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
-public class GameScene extends SceneTool{
+public class GameScene extends SceneTool {
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();

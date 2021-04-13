@@ -1,16 +1,17 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
+import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
-public class MenuScene extends SceneTool{
+public class MenuScene extends SceneTool {
 
     public final static BorderPane root = new BorderPane();
     private final static int MARGIN = 30;

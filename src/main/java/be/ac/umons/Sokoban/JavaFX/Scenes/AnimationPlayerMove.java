@@ -1,6 +1,8 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.Entities.Direction;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
+import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 import javafx.animation.Interpolator;
 import javafx.animation.Transition;
 import javafx.geometry.Rectangle2D;

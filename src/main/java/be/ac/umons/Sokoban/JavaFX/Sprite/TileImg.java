@@ -1,5 +1,7 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Sprite;
 
+import be.ac.umons.Sokoban.JavaFX.Size;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import javafx.geometry.Rectangle2D;
 
 public enum TileImg {

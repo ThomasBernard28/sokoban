@@ -1,7 +1,9 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Event;
 
 import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.JavaFX.Scenes.AnimationPlayerMove;
+import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;

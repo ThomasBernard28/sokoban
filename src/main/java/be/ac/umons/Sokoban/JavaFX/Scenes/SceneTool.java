@@ -1,24 +1,24 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Scenes;
 
-import javafx.event.EventHandler;
-import javafx.event.EventType;
+import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
+import be.ac.umons.Sokoban.JavaFX.Size;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class SceneTool {
     /**
      * This enum contains every scene and allows to switch the current scene
      */
-    protected enum SceneList{
+    public enum SceneList{
         GAME,
         LVL_GEN,
         MENU,

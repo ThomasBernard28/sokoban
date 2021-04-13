@@ -1,8 +1,11 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Event;
 
 import be.ac.umons.Sokoban.Entities.ImmovableContent;
 import be.ac.umons.Sokoban.Entities.MovableContent;
 import be.ac.umons.Sokoban.Entities.Tile;
+import be.ac.umons.Sokoban.JavaFX.Scenes.LevelGenScene;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
+import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 

@@ -1,4 +1,4 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Sprite;
 
 import javafx.geometry.Rectangle2D;
 

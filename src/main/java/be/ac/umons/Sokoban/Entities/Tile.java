@@ -5,7 +5,7 @@ With this class we can control the movements of the different entities and check
 we want to make is possible.
  */
 
-import be.ac.umons.Sokoban.JavaFX.TileImg;
+import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 
 public class Tile
 {

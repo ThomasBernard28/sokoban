@@ -1,4 +1,4 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import javafx.scene.layout.StackPane;
 

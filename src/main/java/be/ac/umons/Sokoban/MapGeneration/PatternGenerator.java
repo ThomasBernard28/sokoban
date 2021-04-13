@@ -150,8 +150,9 @@ public class PatternGenerator {
                     return rotation(pattern, i * 90);
                 case X:
                     return pattern;
+                default:
+                    throw new IllegalStateException("Unexpected enum value");
             }
-            return pattern;
         }
     }
 

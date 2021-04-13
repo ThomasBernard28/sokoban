@@ -1,5 +1,6 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Sprite;
 
+import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 

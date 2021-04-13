@@ -1,37 +1,15 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.Test.ConsoleGrid;
+import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene;
+import be.ac.umons.Sokoban.JavaFX.Scenes.LevelGenScene;
+import be.ac.umons.Sokoban.JavaFX.Scenes.MenuScene;
+import be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool;
 import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
 import java.awt.*;
-import java.io.File;
-import java.net.URI;
 import java.net.URL;
 
 public class MyWindow extends Application
@@ -50,6 +28,8 @@ public class MyWindow extends Application
     }
 
     public void start(Stage theStage){
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        System.out.println(screenSize.width + "," + screenSize.height);
         SceneTool.setStage(theStage);
         SceneTool.setCurrSize(Size.LARGE);
         final Image imageHead = new Image("images/Head.png");

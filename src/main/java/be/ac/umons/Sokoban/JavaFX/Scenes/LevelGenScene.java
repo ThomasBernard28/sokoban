@@ -1,7 +1,13 @@
-package be.ac.umons.Sokoban.JavaFX;
+package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.Test.ConsoleGrid;
+import be.ac.umons.Sokoban.JavaFX.*;
+import be.ac.umons.Sokoban.JavaFX.Event.LevelGenEvent;
+import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
+import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
+import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
