@@ -3,6 +3,8 @@ package be.ac.umons.Sokoban.JavaFX.Scenes;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Size;
+import be.ac.umons.Sokoban.Save.Load;
+import be.ac.umons.Sokoban.Save.Path;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+
+import java.io.IOException;
 
 public class GameScene extends SceneTool {
 
@@ -39,10 +43,18 @@ public class GameScene extends SceneTool {
         logicGrid.set_boxes(logicGrid.getSize().getCol()/2, logicGrid.getSize().getRow()/2);
         logicGrid.set_flag((logicGrid.getSize().getCol()/2) + 1, (logicGrid.getSize().getRow()/2) + 1);
 
-        GamePane gamePane = new GamePane(logicGrid);
+        Grid test = null;
+        try{
+            test = Load.loadFile(Path.LVL,"level1_0");
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+
+
+        GamePane gamePane = new GamePane(test);
         gamePane.initiate();
 
-        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(logicGrid, gamePane));
+        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(gamePane));
         return gamePane;
     }
 

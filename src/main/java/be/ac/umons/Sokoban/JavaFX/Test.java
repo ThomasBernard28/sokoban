@@ -2,6 +2,10 @@ package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
+import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene;
+import be.ac.umons.Sokoban.JavaFX.Scenes.LevelGenScene;
+import be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
@@ -16,8 +20,9 @@ public class Test extends Application {
     public void start(Stage theStage){
         theStage.setTitle("MapTest");
         // logic part
-
-        Grid logicGrid = new Grid(Size.SMALL);
+        /*
+        Grid logicGrid = new Grid(Size.MEDIUM);
+        SpriteTile.setGameSheet(Size.MEDIUM);
         logicGrid.set_default_walls();
         logicGrid.generateRandomWalls();
 
@@ -26,8 +31,10 @@ public class Test extends Application {
         // GridPane group that will contain the Grid
         GamePane gamePane = new GamePane(logicGrid);
         // Scene with the game
-        Scene gameScene = new Scene(gamePane);
-        theStage.setScene(gameScene);
+        Scene gameScene = new Scene(gamePane);*//*
+        LevelGenScene.makeScene();
+        SceneTool.SceneList.LVL_GEN.setOnActive();
+
         gamePane.initiate();
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
@@ -35,9 +42,9 @@ public class Test extends Application {
             gamePane.getGrid().set_default_walls();
             gamePane.getGrid().generateRandomWalls();
             gamePane.initiate();
-        });
+        });*/
 
-        theStage.show();
+        SceneTool.start();
     }
 
     public void startl(Stage theStage){

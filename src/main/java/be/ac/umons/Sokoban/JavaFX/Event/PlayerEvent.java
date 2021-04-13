@@ -12,8 +12,8 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
     private final Grid logicGrid;
     private final AnimationPlayerMove playerAnimation;
 
-    public PlayerEvent(Grid grid, GamePane gamePane){
-        this.logicGrid = grid;
+    public PlayerEvent(GamePane gamePane){
+        this.logicGrid = gamePane.getGrid();
 
         playerAnimation = new AnimationPlayerMove(gamePane, Duration.millis(300));
 
@@ -33,6 +33,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                     playerAnimation.setAnimation(logicGrid.getGridFromPlayer(Direction.UP).hasBox());
                     logicGrid.getGridFromPlayer().move(logicGrid, Direction.UP);
                     playerAnimation.play();
+                    System.out.println("z");
 
                 }
                 break;

@@ -8,6 +8,8 @@ import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
+import be.ac.umons.Sokoban.Save.Path;
+import be.ac.umons.Sokoban.Save.Save;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
@@ -24,6 +26,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class LevelGenScene extends SceneTool {
@@ -67,8 +70,8 @@ public class LevelGenScene extends SceneTool {
 
 
         root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
-        root.setScaleY(0.8);
-        root.setScaleX(0.8);
+        //root.setScaleY(0.8);
+        //root.setScaleX(0.8);
 
         superRoot.add(root, 0, 0);
 
@@ -238,7 +241,7 @@ public class LevelGenScene extends SceneTool {
         play.setOnAction(event -> {
             if(containPlayer && gridToTry == null) {
                 gridToTry = copyOfSpecialPane(visualGrid);
-                eventToTry = new PlayerEvent(gridToTry.getGrid(), gridToTry);
+                eventToTry = new PlayerEvent(gridToTry);
 
                 root.setCenter(centerRowGenesis(gridToTry, centerRightGenesis()));
                 SceneList.LVL_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
@@ -272,7 +275,7 @@ public class LevelGenScene extends SceneTool {
         save.setOnAction(event -> {
             CharSequence output = fileOutput.getCharacters();
             // https://regex101.com/
-            if (Pattern.matches("^(\\w|_)+\\.(xsb)$", output)){
+            if (Pattern.matches("^(\\w|_)+$", output)){
                 System.out.println("coooorrectttt");
             }
 
@@ -285,6 +288,24 @@ public class LevelGenScene extends SceneTool {
             setCurrSize(selectedSize);
 
             root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+        });
+
+        generate.setOnAction(event -> {
+            stop.fire();
+            containPlayer = false;
+            visualGrid.getGrid().resetGrid();
+            visualGrid.getGrid().set_default_walls();
+            visualGrid.getGrid().generateRandomWalls();
+            visualGrid.initiate();
+        });
+
+        save.setOnAction(event -> {
+            try{
+                Save.saving(visualGrid.getGrid(), Path.SAVE, fileOutput.getText());
+                System.out.println(fileOutput.getText());
+            } catch (IOException e){
+                e.printStackTrace();
+            }
         });
 
         //end of logic part

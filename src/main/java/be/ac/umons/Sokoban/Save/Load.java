@@ -12,10 +12,14 @@ import java.util.Scanner;
 
 public class Load {
 
-    public static Grid loadSavedFile(String fileName) throws FileNotFoundException {
-        Grid loadGrid = null;
 
-        File file = new File("src/main/resources/saves/" + fileName);
+
+
+
+    public static Grid loadFile(Path path ,String fileName) throws FileNotFoundException {
+        Grid loadGrid;
+
+        File file = new File(path.getPath() + fileName + ".xsb");
 
         Size size = findSize(file);
         loadGrid = new Grid(size);
@@ -35,6 +39,7 @@ public class Load {
                         break;
                     case '@':
                         loadGrid.getGridAt(j, i).setMovableContent(MovableContent.PLAYER);
+                        loadGrid.setPlayerLocation(j, i);
                         break;
                     case '$':
                         loadGrid.getGridAt(j, i).setMovableContent(MovableContent.BOX);
@@ -45,6 +50,7 @@ public class Load {
                     case '+':
                         loadGrid.getGridAt(j, i).setMovableContent(MovableContent.PLAYER);
                         loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
+                        loadGrid.setPlayerLocation(j, i);
                         break;
                     case '*':
                         loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
@@ -85,8 +91,8 @@ public class Load {
     }
     public static void main(String[] args) {
         try {
-            Grid test = loadSavedFile("testBis.xsb");
-            Save.saving(test,"testBis2.xsb");
+            Grid test = loadFile(Path.SAVE,"testBis");
+            Save.saving(test,Path.SAVE,"testBis2");
         } catch (IOException e){
             e.printStackTrace();
         }
