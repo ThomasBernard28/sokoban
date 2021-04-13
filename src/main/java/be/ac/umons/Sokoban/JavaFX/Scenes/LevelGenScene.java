@@ -60,6 +60,7 @@ public class LevelGenScene extends SceneTool {
     public static void makeScene(){
         Scene scene = new Scene(superRoot);
         SceneList.LVL_GEN.setScene(scene);
+        setCurrSize(Size.MEDIUM);
 
         superRoot.setBackground(new Background(bgFillLightBlue));
 
@@ -106,6 +107,7 @@ public class LevelGenScene extends SceneTool {
         centerLeft.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent());
         visualGrid = centerLeft;
         centerLeft.initiateLvlGen();
+
 
         return centerLeft;
     }
@@ -288,24 +290,6 @@ public class LevelGenScene extends SceneTool {
             setCurrSize(selectedSize);
 
             root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
-        });
-
-        generate.setOnAction(event -> {
-            stop.fire();
-            containPlayer = false;
-            visualGrid.getGrid().resetGrid();
-            visualGrid.getGrid().set_default_walls();
-            visualGrid.getGrid().generateRandomWalls();
-            visualGrid.initiate();
-        });
-
-        save.setOnAction(event -> {
-            try{
-                Save.saving(visualGrid.getGrid(), Path.SAVE, fileOutput.getText());
-                System.out.println(fileOutput.getText());
-            } catch (IOException e){
-                e.printStackTrace();
-            }
         });
 
         //end of logic part

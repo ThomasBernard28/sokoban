@@ -14,6 +14,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
+import java.awt.*;
+
 public class SceneTool {
     /**
      * This enum contains every scene and allows to switch the current scene
@@ -43,9 +45,17 @@ public class SceneTool {
     }
 
     protected static Stage WINDOW;
+    private  static double windowResizeFactor;
 
     public static void setStage(Stage theStage){
         WINDOW = theStage;
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        windowResizeFactor = screenSize.height/1080.0;
+
+    }
+
+    public static double getWindowResizeFactor() {
+        return windowResizeFactor;
     }
 
     /**
@@ -58,6 +68,7 @@ public class SceneTool {
     public static void start(){
         WINDOW.show();
     }
+
 
     /*
     Here we have some design constant that are used in several scenes
