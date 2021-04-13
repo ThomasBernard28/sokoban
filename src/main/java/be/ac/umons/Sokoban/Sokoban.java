@@ -4,10 +4,21 @@
 
 package be.ac.umons.Sokoban;
 
+import be.ac.umons.Sokoban.JavaFX.MyWindow;
+
 public class Sokoban
 {
     public static void main(String[] args)
     {
-        int a;
+        switch(args.length){
+            case 0:
+                MyWindow.main(args);
+                break;
+            case 3:
+                // TODO implement unit test
+                break;
+            default : throw new IllegalStateException("Veuillez entrer des arguments valables");
+       }
     }
+
 }

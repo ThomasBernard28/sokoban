@@ -86,7 +86,7 @@ public class Load {
     public static void main(String[] args) {
         try {
             Grid test = loadSavedFile("testBis.xsb");
-            Save.savingBis(test,"testBis2.xsb");
+            Save.saving(test,"testBis2.xsb");
         } catch (IOException e){
             e.printStackTrace();
         }

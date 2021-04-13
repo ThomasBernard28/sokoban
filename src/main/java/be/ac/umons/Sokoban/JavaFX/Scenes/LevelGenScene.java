@@ -66,6 +66,11 @@ public class LevelGenScene extends SceneTool {
 
 
         root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+        root.setScaleY(0.8);
+        root.setScaleX(0.8);
+
+        superRoot.add(root, 0, 0);
+
     }
 
     public static TileImg getCurrModifier(){

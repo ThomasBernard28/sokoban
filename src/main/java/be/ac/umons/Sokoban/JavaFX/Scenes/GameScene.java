@@ -27,6 +27,8 @@ public class GameScene extends SceneTool {
 
         root.setBackground(new Background(bgFillLightBlue));
         root.setAlignment(Pos.CENTER);
+
+
     }
 
     private static GamePane bottomRowGenesis(Size size){

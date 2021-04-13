@@ -20,19 +20,26 @@ import java.util.List;
 
 public class Save {
 
-    public static void saving(Grid test, String fileName) throws IOException {
-
-        CharArrayWriter caw = new CharArrayWriter();
-        for(char[] line : test.toCharArray()){
-            caw.write(line);
+    public static void saving(Grid logicGrid, String fileName, String path) throws IOException {
+        String gridToTxt = "";
+        for(int i = 0; i < logicGrid.getSize().getRow(); i++){
+            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
+                gridToTxt += logicGrid.getGridAt(j, i);
+                if(j == logicGrid.getSize().getCol() - 1){
+                    gridToTxt += "\n";
+                }
+            }
         }
 
-        FileWriter fw = new FileWriter("src/main/resources/saves/"+fileName+".xsb");
-        caw.writeTo(fw);
+        File file = new File("src/main/resources/"+ path+"/" + fileName);
+        boolean success = file.createNewFile();
+        if(success){
+            FileWriter writer = new FileWriter(file);
 
-        fw.flush();
-        caw.flush();
-        caw.close();
+            writer.write(gridToTxt);
+            writer.flush();
+            writer.close();
+        }
     }
 
     /**
@@ -41,7 +48,7 @@ public class Save {
      * @param fileName new file in which the grid will be saved the extension must be .xsb
      * @throws IOException if the file already exists
      */
-    public static void savingBis(Grid logicGrid, String fileName) throws IOException {
+    public static void saving(Grid logicGrid, String fileName) throws IOException {
         String gridToTxt = "";
         for(int i = 0; i < logicGrid.getSize().getRow(); i++){
             for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
@@ -67,7 +74,7 @@ public class Save {
         try {
             Grid test = MyWindow.logicGridGenesis(Size.SMALL);
             test.set_boxes(2,2);
-            savingBis(test , "testBis.xsb");
+            saving(test , "testBis.xsb");
         } catch (IOException e) {
             e.printStackTrace();
         }
