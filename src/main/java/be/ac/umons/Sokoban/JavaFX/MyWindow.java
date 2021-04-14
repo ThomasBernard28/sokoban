@@ -36,6 +36,7 @@ public class MyWindow extends Application
         PlayMenuScene.makeScene();
 
 
+
         theStage.setTitle("Sokoban");
         theStage.getIcons().add(imageHead);
 

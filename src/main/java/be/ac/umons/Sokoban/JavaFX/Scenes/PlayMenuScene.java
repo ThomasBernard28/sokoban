@@ -69,9 +69,8 @@ public class PlayMenuScene extends SceneTool{
 
         LvlSelectButton.setOnMouseClicked(event -> {
             //TODO LevelSelectionScene
-            GameScene.makeScene();
-            SceneList.GAME.setOnActive();
-            WINDOW.setFullScreen(true);
+            LevelSelectionScene.makeScene();
+            SceneList.LVL_SELECTION.setOnActive();
         });
 
         LvlGeneratorButton.setOnMouseClicked(event -> {
