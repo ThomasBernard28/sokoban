@@ -128,6 +128,7 @@ public class LevelGenScene extends SceneTool {
         Button playerButton = new Button("Player");
         Button wallButton = new Button("Wall");
         Button eraseButton = new Button("Erase");
+        Button nothing = new Button();
 
         boxButton.setGraphic(SpriteTile.getTileImg(TileImg.BOX));
         flagButton.setGraphic(SpriteTile.getTileImg(TileImg.FLAG));
