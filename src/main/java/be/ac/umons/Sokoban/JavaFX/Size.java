@@ -1,9 +1,9 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 public enum Size {
-    SMALL(32, 20, 32), // 19, 32
-    MEDIUM(48, 14,23), // 14, 21
-    LARGE(64, 11,17); //11, 16
+    SMALL(32, 20, 32), // 20, 32
+    MEDIUM(48, 14,23), // 14, 23
+    LARGE(64, 11,17); //11, 17
 
     private final int cellSize;
     private final int row;
