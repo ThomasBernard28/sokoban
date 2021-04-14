@@ -1,5 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
+import be.ac.umons.Sokoban.JavaFX.MyWindow;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
@@ -17,6 +18,7 @@ import javafx.stage.Stage;
 import java.awt.*;
 
 public class SceneTool {
+
     /**
      * This enum contains every scene and allows to switch the current scene
      */
@@ -105,11 +107,30 @@ public class SceneTool {
 
         exitButton.setGraphic(exit);
         exitButton.setBackground(new Background(bgFillGray));
-        exitButton.setStyle("-fx-cursor: hand");
+        exitButton.setStyle("-fx-cursor: hand;");
 
-        exitButton.setOnAction(event -> SceneList.MENU.setOnActive());
+        exitButton.setOnAction(event -> {
+            SceneList.MENU.setOnActive();
+        });
         return exitButton;
     }
+    protected static Button makeToPLayMenuButton(){
+        Button exitButton = new Button();
+        ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
+
+        exitButton.setScaleX(0.5);
+        exitButton.setScaleY(0.5);
+
+        exitButton.setGraphic(exit);
+        exitButton.setBackground(new Background(bgFillGray));
+        exitButton.setStyle("-fx-cursor: hand;");
+
+        exitButton.setOnAction(event -> {
+            SceneList.PLAY_MENU.setOnActive();
+        });
+         return exitButton;
+    }
+
 
     protected static Size currSize;
 

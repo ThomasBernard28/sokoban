@@ -31,8 +31,10 @@ public class MyWindow extends Application
         SceneTool.setCurrSize(Size.LARGE);
         final Image imageHead = new Image("images/Head.png");
 
-        GameScene.makeScene();
+
         LevelGenScene.makeScene();
+        GameScene.makeScene();
+
 
 
         theStage.setTitle("Sokoban");

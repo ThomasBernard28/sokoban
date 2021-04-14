@@ -16,6 +16,7 @@ import javafx.scene.text.Font;
 public class PlayMenuScene extends SceneTool{
     public final static BorderPane root = new BorderPane();
     private final static int MARGIN = 30;
+    private static Button resetButton = null;
 
     public static void makeScene(){
         root.setCenter(centerGenesis());
@@ -117,7 +118,7 @@ public class PlayMenuScene extends SceneTool{
         title.setFont(Font.font("impact", 70));
         title.setStyle("-fx-padding: 20 20 20 20");
 
-        Button exitButton = makeToMenuButton();
+        Button exitButton = makeToMenuButton();;
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);
 
@@ -127,5 +128,9 @@ public class PlayMenuScene extends SceneTool{
         topSide.getChildren().addAll(exitButton, title);
 
         return topSide;
+    }
+
+    public static void resetScene() {
+        resetButton.fire();
     }
 }

@@ -47,19 +47,7 @@ public class LevelSelectionScene extends SceneTool{
         title.setFont(Font.font("impact", 70));
         title.setStyle("-fx-padding: 20, 20 ,20 , 20");
 
-        Button exitButton = new Button();
-        ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
-
-        exit.setScaleX(1);
-        exit.setScaleY(1);
-
-        exitButton.setGraphic(exit);
-        exitButton.setBackground(new Background(bgFillGray));
-        exitButton.setStyle("-fx-cursor: hand;");
-
-        exitButton.setOnAction(event -> {
-            SceneList.PLAY_MENU.setOnActive();
-        });
+        Button exitButton = makeToPLayMenuButton();
 
         topSide.setStyle("-fx-padding: 60, 50, 20, 50");
         topSide.setSpacing(50);
