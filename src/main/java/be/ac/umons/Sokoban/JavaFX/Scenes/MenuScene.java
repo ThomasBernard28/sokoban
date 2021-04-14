@@ -72,6 +72,7 @@ public class MenuScene extends SceneTool {
             WINDOW.setFullScreen(true);
         });
         lvlGenButton.setOnMouseClicked(event -> {
+            LevelGenScene.resetScene();
             SceneList.LVL_GEN.setOnActive();
             WINDOW.setFullScreen(true);
         });

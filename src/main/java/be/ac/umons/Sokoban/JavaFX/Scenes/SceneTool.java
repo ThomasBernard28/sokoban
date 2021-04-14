@@ -56,6 +56,8 @@ public class SceneTool {
     }
 
     public static void start(){
+        MenuScene.makeScene();
+        SceneTool.SceneList.MENU.setOnActive();
         WINDOW.show();
     }
 

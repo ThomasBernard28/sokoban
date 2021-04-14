@@ -50,6 +50,8 @@ public class LevelGenScene extends SceneTool {
     private static GamePane gridToTry = null;
     private static PlayerEvent eventToTry = null;
 
+    private static Button resetButton = null;
+
     private final static EventHandler<MouseEvent> filter = event -> {
         System.out.println("Filtering out event " + event.getEventType());
         event.consume();
@@ -70,8 +72,7 @@ public class LevelGenScene extends SceneTool {
 
 
         root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
-        //root.setScaleY(0.8);
-        //root.setScaleX(0.8);
+
 
         superRoot.add(root, 0, 0);
 
@@ -91,6 +92,10 @@ public class LevelGenScene extends SceneTool {
 
     public static void resetCurrModifier(){
         currModifier = TileImg.EMPTY;
+    }
+
+    protected static void resetScene(){
+        resetButton.fire();
     }
 
 
@@ -148,6 +153,8 @@ public class LevelGenScene extends SceneTool {
                 child.setStyle(UnpressedButtonCSS);
             }
             boxButton.setStyle(PressedButtonCSS);
+            System.out.println(root.getWidth() + "," + root.getHeight());
+            System.out.println(WINDOW.getWidth() + "," + WINDOW.getHeight());
 
         });
         flagButton.setOnAction(event -> {
@@ -203,14 +210,18 @@ public class LevelGenScene extends SceneTool {
 
         Button generate = new Button();
         Button reset = new Button();
+        resetButton = reset;
         Button save = new Button();
         Button play = new Button();
         Button stop = new Button();
+
         TextField fileOutput = new TextField();
         fileOutput.setFont(new Font("arial", 20));
+
         //TODO adapt list view to size enum
         ObservableList<Size> diffSize = FXCollections.observableArrayList(Size.values());
         ListView<Size> sizePicker = new ListView<Size>(diffSize);
+
         sizePicker.setMaxHeight(90);
         sizePicker.setFixedCellSize(29);
         sizePicker.setMaxWidth(200);
@@ -267,6 +278,7 @@ public class LevelGenScene extends SceneTool {
 
         reset.setOnAction(event -> {
             stop.fire();
+            resetCurrModifier();
             containPlayer = false;
             visualGrid.getGrid().resetGrid();
             visualGrid.initiate();
