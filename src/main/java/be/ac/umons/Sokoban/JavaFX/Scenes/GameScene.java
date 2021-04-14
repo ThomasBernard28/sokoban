@@ -77,4 +77,10 @@ public class GameScene extends SceneTool {
         return topSide;
 
     }
+    public static GamePane createGamePane(Grid gameFile){
+        GamePane gamePane = new GamePane(gameFile);
+        gamePane.initiate();
+
+        return gamePane;
+    }
 }

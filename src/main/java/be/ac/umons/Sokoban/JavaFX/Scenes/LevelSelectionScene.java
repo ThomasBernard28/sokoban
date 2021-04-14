@@ -1,16 +1,23 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
+import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
+import be.ac.umons.Sokoban.Save.Load;
+import be.ac.umons.Sokoban.Save.Path;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+
+import java.io.IOException;
 
 public class LevelSelectionScene extends SceneTool{
     private static final BorderPane selectionRoot = new BorderPane();
@@ -116,16 +123,8 @@ public class LevelSelectionScene extends SceneTool{
         Label level10text = new Label("Lvl 10");
 
 
-        level1text.setFont(Font.font("impact", 20));
-        level2text.setFont(Font.font("impact", 20));
-        level3text.setFont(Font.font("impact", 20));
-        level4text.setFont(Font.font("impact", 20));
-        level5text.setFont(Font.font("impact", 20));
-        level6text.setFont(Font.font("impact", 20));
-        level7text.setFont(Font.font("impact", 20));
-        level8text.setFont(Font.font("impact", 20));
-        level9text.setFont(Font.font("impact", 20));
-        level10text.setFont(Font.font("impact", 20));
+        setFont(level1text, level2text, level3text, level4text, level5text);
+        setFont(level6text, level7text, level8text, level9text, level10text);
 
         level1Button.getChildren().addAll(level1ButtonImg, level1text);
         level2Button.getChildren().addAll(level2ButtonImg, level2text);
@@ -138,10 +137,145 @@ public class LevelSelectionScene extends SceneTool{
         level9Button.getChildren().addAll(level9ButtonImg, level9text);
         level10Button.getChildren().addAll(level10ButtonImg, level10text);
 
+        level1Button.setStyle("-fx-cursor: hand;");
+        level2Button.setStyle("-fx-cursor: hand;");
+        level3Button.setStyle("-fx-cursor: hand;");
+        level4Button.setStyle("-fx-cursor: hand;");
+        level5Button.setStyle("-fx-cursor: hand;");
+        level6Button.setStyle("-fx-cursor: hand;");
+        level7Button.setStyle("-fx-cursor: hand;");
+        level8Button.setStyle("-fx-cursor: hand;");
+        level9Button.setStyle("-fx-cursor: hand;");
+        level10Button.setStyle("-fx-cursor: hand;");
+
+        level1Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level2Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level2_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level3Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level3_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level4Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level4_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level5Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level6Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level6_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level7Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level7_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level8Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level8_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level9Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level9_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+        level10Button.setOnMouseClicked(event -> {
+            try {
+                Grid gameFile =Load.loadFile(Path.LVL, "level10_0");
+                GamePane gamePane = GameScene.createGamePane(gameFile);
+                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.makeScene();
+                SceneList.GAME.setOnActive();
+
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        });
+
+
+
         HBox firstLevels = new HBox();
         firstLevels.getChildren().addAll(level1Button, level2Button, level3Button, level4Button, level5Button);
         firstLevels.setSpacing(100);
         firstLevels.setAlignment(Pos.TOP_CENTER);
+
 
         HBox otherLevels = new HBox();
         otherLevels.getChildren().addAll(level6Button, level7Button, level8Button, level9Button, level10Button);
@@ -158,6 +292,15 @@ public class LevelSelectionScene extends SceneTool{
 
         return centerSide;
     }
+
+    private static void setFont(Label level1text, Label level2text, Label level3text, Label level4text, Label level5text) {
+        level1text.setFont(Font.font("impact", 20));
+        level2text.setFont(Font.font("impact", 20));
+        level3text.setFont(Font.font("impact", 20));
+        level4text.setFont(Font.font("impact", 20));
+        level5text.setFont(Font.font("impact", 20));
+    }
+
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
