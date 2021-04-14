@@ -24,7 +24,8 @@ public class SceneTool {
         GAME,
         LVL_GEN,
         MENU,
-        LVL_SELECTION;
+        LVL_SELECTION,
+        PLAY_MENU;
 
         private Scene scene = null;
 
