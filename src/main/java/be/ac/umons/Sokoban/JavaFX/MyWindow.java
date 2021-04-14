@@ -34,7 +34,7 @@ public class MyWindow extends Application
         GameScene.makeScene();
         LevelGenScene.makeScene();
         PlayMenuScene.makeScene();
-        //MenuScene.makeScene();
+
 
 
         theStage.setTitle("Sokoban");

@@ -7,29 +7,28 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
-import java.util.Stack;
+
 
 public class PlayMenuScene extends SceneTool{
-    public final static BorderPane interRoot = new BorderPane();
+    public final static BorderPane root = new BorderPane();
     private final static int MARGIN = 30;
 
     public static void makeScene(){
-        interRoot.setCenter(centerGenesis());
-        interRoot.setTop(topGenesis());
-        interRoot.setBottom(bottomGenesis());
-        interRoot.setLeft(leftGenesis());
-        interRoot.setRight(rightGenesis());
+        root.setCenter(centerGenesis());
+        root.setTop(topGenesis());
+        root.setBottom(bottomGenesis());
+        root.setLeft(leftGenesis());
+        root.setRight(rightGenesis());
 
-        interRoot.setBackground(new Background(bgFillLightBlue));
-        interRoot.setMinHeight(720);
-        interRoot.setMinWidth(1280);
+        root.setBackground(new Background(bgFillLightBlue));
+        root.setMinHeight(720);
+        root.setMinWidth(1280);
 
-        Scene scene  = new Scene(interRoot);
+        Scene scene  = new Scene(root);
         SceneList.PLAY_MENU.setScene(scene);
     }
 
@@ -69,9 +68,8 @@ public class PlayMenuScene extends SceneTool{
 
         LvlSelectButton.setOnMouseClicked(event -> {
             //TODO LevelSelectionScene
-            GameScene.makeScene();
-            SceneList.GAME.setOnActive();
-            WINDOW.setFullScreen(true);
+            LevelSelectionScene.makeScene();
+            SceneList.LVL_SELECTION.setOnActive();
         });
 
         LvlGeneratorButton.setOnMouseClicked(event -> {
@@ -80,7 +78,8 @@ public class PlayMenuScene extends SceneTool{
         });
 
         LoadSavedGameButton.setOnMouseClicked(event -> {
-            //TODO Create the file Loader
+            LoadScene.makeScene();
+            SceneList.LOAD.setOnActive();
         });
         centerSide.getChildren().addAll(LvlSelectButton, LvlGeneratorButton, LoadSavedGameButton);
         centerSide.setOrientation(Orientation.VERTICAL);
