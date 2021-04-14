@@ -1,10 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene;
-import be.ac.umons.Sokoban.JavaFX.Scenes.LevelGenScene;
-import be.ac.umons.Sokoban.JavaFX.Scenes.MenuScene;
-import be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool;
+import be.ac.umons.Sokoban.JavaFX.Scenes.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -36,7 +33,7 @@ public class MyWindow extends Application
 
         GameScene.makeScene();
         LevelGenScene.makeScene();
-        MenuScene.makeScene();
+        PlayMenuScene.makeScene();
 
 
         theStage.setTitle("Sokoban");
