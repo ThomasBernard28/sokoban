@@ -22,22 +22,22 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class LevelSelectionScene extends SceneTool{
-    private static final BorderPane selectionRoot = new BorderPane();
+    private static final BorderPane root = new BorderPane();
     private static final int MARGIN = 30;
 
     public static void makeScene(){
-        selectionRoot.setCenter(centerGenesis());
-        selectionRoot.setBottom(bottomGenesis());
-        selectionRoot.setTop(topGenesis());
-        selectionRoot.setLeft(leftGenesis());
-        selectionRoot.setRight(rightGenesis());
+        root.setCenter(centerGenesis());
+        root.setBottom(bottomGenesis());
+        root.setTop(topGenesis());
+        root.setLeft(leftGenesis());
+        root.setRight(rightGenesis());
 
 
-        selectionRoot.setBackground(new Background(bgFillLightBlue));
-        selectionRoot.setMinWidth(1280);
-        selectionRoot.setMinHeight(720);
+        root.setBackground(new Background(bgFillLightBlue));
+        root.setMinWidth(1280);
+        root.setMinHeight(720);
 
-        Scene scene = new Scene(selectionRoot);
+        Scene scene = new Scene(root);
         SceneList.LVL_SELECTION.setScene(scene);
     }
     public static HBox topGenesis(){
@@ -50,8 +50,8 @@ public class LevelSelectionScene extends SceneTool{
         Button exitButton = new Button();
         ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
 
-        exit.setScaleX(0.5);
-        exit.setScaleY(0.5);
+        exit.setScaleX(1);
+        exit.setScaleY(1);
 
         exitButton.setGraphic(exit);
         exitButton.setBackground(new Background(bgFillGray));
@@ -294,15 +294,6 @@ public class LevelSelectionScene extends SceneTool{
 
         return centerSide;
     }
-
-    private static void setFont(Label level1text, Label level2text, Label level3text, Label level4text, Label level5text) {
-        level1text.setFont(Font.font("impact", 20));
-        level2text.setFont(Font.font("impact", 20));
-        level3text.setFont(Font.font("impact", 20));
-        level4text.setFont(Font.font("impact", 20));
-        level5text.setFont(Font.font("impact", 20));
-    }
-
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
@@ -321,19 +312,19 @@ public class LevelSelectionScene extends SceneTool{
         customLevelButton.setStyle("-fx-cursor: hand;");
 
         customLevelButton.setOnMouseClicked(event -> {
-                CharSequence input = fileInput.getCharacters();
-                if (Pattern.matches("^(\\w|_)+$", input)) {
-                    try {
-                        Grid gameFile = Load.loadFile(Path.LVL, input.toString());
-                        GamePane gamePane = GameScene.createGamePane(gameFile);
-                        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
-                        GameScene.makeScene();
-                        SceneList.GAME.setOnActive();
+            CharSequence input = fileInput.getCharacters();
+            if (Pattern.matches("^(\\w|_)+$", input)) {
+                try {
+                    Grid gameFile = Load.loadFile(Path.LVL, input.toString());
+                    GamePane gamePane = GameScene.createGamePane(gameFile);
+                    SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                    GameScene.makeScene();
+                    SceneList.GAME.setOnActive();
 
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
+            }
         });
 
 
@@ -345,6 +336,15 @@ public class LevelSelectionScene extends SceneTool{
 
         return bottomSide;
     }
+
+    private static void setFont(Label level1text, Label level2text, Label level3text, Label level4text, Label level5text) {
+        level1text.setFont(Font.font("impact", 20));
+        level2text.setFont(Font.font("impact", 20));
+        level3text.setFont(Font.font("impact", 20));
+        level4text.setFont(Font.font("impact", 20));
+        level5text.setFont(Font.font("impact", 20));
+    }
+
 
     private static void scalier(ImageView level1ButtonImg, ImageView level2ButtonImg, ImageView level3ButtonImg, ImageView level4ButtonImg, ImageView level5ButtonImg) {
         level1ButtonImg.setScaleX(2);
