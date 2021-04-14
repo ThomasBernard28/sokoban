@@ -12,12 +12,14 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class LevelSelectionScene extends SceneTool{
     private static final BorderPane selectionRoot = new BorderPane();
@@ -304,6 +306,11 @@ public class LevelSelectionScene extends SceneTool{
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
+        TextField fileInput = new TextField();
+        fileInput.setFont(new Font("arial", 20));
+        fileInput.setScaleX(1.5);
+        fileInput.setScaleY(2.5);
+
         StackPane customLevelButton = new StackPane();
         ImageView customLevelButtonImg = SpriteUI.getUIImg(UIImg.RED_BUTTON01);
         customLevelButtonImg.setScaleX(2);
@@ -312,10 +319,27 @@ public class LevelSelectionScene extends SceneTool{
         customLvlText.setFont(Font.font("impact", 25));
         customLevelButton.getChildren().addAll(customLevelButtonImg, customLvlText);
         customLevelButton.setStyle("-fx-cursor: hand;");
-        //TODO Add an empty fill text to specify the name of the file to load
+
+        customLevelButton.setOnMouseClicked(event -> {
+                CharSequence input = fileInput.getCharacters();
+                if (Pattern.matches("^(\\w|_)+$", input)) {
+                    try {
+                        Grid gameFile = Load.loadFile(Path.LVL, input.toString());
+                        GamePane gamePane = GameScene.createGamePane(gameFile);
+                        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                        GameScene.makeScene();
+                        SceneList.GAME.setOnActive();
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+        });
 
 
-        bottomSide.getChildren().add(customLevelButton);
+
+        bottomSide.getChildren().addAll(customLevelButton, fileInput);
+        bottomSide.setSpacing(175);
         bottomSide.setAlignment(Pos.TOP_CENTER);
         bottomSide.setStyle("-fx-padding: 70, 50, 20, 50");
 
