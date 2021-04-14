@@ -5,6 +5,7 @@
 package be.ac.umons.Sokoban;
 
 import be.ac.umons.Sokoban.JavaFX.MyWindow;
+import be.ac.umons.Sokoban.JavaFX.Test;
 
 public class Sokoban
 {

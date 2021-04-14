@@ -57,7 +57,7 @@ public class LoadScene extends SceneTool{
         exitButton.setBackground(new Background(bgFillGray));
         exitButton.setStyle("-fx-cursor: hand;");
 
-        exitButton.setOnMouseClicked(event -> {
+        exitButton.setOnAction(event -> {
             SceneList.PLAY_MENU.setOnActive();
         });
         topSide.setSpacing(50);
@@ -66,8 +66,8 @@ public class LoadScene extends SceneTool{
 
         return topSide;
     }
-    public static TilePane centerGenesis(){
-        TilePane centerSide = new TilePane();
+    public static GridPane centerGenesis(){
+        GridPane centerSide = new GridPane();
         VBox differentFunction = new VBox();
 
         StackPane loadButton = new StackPane();

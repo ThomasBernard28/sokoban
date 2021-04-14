@@ -57,7 +57,7 @@ public class LevelSelectionScene extends SceneTool{
         exitButton.setBackground(new Background(bgFillGray));
         exitButton.setStyle("-fx-cursor: hand;");
 
-        exitButton.setOnMouseClicked(event -> {
+        exitButton.setOnAction(event -> {
             SceneList.PLAY_MENU.setOnActive();
         });
 
@@ -83,8 +83,8 @@ public class LevelSelectionScene extends SceneTool{
         return leftSide;
     }
 
-    public static TilePane centerGenesis() {
-        TilePane centerSide = new TilePane();
+    public static GridPane centerGenesis() {
+        GridPane centerSide = new GridPane();
 
         StackPane level1Button = new StackPane();
         StackPane level2Button = new StackPane();
