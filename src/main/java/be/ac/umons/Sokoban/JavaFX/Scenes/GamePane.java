@@ -11,8 +11,13 @@ import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 
 public class GamePane extends Pane {
-
     private final Grid logicGrid;
+
+    public int cellSize = 20;
+    public int row = 14;
+    public int col = 23;
+
+
 
     public GamePane(Grid logicGrid){
         this.logicGrid = logicGrid;
@@ -63,6 +68,9 @@ public class GamePane extends Pane {
         if(SpriteTile.getSize(true) != logicGrid.getSize()){
             SpriteTile.setGameSheet(logicGrid.getSize());
         }
+        this.maxHeight(logicGrid.getSize().getRow() * logicGrid.getSize().getSize());
+        this.maxWidth(logicGrid.getSize().getCol() * logicGrid.getSize().getSize());
+
         for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
             for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
 
@@ -99,6 +107,7 @@ public class GamePane extends Pane {
         if(SpriteTile.getSize(true) != logicGrid.getSize()){
             SpriteTile.setGameSheet(logicGrid.getSize());
         }
+
         for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
             for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
 
@@ -119,6 +128,38 @@ public class GamePane extends Pane {
                         break;
                     case FLAG:
                         setAt(SpriteTile.getTileImg(TileImg.FLAG), j, i);
+                        break;
+                    case EMPTY:
+                        break;
+                    default:
+                        throw new IllegalStateException("Unexpected value");
+
+                }
+            }
+        }
+    }
+
+    public void initiate(int cellSize){
+        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
+            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
+                int[] pos = {j * cellSize, i * cellSize};
+                setAt(SpriteTile.getTileImg(TileImg.EMPTY, cellSize, true), pos);
+
+                switch (logicGrid.getGridAt(j, i).getVisualType()) {
+                    case BOX:
+                        setAt(SpriteTile.getTileImg(TileImg.BOX_ICON, cellSize, true), pos);
+                        break;
+                    case FLAGGED_BOX:
+                        setAt(SpriteTile.getTileImg(TileImg.FLAGGED_BOX, cellSize, true), pos);
+                        break;
+                    case WALL:
+                        setAt(SpriteTile.getTileImg(TileImg.WALL, cellSize, true), pos);
+                        break;
+                    case PLAYER:
+                        setAt(SpriteTile.getTileImg(TileImg.HEAD, cellSize, true), pos);
+                        break;
+                    case FLAG:
+                        setAt(SpriteTile.getTileImg(TileImg.FLAG, cellSize, true), pos);
                         break;
                     case EMPTY:
                         break;

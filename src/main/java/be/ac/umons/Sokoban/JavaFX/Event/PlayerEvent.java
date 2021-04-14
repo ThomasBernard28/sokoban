@@ -4,6 +4,7 @@ import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.AnimationPlayerMove;
 import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
+import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
@@ -33,7 +34,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                     playerAnimation.setAnimation(logicGrid.getGridFromPlayer(Direction.UP).hasBox());
                     logicGrid.getGridFromPlayer().move(logicGrid, Direction.UP);
                     playerAnimation.play();
-                    System.out.println("z");
+                    System.out.println(GameScene.superRoot.getLayoutY());
 
                 }
                 break;

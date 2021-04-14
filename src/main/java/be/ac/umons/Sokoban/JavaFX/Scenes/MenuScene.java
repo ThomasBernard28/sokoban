@@ -19,9 +19,9 @@ public class MenuScene extends SceneTool {
     public static void makeScene(){
         root.setTop(topGenesis());
         root.setCenter(centerGenesis());
-        root.setLeft(leftGenesis());
-        root.setRight(rightGenesis());
-        root.setBottom(bottomGenesis());
+        //root.setLeft(leftGenesis());
+        //root.setRight(rightGenesis());
+        //root.setBottom(bottomGenesis());
 
         root.setBackground(new Background(bgFillLightBlue));
         root.setMinHeight(720);
@@ -68,8 +68,8 @@ public class MenuScene extends SceneTool {
 
         playButton.setOnMouseClicked(event -> {
             GameScene.makeScene();
-            SceneList.PLAY_MENU.setOnActive();
-            WINDOW.setFullScreen(true);
+            SceneList.GAME.setOnActive();
+            //WINDOW.setFullScreen(true);
         });
         lvlGenButton.setOnMouseClicked(event -> {
             LevelGenScene.resetScene();

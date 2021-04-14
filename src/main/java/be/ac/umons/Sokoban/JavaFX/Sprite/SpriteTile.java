@@ -32,6 +32,13 @@ public class SpriteTile {
         return tileView;
     }
 
+    public static ImageView getTileImg(TileImg tile, int cellSize, boolean nothing){
+        ImageView tileView = getTileImg(tile);
+        tileView.setFitHeight(cellSize);
+        tileView.setFitWidth(cellSize);
+        return tileView;
+    }
+
     public static Image getGameSheet() {
         return gameSheet;
     }

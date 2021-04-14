@@ -2,14 +2,19 @@ package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
-import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene;
-import be.ac.umons.Sokoban.JavaFX.Scenes.LevelGenScene;
-import be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
+import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
+import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Test extends Application {
 
@@ -18,54 +23,40 @@ public class Test extends Application {
     }
 
     public void start(Stage theStage){
+        // https://gillius.org/blog/2013/02/javafx-window-scaling-on-resize.html
         theStage.setTitle("MapTest");
-        // logic part
-        /*
+
+        GridPane root = new GridPane();
+
         Grid logicGrid = new Grid(Size.MEDIUM);
-        SpriteTile.setGameSheet(Size.MEDIUM);
         logicGrid.set_default_walls();
         logicGrid.generateRandomWalls();
 
-        // gui part
-
-        // GridPane group that will contain the Grid
         GamePane gamePane = new GamePane(logicGrid);
-        // Scene with the game
-        Scene gameScene = new Scene(gamePane);*//*
-        LevelGenScene.makeScene();
-        SceneTool.SceneList.LVL_GEN.setOnActive();
-
-        gamePane.initiate();
-
-        theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            gamePane.getGrid().resetGrid();
-            gamePane.getGrid().set_default_walls();
-            gamePane.getGrid().generateRandomWalls();
-            gamePane.initiate();
-        });*/
-
-        SceneTool.start();
-    }
-
-    public void startl(Stage theStage){
-        /*
-        GameScene gamePaneGiver = new GameScene(3,3);
-        Scene gameScene = gamePaneGiver.rootScene;
-
-        GamePane testPane = new GamePane(new Grid(5, 5));
-
-        GridPane testBis = new GridPane();
-        testBis.add(SpriteTile.getTileImg(TileImg.EMPTY), 0, 0);
-
-        Scene test = new Scene(testPane);
-        for (int i = 0; i < 5; i++) {
-            testPane.setAt(SpriteTile.getTileImg(TileImg.EMPTY), i, 0);
-        }
+        gamePane.initiate(20);
 
 
-        testPane.initiate();
+        Scene myScene = new Scene(gamePane);
 
-        theStage.setScene(gameScene);
-        theStage.show();*/
+        gamePane.setOnMouseClicked(event -> gamePane.initiate(60));
+
+        gamePane.layoutBoundsProperty().addListener(((observable, oldValue, newValue) -> {
+             int cellX = (int) newValue.getWidth() / gamePane.col;
+             int cellY = (int) newValue.getHeight() / gamePane.row;
+
+             if(cellX != gamePane.cellSize || cellY != gamePane.cellSize){
+                 if (cellX <= cellY) {
+                     gamePane.initiate(cellX);
+                     gamePane.cellSize = cellX;
+                 } else {
+                     gamePane.initiate(cellY);
+                     gamePane.cellSize = cellY;
+                 }
+             }
+        }));
+
+        gamePane.setStyle("-fx-border-color: red; -fx-border-width: 5");
+        theStage.setScene(myScene);
+        theStage.show();
     }
 }

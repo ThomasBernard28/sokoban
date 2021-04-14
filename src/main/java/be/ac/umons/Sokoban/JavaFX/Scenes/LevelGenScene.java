@@ -41,7 +41,7 @@ public class LevelGenScene extends SceneTool {
          */
 
     private final static BorderPane root = new BorderPane();
-    private final static GridPane superRoot = new GridPane();
+    //private final static GridPane superRoot = new GridPane();
 
     private static GamePane visualGrid = null;
     private static TileImg currModifier = TileImg.EMPTY;
@@ -60,11 +60,11 @@ public class LevelGenScene extends SceneTool {
     private final static int MARGIN = 30;
 
     public static void makeScene(){
-        Scene scene = new Scene(superRoot);
+        Scene scene = new Scene(root); //
         SceneList.LVL_GEN.setScene(scene);
         setCurrSize(Size.MEDIUM);
 
-        superRoot.setBackground(new Background(bgFillLightBlue));
+        root.setBackground(new Background(bgFillLightBlue)); //
 
         root.setTop(topGenesis());
         root.setBottom(bottomGenesis());
@@ -74,8 +74,7 @@ public class LevelGenScene extends SceneTool {
 
         root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
 
-
-        superRoot.add(root, 0, 0);
+        //superRoot.add(root, 0, 0);
 
     }
 
@@ -112,6 +111,7 @@ public class LevelGenScene extends SceneTool {
         centerLeft.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent());
         visualGrid = centerLeft;
         centerLeft.initiateLvlGen();
+        centerLeft.setStyle("-fx-border-color: red; -fx-border-width: 5");
 
 
         return centerLeft;
@@ -128,7 +128,6 @@ public class LevelGenScene extends SceneTool {
         Button playerButton = new Button("Player");
         Button wallButton = new Button("Wall");
         Button eraseButton = new Button("Erase");
-        Button nothing = new Button();
 
         boxButton.setGraphic(SpriteTile.getTileImg(TileImg.BOX));
         flagButton.setGraphic(SpriteTile.getTileImg(TileImg.FLAG));
@@ -157,6 +156,7 @@ public class LevelGenScene extends SceneTool {
             }
             boxButton.setStyle(PressedButtonCSS);
             System.out.println(root.getWidth() + "," + root.getHeight());
+            System.out.println(SceneList.LVL_GEN.getScene().getWidth() + "," + SceneList.LVL_GEN.getScene().getHeight());
             System.out.println(WINDOW.getWidth() + "," + WINDOW.getHeight());
 
         });
