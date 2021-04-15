@@ -2,6 +2,7 @@ package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
+import be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 import javafx.application.Application;
@@ -10,7 +11,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
 
@@ -38,8 +43,6 @@ public class Test extends Application {
 
         Scene myScene = new Scene(gamePane);
 
-        gamePane.setOnMouseClicked(event -> gamePane.initiate(60));
-
         gamePane.layoutBoundsProperty().addListener(((observable, oldValue, newValue) -> {
              int cellX = (int) newValue.getWidth() / gamePane.col;
              int cellY = (int) newValue.getHeight() / gamePane.row;
@@ -51,6 +54,7 @@ public class Test extends Application {
                  } else {
                      gamePane.initiate(cellY);
                      gamePane.cellSize = cellY;
+                     //myScene.setFill(new Background(new BackgroundFill(Color.valueOf("#1EA7E1"), new CornerRadii(1), null)));
                  }
              }
         }));

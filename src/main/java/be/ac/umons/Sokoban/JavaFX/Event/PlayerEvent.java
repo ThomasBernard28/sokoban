@@ -34,7 +34,6 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                     playerAnimation.setAnimation(logicGrid.getGridFromPlayer(Direction.UP).hasBox());
                     logicGrid.getGridFromPlayer().move(logicGrid, Direction.UP);
                     playerAnimation.play();
-                    System.out.println(GameScene.superRoot.getLayoutY());
 
                 }
                 break;

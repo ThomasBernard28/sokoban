@@ -111,7 +111,7 @@ public class LevelGenScene extends SceneTool {
         centerLeft.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent());
         visualGrid = centerLeft;
         centerLeft.initiateLvlGen();
-        centerLeft.setStyle("-fx-border-color: red; -fx-border-width: 5");
+        //centerLeft.setStyle("-fx-border-color: red; -fx-border-width: 5");
 
 
         return centerLeft;

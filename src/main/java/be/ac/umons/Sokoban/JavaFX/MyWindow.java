@@ -25,22 +25,18 @@ public class MyWindow extends Application
     }
 
     public void start(Stage theStage){
-        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        System.out.println(screenSize.width + "," + screenSize.height);
-        SceneTool.setStage(theStage);
-        SceneTool.setCurrSize(Size.LARGE);
-        final Image imageHead = new Image("images/Head.png");
-
-
-        LevelGenScene.makeScene();
-        GameScene.makeScene();
-
-
-
         theStage.setTitle("Sokoban");
+        SceneTool.setStage(theStage);
+        SceneTool.setCurrSize(Size.MEDIUM);
+
+        final Image imageHead = new Image("images/Head.png");
         theStage.getIcons().add(imageHead);
 
-        SceneTool.SceneList.MENU.setOnActive();
+        LevelGenScene.makeScene();
+        //GameScene.makeScene();
+        LevelSelectionScene.makeScene();
+        PlayMenuScene.makeScene();
+        MenuScene.makeScene();
 
         SceneTool.start();
     }

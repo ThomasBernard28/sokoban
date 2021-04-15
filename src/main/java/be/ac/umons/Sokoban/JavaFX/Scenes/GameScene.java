@@ -16,7 +16,6 @@ import javafx.scene.text.Font;
 import java.io.IOException;
 
 public class GameScene extends SceneTool {
-    public static HBox superRoot;
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();
@@ -33,11 +32,7 @@ public class GameScene extends SceneTool {
         root.setBackground(new Background(bgFillLightBlue));
         root.setAlignment(Pos.CENTER);
 
-        root.setStyle("-fx-border-width: 5;-fx-border-color: red");
-
-        root.setScaleY(0.5);
-        root.setScaleX(0.5);
-        superRoot = root;
+        //root.setStyle("-fx-border-width: 5;-fx-border-color: red");
 
 
 
