@@ -1,22 +1,30 @@
 package be.ac.umons.Sokoban.JavaFX;
 
-public enum Size {
-    SMALL(32, 20, 32), // 20, 32
-    MEDIUM(48, 14,23), // 14, 23
-    LARGE(64, 11,17); //11, 17
+import be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool;
 
-    private final int cellSize;
+import java.awt.*;
+
+public enum Size {
+    SMALL(20, 32), // 20, 32
+    MEDIUM(14,23), // 14, 23
+    LARGE(11,17); //11, 17
+
     private final int row;
     private final int col;
 
-    Size(int cellSize, int row, int col){
-        this.cellSize = cellSize;
+    protected final static int windowX = Toolkit.getDefaultToolkit().getScreenSize().width;
+    protected final static int windowY = Toolkit.getDefaultToolkit().getScreenSize().height;
+
+    Size( int row, int col){
+
         this.col = col;
         this.row = row;
     }
 
-    public int getSize(){
-       return cellSize;
+    public int getAdaptiveSize(){
+         int sizeForY = (int) ((windowY / row) * 0.65);
+         int sizeForX = (int) ((windowX / col) * 0.65);
+         return Math.min(sizeForX, sizeForY);
     }
 
     public int getRow(){

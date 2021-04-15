@@ -10,7 +10,7 @@ public class SpriteTile {
     private static Size cellSize = Size.MEDIUM;
 
     public static int getSize(){
-        return cellSize.getSize();
+        return cellSize.getAdaptiveSize();
     }
     public static Size getSize(boolean trueSize){
         return cellSize;
@@ -20,6 +20,8 @@ public class SpriteTile {
     public static ImageView getTileImg(TileImg tile){
         ImageView tileView = new ImageView(gameSheet);
         tileView.setViewport(tile.getLocation());
+        tileView.setFitHeight(cellSize.getAdaptiveSize());
+        tileView.setFitWidth(cellSize.getAdaptiveSize());
 
         return tileView;
     }
@@ -44,8 +46,7 @@ public class SpriteTile {
     }
 
     public static void setGameSheet(Size size){
-        gameSheet = new Image("images/tile_sheet_" + size.getSize() + ".png");
+        gameSheet = new Image("images/tile_sheet_" + 48 + ".png");
         cellSize = size;
-        TileImg.setCellSize(size);
     }
 }

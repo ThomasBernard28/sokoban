@@ -38,7 +38,7 @@ public class Test extends Application {
         logicGrid.generateRandomWalls();
 
         GamePane gamePane = new GamePane(logicGrid);
-        gamePane.initiate(20);
+        gamePane.initiate();
 
 
         Scene myScene = new Scene(gamePane);
@@ -49,10 +49,10 @@ public class Test extends Application {
 
              if(cellX != gamePane.cellSize || cellY != gamePane.cellSize){
                  if (cellX <= cellY) {
-                     gamePane.initiate(cellX);
+                     gamePane.initiate();
                      gamePane.cellSize = cellX;
                  } else {
-                     gamePane.initiate(cellY);
+                     gamePane.initiate();
                      gamePane.cellSize = cellY;
                      //myScene.setFill(new Background(new BackgroundFill(Color.valueOf("#1EA7E1"), new CornerRadii(1), null)));
                  }

@@ -10,6 +10,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Rectangle;
 
+
 public class GamePane extends Pane {
     private final Grid logicGrid;
 
@@ -43,9 +44,23 @@ public class GamePane extends Pane {
         return logicGrid.getPlayerY();
     }
 
+    //  3 Function for adaptive size
+    public int getRow(){
+        return logicGrid.getSize().getRow();
+    }
+
+    public int getCol(){
+        return logicGrid.getSize().getCol();
+    }
+
+    public int getCellSize(){
+        return logicGrid.getSize().getAdaptiveSize();
+    }
+
+
     public void setAt(ImageView imageView, int x, int y){
         this.getChildren().add(imageView);
-        imageView.relocate(SpriteTile.getSize() * x, SpriteTile.getSize() * y);
+        imageView.relocate(getCellSize() * x, getCellSize() * y);
     }
 
     public void setAt(ImageView imageView, int[] pixel){
@@ -68,11 +83,9 @@ public class GamePane extends Pane {
         if(SpriteTile.getSize(true) != logicGrid.getSize()){
             SpriteTile.setGameSheet(logicGrid.getSize());
         }
-        this.maxHeight(logicGrid.getSize().getRow() * logicGrid.getSize().getSize());
-        this.maxWidth(logicGrid.getSize().getCol() * logicGrid.getSize().getSize());
 
-        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
-            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
+        for (int i = 0; i < getRow(); i++) {
+            for (int j = 0; j < getCol(); j++) {
 
                 setAt(SpriteTile.getTileImg(TileImg.EMPTY), j, i);
 
@@ -100,7 +113,6 @@ public class GamePane extends Pane {
                 }
             }
         }
-        // clip
     }
 
     public void initiateLvlGen(){
@@ -108,8 +120,8 @@ public class GamePane extends Pane {
             SpriteTile.setGameSheet(logicGrid.getSize());
         }
 
-        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
-            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
+        for (int i = 0; i < getRow(); i++) {
+            for (int j = 0; j < getCol(); j++) {
 
                 setAt(SpriteTile.getTileImg(TileImg.EMPTY), j, i);
 
@@ -128,38 +140,6 @@ public class GamePane extends Pane {
                         break;
                     case FLAG:
                         setAt(SpriteTile.getTileImg(TileImg.FLAG), j, i);
-                        break;
-                    case EMPTY:
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value");
-
-                }
-            }
-        }
-    }
-
-    public void initiate(int cellSize){
-        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
-            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
-                int[] pos = {j * cellSize, i * cellSize};
-                setAt(SpriteTile.getTileImg(TileImg.EMPTY, cellSize, true), pos);
-
-                switch (logicGrid.getGridAt(j, i).getVisualType()) {
-                    case BOX:
-                        setAt(SpriteTile.getTileImg(TileImg.BOX_ICON, cellSize, true), pos);
-                        break;
-                    case FLAGGED_BOX:
-                        setAt(SpriteTile.getTileImg(TileImg.FLAGGED_BOX, cellSize, true), pos);
-                        break;
-                    case WALL:
-                        setAt(SpriteTile.getTileImg(TileImg.WALL, cellSize, true), pos);
-                        break;
-                    case PLAYER:
-                        setAt(SpriteTile.getTileImg(TileImg.HEAD, cellSize, true), pos);
-                        break;
-                    case FLAG:
-                        setAt(SpriteTile.getTileImg(TileImg.FLAG, cellSize, true), pos);
                         break;
                     case EMPTY:
                         break;
@@ -194,19 +174,6 @@ public class GamePane extends Pane {
                             logicGrid.getPlayerY() * SpriteTile.getSize() - length * dir.y}
             );
         }
-    }
-
-    private static void clipChildren(Region region, double arc) {
-
-        final Rectangle outputClip = new Rectangle();
-        outputClip.setArcWidth(arc);
-        outputClip.setArcHeight(arc);
-        region.setClip(outputClip);
-
-        region.layoutBoundsProperty().addListener((ov, oldValue, newValue) -> {
-            outputClip.setWidth(newValue.getWidth());
-            outputClip.setHeight(newValue.getHeight());
-        });
     }
 
 }

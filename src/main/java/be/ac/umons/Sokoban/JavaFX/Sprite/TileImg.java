@@ -17,18 +17,12 @@ public enum TileImg {
     private final int col;
     private final int row;
 
-    private static int cellSize = SpriteTile.getSize();
-
     TileImg(int row, int col){
         this.col = col;
         this.row = row;
     }
 
     public Rectangle2D getLocation() {
-        return new Rectangle2D(cellSize * col, cellSize * row, cellSize, cellSize);
-    }
-
-    public static void setCellSize(Size size){
-        cellSize = size.getSize();
+        return new Rectangle2D(48 * col, 48 * row, 48, 48);
     }
 }
