@@ -43,7 +43,7 @@ public class LevelGenSceneBis extends SceneTool {
     };
 
     public static void makeScene(){
-        root.addRow(0, topGenesis());
+        //root.addRow(0, topGenesis());
         root.addRow(1, centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
         root.addRow(2, bottomGenesis());
 
