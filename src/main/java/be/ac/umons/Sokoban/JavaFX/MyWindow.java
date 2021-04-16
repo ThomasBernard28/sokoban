@@ -25,6 +25,7 @@ public class MyWindow extends Application
     }
 
     public void start(Stage theStage){
+        theStage.setResizable(false);
         theStage.setTitle("Sokoban");
         SceneTool.setStage(theStage);
         SceneTool.setCurrSize(Size.MEDIUM);

@@ -37,6 +37,34 @@ public class GameScene extends SceneTool {
 
 
     }
+    public static void makeScene(Grid grid){
+        VBox V_ROOT = new VBox();
+        HBox root = new HBox(V_ROOT);
+
+        Scene scene = new Scene(root);
+        SceneList.GAME.setScene(scene);
+
+        V_ROOT.getChildren().addAll(topRowGenesis(), bottomRowGenesis(grid));
+
+        V_ROOT.setStyle("-fx-padding: 0 100 100 100");
+        V_ROOT.setSpacing(100);
+
+        root.setBackground(new Background(bgFillLightBlue));
+        root.setAlignment(Pos.CENTER);
+
+        //root.setStyle("-fx-border-width: 5;-fx-border-color: red");
+
+
+
+    }
+    private static GamePane bottomRowGenesis(Grid grid){
+        // TODO change the resize factor of initiate method
+        GamePane gamePane = new GamePane(grid);
+        gamePane.initiate();
+
+        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(gamePane));
+        return gamePane;
+    }
 
     private static GamePane bottomRowGenesis(Size size){
         // TODO change the resize factor of initiate method

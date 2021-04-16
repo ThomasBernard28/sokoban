@@ -5,6 +5,7 @@ import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.ImageView;
@@ -13,6 +14,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -40,7 +42,18 @@ public class SceneTool {
          * Change the scene of the window by the one contained in the enum
          */
         public void setOnActive(){
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+
+            WINDOW.setX(bounds.getMinX());
+            WINDOW.setY(bounds.getMinY());
+            WINDOW.setWidth(bounds.getWidth());
+            WINDOW.setHeight(bounds.getHeight());
             WINDOW.setScene(this.scene);
+
+            //WINDOW.setMaximized(true);
+            //WINDOW.setFullScreen(true);
+
         }
 
         protected Scene getScene(){

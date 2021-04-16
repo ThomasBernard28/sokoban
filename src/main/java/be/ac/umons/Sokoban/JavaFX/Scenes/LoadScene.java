@@ -94,9 +94,7 @@ public class LoadScene extends SceneTool{
             if (Pattern.matches("^(\\w|_)+$", input)){
                 try{
                     Grid gameFile = Load.loadFile(Path.SAVE, input.toString());
-                    GamePane gamePane = GameScene.createGamePane(gameFile);
-                    SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
-                    GameScene.makeScene();
+                    GameScene.makeScene(gameFile);
                     SceneList.GAME.setOnActive();
 
                 }catch (IOException e){

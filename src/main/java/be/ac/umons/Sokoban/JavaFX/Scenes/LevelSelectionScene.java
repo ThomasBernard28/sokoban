@@ -48,6 +48,8 @@ public class LevelSelectionScene extends SceneTool{
         title.setStyle("-fx-padding: 20, 20 ,20 , 20");
 
         Button exitButton = makeExitButton();
+        exitButton.setScaleX(1.0);
+        exitButton.setScaleY(1.0);
         exitButton.setOnAction(event -> {
             SceneList.PLAY_MENU.setOnActive();
         });
@@ -144,8 +146,7 @@ public class LevelSelectionScene extends SceneTool{
         level1Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -155,8 +156,7 @@ public class LevelSelectionScene extends SceneTool{
         level2Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level2_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -166,8 +166,7 @@ public class LevelSelectionScene extends SceneTool{
         level3Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level3_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -177,8 +176,7 @@ public class LevelSelectionScene extends SceneTool{
         level4Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level4_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -188,8 +186,7 @@ public class LevelSelectionScene extends SceneTool{
         level5Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -199,8 +196,7 @@ public class LevelSelectionScene extends SceneTool{
         level6Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level6_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -210,8 +206,7 @@ public class LevelSelectionScene extends SceneTool{
         level7Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level7_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -221,8 +216,7 @@ public class LevelSelectionScene extends SceneTool{
         level8Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level8_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -232,8 +226,7 @@ public class LevelSelectionScene extends SceneTool{
         level9Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level9_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -243,8 +236,7 @@ public class LevelSelectionScene extends SceneTool{
         level10Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level10_0");
-                GameScene.createGamePane(gameFile);
-                GameScene.makeScene();
+                GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
             }catch (IOException e){
@@ -297,8 +289,7 @@ public class LevelSelectionScene extends SceneTool{
             if (Pattern.matches("^(\\w|_)+$", input)) {
                 try {
                     Grid gameFile = Load.loadFile(Path.LVL, input.toString());
-                    GameScene.createGamePane(gameFile);
-                    GameScene.makeScene();
+                    GameScene.makeScene(gameFile);
                     SceneList.GAME.setOnActive();
 
                 } catch (IOException e) {
