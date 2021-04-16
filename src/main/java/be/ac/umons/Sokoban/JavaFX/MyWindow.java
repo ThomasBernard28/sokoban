@@ -38,6 +38,7 @@ public class MyWindow extends Application
         PlayMenuScene.makeScene();
         MenuScene.makeScene();
         LoadScene.makeScene();
+        ProfileScene.makeScene();
 
         SceneTool.start();
     }

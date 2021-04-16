@@ -30,7 +30,8 @@ public class SceneTool {
         MENU,
         PLAY_MENU,
         LVL_SELECTION,
-        LOAD;
+        LOAD,
+        PROFILE;
 
         private Scene scene = null;
 
