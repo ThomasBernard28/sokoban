@@ -69,7 +69,10 @@ public class GameScene extends SceneTool {
         title.setFont(Font.font("impact", 50));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
-        Button exitButton = makeToMenuButton();
+        Button exitButton = makeExitButton();
+        exitButton.setOnAction(event -> {
+            SceneList.LVL_SELECTION.setOnActive();
+        });
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);
 

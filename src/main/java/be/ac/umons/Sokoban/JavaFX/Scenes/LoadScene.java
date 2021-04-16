@@ -48,7 +48,10 @@ public class LoadScene extends SceneTool{
         title.setFont(Font.font("impact", 70));
         title.setStyle("-fx-padding: 70, 50, 20, 50");
 
-        Button exitButton = makeToPLayMenuButton();
+        Button exitButton = makeExitButton();
+        exitButton.setOnAction(event -> {
+            SceneList.PLAY_MENU.setOnActive();
+        });
 
         topSide.setSpacing(50);
         topSide.getChildren().addAll(exitButton, title);

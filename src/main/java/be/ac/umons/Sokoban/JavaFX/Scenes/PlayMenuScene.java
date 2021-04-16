@@ -61,13 +61,11 @@ public class PlayMenuScene extends SceneTool{
         LoadSavedGameButton.setStyle("-fx-cursor: hand;");
 
         LvlSelectButton.setOnMouseClicked(event -> {
-            LevelSelectionScene.makeScene();
             SceneList.LVL_SELECTION.setOnActive();
         });
 
 
         LoadSavedGameButton.setOnMouseClicked(event -> {
-            LoadScene.makeScene();
             SceneList.LOAD.setOnActive();
         });
         centerSide.getChildren().addAll(LvlSelectButton,LoadSavedGameButton);
@@ -107,7 +105,10 @@ public class PlayMenuScene extends SceneTool{
         title.setFont(Font.font("impact", 70));
         title.setStyle("-fx-padding: 20 20 20 20");
 
-        Button exitButton = makeToMenuButton();;
+        Button exitButton = makeExitButton();
+        exitButton.setOnAction(event -> {
+            SceneList.MENU.setOnActive();
+        });
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);
 

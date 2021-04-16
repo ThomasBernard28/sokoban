@@ -97,7 +97,7 @@ public class SceneTool {
     protected final static BackgroundFill bgFillGreen =
             new BackgroundFill(greenPaint, new CornerRadii(1), null);
 
-    protected static Button makeToMenuButton(){
+    protected static Button makeExitButton(){
         Button exitButton = new Button();
         ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
 
@@ -108,27 +108,9 @@ public class SceneTool {
         exitButton.setBackground(new Background(bgFillGray));
         exitButton.setStyle("-fx-cursor: hand;");
 
-        exitButton.setOnAction(event -> {
-            SceneList.MENU.setOnActive();
-        });
         return exitButton;
     }
-    protected static Button makeToPLayMenuButton(){
-        Button exitButton = new Button();
-        ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
 
-        exitButton.setScaleX(0.5);
-        exitButton.setScaleY(0.5);
-
-        exitButton.setGraphic(exit);
-        exitButton.setBackground(new Background(bgFillGray));
-        exitButton.setStyle("-fx-cursor: hand;");
-
-        exitButton.setOnAction(event -> {
-            SceneList.PLAY_MENU.setOnActive();
-        });
-         return exitButton;
-    }
 
 
     protected static Size currSize;

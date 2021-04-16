@@ -47,7 +47,10 @@ public class LevelSelectionScene extends SceneTool{
         title.setFont(Font.font("impact", 70));
         title.setStyle("-fx-padding: 20, 20 ,20 , 20");
 
-        Button exitButton = makeToPLayMenuButton();
+        Button exitButton = makeExitButton();
+        exitButton.setOnAction(event -> {
+            SceneList.PLAY_MENU.setOnActive();
+        });
 
         topSide.setStyle("-fx-padding: 60, 50, 20, 50");
         topSide.setSpacing(50);
@@ -141,8 +144,7 @@ public class LevelSelectionScene extends SceneTool{
         level1Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -153,8 +155,7 @@ public class LevelSelectionScene extends SceneTool{
         level2Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level2_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -165,8 +166,7 @@ public class LevelSelectionScene extends SceneTool{
         level3Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level3_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -177,8 +177,7 @@ public class LevelSelectionScene extends SceneTool{
         level4Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level4_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -189,8 +188,7 @@ public class LevelSelectionScene extends SceneTool{
         level5Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -201,8 +199,7 @@ public class LevelSelectionScene extends SceneTool{
         level6Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level6_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -213,8 +210,7 @@ public class LevelSelectionScene extends SceneTool{
         level7Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level7_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -225,8 +221,7 @@ public class LevelSelectionScene extends SceneTool{
         level8Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level8_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -237,8 +232,7 @@ public class LevelSelectionScene extends SceneTool{
         level9Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level9_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -249,8 +243,7 @@ public class LevelSelectionScene extends SceneTool{
         level10Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level10_0");
-                GamePane gamePane = GameScene.createGamePane(gameFile);
-                SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                GameScene.createGamePane(gameFile);
                 GameScene.makeScene();
                 SceneList.GAME.setOnActive();
 
@@ -304,8 +297,7 @@ public class LevelSelectionScene extends SceneTool{
             if (Pattern.matches("^(\\w|_)+$", input)) {
                 try {
                     Grid gameFile = Load.loadFile(Path.LVL, input.toString());
-                    GamePane gamePane = GameScene.createGamePane(gameFile);
-                    SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, new PlayerEvent(gamePane));
+                    GameScene.createGamePane(gameFile);
                     GameScene.makeScene();
                     SceneList.GAME.setOnActive();
 

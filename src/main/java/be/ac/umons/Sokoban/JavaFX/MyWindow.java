@@ -33,10 +33,10 @@ public class MyWindow extends Application
         theStage.getIcons().add(imageHead);
 
         LevelGenScene.makeScene();
-        //GameScene.makeScene();
         LevelSelectionScene.makeScene();
         PlayMenuScene.makeScene();
         MenuScene.makeScene();
+        LoadScene.makeScene();
 
         SceneTool.start();
     }
