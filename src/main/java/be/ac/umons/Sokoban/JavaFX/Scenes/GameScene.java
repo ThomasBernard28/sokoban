@@ -8,6 +8,8 @@ import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,6 +24,7 @@ import java.util.regex.Pattern;
 
 public class GameScene extends SceneTool {
     private static Grid currentGrid = null;
+    private static PlayerEvent playerEvent = null;
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();
@@ -71,11 +74,12 @@ public class GameScene extends SceneTool {
         currentGrid = grid;
         gamePane.initiate();
 
-        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(gamePane));
+        playerEvent = new PlayerEvent(gamePane);
+        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
     }
 
-    private static GamePane bottomRowGenesis(Size size){
+    protected static GamePane bottomRowGenesis(Size size){
         // TODO change the resize factor of initiate method
         Grid logicGrid = new Grid(size);
         logicGrid.set_default_walls();
@@ -93,13 +97,15 @@ public class GameScene extends SceneTool {
         currentGrid = test;
         GamePane gamePane = new GamePane(test);
         gamePane.initiate();
-
-        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(gamePane));
+        playerEvent = new PlayerEvent(gamePane);
+        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
     }
 
     private static HBox topRowGenesis(){
         HBox topSide = new HBox();
+        HBox titleBox = new HBox();
+        HBox saveBox = new HBox();
         //TODO this label will display the current lvl playing
         Label title = new Label("Sokoban");
 
@@ -108,6 +114,7 @@ public class GameScene extends SceneTool {
 
         TextField fileOutput = new TextField();
         fileOutput.setFont(new Font("arial", 28));
+        fileOutput.setScaleY(1.2);
 
         Button save = new Button();
         save.setGraphic(SpriteIcon.getIconImg(IconImg.SAVE));
@@ -123,6 +130,7 @@ public class GameScene extends SceneTool {
 
         save.setOnAction(event -> {
             CharSequence output = fileOutput.getCharacters();
+            System.out.println(fileOutput.isFocused());
             // https://regex101.com/
             if (Pattern.matches("^(\\w|_)+$", output)){
                 try{
@@ -136,9 +144,15 @@ public class GameScene extends SceneTool {
         });
 
         topSide.setStyle("-fx-padding: 70 50 20 50");
-        topSide.setSpacing(50);
 
-        topSide.getChildren().addAll(exitButton, title, fileOutput, save);
+        titleBox.getChildren().addAll(exitButton, title);
+        titleBox.setSpacing(20);
+        titleBox.setAlignment(Pos.CENTER_LEFT);
+        saveBox.getChildren().addAll(fileOutput, save);
+        saveBox.setAlignment(Pos.CENTER);
+        topSide.getChildren().addAll(titleBox, saveBox);
+        topSide.setSpacing(300);
+
         return topSide;
 
     }

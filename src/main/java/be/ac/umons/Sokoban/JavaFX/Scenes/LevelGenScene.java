@@ -362,6 +362,7 @@ public class LevelGenScene extends SceneTool {
         playerHead.setStyle("-fx-padding: 30 20 20 20;");
 
         topSide.getChildren().addAll(exitButton, SpriteTile.getTileImg(TileImg.HEAD), title);
+        topSide.setAlignment(Pos.CENTER_LEFT);
         topSide.setSpacing(50);
 
         return topSide;
