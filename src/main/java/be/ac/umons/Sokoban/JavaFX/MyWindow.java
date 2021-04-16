@@ -32,7 +32,7 @@ public class MyWindow extends Application
         final Image imageHead = new Image("images/Head.png");
         theStage.getIcons().add(imageHead);
 
-        LevelGenSceneBis.makeScene();
+        LevelGenScene.makeScene();
         //GameScene.makeScene();
         LevelSelectionScene.makeScene();
         PlayMenuScene.makeScene();

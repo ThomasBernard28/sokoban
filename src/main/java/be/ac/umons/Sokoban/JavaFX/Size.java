@@ -22,8 +22,8 @@ public enum Size {
     }
 
     public int getAdaptiveSize(){
-         int sizeForY = (int) ((windowY / row) * 0.65);
-         int sizeForX = (int) ((windowX / col) * 0.65);
+         int sizeForY = (int) ((windowY / row) * 0.60);
+         int sizeForX = (int) ((windowX / col) * 0.60);
          return Math.min(sizeForX, sizeForY);
     }
 

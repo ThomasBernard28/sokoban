@@ -43,12 +43,13 @@ public class LevelGenSceneBis extends SceneTool {
     };
 
     public static void makeScene(){
-        //root.addRow(0, topGenesis());
-        root.addRow(1, centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
-        root.addRow(2, bottomGenesis());
+        root.add(topGenesis(), 0, 0, 1,2);
+        root.add(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()), 1, 0);
+        root.add(bottomGenesis(),1,1);
 
         root.setBackground(new Background(bgFillLightBlue));
         root.setStyle("-fx-padding: 20 20 20 20");
+        root.setGridLinesVisible(true);
 
         Scene scene = new Scene(root); //
         SceneList.LVL_GEN.setScene(scene);
@@ -176,21 +177,26 @@ public class LevelGenSceneBis extends SceneTool {
         return bottomSide;
     }
 
-    private static HBox topGenesis(){
+    private static VBox topGenesis(){
         // Making things pretty
-        HBox topSide = new HBox();
+        VBox topSide = new VBox();
 
         Label title = new Label("Level Build Tool");
-        title.setFont(Font.font("impact", 35));
-        title.setStyle("-fx-padding: 20 20 20 20;");
+        title.setFont(Font.font("impact", 30));
+        //title.setStyle("-fx-padding: 20 20 20 20;");
+        title.setRotate(-90);
+        title.setTranslateY(150);
+        title.setStyle("-fx-border-width: 5;-fx-border-color: red");
 
         Button exitButton = makeToMenuButton();
 
-        ImageView playerHead = SpriteTile.getTileImg(TileImg.HEAD, 0.8);
-        playerHead.setStyle("-fx-padding: 30 20 20 20;");
+        //ImageView playerHead = SpriteTile.getTileImg(TileImg.HEAD, 0.8);
+        //playerHead.setStyle("-fx-padding: 30 20 20 20;");
 
-        topSide.getChildren().addAll(exitButton, SpriteTile.getTileImg(TileImg.HEAD), title);
-        topSide.setSpacing(50);
+        topSide.getChildren().addAll(exitButton, title);
+        topSide.setSpacing(10);
+        topSide.setAlignment(Pos.TOP_CENTER);
+       // topSide.setMaxWidth(100);
 
         return topSide;
     }

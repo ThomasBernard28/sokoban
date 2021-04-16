@@ -57,7 +57,7 @@ public class LevelGenScene extends SceneTool {
         event.consume();
     };
 
-    private final static int MARGIN = 30;
+    private final static int MARGIN = 20;
 
     public static void makeScene(){
         Scene scene = new Scene(root); //
@@ -66,13 +66,12 @@ public class LevelGenScene extends SceneTool {
 
         root.setBackground(new Background(bgFillLightBlue)); //
 
-        root.setTop(topGenesis());
         root.setBottom(bottomGenesis());
-        root.setLeft(leftGenesis());
+        root.setLeft(topGenesis());
+        root.setRight(centerRightGenesis());
+        root.setCenter(centerLeftGenesis());
 
-
-
-        root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+        root.setStyle("-fx-padding: 20 0 0 0");
 
         //superRoot.add(root, 0, 0);
 
@@ -110,7 +109,7 @@ public class LevelGenScene extends SceneTool {
         GamePane centerLeft = new GamePane(new Grid(currSize));
         centerLeft.addEventHandler(MouseEvent.MOUSE_CLICKED, new LevelGenEvent());
         visualGrid = centerLeft;
-        centerLeft.initiateLvlGen();
+        centerLeft.initiate();
         //centerLeft.setStyle("-fx-border-color: red; -fx-border-width: 5");
 
 
@@ -257,7 +256,7 @@ public class LevelGenScene extends SceneTool {
                 gridToTry = copyOfSpecialPane(visualGrid);
                 eventToTry = new PlayerEvent(gridToTry);
 
-                root.setCenter(centerRowGenesis(gridToTry, centerRightGenesis()));
+                root.setCenter(gridToTry);
                 SceneList.LVL_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
                 SceneList.LVL_GEN.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
 
@@ -270,7 +269,7 @@ public class LevelGenScene extends SceneTool {
             if(gridToTry != null){
                 SceneList.LVL_GEN.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
                 SceneList.LVL_GEN.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
-                root.setCenter(centerRowGenesis(visualGrid, centerRightGenesis()));
+                root.setCenter(visualGrid);
 
                 gridToTry = null;
                 eventToTry = null;
@@ -302,7 +301,7 @@ public class LevelGenScene extends SceneTool {
             Size selectedSize = sizePicker.getSelectionModel().getSelectedItem();
             setCurrSize(selectedSize);
 
-            root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+            root.setCenter(centerLeftGenesis());
         });
 
         //end of logic part
@@ -339,21 +338,25 @@ public class LevelGenScene extends SceneTool {
         return leftSide;
     }
 
-    private static HBox topGenesis(){
+    private static VBox topGenesis(){
         // Making things pretty
-        HBox topSide = new HBox();
+        VBox topSide = new VBox();
 
         Label title = new Label("Level Build Tool");
-        title.setFont(Font.font("impact", 35));
-        title.setStyle("-fx-padding: 20 20 20 20;");
+        title.setFont(Font.font("impact", 30));
+        //title.setStyle("-fx-padding: 20 20 20 20;");
+        title.setRotate(-90);
+        title.setTranslateY(150);
 
         Button exitButton = makeToMenuButton();
 
-        ImageView playerHead = SpriteTile.getTileImg(TileImg.HEAD, 0.8);
-        playerHead.setStyle("-fx-padding: 30 20 20 20;");
+        //ImageView playerHead = SpriteTile.getTileImg(TileImg.HEAD, 0.8);
+        //playerHead.setStyle("-fx-padding: 30 20 20 20;");
 
-        topSide.getChildren().addAll(exitButton, SpriteTile.getTileImg(TileImg.HEAD), title);
-        topSide.setSpacing(50);
+        topSide.getChildren().addAll(exitButton, title);
+        topSide.setSpacing(10);
+        topSide.setAlignment(Pos.TOP_CENTER);
+        // topSide.setMaxWidth(100);
 
         return topSide;
     }
