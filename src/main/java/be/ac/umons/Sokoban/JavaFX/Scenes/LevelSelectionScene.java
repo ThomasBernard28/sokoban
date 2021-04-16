@@ -175,7 +175,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level4Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level4_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level4_1");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -185,7 +185,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level5Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level5_1");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -195,7 +195,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level6Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level6_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level6_1");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -205,7 +205,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level7Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level7_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level7_1");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -215,7 +215,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level8Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level8_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level8_2");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -225,7 +225,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level9Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level9_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level9_2");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -235,7 +235,7 @@ public class LevelSelectionScene extends SceneTool{
         });
         level10Button.setOnMouseClicked(event -> {
             try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level10_0");
+                Grid gameFile =Load.loadFile(Path.LVL, "level10_2");
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 

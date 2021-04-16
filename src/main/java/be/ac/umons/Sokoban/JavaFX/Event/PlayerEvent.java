@@ -80,5 +80,8 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 (new MyWindow()).renderer(GUIGrid, grid, resources);*/
                 break;
         }
+        if (logicGrid.checkWin()){
+            GameScene.victory();
+        }
     }
 }

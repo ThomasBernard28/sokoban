@@ -12,7 +12,6 @@ import javafx.scene.shape.Rectangle;
 
 public class GamePane extends Pane {
     private final Grid logicGrid;
-
     public int cellSize = 20;
     public int row = 14;
     public int col = 23;

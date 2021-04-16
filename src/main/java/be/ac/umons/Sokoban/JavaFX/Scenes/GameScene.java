@@ -3,19 +3,25 @@ package be.ac.umons.Sokoban.JavaFX.Scenes;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Size;
+import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
+import be.ac.umons.Sokoban.Save.Save;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class GameScene extends SceneTool {
+    private static Grid currentGrid = null;
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();
@@ -31,6 +37,7 @@ public class GameScene extends SceneTool {
 
         root.setBackground(new Background(bgFillLightBlue));
         root.setAlignment(Pos.CENTER);
+
 
         //root.setStyle("-fx-border-width: 5;-fx-border-color: red");
 
@@ -52,6 +59,7 @@ public class GameScene extends SceneTool {
         root.setBackground(new Background(bgFillLightBlue));
         root.setAlignment(Pos.CENTER);
 
+
         //root.setStyle("-fx-border-width: 5;-fx-border-color: red");
 
 
@@ -60,6 +68,7 @@ public class GameScene extends SceneTool {
     private static GamePane bottomRowGenesis(Grid grid){
         // TODO change the resize factor of initiate method
         GamePane gamePane = new GamePane(grid);
+        currentGrid = grid;
         gamePane.initiate();
 
         SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED,new PlayerEvent(gamePane));
@@ -81,7 +90,7 @@ public class GameScene extends SceneTool {
             e.printStackTrace();
         }
 
-
+        currentGrid = test;
         GamePane gamePane = new GamePane(test);
         gamePane.initiate();
 
@@ -97,6 +106,14 @@ public class GameScene extends SceneTool {
         title.setFont(Font.font("impact", 50));
         title.setStyle("-fx-padding: 20 20 20 20;");
 
+        TextField fileOutput = new TextField();
+        fileOutput.setFont(new Font("arial", 28));
+
+        Button save = new Button();
+        save.setGraphic(SpriteIcon.getIconImg(IconImg.SAVE));
+        save.setBackground(new Background(bgFillGray));
+        save.setStyle("-fx-padding: 10, 10, 10, 10; -fx-cursor: hand; ");
+
         Button exitButton = makeExitButton();
         exitButton.setOnAction(event -> {
             SceneList.LVL_SELECTION.setOnActive();
@@ -104,10 +121,24 @@ public class GameScene extends SceneTool {
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);
 
+        save.setOnAction(event -> {
+            CharSequence output = fileOutput.getCharacters();
+            // https://regex101.com/
+            if (Pattern.matches("^(\\w|_)+$", output)){
+                try{
+                    Save.saving(currentGrid, Path.SAVE, output.toString());
+                    fileOutput.clear();
+                }catch(IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
         topSide.setStyle("-fx-padding: 70 50 20 50");
         topSide.setSpacing(50);
 
-        topSide.getChildren().addAll(exitButton, title);
+        topSide.getChildren().addAll(exitButton, title, fileOutput, save);
         return topSide;
 
     }
@@ -116,5 +147,10 @@ public class GameScene extends SceneTool {
         gamePane.initiate();
 
         return gamePane;
+    }
+    public static void victory(){
+        if(WINDOW.getScene() == SceneList.GAME.getScene()){
+            SceneList.LVL_SELECTION.setOnActive();
+        }
     }
 }

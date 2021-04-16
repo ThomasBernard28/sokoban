@@ -96,6 +96,7 @@ public class LoadScene extends SceneTool{
                     Grid gameFile = Load.loadFile(Path.SAVE, input.toString());
                     GameScene.makeScene(gameFile);
                     SceneList.GAME.setOnActive();
+                    fileInput.clear();
 
                 }catch (IOException e){
                     e.printStackTrace();

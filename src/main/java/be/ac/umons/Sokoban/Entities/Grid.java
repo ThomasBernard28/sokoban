@@ -153,6 +153,17 @@ public class Grid {
         grid[y][x].setImmovableContent(ImmovableContent.FLAG);
     }
 
+    public boolean checkWin(){
+        for (int i = 0; i < size.getRow() ; i++) {
+            for (int j = 0; j < size.getCol(); j++) {
+                if(getGridAt(j, i).isBox()){
+                    return false;
+                }
+            }
+
+        }return true;
+    }
+
     /*
      *
      * Generation Part

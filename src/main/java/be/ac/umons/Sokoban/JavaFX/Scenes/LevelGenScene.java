@@ -74,6 +74,7 @@ public class LevelGenScene extends SceneTool {
 
         root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
 
+
         //superRoot.add(root, 0, 0);
 
     }
@@ -291,7 +292,12 @@ public class LevelGenScene extends SceneTool {
             CharSequence output = fileOutput.getCharacters();
             // https://regex101.com/
             if (Pattern.matches("^(\\w|_)+$", output)){
-                System.out.println("coooorrectttt");
+                try {
+                    Save.saving(visualGrid.getGrid(), Path.SAVE, output.toString());
+                    fileOutput.clear();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
             }
 
         });
