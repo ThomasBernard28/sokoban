@@ -90,38 +90,7 @@ public class Load {
 
         return Size.determineSize(nbRow, nbCol);
     }
-    public static char[] loadMov(String fileName, Path path){
-        char []listChar=new char[1];
-        //encore à faire mais comme ça ça met pas d'erreurs dans le programme
-        return listChar;
-    }
 
-    public static Grid applyMov(String testFile, String movFile) throws FileNotFoundException {
-        /*
-        Load the files as a Grid and a char[] and apply the movements
-        dite moi si j'ai écris un truc mauvais
-         */
-        Grid testGrid=loadFile(Path.UNIT_TEST_IN,testFile);
-        char[] listMov=loadMov(movFile,Path.UNIT_TEST_IN);
-        for (char ch: listMov){
-            switch (ch){
-                case('z'):
-                    testGrid.getGridFromPlayer().move(testGrid, Direction.UP);
-                    break;
-                case('q'):
-                    testGrid.getGridFromPlayer().move(testGrid, Direction.LEFT);
-                    break;
-                case('s'):
-                    testGrid.getGridFromPlayer().move(testGrid, Direction.DOWN);
-                    break;
-                case('d'):
-                    testGrid.getGridFromPlayer().move(testGrid, Direction.RIGHT);
-                    break;
-            }
-
-        }
-        return testGrid;
-    }
 
 
 
