@@ -24,6 +24,8 @@ import java.util.regex.Pattern;
 public class LevelSelectionScene extends SceneTool{
     private static final BorderPane root = new BorderPane();
     private static final int MARGIN = 30;
+    protected static Path currPath = null;
+    protected static String currFile = null;
 
     public static void makeScene(){
         root.setCenter(centerGenesis());
@@ -146,6 +148,8 @@ public class LevelSelectionScene extends SceneTool{
         level1Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
+                currPath = Path.LVL;
+                currFile = "level1_0";
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -156,6 +160,8 @@ public class LevelSelectionScene extends SceneTool{
         level2Button.setOnMouseClicked(event -> {
             try {
                 Grid gameFile =Load.loadFile(Path.LVL, "level2_0");
+                currPath = Path.LVL;
+                currFile = "level2_0";
                 GameScene.makeScene(gameFile);
                 SceneList.GAME.setOnActive();
 
@@ -329,4 +335,5 @@ public class LevelSelectionScene extends SceneTool{
         level5ButtonImg.setScaleX(2);
         level5ButtonImg.setScaleY(2);
     }
+
 }

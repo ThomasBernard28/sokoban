@@ -33,7 +33,7 @@ public class GameScene extends SceneTool {
         Scene scene = new Scene(root);
         SceneList.GAME.setScene(scene);
 
-        V_ROOT.getChildren().addAll(topRowGenesis(), bottomRowGenesis(currSize));
+        V_ROOT.getChildren().addAll(topRowGenesis(), bottomRowGenesis(currentGrid));
 
         V_ROOT.setStyle("-fx-padding: 0 100 100 100");
         V_ROOT.setSpacing(100);
@@ -78,7 +78,7 @@ public class GameScene extends SceneTool {
         SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
     }
-
+/*
     protected static GamePane bottomRowGenesis(Size size){
         // TODO change the resize factor of initiate method
         Grid logicGrid = new Grid(size);
@@ -101,7 +101,7 @@ public class GameScene extends SceneTool {
         SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
     }
-
+*/
     private static HBox topRowGenesis(){
         HBox topSide = new HBox();
         HBox titleBox = new HBox();

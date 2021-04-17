@@ -17,6 +17,8 @@ import javafx.scene.text.Font;
 import javafx.scene.layout.*;
 import javafx.stage.Popup;
 
+import java.awt.event.MouseEvent;
+
 
 public class ProfileScene extends SceneTool {
     private static final BorderPane root = new BorderPane();
@@ -127,17 +129,18 @@ public class ProfileScene extends SceneTool {
 
         deleteProfile.setOnMouseClicked(event -> {
             deleteProfile.setBackground(pressed);
-            profile1Button.setOnMouseClicked(event1 -> {
+            newProfile1Button.setOnMouseClicked(event1 -> {
                 deleteProfile.setBackground(unpressed);
                 new PopupWindow(PopupWindow.PopupType.DELETE_PROFILE);
             });
-        });
 
+        });
         newProfile1Button.setOnMouseClicked(event -> {
             new PopupWindow(PopupWindow.PopupType.NEW_PROFILE);
             profile1Button.getChildren().addAll(createProfile("Profile 1"), profile1ButtonImg);
             profilesBox.getChildren().set(0, profile1Button);
         });
+
         newProfile2Button.setOnMouseClicked(event -> {
             //TODO
         });
