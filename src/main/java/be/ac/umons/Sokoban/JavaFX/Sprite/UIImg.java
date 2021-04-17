@@ -7,7 +7,8 @@ public enum UIImg{
     RED_BUTTON01(0, 45, 190, 49, "red"),
     YELLOW_BUTTON06(190, 194, 49, 49, "yellow"),
     RED_BUTTON06(288,198, 49, 49, "red" ),
-    BLUE_BUTTON00(0, 94, 190, 49, "blue");
+    BLUE_BUTTON00(0, 94, 190, 49, "blue"),
+    GREEN_BUTTON00(0, 0, 190, 49, "green");
 
     private final Rectangle2D location;
     private final String color;

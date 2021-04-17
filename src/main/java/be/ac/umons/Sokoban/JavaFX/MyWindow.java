@@ -3,7 +3,10 @@ package be.ac.umons.Sokoban.JavaFX;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.*;
 import javafx.application.Application;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.scene.shape.Circle;
+import javafx.stage.Popup;
 import javafx.stage.Stage;
 
 import java.awt.*;
@@ -30,6 +33,7 @@ public class MyWindow extends Application
         SceneTool.setStage(theStage);
         SceneTool.setCurrSize(Size.MEDIUM);
 
+
         final Image imageHead = new Image("images/Head.png");
         theStage.getIcons().add(imageHead);
 
@@ -51,6 +55,5 @@ public class MyWindow extends Application
         grid.set_flag((size.getCol()/2)+1, (size.getRow()/2)+1);
         return grid;
     }
-
 }
 

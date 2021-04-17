@@ -164,7 +164,7 @@ public class GameScene extends SceneTool {
     }
     public static void victory(){
         if(WINDOW.getScene() == SceneList.GAME.getScene()){
-            SceneList.LVL_SELECTION.setOnActive();
+            new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }
 }
