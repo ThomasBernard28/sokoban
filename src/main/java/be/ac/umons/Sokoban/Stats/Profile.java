@@ -3,16 +3,24 @@ package be.ac.umons.Sokoban.Stats;
 public class Profile {
 
     public enum ProfileNumber{
-        PROFILE_1("New Profile", 1),
-        PROFILE_2("New Profile", 2),
-        PROFILE_3("New Profile", 3);
+        PROFILE_1(1),
+        PROFILE_2(2),
+        PROFILE_3(3);
 
-        private final String profileName;
         private final int profileNumber;
 
-        ProfileNumber(String profileName, int profileNumber) {
-            this.profileName = profileName;
+        ProfileNumber(int profileNumber) {
             this.profileNumber = profileNumber;
         }
+        public int getProfileNumber(){
+            return profileNumber;
+        }
+    }
+    public Profile(ProfileNumber profileNumber, String profileName){
+        createProfile(profileNumber, profileName);
+
+    }
+    public void createProfile(ProfileNumber profileNumber, String profileName){
+
     }
 }

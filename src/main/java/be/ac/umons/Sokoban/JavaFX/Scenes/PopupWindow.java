@@ -3,6 +3,7 @@ package be.ac.umons.Sokoban.JavaFX.Scenes;
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
+import be.ac.umons.Sokoban.Stats.Profile;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -118,7 +119,8 @@ public class PopupWindow {
                 });
 
                 validate.setOnAction(event -> {
-                    //TODO
+                    new Profile(ProfileScene.profileNumber, input.getCharacters().toString());
+                    popupWindow.close();
                 });
 
                 layout.getChildren().addAll(closeButton,label, bottomBox);

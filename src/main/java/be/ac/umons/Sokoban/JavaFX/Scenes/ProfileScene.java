@@ -5,6 +5,7 @@ import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
+import be.ac.umons.Sokoban.Stats.Profile;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,7 +23,7 @@ import java.awt.event.MouseEvent;
 
 public class ProfileScene extends SceneTool {
     private static final BorderPane root = new BorderPane();
-
+    public static Profile.ProfileNumber profileNumber = null;
     public static void makeScene(){
         root.setTop(topGenesis());
         root.setBottom(bottomGenesis());
@@ -136,6 +137,7 @@ public class ProfileScene extends SceneTool {
 
         });
         newProfile1Button.setOnMouseClicked(event -> {
+            profileNumber = Profile.ProfileNumber.PROFILE_1;
             new PopupWindow(PopupWindow.PopupType.NEW_PROFILE);
             profile1Button.getChildren().addAll(createProfile("Profile 1"), profile1ButtonImg);
             profilesBox.getChildren().set(0, profile1Button);
