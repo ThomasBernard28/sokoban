@@ -60,7 +60,7 @@ public class PopupWindow {
         popupWindow.initModality(Modality.APPLICATION_MODAL);
         popupWindow.setTitle(popupType.getTitle());
         popupWindow.setMinWidth(500);
-        popupWindow.setMinHeight(300);
+        popupWindow.setMinHeight(400);
 
         Label label = new Label();
         label.setText(popupType.getMessage());
@@ -170,14 +170,17 @@ public class PopupWindow {
 
                 return layout;
             case END_GAME:
-                Button returnToMenu = new Button("Return to the menu");
-                Button restartGame = new Button("Restart");
-                restartGame.setScaleX(4);
+                Button returnToMenu = new Button();
+                Button restartGame = new Button();
+                restartGame.setScaleX(2);
                 restartGame.setScaleY(2);
                 returnToMenu.setScaleX(2);
                 returnToMenu.setScaleY(2);
-                returnToMenu.setBackground(new Background(bgFillGreen));
-                restartGame.setBackground(new Background(bgFillDarkOrange));
+                returnToMenu.setBackground(new Background(bgFillRed));
+                restartGame.setBackground(new Background(bgFillGreen));
+
+                restartGame.setGraphic(SpriteIcon.getIconImg(IconImg.RESTART));
+                returnToMenu.setGraphic(SpriteIcon.getIconImg(IconImg.EXIT));
 
                 returnToMenu.setStyle("-fx-cursor: hand;");
                 restartGame.setStyle("-fx-cursor: hand;");
@@ -191,6 +194,7 @@ public class PopupWindow {
                 });
                 restartGame.setOnAction(event -> {
                     popupWindow.close();
+                    GameScene.makeTheGame(GameScene.currPath, GameScene.currFileName);
 
                 });
                 choice.getChildren().addAll(restartGame, returnToMenu);

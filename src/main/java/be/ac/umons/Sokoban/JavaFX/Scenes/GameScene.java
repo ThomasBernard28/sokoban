@@ -25,6 +25,8 @@ import java.util.regex.Pattern;
 public class GameScene extends SceneTool {
     private static Grid currentGrid = null;
     private static PlayerEvent playerEvent = null;
+    protected static String currFileName = null;
+    protected static Path currPath = null;
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();
@@ -167,4 +169,17 @@ public class GameScene extends SceneTool {
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }
+    public static void makeTheGame(Path path, String fileName){
+        currFileName = fileName;
+        currPath = path;
+        try{
+            Grid gameFile = Load.loadFile(path, fileName);
+            GameScene.makeScene(gameFile);
+            SceneList.GAME.setOnActive();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
 }

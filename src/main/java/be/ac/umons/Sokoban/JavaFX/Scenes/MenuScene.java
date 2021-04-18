@@ -69,7 +69,7 @@ public class MenuScene extends SceneTool {
         quitButton.setStyle("-fx-cursor: hand");
 
         playButton.setOnMouseClicked(event -> {
-            SceneList.PROFILE.setOnActive();
+            SceneList.PLAY_MENU.setOnActive();
         });
         lvlGenButton.setOnMouseClicked(event -> {
             LevelGenScene.resetScene();

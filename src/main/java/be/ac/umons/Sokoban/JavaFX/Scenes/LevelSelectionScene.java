@@ -146,108 +146,41 @@ public class LevelSelectionScene extends SceneTool{
         level10Button.setStyle("-fx-cursor: hand;");
 
         level1Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level1_0");
-                currPath = Path.LVL;
-                currFile = "level1_0";
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level1_0");
         });
+
         level2Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level2_0");
-                currPath = Path.LVL;
-                currFile = "level2_0";
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level2_0");
         });
+
         level3Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level3_0");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level3_0");
         });
+
         level4Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level4_1");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level4_1");
         });
+
         level5Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level5_1");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level5_1");
         });
+
         level6Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level6_1");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level6_1");
         });
+
         level7Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level7_1");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level7_1");
         });
-        level8Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level8_2");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
 
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+        level8Button.setOnMouseClicked(event -> {
+                GameScene.makeTheGame(Path.LVL, "level8_2");
         });
         level9Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level9_2");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level9_2");
         });
         level10Button.setOnMouseClicked(event -> {
-            try {
-                Grid gameFile =Load.loadFile(Path.LVL, "level10_2");
-                GameScene.makeScene(gameFile);
-                SceneList.GAME.setOnActive();
-
-            }catch (IOException e){
-                e.printStackTrace();
-            }
+                GameScene.makeTheGame(Path.LVL, "level10_2");
         });
 
 

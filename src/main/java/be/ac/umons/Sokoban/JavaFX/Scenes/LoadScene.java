@@ -92,15 +92,8 @@ public class LoadScene extends SceneTool{
         loadButton.setOnMouseClicked(event -> {
             CharSequence input = fileInput.getCharacters();
             if (Pattern.matches("^(\\w|_)+$", input)){
-                try{
-                    Grid gameFile = Load.loadFile(Path.SAVE, input.toString());
-                    GameScene.makeScene(gameFile);
-                    SceneList.GAME.setOnActive();
+                    GameScene.makeTheGame(Path.SAVE, input.toString());
                     fileInput.clear();
-
-                }catch (IOException e){
-                    e.printStackTrace();
-                }
             }
         });
 
