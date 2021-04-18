@@ -108,6 +108,14 @@ public class GameScene extends SceneTool {
         HBox topSide = new HBox();
         HBox titleBox = new HBox();
         HBox saveBox = new HBox();
+
+        Button restartGame = new Button();
+        restartGame.setScaleX(1);
+        restartGame.setScaleY(1);
+        restartGame.setGraphic(SpriteIcon.getIconImg(IconImg.RESTART));
+        restartGame.setBackground(new Background(bgFillDarkOrange));
+        restartGame.setStyle("-fx-cursor: hand; -fx-padding: 10, 10, 10, 10;");
+
         //TODO this label will display the current lvl playing
         Label title = new Label("Sokoban");
 
@@ -122,6 +130,10 @@ public class GameScene extends SceneTool {
         save.setGraphic(SpriteIcon.getIconImg(IconImg.SAVE));
         save.setBackground(new Background(bgFillGray));
         save.setStyle("-fx-padding: 10, 10, 10, 10; -fx-cursor: hand; ");
+
+        restartGame.setOnAction(event -> {
+            GameScene.makeTheGame(GameScene.currPath, GameScene.currFileName);
+        });
 
         Button exitButton = makeExitButton();
         exitButton.setOnAction(event -> {
@@ -152,8 +164,10 @@ public class GameScene extends SceneTool {
         titleBox.setAlignment(Pos.CENTER_LEFT);
         saveBox.getChildren().addAll(fileOutput, save);
         saveBox.setAlignment(Pos.CENTER);
-        topSide.getChildren().addAll(titleBox, saveBox);
-        topSide.setSpacing(300);
+        restartGame.setTranslateY(90);
+        restartGame.setTranslateX(522);
+        topSide.getChildren().addAll(titleBox,restartGame, saveBox);
+        topSide.setSpacing(100);
 
         return topSide;
 

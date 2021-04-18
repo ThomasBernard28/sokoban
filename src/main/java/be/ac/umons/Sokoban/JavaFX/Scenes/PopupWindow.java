@@ -188,9 +188,16 @@ public class PopupWindow {
                 layout.setBackground(new Background(bgFillLightBlue));
 
                 returnToMenu.setOnAction(event -> {
-                    SceneList.LVL_SELECTION.setOnActive();
                     popupWindow.close();
-
+                    switch(GameScene.currPath){
+                        case LVL:
+                            SceneList.LVL_SELECTION.setOnActive();
+                            break;
+                        case SAVE:
+                            SceneList.LOAD.setOnActive();
+                            break;
+                        default: throw new IllegalStateException("The file doesn't come from an correct path");
+                    }
                 });
                 restartGame.setOnAction(event -> {
                     popupWindow.close();

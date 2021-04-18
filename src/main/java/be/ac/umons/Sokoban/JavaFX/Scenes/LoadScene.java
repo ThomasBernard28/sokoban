@@ -49,6 +49,9 @@ public class LoadScene extends SceneTool{
         title.setStyle("-fx-padding: 70, 50, 20, 50");
 
         Button exitButton = makeExitButton();
+        exitButton.setScaleX(1);
+        exitButton.setScaleY(1);
+
         exitButton.setOnAction(event -> {
             SceneList.PLAY_MENU.setOnActive();
         });
