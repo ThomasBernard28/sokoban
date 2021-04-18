@@ -120,6 +120,7 @@ public class PopupWindow {
 
                 validate.setOnAction(event -> {
                     new Profile(ProfileScene.profileNumber, input.getCharacters().toString());
+                    input.clear();
                     popupWindow.close();
                 });
 
