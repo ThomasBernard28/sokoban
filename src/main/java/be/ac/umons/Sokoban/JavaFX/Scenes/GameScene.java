@@ -137,7 +137,15 @@ public class GameScene extends SceneTool {
 
         Button exitButton = makeExitButton();
         exitButton.setOnAction(event -> {
-            SceneList.LVL_SELECTION.setOnActive();
+            switch (GameScene.currPath){
+                case LVL:
+                    SceneList.LVL_SELECTION.setOnActive();
+                    break;
+                case SAVE:
+                    SceneList.LOAD.setOnActive();
+                    break;
+                default: throw new IllegalStateException("The file doesn't come from an correct path");
+            }
         });
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);
