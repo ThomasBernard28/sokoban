@@ -11,20 +11,31 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * This Class has for objective to load a file and to return it as a game instance
+ */
+
 public class Load {
-
-
-
+    /**
+     * Method used to load a file
+     * @param path a path coming from Path enum to know in wich resources directory we have to search
+     * @param fileName the name of the file the game has to open
+     * @return returning the instance of the Grid wich we be used to create the game then
+     * @throws FileNotFoundException if the file game doesn't exist
+     */
 
 
     public static Grid loadFile(Path path ,String fileName) throws FileNotFoundException {
         Grid loadGrid;
 
-        File file = new File(path.getPath() + fileName + ".xsb");
 
+        File file = new File(path.getPath() + fileName );
+
+        //Call the method find size to know th size of the grid
         Size size = findSize(file);
         loadGrid = new Grid(size);
 
+        //Scanning the file we open
         Scanner scanner = new Scanner(file);
         char[] line;
         int i = 0;
@@ -32,6 +43,7 @@ public class Load {
         while (scanner.hasNextLine()){
             line = scanner.nextLine().toCharArray();
             for (int j = 0; j < line.length; j++) {
+                //Switch made to load each entity on the grid
                 switch (line[j]) {
                     case '#':
                         loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.WALL);
@@ -66,54 +78,6 @@ public class Load {
         return loadGrid;
     }
 
-    public static Grid loadFileChooser(Path path ,String fileName) throws FileNotFoundException {
-        Grid loadGrid;
-
-        File file = new File(path.getPath() + fileName);
-
-        Size size = findSize(file);
-        loadGrid = new Grid(size);
-
-        Scanner scanner = new Scanner(file);
-        char[] line;
-        int i = 0;
-
-        while (scanner.hasNextLine()){
-            line = scanner.nextLine().toCharArray();
-            for (int j = 0; j < line.length; j++) {
-                switch (line[j]) {
-                    case '#':
-                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.WALL);
-                        break;
-                    case ' ':
-                        break;
-                    case '@':
-                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.PLAYER);
-                        loadGrid.setPlayerLocation(j, i);
-                        break;
-                    case '$':
-                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.BOX);
-                        break;
-                    case '.':
-                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
-                        break;
-                    case '+':
-                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.PLAYER);
-                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
-                        loadGrid.setPlayerLocation(j, i);
-                        break;
-                    case '*':
-                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
-                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.BOX);
-                        break;
-                    default:
-                        throw new IllegalStateException("Bad file format must be .xsb");
-                }
-            }
-            i++;
-        }
-        return loadGrid;
-    }
 
     /**
      * Take a file an return the size that the grid needs to be in order to contain it
@@ -139,8 +103,6 @@ public class Load {
 
         return Size.determineSize(nbRow, nbCol);
     }
-
-
 
 
     public static void main(String[] args) {

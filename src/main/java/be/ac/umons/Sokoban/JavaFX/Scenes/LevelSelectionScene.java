@@ -266,7 +266,7 @@ public class LevelSelectionScene extends SceneTool{
             fc.setInitialDirectory(fileToload);
             File fileChosen = fc.showOpenDialog(null);
             if(fileChosen != null){
-                GameScene.makeTheGameFc(Path.LVL, fileChosen.getName());
+                GameScene.makeTheGame(Path.LVL, fileChosen.getName());
             }
         });
 

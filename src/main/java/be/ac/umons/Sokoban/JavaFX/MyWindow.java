@@ -3,14 +3,10 @@ package be.ac.umons.Sokoban.JavaFX;
 import be.ac.umons.Sokoban.Entities.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.*;
 import javafx.application.Application;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.shape.Circle;
-import javafx.stage.Popup;
 import javafx.stage.Stage;
 
-import java.awt.*;
 import java.net.URL;
 
 public class MyWindow extends Application
@@ -40,7 +36,7 @@ public class MyWindow extends Application
 
         LevelGenScene.makeScene();
         //LevelSelectionScene.makeScene();
-        PlayMenuScene.makeScene();
+        GameModeScene.makeScene();
         MenuScene.makeScene();
         ProfileScene.makeScene();
 

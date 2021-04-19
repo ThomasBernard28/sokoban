@@ -210,18 +210,6 @@ public class GameScene extends SceneTool {
             e.printStackTrace();
         }
     }
-    public static void makeTheGameFc(Path path, String fileName){
-        currFileName = fileName;
-        currPath = path;
-        try{
-            Grid gameFile = Load.loadFileChooser(path, fileName);
-            GameScene.makeScene(gameFile);
-            SceneList.GAME.setOnActive();
-
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-    }
 
     public static Profile getCurrProfile() {
         return currProfile;

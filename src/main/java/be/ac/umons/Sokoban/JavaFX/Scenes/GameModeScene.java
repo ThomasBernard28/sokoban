@@ -15,8 +15,12 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
+/**
+ * This Class display the Game mode chooser scene
+ */
 
-public class PlayMenuScene extends SceneTool{
+
+public class GameModeScene extends SceneTool{
     public final static BorderPane root = new BorderPane();
     private final static int MARGIN = 30;
     private static Button resetButton = null;
@@ -63,20 +67,21 @@ public class PlayMenuScene extends SceneTool{
         LvlSelectButton.setStyle("-fx-cursor: hand;");
         LoadSavedGameButton.setStyle("-fx-cursor: hand;");
 
+        //Switching to the level selection
         LvlSelectButton.setOnMouseClicked(event -> {
             LevelSelectionScene.makeScene();
             SceneList.LVL_SELECTION.setOnActive();
 
         });
 
-
+        //Opening a file explorer to load a saved game
         LoadSavedGameButton.setOnMouseClicked(event -> {
             FileChooser fc = new FileChooser();
             File fileToload = new File(Path.SAVE.getPath());
             fc.setInitialDirectory(fileToload);
             File fileChosen = fc.showOpenDialog(null);
             if(fileChosen != null){
-                GameScene.makeTheGameFc(Path.SAVE, fileChosen.getName());
+                GameScene.makeTheGame(Path.SAVE, fileChosen.getName());
             }
         });
         centerSide.getChildren().addAll(LvlSelectButton,LoadSavedGameButton);

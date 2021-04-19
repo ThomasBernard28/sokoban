@@ -26,6 +26,10 @@ import java.security.Key;
 
 import static be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool.*;
 
+/**
+ * Class to create a popup window in order to ask some choice
+ * to the player or to prevent him from making some action
+ */
 
 
 public class PopupWindow {
@@ -36,6 +40,12 @@ public class PopupWindow {
 
         private final String title;
         private final String message;
+
+        /**
+         * Construc of a popup type in the enum
+         * @param title specific title given to each type of popup
+         * @param message specific message given to each type of popup
+         */
 
         PopupType(String title, String message){
             this.title = title;
@@ -52,13 +62,27 @@ public class PopupWindow {
 
     }
 
+    /**
+     * Constructor used to create a popup window th throw some advertising or question in the game
+     * the constructor calls the display method in order to display the popup
+     *
+     * @param popupType Type of popup we will display on the screen
+     */
+
     public PopupWindow(PopupType popupType){
         display(popupType);
     }
 
+    /**
+     * This methode takes all the parameters necessary to display a pop up
+     *
+     * @param popupType the popup type to display
+     */
+
     public void display(PopupType popupType){
         Stage popupWindow = new Stage();
 
+        //Creating the new window to display the popup
         popupWindow.initModality(Modality.APPLICATION_MODAL);
         popupWindow.setTitle(popupType.getTitle());
         popupWindow.setMinWidth(500);
@@ -81,11 +105,20 @@ public class PopupWindow {
         layout.getChildren().addAll(label, closeButton);
         layout.setAlignment(Pos.CENTER);
 
+        //Setting the current scene calling the next method to create specific layout
         Scene scene = new Scene(createLayout(popupType, label, popupWindow));
         popupWindow.setScene(scene);
         popupWindow.showAndWait();
 
     }
+
+    /**
+     * This methode initiate and return a layout that will be display on the scene
+     * @param popupType the type of popup
+     * @param label The message we display wich comes directly from the Popup type enum
+     * @param popupWindow The stage that is create in the previous method
+     * @return returning the layout to the call in display() method
+     */
 
     public VBox createLayout(PopupType popupType, Label label, Stage popupWindow){
         VBox layout = new VBox(10);
@@ -98,6 +131,7 @@ public class PopupWindow {
         closeButton.setScaleX(0.5);
         closeButton.setScaleY(0.5);
 
+        //Switching on the popup type to set a specific layout
         switch (popupType){
             case NEW_PROFILE:
                 HBox bottomBox = new HBox(50);
@@ -113,15 +147,20 @@ public class PopupWindow {
                 input.setScaleY(1.5);
                 input.setScaleX(1);
 
+                //Closing the window
                 closeButton.setTranslateX(-210);
                 closeButton.setTranslateY(-45);
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
                 });
 
+                //Validate the creation of a profile
                 validate.setOnAction(event -> {
+                    //method to set the username entered in the textfield
                     GameScene.getCurrProfile().setUsername(input.getCharacters().toString());
+                    //clearing textfield
                     input.clear();
+                    //end popup
                     popupWindow.close();
                 });
 
@@ -136,6 +175,7 @@ public class PopupWindow {
                 Button validate2 = new Button();
                 Button cancel = new Button();
 
+                //close popup
                 closeButton.setTranslateY(-45);
                 closeButton.setTranslateX(-210);
                 closeButton.setOnAction(event -> {
@@ -156,11 +196,13 @@ public class PopupWindow {
                 cancel.setScaleX(1);
                 cancel.setScaleY(1);
 
+                //Delete the selected profile
                 validate2.setOnAction(event -> {
                     deleteAProfile();
                     popupWindow.close();
                 });
 
+                //Does nothing and comeback to profile selection
                 cancel.setOnAction(event -> {
                     popupWindow.close();
                 });
@@ -177,10 +219,10 @@ public class PopupWindow {
             case END_GAME:
                 Button returnToMenu = new Button();
                 Button restartGame = new Button();
-                restartGame.setScaleX(2);
-                restartGame.setScaleY(2);
-                returnToMenu.setScaleX(2);
-                returnToMenu.setScaleY(2);
+                restartGame.setScaleX(1.5);
+                restartGame.setScaleY(1.5);
+                returnToMenu.setScaleX(1.5);
+                returnToMenu.setScaleY(1.5);
                 returnToMenu.setBackground(new Background(bgFillRed));
                 restartGame.setBackground(new Background(bgFillGreen));
 
@@ -194,6 +236,7 @@ public class PopupWindow {
 
                 returnToMenu.setOnAction(event -> {
                     popupWindow.close();
+                    //Switch made to know on wich scene we have to go back
                     switch(GameScene.currPath){
                         case LVL:
                             SceneList.LVL_SELECTION.setOnActive();
@@ -204,6 +247,7 @@ public class PopupWindow {
                         default: throw new IllegalStateException("The file doesn't come from an correct path");
                     }
                 });
+                //Restarting the game
                 restartGame.setOnAction(event -> {
                     popupWindow.close();
                     GameScene.makeTheGame(GameScene.currPath, GameScene.currFileName);
@@ -221,6 +265,7 @@ public class PopupWindow {
         }
     }
 
+    //Method to delete a profile
     public void deleteAProfile(){
         throw new IllegalStateException("Function has not been defined");
     }

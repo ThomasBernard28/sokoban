@@ -37,6 +37,7 @@ public class Save {
         }
 
         File file = new File(path.getPath() + fileName + ".xsb");
+        //before writing check if the file has been created
         boolean success = file.createNewFile();
         if(success){
             FileWriter writer = new FileWriter(file);
