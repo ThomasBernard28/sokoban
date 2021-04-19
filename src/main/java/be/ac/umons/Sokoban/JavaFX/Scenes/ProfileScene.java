@@ -133,12 +133,7 @@ public class ProfileScene extends SceneTool {
         Background pressed = new Background(bgFillGray);
 
         deleteProfile.setOnMouseClicked(event -> {
-            deleteProfile.setBackground(pressed);
-            newProfile1Button.setOnMouseClicked(event1 -> {
-                deleteProfile.setBackground(unpressed);
-                new PopupWindow(PopupWindow.PopupType.DELETE_PROFILE);
-            });
-
+            new PopupWindow((PopupWindow.PopupType.DELETE_PROFILE));
         });
         newProfile1Button.setOnMouseClicked(event -> {
             profileNumber = Profile.ProfileNumber.PROFILE_1;
@@ -192,8 +187,8 @@ public class ProfileScene extends SceneTool {
 
         profilesContainer.setAlignment(Pos.CENTER);
         profilesContainer.setVgap(70);
-        profilesContainer.setHgap(70);
-        profilesContainer.setGridLinesVisible(true);
+        profilesContainer.setHgap(115);
+        profilesContainer.setGridLinesVisible(false);
 
         return profilesContainer;
     }
