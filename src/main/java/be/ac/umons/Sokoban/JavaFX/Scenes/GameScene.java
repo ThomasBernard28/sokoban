@@ -79,6 +79,10 @@ public class GameScene extends SceneTool {
         currentGrid = grid;
         gamePane.initiate();
 
+        gamePane.setOnMouseClicked(event -> {
+            gamePane.requestFocus();
+        });
+
         playerEvent = new PlayerEvent(gamePane);
         SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
