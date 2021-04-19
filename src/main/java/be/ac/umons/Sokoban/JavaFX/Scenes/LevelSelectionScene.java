@@ -24,13 +24,13 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class LevelSelectionScene extends SceneTool{
-    private static final BorderPane root = new BorderPane();
+    public static final BorderPane root = new BorderPane();
     private static final int MARGIN = 30;
     protected static Path currPath = null;
     protected static String currFile = null;
 
     public static void makeScene(){
-        root.setCenter(centerGenesis());
+        root.setCenter(_centerGenesis());
         root.setBottom(bottomGenesis());
         root.setTop(topGenesis());
         root.setLeft(leftGenesis());
@@ -208,6 +208,45 @@ public class LevelSelectionScene extends SceneTool{
 
         return centerSide;
     }
+
+    public static GridPane _centerGenesis(){
+        GridPane centerSide = new GridPane();
+
+        LevelButton[] lvlButtons = new LevelButton[10];
+        for (int i = 0; i < 10; i++) {
+            lvlButtons[i] = new LevelButton(i + 1);
+        }
+
+        final int lvlCompleted = GameScene.getCurrProfile().getLvlCompleted();
+        for (int i = 0; i < lvlCompleted; i++) {
+            lvlButtons[i].unlock();
+        }
+        if(lvlCompleted != 10){
+            lvlButtons[lvlCompleted].setNext();
+        }
+
+        HBox firstLevels = new HBox();
+        HBox otherLevels = new HBox();
+        for(int i = 0; i < 5; i++){
+            firstLevels.getChildren().add(lvlButtons[i]);
+            otherLevels.getChildren().add(lvlButtons[5 + i]);
+        }
+        firstLevels.setSpacing(100);
+        firstLevels.setAlignment(Pos.TOP_CENTER);
+
+        otherLevels.setSpacing(100);
+        otherLevels.setAlignment(Pos.BOTTOM_CENTER);
+
+        VBox levels = new VBox();
+        levels.getChildren().addAll(firstLevels, otherLevels);
+        levels.setSpacing(100);
+        levels.setAlignment(Pos.CENTER);
+
+        centerSide.getChildren().add(levels);
+        centerSide.setAlignment(Pos.CENTER);
+
+        return centerSide;
+    }
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
@@ -261,5 +300,71 @@ public class LevelSelectionScene extends SceneTool{
         level5ButtonImg.setScaleX(2);
         level5ButtonImg.setScaleY(2);
     }
+
+}
+
+class LevelButton extends StackPane {
+
+    final String filename;
+    final int lvl;
+
+    LevelButton(int lvl){
+        assert lvl <= 10;
+        this.lvl = lvl;
+
+        ImageView btnImg = SpriteUI.getUIImg(UIImg.RED_BUTTON06);
+        btnImg.setScaleX(2);
+        btnImg.setScaleY(2);
+        ImageView lockImg = SpriteIcon.getIconImg(IconImg.LOCKED);
+
+        this.getChildren().addAll(btnImg, lockImg);
+        this.setStyle("-fx-cursor: hand;");
+
+        String name = "level" + lvl +"_2";
+        if(lvl <= 7){
+            name = "level" + lvl +"_1";
+        }
+        if(lvl <= 3){
+            name = "level" + lvl +"_0";
+        }
+        // made final to be used in the lambda expression
+        filename = name;
+
+    }
+
+    public void setNext(){
+        this.getChildren().clear();
+
+        ImageView btnImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON09);
+        btnImg.setScaleY(2);
+        btnImg.setScaleX(2);
+
+        Label btnText = new Label("Lvl " + lvl);
+        btnText.setFont(Font.font("impact", 20));
+
+        this.getChildren().addAll(btnImg, btnText);
+
+        this.setOnMouseClicked(event -> {
+            GameScene.makeTheGame(Path.LVL, filename);
+        });
+    }
+
+    public void unlock(){
+        this.getChildren().clear();
+
+        ImageView btnImg = SpriteUI.getUIImg(UIImg.GREEN_BUTTON09);
+        btnImg.setScaleY(2);
+        btnImg.setScaleX(2);
+
+        Label btnText = new Label("Lvl " + lvl);
+        btnText.setFont(Font.font("impact", 20));
+
+        this.getChildren().addAll(btnImg, btnText);
+
+        this.setOnMouseClicked(event -> {
+            GameScene.makeTheGame(Path.LVL, filename);
+        });
+    }
+
 
 }

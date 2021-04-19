@@ -11,7 +11,7 @@ public class UnitTest {
 
 
     public static char[] loadMov(String fileName, Path path){
-        char []listChar=new char[1];
+        char []listChar = new char[1];
         //encore à faire mais comme ça ça met pas d'erreurs dans le programme
         return listChar;
     }
@@ -38,7 +38,6 @@ public class UnitTest {
                     testGrid.getGridFromPlayer().move(testGrid, Direction.RIGHT);
                     break;
             }
-
         }
         return testGrid;
     }

@@ -64,7 +64,9 @@ public class PlayMenuScene extends SceneTool{
         LoadSavedGameButton.setStyle("-fx-cursor: hand;");
 
         LvlSelectButton.setOnMouseClicked(event -> {
+            LevelSelectionScene.makeScene();
             SceneList.LVL_SELECTION.setOnActive();
+
         });
 
 
