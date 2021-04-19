@@ -199,7 +199,7 @@ public class PopupWindow {
                             SceneList.LVL_SELECTION.setOnActive();
                             break;
                         case SAVE:
-                            SceneList.LOAD.setOnActive();
+                            SceneList.PLAY_MENU.setOnActive();
                             break;
                         default: throw new IllegalStateException("The file doesn't come from an correct path");
                     }
