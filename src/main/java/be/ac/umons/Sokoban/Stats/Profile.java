@@ -68,6 +68,10 @@ public class Profile {
         this.bestTime = bestTime;
     }
 
+    private Profile(String username){
+        this.username = username;
+    }
+
     /**
      * Constructor used by the jackson module and to create an empty profile
      */
@@ -90,6 +94,11 @@ public class Profile {
 
     public void setUsername(String username){
         this.username = username;
+        try{
+            writeJsonFile(activeProfile);
+        }catch (IOException e){
+            throw new IndexOutOfBoundsException("File is missing");
+        }
     }
     /**
      * Save the Profile in the json file
@@ -127,13 +136,13 @@ public class Profile {
     }
 
     private void reset(){
-        this.username = null;
+        this.username = "New Profile";
         this.lvlCompleted = 0;
         this.bestTime = new double[10];
     }
 
-    private boolean isNew(){
-        return username == null;
+    public boolean thisIsANewProfile(){
+        return username.equals("New Profile");
     }
 
     /*
@@ -145,7 +154,7 @@ public class Profile {
      * List of active profile that is initiate at the start of the program by reading the json file
      * and saved in that file at every modification
      */
-    private static Profile[] activeProfile;
+    private static Profile[] activeProfile = new Profile[3];
 
     /**
      * Read the json file located in resources/profileInfo
@@ -154,7 +163,9 @@ public class Profile {
      */
     private static Profile[] readJsonFile() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(path), Profile[].class);
+        Profile[] temp = objectMapper.readValue(new File(path), Profile[].class);
+        writeJsonFile(temp);
+        return temp;
     }
 
     /**
@@ -176,6 +187,7 @@ public class Profile {
         }
     }
 
+
     /**
      * update the activeProfile by copying the info contained in the json file
      * @return the active profile updated
@@ -189,11 +201,12 @@ public class Profile {
             // TODO create new file
         }
 
+
         // Making sure that the new profile will be at the end of the list
         int i = 0;
-        int k = 0;
+        int k = 1;
         for (Profile profile: saved){
-            if(profile.isNew()){
+            if(profile.thisIsANewProfile()){
                 activeProfile[saved.length - k] = profile;
                 k++;
             }else{
@@ -212,8 +225,14 @@ public class Profile {
      *
      */
     public static void main(String[] args) throws IOException, ParseException {
-        Profile[] users = readJsonFile();
-        System.out.println(Arrays.toString(users));
+        Profile[] defaultProfile = {
+                new Profile(),
+                new Profile(),
+                new Profile()
+        };
+        //writeFileJackson("profileList.json", defaultProfile);
+        defaultProfile = readJsonFile();
+        System.out.println(Arrays.toString(defaultProfile));
     }
 
 

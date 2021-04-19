@@ -8,6 +8,7 @@ import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
+import be.ac.umons.Sokoban.Stats.Profile;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
@@ -27,6 +28,8 @@ public class GameScene extends SceneTool {
     private static PlayerEvent playerEvent = null;
     protected static String currFileName = null;
     protected static Path currPath = null;
+
+    private static Profile currProfile = null;
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();
@@ -204,4 +207,11 @@ public class GameScene extends SceneTool {
         }
     }
 
+    public static Profile getCurrProfile() {
+        return currProfile;
+    }
+
+    public static void setCurrProfile(Profile currProfile) {
+        GameScene.currProfile = currProfile;
+    }
 }

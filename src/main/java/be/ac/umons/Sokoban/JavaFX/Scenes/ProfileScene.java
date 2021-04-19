@@ -73,7 +73,7 @@ public class ProfileScene extends SceneTool {
 
         return topSide;
     }
-    public static VBox centerGenesis(){
+    public static VBox _centerGenesis(){
         VBox centerSide = new VBox();
         VBox profilesBox = new VBox();
         VBox deleteBox = new VBox();
@@ -169,7 +169,7 @@ public class ProfileScene extends SceneTool {
         return centerSide;
     }
 
-    public static GridPane _centerGenesis(){
+    public static GridPane centerGenesis(){
         GridPane profilesContainer = new GridPane();
 
         Profile[] profilesList = Profile.getActiveProfile();
@@ -185,27 +185,15 @@ public class ProfileScene extends SceneTool {
                 new DelProfileButton(profileButtons[2], bgFillDarkOrange)
         };
 
-
-
-        deleteProfile.setOnMouseClicked(event -> {
-            deleteProfile.setBackground(pressed);
-            newProfile1Button.setOnMouseClicked(event1 -> {
-                deleteProfile.setBackground(unpressed);
-                new PopupWindow(PopupWindow.PopupType.DELETE_PROFILE);
-            });
-
-        });
-        newProfile1Button.setOnMouseClicked(event -> {
-            profileNumber = Profile.ProfileNumber.PROFILE_1;
-            new PopupWindow(PopupWindow.PopupType.NEW_PROFILE);
-            profile1Button.getChildren().addAll(createProfile("Profile 1"), profile1ButtonImg);
-            profilesBox.getChildren().set(0, profile1Button);
-        });
-
         for (int i = 0; i < profileButtons.length; i++) {
             profilesContainer.add(profileButtons[i], 0, i);
             profilesContainer.add(delProfileButtons[i], 1, i);
         }
+
+        profilesContainer.setAlignment(Pos.CENTER);
+        profilesContainer.setVgap(70);
+        profilesContainer.setHgap(70);
+        profilesContainer.setGridLinesVisible(true);
 
         return profilesContainer;
     }
@@ -239,13 +227,14 @@ public class ProfileScene extends SceneTool {
 
 class ProfileButton extends StackPane{
 
-    Profile linkedProfile;
+    private Profile linkedProfile;
     Label btnTxt;
 
     ProfileButton(Profile linkedProfile){
         super();
         this.setScaleX(2);
         this.setScaleY(2);
+        this.linkedProfile = linkedProfile;
         btnTxt = new Label(linkedProfile.getUsername());
         btnTxt.setFont(Font.font("impact", 30));
 
@@ -254,7 +243,14 @@ class ProfileButton extends StackPane{
         this.setStyle("-fx-cursor: hand;");
 
         this.setOnMouseClicked(event -> {
-            //TODO something
+            if(linkedProfile.thisIsANewProfile()){
+                GameScene.setCurrProfile(linkedProfile);
+                new PopupWindow(PopupWindow.PopupType.NEW_PROFILE);
+                btnTxt.setText(linkedProfile.getUsername());
+            }else{
+               GameScene.setCurrProfile(linkedProfile);
+               SceneTool.SceneList.PLAY_MENU.setOnActive();
+            }
         });
 
     }
@@ -266,8 +262,7 @@ class ProfileButton extends StackPane{
 }
 
 class DelProfileButton extends Button {
-
-    ProfileButton linkedButton;
+    // Possible error the order of profile may change and link may be wrong
 
     DelProfileButton(ProfileButton linkedButton, BackgroundFill bg){
         super();
@@ -275,6 +270,15 @@ class DelProfileButton extends Button {
         this.setGraphic(SpriteIcon.getIconImg(IconImg.RESET));
         this.setScaleX(1);
         this.setScaleY(1);
-        this.setOnAction(event -> linkedButton.delLinkedProfile());
+        this.setStyle("-fx-cursor: hand;");
+        this.setOnAction(event -> {
+            new PopupWindow(PopupWindow.PopupType.DELETE_PROFILE){
+                @Override
+                public void deleteAProfile(){
+                    System.out.println("override");
+                    linkedButton.delLinkedProfile();
+                }
+            };
+        });
     }
 }

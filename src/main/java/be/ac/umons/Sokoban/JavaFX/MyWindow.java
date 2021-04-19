@@ -5,6 +5,7 @@ import be.ac.umons.Sokoban.JavaFX.Scenes.*;
 import javafx.application.Application;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.shape.Circle;
 import javafx.stage.Popup;
 import javafx.stage.Stage;
@@ -44,6 +45,13 @@ public class MyWindow extends Application
         LoadScene.makeScene();
         ProfileScene.makeScene();
 
+        theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
+            if(GameScene.getCurrProfile() != null) {
+                System.out.println(GameScene.getCurrProfile().getUsername());
+            }else{
+                System.out.println("null");
+            }
+        });
         SceneTool.start();
     }
 

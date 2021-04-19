@@ -107,7 +107,8 @@ public class PlayMenuScene extends SceneTool{
 
         Button exitButton = makeExitButton();
         exitButton.setOnAction(event -> {
-            SceneList.MENU.setOnActive();
+            GameScene.setCurrProfile(null);
+            SceneList.PROFILE.setOnActive();
         });
         exitButton.setScaleX(1);
         exitButton.setScaleY(1);

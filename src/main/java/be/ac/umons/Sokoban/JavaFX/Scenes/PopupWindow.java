@@ -34,8 +34,8 @@ public class PopupWindow {
         NEW_PROFILE("CREATE PROFILE", "Please enter a profile name"),
         END_GAME("END OF THE LEVEL", "Congrats you won ! Please make a choice");
 
-        private  final String title;
-        private  final String message;
+        private final String title;
+        private final String message;
 
         PopupType(String title, String message){
             this.title = title;
@@ -49,6 +49,7 @@ public class PopupWindow {
         public String getMessage(){
             return message;
         }
+
     }
 
     public PopupWindow(PopupType popupType){
@@ -119,7 +120,7 @@ public class PopupWindow {
                 });
 
                 validate.setOnAction(event -> {
-                    new Profile(ProfileScene.profileNumber, input.getCharacters().toString());
+                    GameScene.getCurrProfile().setUsername(input.getCharacters().toString());
                     input.clear();
                     popupWindow.close();
                 });
@@ -156,7 +157,8 @@ public class PopupWindow {
                 cancel.setScaleY(1);
 
                 validate2.setOnAction(event -> {
-                    //TODO
+                    deleteAProfile();
+                    popupWindow.close();
                 });
 
                 cancel.setOnAction(event -> {
@@ -217,6 +219,10 @@ public class PopupWindow {
                 return layout;
             default: throw new IllegalStateException("Not an existing popup");
         }
+    }
+
+    public void deleteAProfile(){
+        throw new IllegalStateException("Function has not been defined");
     }
     
 }
