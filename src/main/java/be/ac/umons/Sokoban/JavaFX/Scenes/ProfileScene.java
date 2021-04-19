@@ -19,11 +19,14 @@ import javafx.scene.layout.*;
 import javafx.stage.Popup;
 
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
 
 public class ProfileScene extends SceneTool {
+
     private static final BorderPane root = new BorderPane();
     public static Profile.ProfileNumber profileNumber = null;
+
     public static void makeScene(){
         root.setTop(topGenesis());
         root.setBottom(bottomGenesis());
@@ -47,8 +50,8 @@ public class ProfileScene extends SceneTool {
         Button exitButton = makeExitButton();
         exitButton.setScaleY(1.0);
         exitButton.setScaleX(1.0);
-        exitButton.setOnAction(event ->
-                SceneList.MENU.setOnActive());
+
+        exitButton.setOnAction(event -> SceneList.MENU.setOnActive());
 
         Button statsButton = new Button();
         statsButton.setGraphic(SpriteIcon.getIconImg(IconImg.STAT));
@@ -82,6 +85,7 @@ public class ProfileScene extends SceneTool {
         StackPane newProfile3Button = new StackPane();
         StackPane profile3Button = new StackPane();
         Button deleteProfile = new Button();
+
 
         deleteProfile.setBackground(new Background(bgFillDarkOrange));
         deleteProfile.setGraphic(SpriteIcon.getIconImg(IconImg.RESET));
@@ -164,6 +168,48 @@ public class ProfileScene extends SceneTool {
 
         return centerSide;
     }
+
+    public static GridPane _centerGenesis(){
+        GridPane profilesContainer = new GridPane();
+
+        Profile[] profilesList = Profile.getActiveProfile();
+
+        ProfileButton[] profileButtons = {
+                new ProfileButton(profilesList[0]),
+                new ProfileButton(profilesList[1]),
+                new ProfileButton(profilesList[2])
+        };
+        DelProfileButton[] delProfileButtons = {
+                new DelProfileButton(profileButtons[0], bgFillDarkOrange),
+                new DelProfileButton(profileButtons[1], bgFillDarkOrange),
+                new DelProfileButton(profileButtons[2], bgFillDarkOrange)
+        };
+
+
+
+        deleteProfile.setOnMouseClicked(event -> {
+            deleteProfile.setBackground(pressed);
+            newProfile1Button.setOnMouseClicked(event1 -> {
+                deleteProfile.setBackground(unpressed);
+                new PopupWindow(PopupWindow.PopupType.DELETE_PROFILE);
+            });
+
+        });
+        newProfile1Button.setOnMouseClicked(event -> {
+            profileNumber = Profile.ProfileNumber.PROFILE_1;
+            new PopupWindow(PopupWindow.PopupType.NEW_PROFILE);
+            profile1Button.getChildren().addAll(createProfile("Profile 1"), profile1ButtonImg);
+            profilesBox.getChildren().set(0, profile1Button);
+        });
+
+        for (int i = 0; i < profileButtons.length; i++) {
+            profilesContainer.add(profileButtons[i], 0, i);
+            profilesContainer.add(delProfileButtons[i], 1, i);
+        }
+
+        return profilesContainer;
+    }
+
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
@@ -189,5 +235,46 @@ public class ProfileScene extends SceneTool {
         Label profileName = new Label("name");
         return profileName;
     }
+}
 
+class ProfileButton extends StackPane{
+
+    Profile linkedProfile;
+    Label btnTxt;
+
+    ProfileButton(Profile linkedProfile){
+        super();
+        this.setScaleX(2);
+        this.setScaleY(2);
+        btnTxt = new Label(linkedProfile.getUsername());
+        btnTxt.setFont(Font.font("impact", 30));
+
+        this.getChildren().addAll(SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02), btnTxt);
+
+        this.setStyle("-fx-cursor: hand;");
+
+        this.setOnMouseClicked(event -> {
+            //TODO something
+        });
+
+    }
+
+    public void delLinkedProfile() {
+        Profile.deleteProfile(linkedProfile);
+        btnTxt.setText(linkedProfile.getUsername());
+    }
+}
+
+class DelProfileButton extends Button {
+
+    ProfileButton linkedButton;
+
+    DelProfileButton(ProfileButton linkedButton, BackgroundFill bg){
+        super();
+        this.setBackground(new Background(bg));
+        this.setGraphic(SpriteIcon.getIconImg(IconImg.RESET));
+        this.setScaleX(1);
+        this.setScaleY(1);
+        this.setOnAction(event -> linkedButton.delLinkedProfile());
+    }
 }

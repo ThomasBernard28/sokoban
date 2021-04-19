@@ -52,20 +52,10 @@ public class Profile {
 
 
     private String username;
-    private int lvlCompleted;
-    private double[] bestTime;
+    private int lvlCompleted = 0;
+    private double[] bestTime = new double[10];
 
     private final static String path = Path.PROFILE.getPath() + "/profileList.json";
-
-    /**
-     * Constructor used to create a new profile
-     */
-    private Profile(String username){
-        this.username = username;
-        this.lvlCompleted = 0;
-        this.bestTime = new double[10];
-
-    }
 
     /**
      * Constructor used to create a profile already save
@@ -79,11 +69,14 @@ public class Profile {
     }
 
     /**
-     * Constructor used only by the jackson module
+     * Constructor used by the jackson module and to create an empty profile
      */
     public Profile(){}
 
     public String getUsername() {
+        if(username == null){
+            return "New Profile";
+        }
         return username;
     }
 
@@ -133,43 +126,83 @@ public class Profile {
         return jsonString;
     }
 
+    private void reset(){
+        this.username = null;
+        this.lvlCompleted = 0;
+        this.bestTime = new double[10];
+    }
+
+    private boolean isNew(){
+        return username == null;
+    }
+
     /*
      *
      *static part
      *
      */
+    /**
+     * List of active profile that is initiate at the start of the program by reading the json file
+     * and saved in that file at every modification
+     */
+    private static Profile[] activeProfile;
 
     /**
      * Read the json file located in resources/profileInfo
      * @return an array with the Profile saved in it
      * @throws IOException file is missing
      */
-    public static Profile[] readJsonFile() throws IOException {
+    private static Profile[] readJsonFile() throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(new File(path), Profile[].class);
     }
 
     /**
      * Write an array of Profile in a json file located in resources/profileInfo
-     * @param profile array of Profile
      * @throws IOException file is missing
      */
-    public static void writeJsonFile(Profile[] profile) throws IOException {
+    private static void writeJsonFile(Profile[] activeProfile) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(path), profile);
+        objectMapper.writeValue(new File(path), activeProfile);
     }
 
-    /**
-     * Delete the profile save in the file
-     */
-    public static void resetProfile(){
-        try {
-            writeJsonFile(new Profile[0]);
-        } catch (IOException e){
-            e.printStackTrace();
+
+    public static void deleteProfile(Profile toDel){
+        toDel.reset();
+        try{
+            writeJsonFile(activeProfile);
+        }catch (IOException e){
+            throw new IndexOutOfBoundsException("File is missing");
         }
     }
 
+    /**
+     * update the activeProfile by copying the info contained in the json file
+     * @return the active profile updated
+     */
+    public static Profile[] getActiveProfile() {
+        Profile[] saved = new Profile[3];
+        try {
+            saved = readJsonFile();
+        } catch (IOException e){
+            e.printStackTrace();
+            // TODO create new file
+        }
+
+        // Making sure that the new profile will be at the end of the list
+        int i = 0;
+        int k = 0;
+        for (Profile profile: saved){
+            if(profile.isNew()){
+                activeProfile[saved.length - k] = profile;
+                k++;
+            }else{
+                activeProfile[i] = profile;
+                i++;
+            }
+        }
+        return activeProfile;
+    }
 
     /*
      *
