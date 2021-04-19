@@ -29,5 +29,4 @@ public class Sokoban
             default : throw new IllegalStateException("Veuillez entrer des arguments valables");
        }
     }
-
 }

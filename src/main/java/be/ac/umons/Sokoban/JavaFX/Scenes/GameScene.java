@@ -145,7 +145,7 @@ public class GameScene extends SceneTool {
                     SceneList.LVL_SELECTION.setOnActive();
                     break;
                 case SAVE:
-                    SceneList.LOAD.setOnActive();
+                    SceneList.PLAY_MENU.setOnActive();
                     break;
                 default: throw new IllegalStateException("The file doesn't come from an correct path");
             }
@@ -199,6 +199,18 @@ public class GameScene extends SceneTool {
         currPath = path;
         try{
             Grid gameFile = Load.loadFile(path, fileName);
+            GameScene.makeScene(gameFile);
+            SceneList.GAME.setOnActive();
+
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    public static void makeTheGameFc(Path path, String fileName){
+        currFileName = fileName;
+        currPath = path;
+        try{
+            Grid gameFile = Load.loadFileChooser(path, fileName);
             GameScene.makeScene(gameFile);
             SceneList.GAME.setOnActive();
 

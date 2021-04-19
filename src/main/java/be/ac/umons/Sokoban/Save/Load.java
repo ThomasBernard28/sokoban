@@ -66,6 +66,55 @@ public class Load {
         return loadGrid;
     }
 
+    public static Grid loadFileChooser(Path path ,String fileName) throws FileNotFoundException {
+        Grid loadGrid;
+
+        File file = new File(path.getPath() + fileName);
+
+        Size size = findSize(file);
+        loadGrid = new Grid(size);
+
+        Scanner scanner = new Scanner(file);
+        char[] line;
+        int i = 0;
+
+        while (scanner.hasNextLine()){
+            line = scanner.nextLine().toCharArray();
+            for (int j = 0; j < line.length; j++) {
+                switch (line[j]) {
+                    case '#':
+                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.WALL);
+                        break;
+                    case ' ':
+                        break;
+                    case '@':
+                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.PLAYER);
+                        loadGrid.setPlayerLocation(j, i);
+                        break;
+                    case '$':
+                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.BOX);
+                        break;
+                    case '.':
+                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
+                        break;
+                    case '+':
+                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.PLAYER);
+                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
+                        loadGrid.setPlayerLocation(j, i);
+                        break;
+                    case '*':
+                        loadGrid.getGridAt(j, i).setImmovableContent(ImmovableContent.FLAG);
+                        loadGrid.getGridAt(j, i).setMovableContent(MovableContent.BOX);
+                        break;
+                    default:
+                        throw new IllegalStateException("Bad file format must be .xsb");
+                }
+            }
+            i++;
+        }
+        return loadGrid;
+    }
+
     /**
      * Take a file an return the size that the grid needs to be in order to contain it
      * if the file is too big for the grid (row > 19 or col > 32 : size determined in Size enum) it returns null

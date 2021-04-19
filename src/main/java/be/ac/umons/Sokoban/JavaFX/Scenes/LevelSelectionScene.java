@@ -17,7 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
@@ -209,10 +211,6 @@ public class LevelSelectionScene extends SceneTool{
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
-        TextField fileInput = new TextField();
-        fileInput.setFont(new Font("arial", 20));
-        fileInput.setScaleX(1.5);
-        fileInput.setScaleY(2.5);
 
         StackPane customLevelButton = new StackPane();
         ImageView customLevelButtonImg = SpriteUI.getUIImg(UIImg.RED_BUTTON01);
@@ -224,23 +222,18 @@ public class LevelSelectionScene extends SceneTool{
         customLevelButton.setStyle("-fx-cursor: hand;");
 
         customLevelButton.setOnMouseClicked(event -> {
-            CharSequence input = fileInput.getCharacters();
-            if (Pattern.matches("^(\\w|_)+$", input)) {
-                try {
-                    Grid gameFile = Load.loadFile(Path.LVL, input.toString());
-                    GameScene.makeScene(gameFile);
-                    SceneList.GAME.setOnActive();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            FileChooser fc = new FileChooser();
+            File fileToload = new File(Path.LVL.getPath());
+            fc.setInitialDirectory(fileToload);
+            File fileChosen = fc.showOpenDialog(null);
+            if(fileChosen != null){
+                GameScene.makeTheGameFc(Path.LVL, fileChosen.getName());
             }
         });
 
 
 
-        bottomSide.getChildren().addAll(customLevelButton, fileInput);
-        bottomSide.setSpacing(175);
+        bottomSide.getChildren().add(customLevelButton);
         bottomSide.setAlignment(Pos.TOP_CENTER);
         bottomSide.setStyle("-fx-padding: 70, 50, 20, 50");
 

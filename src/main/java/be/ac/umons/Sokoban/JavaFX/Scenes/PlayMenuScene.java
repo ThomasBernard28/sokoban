@@ -2,6 +2,7 @@ package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
+import be.ac.umons.Sokoban.Save.Path;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -10,7 +11,9 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+import javafx.stage.FileChooser;
 
+import java.io.File;
 
 
 public class PlayMenuScene extends SceneTool{
@@ -66,7 +69,13 @@ public class PlayMenuScene extends SceneTool{
 
 
         LoadSavedGameButton.setOnMouseClicked(event -> {
-            SceneList.LOAD.setOnActive();
+            FileChooser fc = new FileChooser();
+            File fileToload = new File(Path.SAVE.getPath());
+            fc.setInitialDirectory(fileToload);
+            File fileChosen = fc.showOpenDialog(null);
+            if(fileChosen != null){
+                GameScene.makeTheGameFc(Path.SAVE, fileChosen.getName());
+            }
         });
         centerSide.getChildren().addAll(LvlSelectButton,LoadSavedGameButton);
         centerSide.setOrientation(Orientation.VERTICAL);

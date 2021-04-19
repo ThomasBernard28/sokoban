@@ -42,7 +42,6 @@ public class MyWindow extends Application
         LevelSelectionScene.makeScene();
         PlayMenuScene.makeScene();
         MenuScene.makeScene();
-        LoadScene.makeScene();
         ProfileScene.makeScene();
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
