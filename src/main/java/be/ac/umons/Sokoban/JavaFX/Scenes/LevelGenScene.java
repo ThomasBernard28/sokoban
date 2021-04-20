@@ -12,6 +12,7 @@ import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Node;
@@ -52,10 +53,8 @@ public class LevelGenScene extends SceneTool {
 
     private static Button resetButton = null;
 
-    private final static EventHandler<MouseEvent> filter = event -> {
-        System.out.println("Filtering out event " + event.getEventType());
-        event.consume();
-    };
+    @SuppressWarnings("Convert2MethodRef")
+    private final static EventHandler<MouseEvent> filter = event -> event.consume();
 
     private final static int MARGIN = 30;
 
@@ -67,12 +66,12 @@ public class LevelGenScene extends SceneTool {
         root.setBackground(new Background(bgFillLightBlue)); //
 
         root.setTop(topGenesis());
-        root.setBottom(bottomGenesis());
+        root.setBottom(_bottomGenesis());
         root.setLeft(leftGenesis());
 
 
 
-        root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+        root.setCenter(centerRowGenesis(centerLeftGenesis(), _centerRightGenesis()));
 
 
         //superRoot.add(root, 0, 0);
@@ -81,6 +80,10 @@ public class LevelGenScene extends SceneTool {
 
     public static TileImg getCurrModifier(){
         return currModifier;
+    }
+
+    public static void setCurrModifier(TileImg currModifier) {
+        LevelGenScene.currModifier = currModifier;
     }
 
     public static GamePane getVisualGrid() {
@@ -209,6 +212,78 @@ public class LevelGenScene extends SceneTool {
         return centerRight;
     }
 
+    private static TilePane _centerRightGenesis(){
+
+        TilePane centerRight = new TilePane();
+        centerRight.setOrientation(Orientation.VERTICAL);
+        centerRight.setAlignment(Pos.CENTER);
+
+        StyleBtn boxButton = new StyleBtn(TileImg.BOX, StyleBtn.UnpressedCSS, null, "Box");
+        StyleBtn flagButton = new StyleBtn(TileImg.FLAG, StyleBtn.UnpressedCSS, null, "Flag");
+        StyleBtn playerButton = new StyleBtn(TileImg.PLAYER, StyleBtn.UnpressedCSS, null, "Player");
+        StyleBtn wallButton = new StyleBtn(TileImg.WALL, StyleBtn.UnpressedCSS, null, "Wall");
+        StyleBtn eraseButton = new StyleBtn(IconImg.CROSS, StyleBtn.UnpressedCSS, null, "Erase");
+
+        // logic part
+        boxButton.setOnAction(event -> {
+            currModifier = TileImg.BOX;
+
+            for (Node child: centerRight.getChildren()) {
+                child.setStyle(StyleBtn.UnpressedCSS);
+            }
+            boxButton.setStyle(StyleBtn.PressedCSS);
+            System.out.println(root.getWidth() + "," + root.getHeight());
+            System.out.println(SceneList.LVL_GEN.getScene().getWidth() + "," + SceneList.LVL_GEN.getScene().getHeight());
+            System.out.println(WINDOW.getWidth() + "," + WINDOW.getHeight());
+
+        });
+        flagButton.setOnAction(event -> {
+            currModifier = TileImg.FLAG;
+
+            for (Node child: centerRight.getChildren()) {
+                child.setStyle(StyleBtn.UnpressedCSS);
+            }
+            flagButton.setStyle(StyleBtn.PressedCSS);
+        });
+        wallButton.setOnAction(event -> {
+            currModifier = TileImg.WALL;
+
+            for (Node child: centerRight.getChildren()) {
+                child.setStyle(StyleBtn.UnpressedCSS);
+            }
+            wallButton.setStyle(StyleBtn.PressedCSS);
+        });
+        eraseButton.setOnAction(event -> {
+            currModifier = TileImg.EMPTY;
+
+            for (Node child: centerRight.getChildren()) {
+                child.setStyle(StyleBtn.UnpressedCSS);
+            }
+            eraseButton.setStyle(StyleBtn.PressedCSS);
+        });
+        playerButton.setOnAction(event -> {
+            if(!containPlayer){
+                currModifier = TileImg.PLAYER;
+                for (Node child: centerRight.getChildren()) {
+                    child.setStyle(StyleBtn.UnpressedCSS);
+                }
+                playerButton.setStyle(StyleBtn.PressedCSS);
+            }
+        });
+
+        // end of logic part
+
+        centerRight.setVgap(20);
+        centerRight.setMinSize(80, 0);
+        centerRight.setStyle("-fx-padding: 10 10 10 10");
+
+        centerRight.setAlignment(Pos.CENTER);
+
+        centerRight.getChildren().addAll(boxButton, flagButton, wallButton, playerButton, eraseButton);
+
+        return centerRight;
+    }
+
     private static GridPane bottomGenesis(){
         GridPane bottomSide = new GridPane();
 
@@ -222,7 +297,6 @@ public class LevelGenScene extends SceneTool {
         TextField fileOutput = new TextField();
         fileOutput.setFont(new Font("arial", 20));
 
-        //TODO adapt list view to size enum
         ObservableList<Size> diffSize = FXCollections.observableArrayList(Size.values());
         ListView<Size> sizePicker = new ListView<Size>(diffSize);
 
@@ -232,6 +306,7 @@ public class LevelGenScene extends SceneTool {
         sizePicker.setScaleY(1.2);
         sizePicker.setScaleX(1.2);
         sizePicker.setStyle("-fx-border-insets: 1000");
+
 
         generate.setGraphic(SpriteIcon.getIconImg(IconImg.RELOAD));
         reset.setGraphic(SpriteIcon.getIconImg(IconImg.RESET));
@@ -251,6 +326,116 @@ public class LevelGenScene extends SceneTool {
         reset.setStyle(buttonCSS);
         play.setStyle(buttonCSS);
         stop.setStyle(buttonCSS);
+
+        // logic part
+        play.setOnAction(event -> {
+            if(containPlayer && gridToTry == null) {
+                gridToTry = copyOfSpecialPane(visualGrid);
+                eventToTry = new PlayerEvent(gridToTry);
+
+                root.setCenter(centerRowGenesis(gridToTry, centerRightGenesis()));
+                SceneList.LVL_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.LVL_GEN.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+
+                gridToTry.initiate();
+            }
+        });
+
+        stop.setOnAction(event -> {
+            // if not null then play mode is active
+            if(gridToTry != null){
+                SceneList.LVL_GEN.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.LVL_GEN.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                root.setCenter(centerRowGenesis(visualGrid, centerRightGenesis()));
+
+                gridToTry = null;
+                eventToTry = null;
+
+                visualGrid.initiateLvlGen();
+            }
+        });
+
+        reset.setOnAction(event -> {
+            stop.fire();
+            resetCurrModifier();
+            containPlayer = false;
+            visualGrid.getGrid().resetGrid();
+            visualGrid.initiate();
+        });
+
+        save.setOnAction(event -> {
+            CharSequence output = fileOutput.getCharacters();
+            // https://regex101.com/
+            if (Pattern.matches("^(\\w|_)+$", output)){
+                try {
+                    Save.saving(visualGrid.getGrid(), Path.SAVE, output.toString());
+                    fileOutput.clear();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+        sizePicker.setOnMouseClicked(event -> {
+            stop.fire();
+            containPlayer = false;
+            Size selectedSize = sizePicker.getSelectionModel().getSelectedItem();
+            setCurrSize(selectedSize);
+
+            root.setCenter(centerRowGenesis(centerLeftGenesis(), centerRightGenesis()));
+        });
+
+        //end of logic part
+
+        bottomSide.add(generate,0,0);
+        bottomSide.add(reset, 0,1);
+        bottomSide.add(sizePicker,1,0);
+        bottomSide.add(save,2,0);
+        bottomSide.add(play,2,1);
+        bottomSide.add(fileOutput, 3, 0);
+        bottomSide.add(stop,3,1);
+
+        bottomSide.getColumnConstraints().add(new ColumnConstraints());
+        bottomSide.getColumnConstraints().add(new ColumnConstraints((currSize.getCol() * SpriteTile.getSize())/ 2.0));
+        bottomSide.setPadding(new Insets(MARGIN, MARGIN, MARGIN, MARGIN));
+        bottomSide.setHgap(20);
+
+        GridPane.setHalignment(sizePicker, HPos.CENTER);
+        GridPane.setHalignment(stop, HPos.LEFT);
+        GridPane.setHalignment(play, HPos.CENTER);
+        GridPane.setHalignment(save, HPos.CENTER);
+        GridPane.setHalignment(fileOutput, HPos.LEFT);
+
+
+
+        return bottomSide;
+    }
+
+    private static GridPane _bottomGenesis(){
+        GridPane bottomSide = new GridPane();
+
+        TextField fileOutput = new TextField();
+        fileOutput.setFont(new Font("arial", 20));
+
+        ObservableList<Size> diffSize = FXCollections.observableArrayList(Size.values());
+        ListView<Size> sizePicker = new ListView<Size>(diffSize);
+
+        sizePicker.setMaxHeight(90);
+        sizePicker.setFixedCellSize(29);
+        sizePicker.setMaxWidth(200);
+        sizePicker.setScaleY(1.2);
+        sizePicker.setScaleX(1.2);
+        sizePicker.setStyle("-fx-border-insets: 1000");
+
+
+        StyleBtn generate = new StyleBtn(IconImg.RELOAD, StyleBtn.classicCSS, bgFillGray, null);
+        StyleBtn reset = new StyleBtn(IconImg.RESET, StyleBtn.classicCSS, bgFillDarkOrange, null);
+        resetButton = reset;
+        StyleBtn save = new StyleBtn(IconImg.SAVE, StyleBtn.classicCSS, bgFillGray, null);
+        StyleBtn play = new StyleBtn(IconImg.PLAY, StyleBtn.classicCSS, bgFillGreen, null);
+        StyleBtn stop = new StyleBtn(IconImg.STOP, StyleBtn.classicCSS, bgFillDarkOrange, null);
+
 
         // logic part
         play.setOnAction(event -> {
@@ -384,3 +569,6 @@ public class LevelGenScene extends SceneTool {
         return new GamePane(copyOfGrid(old.getGrid()));
     }
 }
+
+
+

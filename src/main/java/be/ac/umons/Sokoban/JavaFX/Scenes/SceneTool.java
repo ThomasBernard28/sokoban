@@ -1,10 +1,8 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.JavaFX.MyWindow;
-import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
+import be.ac.umons.Sokoban.JavaFX.Sprite.*;
 import be.ac.umons.Sokoban.JavaFX.Size;
-import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
-import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -134,5 +132,60 @@ public class SceneTool {
     public static void setCurrSize(Size newSize){
         currSize = newSize;
         SpriteTile.setGameSheet(newSize);
+    }
+
+    /**
+     * This class allows to construct a button and directly apply a style onto it to lighten UI code
+     */
+    protected static class StyleBtn extends Button{
+
+        public final static String UnpressedCSS = "-fx-background-color: transparent;fx-border-style: solid;" +
+                "-fx-border-width: 2; -fx-border-color: #1989B8;-fx-cursor: hand";
+        public final static String PressedCSS ="-fx-background-color: transparent;fx-border-style: solid;" +
+                "-fx-border-width: 2; -fx-border-color: #E86A17;-fx-cursor: hand";
+        public final static String classicCSS = "-fx-padding: 10 10 10 10;-fx-cursor: hand";
+
+        /**
+         *
+         * @param type Tile Img that'll be applied on the button
+         * @param CSS CSS style that'll be applied on the button if not desired value must be set to null
+         * @param bg Bg color that'll be applied on the button if not desired value must be set to null
+         * @param txt txt that'll be applied on the button if not desired value must be set to null
+         */
+        protected StyleBtn(TileImg type, String CSS, BackgroundFill bg, String txt){
+            super();
+            this.setGraphic(SpriteTile.getTileImg(type));
+            applyStyle(CSS, bg, txt);
+        }
+
+        /**
+         * Same as other constructors but with an Icon img
+         */
+        protected StyleBtn(IconImg type, String CSS, BackgroundFill bg, String txt){
+            super();
+            this.setGraphic(SpriteIcon.getIconImg(type));
+            applyStyle(CSS, bg, txt);
+        }
+
+        /**
+         * Same as other constructors but with an UI img
+         */
+        protected StyleBtn(UIImg type, String CSS, BackgroundFill bg, String txt){
+            super();
+            this.setGraphic(SpriteUI.getUIImg(type));
+            applyStyle(CSS, bg, txt);
+        }
+
+        private void applyStyle(String CSS, BackgroundFill bg, String txt){
+            if(CSS != null){
+                this.setStyle(CSS);
+            }
+            if(bg != null){
+                this.setBackground(new Background(bg));
+            }
+            if(txt != null){
+                this.setText(txt);
+            }
+        }
     }
 }
