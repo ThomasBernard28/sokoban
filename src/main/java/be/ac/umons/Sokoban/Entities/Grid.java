@@ -1,26 +1,38 @@
 package be.ac.umons.Sokoban.Entities;
 
+import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
 import be.ac.umons.Sokoban.JavaFX.Size;
+import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
+import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
 import be.ac.umons.Sokoban.MapGeneration.PatternGenerator;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
-/*
-This class is made to initiate a grid, the class takes the different parameters of
-a classical grid and translate them into a representable grid
+/**
+ * This class wraps a 2D array of Tile and allow access to it modification and the generation
  */
 public class Grid {
-    // A grid is a 2D Array of tiles
+
+    /**
+     * @param grid the 2D array of tiles that represent the state of the game
+     * @param walkable a 2D array of boolean used by the generation methods
+     * @param size enum value that contains the number of rows and columns of the grid
+     * @param player 1D array that contains the coordinates of the player (x, y)
+     */
+
     private final Tile [][] grid;
     private final boolean[][] walkable;
-
-    //private final int col;
-    //public final int row;
 
     private final Size size;
 
     private final int [] player = new int[2];
 
+    /**
+     * Initiate a grid with rows and columns corresponding to the size entered
+     * @param size enum value that will represent the size of the grid
+     */
     public Grid (Size size)
     {
         this.size = size;
@@ -41,6 +53,13 @@ public class Grid {
         walkable = new boolean[size.getRow()][size.getCol()];
     }
 
+    /**
+     * Initiate a grid with as much row and column of the smallest Size enum value that can contain
+     * the row and column entered. If the number of rows or columns is greater than the largest Size enum
+     * then an error will be launched
+     * @param row number of rows in the level
+     * @param col number of columns int the level
+     */
     public Grid (int row, int col){
         size = Size.determineSize(row, col);
 
@@ -171,26 +190,6 @@ public class Grid {
      */
 
     /**
-     * Find which of the four neighbour aren't yet explored by the pathfinding process
-     * @param startX x coordinate of the tile
-     * @param startY y coordinate of the tile
-     * @return Array of Direction that aren't yet explored. The array is of length 4 and may contain null values
-     */
-    private Direction[] unexploredNeighbour(int startX, int startY){
-        Direction[] res = new Direction[4];
-        int i = 0;
-        for (Direction dir : Direction.values()){
-            if (inIndexRange(startX, startY, dir)){
-                if(walkable[startY + dir.y][startX + dir.x]){
-                    res[i] = dir;
-                }
-            }
-            i++;
-        }
-        return res;
-    }
-
-    /**
      * Tells whether the direction is in range of the array
      * @param startX x coordinate of the tile
      * @param startY y coordinate of the tile
@@ -209,46 +208,30 @@ public class Grid {
     private void resetWalkable(){
         for (int i = 0; i < size.getRow(); i++) {
             for (int j = 0; j < size.getCol(); j++) {
-                walkable[i][j] = !grid[i][j].isWall();
+                walkable[i][j] = !grid[i][j].isWall() && !grid[i][j].hasBox();
             }
         }
     }
 
     /**
-     * https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_profondeur
-     * (Source wikipedia)
-     * Find every explorable tile in the grid, if a tile is not explorable its value will stay true in the
-     * walkable grid
-     * @param startX x coordinate of the start of the pathfinding
-     * @param startY y coordinate of the start of the pathfinding
+     * Find which of the four neighbour aren't yet explored by the pathfinding process
+     * by looking at the walkable array
+     * @param startX x coordinate of the tile
+     * @param startY y coordinate of the tile
+     * @return Array of Direction that aren't yet explored. The array is of length 4 and may contain null values
      */
-    private void pathFinder(int startX, int startY){
-        //
-        walkable[startY][startX] = false;
-        for (Direction dir : unexploredNeighbour(startX, startY)){
-            if (dir != null && walkable[startY + dir.y][startX + dir.x]){
-                pathFinder(startX + dir.x, startY + dir.y);
-            }
-        }
-    }
-
-    /**
-     * Check if a grid is walkable by using the pathfinding method
-     * @param playerX x coordinate of the start of the pathfinding
-     * @param playerY y coordinate of the start of the pathfinding
-     * @return boolean telling whether a grid is solvable
-     */
-    private boolean solvable(int playerX, int playerY){
-        resetWalkable();
-        pathFinder(playerX, playerY);
-        for (boolean[] line : walkable){
-            for (boolean square : line){
-                if (square){
-                    return false;
+    private Direction[] unexploredNeighbour(int startX, int startY){
+        Direction[] res = new Direction[4];
+        int i = 0;
+        for (Direction dir : Direction.values()){
+            if (inIndexRange(startX, startY, dir)){
+                if(walkable[startY + dir.y][startX + dir.x]){
+                    res[i] = dir;
                 }
             }
+            i++;
         }
-        return true;
+        return res;
     }
 
     /**
@@ -271,6 +254,43 @@ public class Grid {
     }
 
     /**
+     * https://fr.wikipedia.org/wiki/Algorithme_de_parcours_en_profondeur
+     * (Source wikipedia)
+     * Find every explorable tile in the grid, if a tile is not explorable its value will stay true in the
+     * walkable grid
+     * @param startX x coordinate of the start of the pathfinding
+     * @param startY y coordinate of the start of the pathfinding
+     */
+    private void explorer(int startX, int startY){
+        //
+        walkable[startY][startX] = false;
+        for (Direction dir : unexploredNeighbour(startX, startY)){
+            if (dir != null && walkable[startY + dir.y][startX + dir.x]){
+                explorer(startX + dir.x, startY + dir.y);
+            }
+        }
+    }
+
+    /**
+     * Check if a grid is walkable by using the explorer method
+     * @param playerX x coordinate of the start of the pathfinding
+     * @param playerY y coordinate of the start of the pathfinding
+     * @return boolean telling whether a grid is solvable
+     */
+    private boolean solvable(int playerX, int playerY){
+        resetWalkable();
+        explorer(playerX, playerY);
+        for (boolean[] line : walkable){
+            for (boolean square : line){
+                if (square){
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    /**
      * Repetitively integrate randomly generated pattern into the grid and check at each iteration
      * if there's a contradiction(when the map is not solvable)
      */
@@ -290,23 +310,100 @@ public class Grid {
         }
     }
 
-    /**
-     * Convert the Tile grid into a char grid the char representing the tile is the same used in the toString method
-     * of the class Tile
-     * @return a char matrix representing the current tile grid
+    /*
+     * Boxes, player and flags placement
      */
-    public char[][] toCharArray(){
-        char [][] charGrid = new char[size.getRow()][size.getCol() + 1];
-        for (int i = 0; i < size.getRow(); i++) {
-            for (int j = 0; j < size.getCol(); j++) {
-                if (j == size.getCol() - 1) {
-                    charGrid[i][j+1] = '\n';
+    /**
+     * Find which of the four neighbour are explorable
+     * by looking at the walkable array
+     * @param startX x coordinate of the tile
+     * @param startY y coordinate of the tile
+     * @return Array of Direction that aren't yet explored. The array is of length 4 and may contain null values
+     */
+    private Direction[] explorableNeighbours(int startX, int startY){
+        Direction[] res = new Direction[4];
+        int i = 0;
+        for (Direction dir : Direction.values()){
+            if (inIndexRange(startX, startY, dir)){
+                if(!walkable[startY + dir.y][startX + dir.x] && !grid[startY + dir.y][startX + dir.x].isWall()){
+                    res[i] = dir;
                 }
-                charGrid[i][j] = grid[i][j].toString().charAt(0);
+            }
+            i++;
+        }
+        return res;
+    }
+
+    private int[][] currBoxes;
+
+    /**
+     * This function randomly place a player and n boxes in the grid
+     * @param n number of boxes that will be placed
+     */
+    public void placeRandomBox(int n){
+        Random rnd = new Random();
+        currBoxes = new int[n][2];
+
+        resetWalkable();
+
+        int i = 0;
+        while(i < n){
+            int rndRow = rnd.nextInt(size.getRow() - 1);
+            int rndCol = rnd.nextInt(size.getCol() - 1);
+
+            if(walkable[rndRow][rndCol]){
+                walkable[rndRow][rndCol] = false;
+                currBoxes[i][0] = rndCol;
+                currBoxes[i][1] = rndRow;
+                set_boxes(rndCol, rndRow);
+                i++;
+            }
+
+        }
+
+        while (i == n) {
+            int rndRow = rnd.nextInt(size.getRow() - 1);
+            int rndCol = rnd.nextInt(size.getCol() - 1);
+
+            if(walkable[rndRow][rndCol]){
+                walkable[rndRow][rndCol] = false;
+                set_player(rndCol, rndRow);
+                i++;
             }
         }
-        return charGrid;
     }
+
+    /**
+     * This function explores the grid and find tiles adjacent of boxes that are explorable
+     * and that doesn't make the following pattern [adjacent box -> concerned tile -> wall]
+     */
+    public ArrayList<int[]> suitableNextBox(GamePane gamePane){
+        resetWalkable();
+        explorer(getPlayerX(), getPlayerY());
+
+        ArrayList<int[]> suitors = new ArrayList<>();
+
+        for (int[] box : currBoxes){
+            // this contains the directions in which there's an empty and explorable tile next to that box
+            Direction[] directions = explorableNeighbours(box[0], box[1]);
+            for (Direction dir : directions) {
+                if(dir != null) {
+                    // here we watch out for the pattern [adjacent box -> concerned tile -> wall]
+                    if (!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isWall()) {
+                        suitors.add(new int[]{box[0] + dir.x, box[1] + dir.y});
+                        // just for visual representation
+                        if(!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isPlayer()) {
+                            gamePane.setAt(SpriteTile.getTileImg(TileImg.FLAG), box[0] + dir.x, box[1] + dir.y);
+                        }
+                    }
+                }
+            }
+        }
+
+        return suitors;
+    }
+
+
 
     public static void main(String[] args)
     {
@@ -316,7 +413,7 @@ public class Grid {
         myGrid.patternIntegration(0, 0, PatternGenerator.Pattern.CROSS.getPattern());
         myGrid.resetWalkable();
         printWalkable(myGrid.walkable);
-        myGrid.pathFinder(6, 6);
+        myGrid.explorer(6, 6);
         printWalkable(myGrid.walkable);
     }
 

@@ -28,39 +28,26 @@ public class Test extends Application {
     }
 
     public void start(Stage theStage){
-        // https://gillius.org/blog/2013/02/javafx-window-scaling-on-resize.html
-        theStage.setTitle("MapTest");
+        Grid testGrid = new Grid(Size.MEDIUM);
 
-        GridPane root = new GridPane();
+        GamePane gamePane = new GamePane(testGrid);
 
-        Grid logicGrid = new Grid(Size.MEDIUM);
-        logicGrid.set_default_walls();
-        logicGrid.generateRandomWalls();
+        testGrid.set_default_walls();
+        testGrid.generateRandomWalls();
+        testGrid.placeRandomBox(5);
+        gamePane.initiate();
+        testGrid.suitableNextBox(gamePane);
 
-        GamePane gamePane = new GamePane(logicGrid);
-        gamePane.initiate(20);
+        gamePane.setOnMouseClicked(event -> {
+            testGrid.resetGrid();
+            testGrid.set_default_walls();
+            testGrid.generateRandomWalls();
+            testGrid.placeRandomBox(5);
+            gamePane.initiate();
+            testGrid.suitableNextBox(gamePane);
+        });
 
-
-        Scene myScene = new Scene(gamePane);
-
-        gamePane.layoutBoundsProperty().addListener(((observable, oldValue, newValue) -> {
-             int cellX = (int) newValue.getWidth() / gamePane.col;
-             int cellY = (int) newValue.getHeight() / gamePane.row;
-
-             if(cellX != gamePane.cellSize || cellY != gamePane.cellSize){
-                 if (cellX <= cellY) {
-                     gamePane.initiate(cellX);
-                     gamePane.cellSize = cellX;
-                 } else {
-                     gamePane.initiate(cellY);
-                     gamePane.cellSize = cellY;
-                     //myScene.setFill(new Background(new BackgroundFill(Color.valueOf("#1EA7E1"), new CornerRadii(1), null)));
-                 }
-             }
-        }));
-
-        gamePane.setStyle("-fx-border-color: red; -fx-border-width: 5");
-        theStage.setScene(myScene);
+        theStage.setScene(new Scene(gamePane));
         theStage.show();
     }
 }
