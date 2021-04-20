@@ -24,12 +24,13 @@ import java.io.IOException;
 import java.util.regex.Pattern;
 
 public class LevelSelectionScene extends SceneTool{
-    public static final BorderPane root = new BorderPane();
+    public static BorderPane root;
     private static final int MARGIN = 30;
     protected static Path currPath = null;
     protected static String currFile = null;
 
     public static void makeScene(){
+        root = new BorderPane();
         root.setCenter(_centerGenesis());
         root.setBottom(bottomGenesis());
         root.setTop(topGenesis());
@@ -221,7 +222,7 @@ public class LevelSelectionScene extends SceneTool{
         for (int i = 0; i < lvlCompleted; i++) {
             lvlButtons[i].unlock();
         }
-        if(lvlCompleted != 10){
+        if(lvlCompleted != 10) {
             lvlButtons[lvlCompleted].setNext();
         }
 
