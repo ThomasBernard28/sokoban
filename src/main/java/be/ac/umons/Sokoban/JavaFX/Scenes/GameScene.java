@@ -9,6 +9,9 @@ import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
 import be.ac.umons.Sokoban.Stats.Profile;
+import javafx.animation.AnimationTimer;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.geometry.Pos;
@@ -116,6 +119,7 @@ public class GameScene extends SceneTool {
         HBox titleBox = new HBox();
         HBox saveBox = new HBox();
 
+
         Button restartGame = new Button();
         restartGame.setScaleX(1);
         restartGame.setScaleY(1);
@@ -181,7 +185,7 @@ public class GameScene extends SceneTool {
         saveBox.setAlignment(Pos.CENTER);
         restartGame.setTranslateY(90);
         restartGame.setTranslateX(522);
-        topSide.getChildren().addAll(titleBox,restartGame, saveBox);
+        topSide.getChildren().addAll(titleBox, restartGame, saveBox);
         topSide.setSpacing(100);
 
         return topSide;
@@ -195,6 +199,7 @@ public class GameScene extends SceneTool {
     }
     public static void victory(){
         if(WINDOW.getScene() == SceneList.GAME.getScene()){
+
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }

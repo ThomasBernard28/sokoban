@@ -29,7 +29,7 @@ public class Load {
         Grid loadGrid;
 
 
-        File file = new File(path.getPath() + fileName );
+        File file = new File(path.getPath() + fileName);
 
         //Call the method find size to know th size of the grid
         Size size = findSize(file);
