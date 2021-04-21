@@ -29,7 +29,7 @@ public class Sokoban
         switch(args.length){
             //Run the game
             case 0:
-                MyWindow.main(args);
+                Test.main(args);
                 break;
             //Run unit Test
             case 3:

@@ -17,8 +17,8 @@ public class ConsoleGrid
 
         Grid grid = new Grid(Size.LARGE);
         grid.set_default_walls();
-        grid.set_player(1,6);
-        grid.set_boxes(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
+        grid.setPlayer(1,6);
+        grid.setBox(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
         grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
 
         System.out.println("To exit press 'e'");
@@ -59,8 +59,8 @@ public class ConsoleGrid
                 case " ":
                     grid = new Grid(Size.LARGE);
                     grid.set_default_walls();
-                    grid.set_player(1,6);
-                    grid.set_boxes(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
+                    grid.setPlayer(1,6);
+                    grid.setBox(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
                     grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
                     break;
                 case "e":

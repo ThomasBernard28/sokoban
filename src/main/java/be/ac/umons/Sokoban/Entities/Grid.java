@@ -157,13 +157,13 @@ public class Grid {
         player[1] = 0;
     }
     // This method set the player at position (x,y)
-    public void set_player(int x, int y)
+    public void setPlayer(int x, int y)
     {
         grid[y][x].setMovableContent(MovableContent.PLAYER);
         player[0] = x;
         player[1] = y;
     }
-    public void set_boxes(int x, int y)
+    public void setBox(int x, int y)
     {
         grid[y][x].setMovableContent(MovableContent.BOX);
     }
@@ -218,21 +218,23 @@ public class Grid {
      * by looking at the walkable array
      * @param startX x coordinate of the tile
      * @param startY y coordinate of the tile
-     * @return Array of Direction that aren't yet explored. The array is of length 4 and may contain null values
+     * @return ArrayList of Direction that aren't yet explored
      */
-    private Direction[] unexploredNeighbour(int startX, int startY){
-        Direction[] res = new Direction[4];
+    private ArrayList<Direction> unexploredNeighbour(int startX, int startY){
+        ArrayList<Direction> res = new ArrayList<>();
         int i = 0;
         for (Direction dir : Direction.values()){
             if (inIndexRange(startX, startY, dir)){
                 if(walkable[startY + dir.y][startX + dir.x]){
-                    res[i] = dir;
+                    res.add(dir);
                 }
             }
             i++;
         }
         return res;
     }
+
+
 
     /**
      * Takes a given pattern of char (value must be 'w' or 'e') an copy it into the tile grid
@@ -265,7 +267,7 @@ public class Grid {
         //
         walkable[startY][startX] = false;
         for (Direction dir : unexploredNeighbour(startX, startY)){
-            if (dir != null && walkable[startY + dir.y][startX + dir.x]){
+            if (walkable[startY + dir.y][startX + dir.x]){
                 explorer(startX + dir.x, startY + dir.y);
             }
         }
@@ -318,15 +320,15 @@ public class Grid {
      * by looking at the walkable array
      * @param startX x coordinate of the tile
      * @param startY y coordinate of the tile
-     * @return Array of Direction that aren't yet explored. The array is of length 4 and may contain null values
+     * @return ArrayList of Direction that aren't yet explored
      */
-    private Direction[] explorableNeighbours(int startX, int startY){
-        Direction[] res = new Direction[4];
+    private ArrayList<Direction> explorableNeighbours(int startX, int startY){
+        ArrayList<Direction> res = new ArrayList<>();
         int i = 0;
         for (Direction dir : Direction.values()){
             if (inIndexRange(startX, startY, dir)){
                 if(!walkable[startY + dir.y][startX + dir.x] && !grid[startY + dir.y][startX + dir.x].isWall()){
-                    res[i] = dir;
+                    res.add(dir);
                 }
             }
             i++;
@@ -334,7 +336,10 @@ public class Grid {
         return res;
     }
 
+
+
     private int[][] currBoxes;
+    private ShuffledBox[] shuffledBoxes;
 
     /**
      * This function randomly place a player and n boxes in the grid
@@ -355,7 +360,7 @@ public class Grid {
                 walkable[rndRow][rndCol] = false;
                 currBoxes[i][0] = rndCol;
                 currBoxes[i][1] = rndRow;
-                set_boxes(rndCol, rndRow);
+                setBox(rndCol, rndRow);
                 i++;
             }
 
@@ -367,9 +372,14 @@ public class Grid {
 
             if(walkable[rndRow][rndCol]){
                 walkable[rndRow][rndCol] = false;
-                set_player(rndCol, rndRow);
+                setPlayer(rndCol, rndRow);
                 i++;
             }
+        }
+        // new version
+        shuffledBoxes = new ShuffledBox[n];
+        for (int j = 0; j < n; j++) {
+            shuffledBoxes[j] = new ShuffledBox(currBoxes[j]);
         }
     }
 
@@ -377,7 +387,7 @@ public class Grid {
      * This function explores the grid and find tiles adjacent of boxes that are explorable
      * and that doesn't make the following pattern [adjacent box -> concerned tile -> wall]
      */
-    public ArrayList<int[]> suitableNextBox(GamePane gamePane){
+    public ArrayList<int[]> suitableNextBoxX(GamePane gamePane){
         resetWalkable();
         explorer(getPlayerX(), getPlayerY());
 
@@ -385,16 +395,14 @@ public class Grid {
 
         for (int[] box : currBoxes){
             // this contains the directions in which there's an empty and explorable tile next to that box
-            Direction[] directions = explorableNeighbours(box[0], box[1]);
+            ArrayList<Direction> directions = explorableNeighbours(box[0], box[1]);
             for (Direction dir : directions) {
-                if(dir != null) {
-                    // here we watch out for the pattern [adjacent box -> concerned tile -> wall]
-                    if (!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isWall()) {
-                        suitors.add(new int[]{box[0] + dir.x, box[1] + dir.y});
-                        // just for visual representation
-                        if(!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isPlayer()) {
-                            gamePane.setAt(SpriteTile.getTileImg(TileImg.FLAG), box[0] + dir.x, box[1] + dir.y);
-                        }
+                // here we watch out for the pattern [adjacent box -> concerned tile -> wall]
+                if (!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isWall()) {
+                    suitors.add(new int[]{box[0] + dir.x, box[1] + dir.y});
+                    // just for visual representation
+                    if(!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isPlayer()) {
+                        gamePane.setAt(SpriteTile.getTileImg(TileImg.FLAG), box[0] + dir.x, box[1] + dir.y);
                     }
                 }
             }
@@ -403,8 +411,146 @@ public class Grid {
         return suitors;
     }
 
+    public void _suitableNextBox(){
+        resetWalkable();
+        explorer(getPlayerX(), getPlayerY());
 
+        for (ShuffledBox box : shuffledBoxes) {
+            // this contains the directions in which there's an empty and explorable tile next to that box
+            ArrayList<Direction> directions = explorableNeighbours(box.getX(), box.getY());
+            for (Direction dir : directions) {
+                // here we watch out for the pattern [adjacent box -> concerned tile -> wall]
+                if (!getGridAt(box.getX() + dir.x * 2, box.getY() + dir.y * 2).isWall()) {
+                    box.addSuitor(dir);
+                }
+            }
+        }
+    }
 
+    /**
+     * Recursive function that'll repeat itself s times and will move a box by
+     * 1 tile at each iteration
+     * @param s nb of iterations for this recursive
+     */
+    public void shuffleBoxes(int s){
+        if(s != 0){
+            System.out.println(s);
+            _suitableNextBox();
+            ShuffledBox chosenOne;
+            do{
+                // we select a random box that will be move
+                 chosenOne = shuffledBoxes[(new Random()).nextInt(shuffledBoxes.length)];
+                 // the loop makes sure that the box can be moved
+            }while(chosenOne.nbOfSuitor() < 1);
+            // we move the box to one of its possible state
+            chosenOne.moveToRandom(this);
+
+            for (ShuffledBox box : shuffledBoxes){
+                box.clearSuitor();
+            }
+
+            shuffleBoxes(s - 1);
+        }
+    }
+
+    public void _shuffleBoxes(int s) {
+        while (s > 0){
+            System.out.println(s);
+            _suitableNextBox();
+            ShuffledBox chosenOne;
+            do{
+                // we select a random box that will be move
+                chosenOne = shuffledBoxes[(new Random()).nextInt(shuffledBoxes.length)];
+                // the loop makes sure that the box can be moved
+            }while(chosenOne.nbOfSuitor() < 1);
+            // we move the box to one of its possible state
+            chosenOne.moveToRandom(this);
+
+            for (ShuffledBox box : shuffledBoxes){
+                box.clearSuitor();
+            }
+            s--;
+        }
+    }
+
+    public void constructMovables(int n, int s){
+        placeRandomBox(n);
+        _shuffleBoxes(s);
+
+        // placing the flags
+        for (ShuffledBox box : shuffledBoxes) {
+            getGridAt(box.getInitialX(), box.getInitialY()).setImmovableContent(ImmovableContent.FLAG);
+        }
+        // if the player sits on a flag at the end it'll raise an error
+        if(getGridFromPlayer().isFlaggedPlayer()){
+            for(Direction dir : Direction.values()) {
+                if(getGridFromPlayer().checkMove(this, dir)){
+                    getGridFromPlayer().move(this, dir);
+                    break;
+                }
+            }
+        }
+        printGrid(grid);
+    }
+
+    private static class ShuffledBox{
+        private static ShuffledBox[] shuffledBoxes;
+
+        private final int[] initialPos = new int[2];
+
+        private int[] box;
+        private final ArrayList<Direction> suitors = new ArrayList<>();
+
+        private ShuffledBox(int[] box){
+            this.box = box;
+            this.initialPos[0] = box[0];
+            this.initialPos[1] = box[1];
+        }
+
+        private int getX(){
+            return box[0];
+        }
+
+        private int getY(){
+            return box[1];
+        }
+
+        private int getInitialX() {
+            return initialPos[0];
+        }
+
+        private int getInitialY() {
+            return initialPos[1];
+        }
+
+        private void addSuitor(Direction suitor){
+            suitors.add(suitor);
+        }
+
+        private void clearSuitor(){
+            suitors.clear();
+        }
+
+        private int nbOfSuitor(){
+            return suitors.size();
+        }
+
+        private void moveToRandom(Grid grid){
+            Direction dir = suitors.get((new Random()).nextInt(suitors.size()));
+
+            // we move the player to the correct position
+            //(needs to be done beforehand so that the player doesn't get deleted)
+            grid.getGridFromPlayer().setMovableContent(MovableContent.EMPTY);
+            grid.setPlayer(getX() + dir.x * 2, getY() + dir.y * 2);
+            // we delete this box from the grid
+            grid.getGridAt(getX(), getY()).setMovableContent(MovableContent.EMPTY);
+            // actual moving of the box
+            box[0] += dir.x;
+            box[1] += dir.y;
+            grid.getGridAt(getX(), getY()).setMovableContent(MovableContent.BOX);
+            System.out.println("box moved at" + grid.getGridAt(getX(), getY()));
+        }
+    }
     public static void main(String[] args)
     {
         Grid myGrid = new Grid(Size.SMALL);

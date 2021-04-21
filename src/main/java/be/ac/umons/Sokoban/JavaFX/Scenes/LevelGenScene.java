@@ -12,7 +12,6 @@ import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.geometry.*;
 import javafx.scene.Node;
@@ -561,7 +560,7 @@ public class LevelGenScene extends SceneTool {
                 copy.getGridAt(j, i).setImmovableContent(old.getGridAt(j, i).getImmovableContent());
             }
         }
-        copy.set_player(old.getPlayerX(), old.getPlayerY());
+        copy.setPlayer(old.getPlayerX(), old.getPlayerY());
         return copy;
     }
 

@@ -122,7 +122,7 @@ public class Tile
             return TileImg.EMPTY;
         }
         else {
-            throw new IllegalStateException("Unexpected value");
+            throw new IllegalStateException("Unexpected value" + this.getImmovableContent() + this.getMovableContent());
         }
     }
 

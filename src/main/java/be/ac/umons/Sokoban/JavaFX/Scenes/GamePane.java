@@ -94,7 +94,7 @@ public class GamePane extends Pane {
                     case EMPTY:
                         break;
                     default:
-                        throw new IllegalStateException("Unexpected value");
+                        throw new IllegalStateException("Unexpected value" + logicGrid.getGridAt(j, i).getVisualType());
 
                 }
             }
@@ -127,38 +127,6 @@ public class GamePane extends Pane {
                         break;
                     case FLAG:
                         setAt(SpriteTile.getTileImg(TileImg.FLAG), j, i);
-                        break;
-                    case EMPTY:
-                        break;
-                    default:
-                        throw new IllegalStateException("Unexpected value");
-
-                }
-            }
-        }
-    }
-
-    public void initiate(int cellSize){
-        for (int i = 0; i < logicGrid.getSize().getRow(); i++) {
-            for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
-                int[] pos = {j * cellSize, i * cellSize};
-                setAt(SpriteTile.getTileImg(TileImg.EMPTY, cellSize, true), pos);
-
-                switch (logicGrid.getGridAt(j, i).getVisualType()) {
-                    case BOX:
-                        setAt(SpriteTile.getTileImg(TileImg.BOX_ICON, cellSize, true), pos);
-                        break;
-                    case FLAGGED_BOX:
-                        setAt(SpriteTile.getTileImg(TileImg.FLAGGED_BOX, cellSize, true), pos);
-                        break;
-                    case WALL:
-                        setAt(SpriteTile.getTileImg(TileImg.WALL, cellSize, true), pos);
-                        break;
-                    case PLAYER:
-                        setAt(SpriteTile.getTileImg(TileImg.HEAD, cellSize, true), pos);
-                        break;
-                    case FLAG:
-                        setAt(SpriteTile.getTileImg(TileImg.FLAG, cellSize, true), pos);
                         break;
                     case EMPTY:
                         break;

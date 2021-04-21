@@ -53,8 +53,8 @@ public class MyWindow extends Application
     public static Grid logicGridGenesis(Size size){
         Grid grid = new Grid(size);
         grid.set_default_walls();
-        grid.set_player(1,6);
-        grid.set_boxes(size.getCol()/2, size.getRow()/2);
+        grid.setPlayer(1,6);
+        grid.setBox(size.getCol()/2, size.getRow()/2);
         grid.set_flag((size.getCol()/2)+1, (size.getRow()/2)+1);
         return grid;
     }
