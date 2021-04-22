@@ -453,16 +453,21 @@ public class Grid {
         }
     }
 
-    public void _shuffleBoxes(int s) {
+    public boolean _shuffleBoxes(int s) {
         while (s > 0){
             System.out.println(s);
             _suitableNextBox();
             ShuffledBox chosenOne;
+            int iteration = 0;
             do{
                 // we select a random box that will be move
                 chosenOne = shuffledBoxes[(new Random()).nextInt(shuffledBoxes.length)];
                 // the loop makes sure that the box can be moved
-                System.out.println("cc");
+                iteration ++;
+                if(iteration > 30) {
+                    System.out.println("Stuck");
+                    return false;
+                }
             }while(chosenOne.nbOfSuitor() < 1);
             // we move the box to one of its possible state
             chosenOne.moveToRandom(this);
@@ -472,11 +477,16 @@ public class Grid {
             }
             s--;
         }
+        return true;
     }
 
     public void constructMovables(int n, int s){
-        placeRandomBox(n);
-        _shuffleBoxes(s);
+        boolean done;
+        do {
+            placeRandomBox(n);
+            done = _shuffleBoxes(s);
+        }while (!done);
+
 
         // placing the flags
         for (ShuffledBox box : shuffledBoxes) {

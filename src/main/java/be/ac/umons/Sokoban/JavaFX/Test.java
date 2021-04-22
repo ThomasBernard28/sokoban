@@ -58,15 +58,15 @@ public class Test extends Application {
 
         testGrid.set_default_walls();
         testGrid.generateRandomWalls();
-        testGrid.constructMovables(5, 20);
-        //gamePane.initiate();
+        testGrid.constructMovables(5, 100);
+        gamePane.initiate();
 
         gamePane.setOnMouseClicked(event -> {
             testGrid.resetGrid();
             testGrid.set_default_walls();
             testGrid.generateRandomWalls();
-            testGrid.constructMovables(5, 30);
-            //gamePane.initiate();
+            testGrid.constructMovables(5, 100);
+            gamePane.initiate();
         });
         Scene myScene = new Scene(gamePane);
         //myScene.setOnKeyPressed(event -> gamePane.initiate());

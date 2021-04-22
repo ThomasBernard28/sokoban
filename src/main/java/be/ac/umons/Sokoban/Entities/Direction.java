@@ -22,4 +22,18 @@ public enum Direction {
                 ", y=" + y +
                 '}';
     }
+
+    public static Direction match(String mov){
+        switch (mov) {
+            case "z":
+                return Direction.UP;
+            case "q":
+                return Direction.LEFT;
+            case "s":
+                return Direction.DOWN;
+            case "d":
+                return Direction.RIGHT;
+        }
+        return null;
+    }
 }
