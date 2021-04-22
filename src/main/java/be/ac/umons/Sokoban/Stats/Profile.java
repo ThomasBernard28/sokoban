@@ -53,19 +53,19 @@ public class Profile {
 
     private String username;
     private int lvlCompleted = 0;
-    private double[] bestTime = new double[10];
+    private int[] bestMov = new int[10];
 
     private final static String path = Path.PROFILE.getPath() + "/profileList.json";
 
     /**
      * Constructor used to create a profile already save
      * @param lvlCompleted nb of lvl already completed (int ranging from 0 to 10)
-     * @param bestTime list with the best_time for every level those not already succeeded will be 0
+     * @param bestMov list with the best_mov for every level those not already succeeded will be 0
      */
-    private Profile(String username, int lvlCompleted, double[] bestTime){
+    private Profile(String username, int lvlCompleted, int[] bestMov){
         this.username = username;
         this.lvlCompleted = lvlCompleted;
-        this.bestTime = bestTime;
+        this.bestMov = bestMov;
     }
 
     private Profile(String username){
@@ -88,8 +88,8 @@ public class Profile {
         return lvlCompleted;
     }
 
-    public double[] getBestTime() {
-        return bestTime;
+    public int[] getBestMov() {
+        return bestMov;
     }
 
     public void setUsername(String username){
@@ -129,7 +129,7 @@ public class Profile {
         jsonString += "{";
         jsonString += "username:" + username;
         jsonString += ", lvlCompleted:" + lvlCompleted;
-        jsonString += ", bestTime:" + Arrays.toString(bestTime);
+        jsonString += ", bestMov:" + Arrays.toString(bestMov);
         jsonString += "}";
 
         return jsonString;
@@ -138,7 +138,7 @@ public class Profile {
     private void reset(){
         this.username = "New Profile";
         this.lvlCompleted = 0;
-        this.bestTime = new double[10];
+        this.bestMov = new int[10];
     }
 
     public boolean thisIsANewProfile(){
@@ -230,7 +230,7 @@ public class Profile {
                 new Profile(),
                 new Profile()
         };
-        //writeFileJackson("profileList.json", defaultProfile);
+        writeFileJackson("profileList.json", defaultProfile);
         defaultProfile = readJsonFile();
         System.out.println(Arrays.toString(defaultProfile));
     }

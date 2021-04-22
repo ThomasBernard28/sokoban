@@ -97,6 +97,7 @@ public class SceneTool {
     protected final static Paint grayPaint = Color.valueOf("#808080");
     protected final static Paint greenPaint = Color.valueOf("#77D04F");
     protected final static Paint redPaint = Color.valueOf("red");
+    protected final static Paint yellowPaint = Color.valueOf("#FFCD00");
 
     protected final static BackgroundFill bgFillLightBlue =
             new BackgroundFill(lightBluePaint, new CornerRadii(1), null);
@@ -110,6 +111,8 @@ public class SceneTool {
             new BackgroundFill(greenPaint, new CornerRadii(1), null);
     protected final static BackgroundFill bgFillRed =
             new BackgroundFill(redPaint, new CornerRadii(1), null);
+    protected final static BackgroundFill bgFillYellow =
+            new BackgroundFill(yellowPaint, new CornerRadii(1), null);
 
     protected static Button makeExitButton(){
         Button exitButton = new Button();

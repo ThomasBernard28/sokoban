@@ -18,6 +18,7 @@ import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 public class GameScene extends SceneTool {
@@ -27,6 +28,9 @@ public class GameScene extends SceneTool {
     protected static Path currPath = null;
 
     private static Profile currProfile = null;
+
+    private static ArrayList<String> movements = new ArrayList();
+    private static TextField nbrMov;
 
     public static void makeScene(){
         VBox V_ROOT = new VBox();
@@ -114,6 +118,16 @@ public class GameScene extends SceneTool {
         HBox saveBox = new HBox();
 
 
+        StackPane movBox = new StackPane();
+        nbrMov = new TextField("Movements : 0");
+        nbrMov.setFont(Font.font("impact", 20));
+        nbrMov.setEditable(false);
+        nbrMov.setFocusTraversable(false);
+        nbrMov.setBackground(new Background(bgFillYellow));
+        movBox.setScaleX(1.5);
+        movBox.setScaleY(2);
+        movBox.getChildren().add(nbrMov);
+
         Button restartGame = new Button();
         restartGame.setScaleX(1);
         restartGame.setScaleY(1);
@@ -179,7 +193,9 @@ public class GameScene extends SceneTool {
         saveBox.setAlignment(Pos.CENTER);
         restartGame.setTranslateY(90);
         restartGame.setTranslateX(522);
-        topSide.getChildren().addAll(titleBox, restartGame, saveBox);
+        movBox.setTranslateX(545);
+        movBox.setTranslateY(75);
+        topSide.getChildren().addAll(titleBox, movBox, restartGame, saveBox);
         topSide.setSpacing(100);
 
         return topSide;
@@ -198,8 +214,10 @@ public class GameScene extends SceneTool {
         }
     }
     public static void makeTheGame(Path path, String fileName){
+        movements.clear();
         currFileName = fileName;
         currPath = path;
+
         try{
             Grid gameFile = Load.loadFile(path, fileName);
             GameScene.makeScene(gameFile);
@@ -208,6 +226,10 @@ public class GameScene extends SceneTool {
         }catch (IOException e){
             e.printStackTrace();
         }
+    }
+    public static void history(String letters){
+        movements.add(letters);
+        nbrMov.setText("Movements : "+ movements.size());
     }
 
     public static Profile getCurrProfile() {

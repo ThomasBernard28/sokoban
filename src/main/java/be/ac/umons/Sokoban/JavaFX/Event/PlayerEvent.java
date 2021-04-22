@@ -9,6 +9,8 @@ import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
 
+import java.util.ArrayList;
+
 public class PlayerEvent implements EventHandler<KeyEvent> {
     private final Grid logicGrid;
     private final AnimationPlayerMove playerAnimation;
@@ -33,6 +35,7 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 );
                 logicGrid.getGridFromPlayer().move(logicGrid, dir);
                 playerAnimation.play();
+                GameScene.history(event.getText());
             }
         }
 
