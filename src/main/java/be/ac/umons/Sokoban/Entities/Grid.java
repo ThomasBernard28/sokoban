@@ -462,6 +462,7 @@ public class Grid {
                 // we select a random box that will be move
                 chosenOne = shuffledBoxes[(new Random()).nextInt(shuffledBoxes.length)];
                 // the loop makes sure that the box can be moved
+                System.out.println("cc");
             }while(chosenOne.nbOfSuitor() < 1);
             // we move the box to one of its possible state
             chosenOne.moveToRandom(this);
@@ -500,6 +501,7 @@ public class Grid {
 
         private int[] box;
         private final ArrayList<Direction> suitors = new ArrayList<>();
+        private int distanceMax = 0;
 
         private ShuffledBox(int[] box){
             this.box = box;
@@ -537,6 +539,7 @@ public class Grid {
 
         private void moveToRandom(Grid grid){
             Direction dir = suitors.get((new Random()).nextInt(suitors.size()));
+            //Direction dir = pickSuitor();
 
             // we move the player to the correct position
             //(needs to be done beforehand so that the player doesn't get deleted)
@@ -549,6 +552,27 @@ public class Grid {
             box[1] += dir.y;
             grid.getGridAt(getX(), getY()).setMovableContent(MovableContent.BOX);
             System.out.println("box moved at" + grid.getGridAt(getX(), getY()));
+        }
+
+        private Direction pickSuitor(){
+            Direction res = null;
+
+            for (Direction suitor : suitors ) {
+                int x = calculateDistance(suitor);
+                if(x > distanceMax) {
+                    distanceMax = x;
+                    res = suitor;
+                }
+            }
+            if(res == null){
+                res = suitors.get((new Random()).nextInt(suitors.size()));
+                distanceMax = calculateDistance(res);
+            }
+            return res;
+        }
+
+        private int calculateDistance(Direction dir){
+            return Math.abs(initialPos[0] - (dir.x + box[0])) + Math.abs(initialPos[1] - (dir.y + box[1]));
         }
     }
     public static void main(String[] args)

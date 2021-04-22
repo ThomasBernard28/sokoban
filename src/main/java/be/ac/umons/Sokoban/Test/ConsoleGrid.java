@@ -15,12 +15,14 @@ public class ConsoleGrid
         Scanner sc= new Scanner(System.in);    //System.in is a standard input stream
 
 
-        Grid grid = new Grid(Size.LARGE);
+        Grid grid = new Grid(Size.MEDIUM);
+        //grid.set_default_walls();
+        //grid.setPlayer(1,6);
+        //grid.setBox(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
+        //grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
         grid.set_default_walls();
-        grid.setPlayer(1,6);
-        grid.setBox(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
-        grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
-
+        grid.generateRandomWalls();
+        grid.constructMovables(5, 20);
         System.out.println("To exit press 'e'");
 
 
