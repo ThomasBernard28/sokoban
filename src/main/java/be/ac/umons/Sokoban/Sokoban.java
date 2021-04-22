@@ -2,15 +2,12 @@
 
 package be.ac.umons.Sokoban;
 
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.MyWindow;
-import be.ac.umons.Sokoban.JavaFX.Test;
-import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
 import be.ac.umons.Sokoban.Test.UnitTest;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
@@ -29,7 +26,7 @@ public class Sokoban
         switch(args.length){
             //Run the game
             case 0:
-                Test.main(args);
+                MyWindow.main(args);
                 break;
             //Run unit Test
             case 3:

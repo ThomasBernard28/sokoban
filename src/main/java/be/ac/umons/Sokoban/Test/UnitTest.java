@@ -1,7 +1,7 @@
 package be.ac.umons.Sokoban.Test;
 
 import be.ac.umons.Sokoban.Entities.Direction;
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 

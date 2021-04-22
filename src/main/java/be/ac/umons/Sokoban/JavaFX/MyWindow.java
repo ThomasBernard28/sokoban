@@ -1,6 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX;
 
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.*;
 import javafx.application.Application;
 import javafx.scene.image.Image;

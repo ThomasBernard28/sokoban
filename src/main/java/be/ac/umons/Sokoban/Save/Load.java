@@ -1,7 +1,6 @@
 package be.ac.umons.Sokoban.Save;
 
-import be.ac.umons.Sokoban.Entities.Direction;
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.Entities.ImmovableContent;
 import be.ac.umons.Sokoban.Entities.MovableContent;
 import be.ac.umons.Sokoban.JavaFX.Size;

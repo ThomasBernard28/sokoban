@@ -1,13 +1,17 @@
-package be.ac.umons.Sokoban.Entities;
+package be.ac.umons.Sokoban.MapGeneration;
 
+import be.ac.umons.Sokoban.Entities.Direction;
+import be.ac.umons.Sokoban.Entities.ImmovableContent;
+import be.ac.umons.Sokoban.Entities.MovableContent;
+import be.ac.umons.Sokoban.Entities.Tile;
 import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
 import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
-import be.ac.umons.Sokoban.MapGeneration.PatternGenerator;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -22,7 +26,7 @@ public class Grid {
      * @param player 1D array that contains the coordinates of the player (x, y)
      */
 
-    private final Tile [][] grid;
+    private final Tile[][] grid;
     private final boolean[][] walkable;
 
     private final Size size;
@@ -189,6 +193,8 @@ public class Grid {
      *
      */
 
+    private final Random rnd = new Random();
+
     /**
      * Tells whether the direction is in range of the array
      * @param startX x coordinate of the tile
@@ -346,7 +352,6 @@ public class Grid {
      * @param n number of boxes that will be placed
      */
     public void placeRandomBox(int n){
-        Random rnd = new Random();
         currBoxes = new int[n][2];
 
         resetWalkable();
@@ -385,7 +390,8 @@ public class Grid {
 
     /**
      * This function explores the grid and find tiles adjacent of boxes that are explorable
-     * and that doesn't make the following pattern [adjacent box -> concerned tile -> wall]
+     * and that doesn't make the following patterns [adjacent box -> concerned tile -> wall]
+     * or [adjacent box -> concerned tile -> other box]
      */
     public ArrayList<int[]> suitableNextBoxX(GamePane gamePane){
         resetWalkable();
@@ -398,7 +404,8 @@ public class Grid {
             ArrayList<Direction> directions = explorableNeighbours(box[0], box[1]);
             for (Direction dir : directions) {
                 // here we watch out for the pattern [adjacent box -> concerned tile -> wall]
-                if (!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isWall()) {
+                if (!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isWall() &&
+                        !getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).hasBox()) {
                     suitors.add(new int[]{box[0] + dir.x, box[1] + dir.y});
                     // just for visual representation
                     if(!getGridAt(box[0] + dir.x * 2, box[1] + dir.y * 2).isPlayer()) {
@@ -420,7 +427,8 @@ public class Grid {
             ArrayList<Direction> directions = explorableNeighbours(box.getX(), box.getY());
             for (Direction dir : directions) {
                 // here we watch out for the pattern [adjacent box -> concerned tile -> wall]
-                if (!getGridAt(box.getX() + dir.x * 2, box.getY() + dir.y * 2).isWall()) {
+                if (!getGridAt(box.getX() + dir.x * 2, box.getY() + dir.y * 2).isWall() &&
+                        !getGridAt(box.getX() + dir.x * 2, box.getY() + dir.y * 2).hasBox()) {
                     box.addSuitor(dir);
                 }
             }
@@ -459,18 +467,27 @@ public class Grid {
             _suitableNextBox();
             ShuffledBox chosenOne;
             int iteration = 0;
-            do{
-                // we select a random box that will be move
-                chosenOne = shuffledBoxes[(new Random()).nextInt(shuffledBoxes.length)];
-                // the loop makes sure that the box can be moved
-                iteration ++;
-                if(iteration > 30) {
+            boolean correctState;
+            do {
+                int iterationBis = 0;
+                do {
+                    // we select a random box that will be move
+                    chosenOne = shuffledBoxes[(new Random()).nextInt(shuffledBoxes.length)];
+                    // the loop makes sure that the box can be moved
+                    iterationBis++;
+                    if (iterationBis > 30) {
+                        System.out.println("Stuck1");
+                        return false;
+                    }
+                } while (chosenOne.nbOfSuitor() < 1);
+                // we move the box to one of its possible state
+                correctState = chosenOne.moveToRandom(this);
+                iteration++;
+                if (iteration > 30) {
                     System.out.println("Stuck");
                     return false;
                 }
-            }while(chosenOne.nbOfSuitor() < 1);
-            // we move the box to one of its possible state
-            chosenOne.moveToRandom(this);
+            }while (!correctState);
 
             for (ShuffledBox box : shuffledBoxes){
                 box.clearSuitor();
@@ -483,6 +500,9 @@ public class Grid {
     public void constructMovables(int n, int s){
         boolean done;
         do {
+            resetGrid();
+            set_default_walls();
+            generateRandomWalls();
             placeRandomBox(n);
             done = _shuffleBoxes(s);
         }while (!done);
@@ -501,22 +521,28 @@ public class Grid {
                 }
             }
         }
-        printGrid(grid);
     }
 
     private static class ShuffledBox{
-        private static ShuffledBox[] shuffledBoxes;
+        private final static Random rnd = new Random();
 
         private final int[] initialPos = new int[2];
 
-        private int[] box;
+        private final int[] box;
         private final ArrayList<Direction> suitors = new ArrayList<>();
+
+        // to compute distance to flag
         private int distanceMax = 0;
+        // to not go in a circle
+        private final HashMap<Direction, Double> probability = new HashMap<>();
 
         private ShuffledBox(int[] box){
             this.box = box;
             this.initialPos[0] = box[0];
             this.initialPos[1] = box[1];
+            for (Direction dir : Direction.values()) {
+                probability.put(dir, 1.0);
+            }
         }
 
         private int getX(){
@@ -547,9 +573,10 @@ public class Grid {
             return suitors.size();
         }
 
-        private void moveToRandom(Grid grid){
-            Direction dir = suitors.get((new Random()).nextInt(suitors.size()));
-            //Direction dir = pickSuitor();
+        private boolean moveToRandom(Grid grid){
+            //Direction dir = suitors.get(rnd.nextInt(suitors.size()));
+            //Direction dir = pickFarAwaySuitor();
+            Direction dir = pickMostProbableSuitor();
 
             // we move the player to the correct position
             //(needs to be done beforehand so that the player doesn't get deleted)
@@ -562,9 +589,23 @@ public class Grid {
             box[1] += dir.y;
             grid.getGridAt(getX(), getY()).setMovableContent(MovableContent.BOX);
             System.out.println("box moved at" + grid.getGridAt(getX(), getY()));
+            return true;
         }
 
-        private Direction pickSuitor(){
+        private Direction pickMostProbableSuitor(){
+            double probabilitySum = getProbabilitySum();
+            probabilitySum *= rnd.nextDouble();
+            for (Direction suitor : suitors) {
+                probabilitySum -= probability.get(suitor);
+                if( probabilitySum < 0) {
+                    adjustProbability(suitor);
+                    return suitor;
+                }
+            }
+            throw new IllegalStateException("Not supposed to be here");
+        }
+
+        private Direction pickFarAwaySuitor(){
             Direction res = null;
 
             for (Direction suitor : suitors ) {
@@ -583,6 +624,26 @@ public class Grid {
 
         private int calculateDistance(Direction dir){
             return Math.abs(initialPos[0] - (dir.x + box[0])) + Math.abs(initialPos[1] - (dir.y + box[1]));
+        }
+
+        /**
+         * Establish the sum of probability for every direction in the box
+         * @return double with the sum of the probability
+         */
+        private double getProbabilitySum(){
+            double sum = 0;
+
+            for(Direction suitor : suitors) {
+                sum += probability.get(suitor);
+            }
+            return sum;
+        }
+
+        private void adjustProbability(Direction dir){
+            double p = probability.get(Direction.getOpposedOf(dir));
+            p *= 0.8;
+            probability.put(Direction.getOpposedOf(dir), p);
+            probability.put(dir, probability.get(dir) * 0.9);
         }
     }
     public static void main(String[] args)

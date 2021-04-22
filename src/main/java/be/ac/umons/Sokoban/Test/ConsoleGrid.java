@@ -2,7 +2,7 @@ package be.ac.umons.Sokoban.Test;
 import java.util.*;
 
 import be.ac.umons.Sokoban.Entities.Direction;
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.Size;
 
 

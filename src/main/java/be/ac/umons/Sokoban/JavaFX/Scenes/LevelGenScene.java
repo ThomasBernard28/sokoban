@@ -1,6 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.*;
 import be.ac.umons.Sokoban.JavaFX.Event.LevelGenEvent;
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;

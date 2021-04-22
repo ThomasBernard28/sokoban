@@ -6,6 +6,7 @@ we want to make is possible.
  */
 
 import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 
 public class Tile
 {

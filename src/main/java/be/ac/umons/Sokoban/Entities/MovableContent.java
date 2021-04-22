@@ -1,5 +1,7 @@
 package be.ac.umons.Sokoban.Entities;
 
+import be.ac.umons.Sokoban.MapGeneration.Grid;
+
 public enum MovableContent {
     PLAYER,
     BOX,

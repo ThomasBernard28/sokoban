@@ -1,27 +1,20 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
-import be.ac.umons.Sokoban.Entities.Grid;
-import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
-import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 import javafx.stage.FileChooser;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.regex.Pattern;
 
 public class LevelSelectionScene extends SceneTool{
     public static BorderPane root;

@@ -36,4 +36,19 @@ public enum Direction {
         }
         return null;
     }
+
+    public static Direction getOpposedOf(Direction direction) {
+        switch (direction) {
+            case UP:
+                return DOWN;
+            case RIGHT:
+                return LEFT;
+            case DOWN:
+                return UP;
+            case LEFT:
+                return RIGHT;
+            default:
+                throw new IllegalArgumentException("Unexpected enum value: " + direction);
+        }
+    }
 }

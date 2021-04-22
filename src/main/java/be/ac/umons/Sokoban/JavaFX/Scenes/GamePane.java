@@ -1,7 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.Entities.Direction;
-import be.ac.umons.Sokoban.Entities.Grid;
+import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.Entities.Tile;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteTile;
 import be.ac.umons.Sokoban.JavaFX.Sprite.TileImg;
