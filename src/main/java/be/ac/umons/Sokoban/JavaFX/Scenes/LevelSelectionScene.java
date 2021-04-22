@@ -149,41 +149,41 @@ public class LevelSelectionScene extends SceneTool{
         level10Button.setStyle("-fx-cursor: hand;");
 
         level1Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level1_0");
+                GameScene.makeTheGame(Path.LVL, "level1_0.xsb");
         });
 
         level2Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level2_0");
+                GameScene.makeTheGame(Path.LVL, "level2_0.xsb");
         });
 
         level3Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level3_0");
+                GameScene.makeTheGame(Path.LVL, "level3_0.xsb");
         });
 
         level4Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level4_1");
+                GameScene.makeTheGame(Path.LVL, "level4_1.xsb");
         });
 
         level5Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level5_1");
+                GameScene.makeTheGame(Path.LVL, "level5_1.xsb");
         });
 
         level6Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level6_1");
+                GameScene.makeTheGame(Path.LVL, "level6_1.xsb");
         });
 
         level7Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level7_1");
+                GameScene.makeTheGame(Path.LVL, "level7_1.xsb");
         });
 
         level8Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level8_2");
+                GameScene.makeTheGame(Path.LVL, "level8_2.xsb");
         });
         level9Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level9_2");
+                GameScene.makeTheGame(Path.LVL, "level9_2.xsb");
         });
         level10Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level10_2");
+                GameScene.makeTheGame(Path.LVL, "level10_2.xsb");
         });
 
 
@@ -329,7 +329,7 @@ class LevelButton extends StackPane {
             name = "level" + lvl +"_0";
         }
         // made final to be used in the lambda expression
-        filename = name;
+        filename = name + ".xsb";
 
     }
 

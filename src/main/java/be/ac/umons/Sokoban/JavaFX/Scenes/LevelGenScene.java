@@ -538,6 +538,8 @@ public class LevelGenScene extends SceneTool {
         title.setStyle("-fx-padding: 20 20 20 20;");
 
         Button exitButton = makeExitButton();
+        exitButton.setScaleX(0.75);
+        exitButton.setScaleY(0.75);
         exitButton.setOnAction(event -> {
             SceneList.MENU.setOnActive();
         });
