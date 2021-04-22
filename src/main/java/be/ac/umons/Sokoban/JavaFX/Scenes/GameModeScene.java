@@ -145,6 +145,7 @@ public class GameModeScene extends SceneTool{
         topSide.setSpacing(50);
 
         topSide.getChildren().addAll(exitButton, title);
+        topSide.setAlignment(Pos.CENTER);
 
         return topSide;
     }

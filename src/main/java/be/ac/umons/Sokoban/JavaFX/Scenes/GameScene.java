@@ -120,13 +120,14 @@ public class GameScene extends SceneTool {
 
         StackPane movBox = new StackPane();
         nbrMov = new TextField("Movements : 0");
-        nbrMov.setFont(Font.font("impact", 20));
+        nbrMov.setFont(Font.font("impact", 18));
         nbrMov.setEditable(false);
         nbrMov.setFocusTraversable(false);
         nbrMov.setBackground(new Background(bgFillYellow));
         movBox.setScaleX(1.5);
-        movBox.setScaleY(2);
+        movBox.setScaleY(1.6);
         movBox.getChildren().add(nbrMov);
+        movBox.setAlignment(Pos.CENTER);
 
         Button restartGame = new Button();
         restartGame.setScaleX(1);
@@ -193,8 +194,8 @@ public class GameScene extends SceneTool {
         saveBox.setAlignment(Pos.CENTER);
         restartGame.setTranslateY(90);
         restartGame.setTranslateX(522);
-        movBox.setTranslateX(545);
-        movBox.setTranslateY(75);
+        movBox.setTranslateX(550);
+        movBox.setTranslateY(70);
         topSide.getChildren().addAll(titleBox, movBox, restartGame, saveBox);
         topSide.setSpacing(100);
 
