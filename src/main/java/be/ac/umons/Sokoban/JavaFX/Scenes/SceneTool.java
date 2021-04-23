@@ -42,11 +42,13 @@ public class SceneTool {
         public void setOnActive(){
             Screen screen = Screen.getPrimary();
             Rectangle2D bounds = screen.getVisualBounds();
+            Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
 
             WINDOW.setX(bounds.getMinX());
-            WINDOW.setY(bounds.getMinY());
-            WINDOW.setWidth(bounds.getWidth());
-            WINDOW.setHeight(bounds.getHeight());
+            WINDOW.setY(bounds.getMinX());
+            WINDOW.setWidth(screenSize.getWidth());
+            WINDOW.setHeight(screenSize.getHeight());
+            WINDOW.setResizable(true);
             WINDOW.setScene(this.scene);
 
             //WINDOW.setMaximized(true);
