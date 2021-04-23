@@ -92,6 +92,20 @@ public class Profile {
         return bestMov;
     }
 
+    public void setBestMov(int nbrMov, int lvlNbr){
+        if (this.bestMov[lvlNbr] == 0){
+            this.bestMov[lvlNbr] = nbrMov;
+        }
+        else if (this.bestMov[lvlNbr] > nbrMov){
+            this.bestMov[lvlNbr] = nbrMov;
+        }
+        try{
+            writeJsonFile(activeProfile);
+        }catch (IOException e){
+            throw new IndexOutOfBoundsException("File is missing");
+        }
+    }
+
     public void setUsername(String username){
         this.username = username;
         try{

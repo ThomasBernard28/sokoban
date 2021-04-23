@@ -210,7 +210,7 @@ public class GameScene extends SceneTool {
     }
     public static void victory(){
         if(WINDOW.getScene() == SceneList.GAME.getScene()){
-
+            //Profile.setBestMov(movements.size(), )
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }
@@ -240,4 +240,5 @@ public class GameScene extends SceneTool {
     public static void setCurrProfile(Profile currProfile) {
         GameScene.currProfile = currProfile;
     }
+
 }

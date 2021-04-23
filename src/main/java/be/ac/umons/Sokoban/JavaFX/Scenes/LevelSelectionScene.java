@@ -326,6 +326,9 @@ class LevelButton extends StackPane {
         filename = name + ".xsb";
 
     }
+    public int getLvl(){
+        return lvl;
+    }
 
     public void setNext(){
         this.getChildren().clear();
