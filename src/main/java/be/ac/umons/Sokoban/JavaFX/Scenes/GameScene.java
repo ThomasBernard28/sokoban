@@ -116,6 +116,8 @@ public class GameScene extends SceneTool {
         HBox topSide = new HBox();
         HBox titleBox = new HBox();
         HBox saveBox = new HBox();
+        HBox others = new HBox();
+        VBox topRightBox = new VBox(5);
 
 
         StackPane movBox = new StackPane();
@@ -142,10 +144,10 @@ public class GameScene extends SceneTool {
         history.setScaleX(2);
         history.setScaleY(1.5);
         history.setBackground(new Background(bgFillRed));
-        history.setMaxHeight(42);
-        history.setTranslateX(500);
-        history.setTranslateY(75);
+        history.setMaxHeight(45);
+        history.setMaxWidth(100);
         history.setStyle("-fx-cursor: hand; -fx-padding: 10, 10, 10, 10;");
+        history.setTranslateX(-35);
 
         history.setOnAction(event -> {
             new PopupWindow(PopupWindow.PopupType.HISTORY);
@@ -203,17 +205,20 @@ public class GameScene extends SceneTool {
 
         topSide.setStyle("-fx-padding: 70 50 20 50");
 
+        others.getChildren().addAll(history, movBox, restartGame);
+        others.setAlignment(Pos.CENTER);
+        others.setSpacing(60);
+        others.setTranslateX(-25);
+
+        topRightBox.getChildren().addAll(saveBox, others);
+
         titleBox.getChildren().addAll(exitButton, title);
         titleBox.setSpacing(20);
         titleBox.setAlignment(Pos.CENTER_LEFT);
         saveBox.getChildren().addAll(fileOutput, save);
         saveBox.setAlignment(Pos.CENTER);
-        restartGame.setTranslateY(90);
-        restartGame.setTranslateX(522);
-        movBox.setTranslateX(550);
-        movBox.setTranslateY(75);
-        topSide.getChildren().addAll(titleBox, history, movBox, restartGame, saveBox);
-        topSide.setSpacing(100);
+        topSide.getChildren().addAll(titleBox,topRightBox);
+        topSide.setSpacing(400);
 
         return topSide;
 
