@@ -26,13 +26,14 @@ public class Load {
 
     public static Grid loadFile(Path path ,String fileName) throws FileNotFoundException {
         Grid loadGrid;
-
-
+        
         File file = new File(path.getPath() + fileName);
 
         //Call the method find size to know th size of the grid
         Size size = findSize(file);
         loadGrid = new Grid(size);
+        
+        
 
         //Scanning the file we open
         Scanner scanner = new Scanner(file);

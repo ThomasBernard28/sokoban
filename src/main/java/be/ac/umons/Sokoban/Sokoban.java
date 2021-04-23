@@ -30,8 +30,7 @@ public class Sokoban
                 break;
             //Run unit Test
             case 3:
-                Grid movedGrid= UnitTest.applyMov(args[0],args[1]);
-                Save.saving(movedGrid, Path.UNIT_TEST_OUT,args[2]);
+                UnitTest.applyMov(args[0], args[1], args[2]);
                 break;
             default : throw new IllegalStateException("Veuillez entrer des arguments valables");
        }
