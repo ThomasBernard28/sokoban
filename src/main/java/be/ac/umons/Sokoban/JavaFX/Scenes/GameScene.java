@@ -124,7 +124,7 @@ public class GameScene extends SceneTool {
         nbrMov.setEditable(false);
         nbrMov.setFocusTraversable(false);
         nbrMov.setBackground(new Background(bgFillYellow));
-        nbrMov.setMaxHeight(42);
+        nbrMov.setPrefWidth(42);
         nbrMov.setPrefWidth(220);
         movBox.setScaleX(1.5);
         movBox.setScaleY(1.6);
