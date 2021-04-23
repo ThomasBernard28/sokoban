@@ -4,12 +4,15 @@ import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.Stats.Profile;
+import com.sun.javafx.util.Utils;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -20,9 +23,10 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
-
+import java.util.Locale;
 import java.awt.*;
 import java.security.Key;
+import java.util.regex.Pattern;
 
 import static be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool.*;
 
@@ -36,7 +40,8 @@ public class PopupWindow {
     public enum PopupType {
         DELETE_PROFILE("DELETE PROFILE","Are you sure you want to delete this profile"),
         NEW_PROFILE("CREATE PROFILE", "Please enter a profile name"),
-        END_GAME("END OF THE LEVEL", "Congrats you won ! Please make a choice");
+        END_GAME("END OF THE LEVEL", "Congrats you won ! Please make a choice\n You unlocked the next level"),
+        HISTORY("History", "Here is your history");
 
         private final String title;
         private final String message;
@@ -149,7 +154,8 @@ public class PopupWindow {
 
                 //Closing the window
                 closeButton.setTranslateX(-210);
-                closeButton.setTranslateY(-45);
+                closeButton.setTranslateY(-95);
+                closeButton.setAlignment(Pos.TOP_LEFT);
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
                 });
@@ -165,7 +171,7 @@ public class PopupWindow {
                 });
 
                 layout.getChildren().addAll(closeButton,label, bottomBox);
-                layout.setBackground(new Background(bgFillLightBlue));
+                layout.setBackground(new Background(bgFillYellow));
                 layout.setSpacing(10);
                 layout.setAlignment(Pos.CENTER);
 
@@ -176,8 +182,9 @@ public class PopupWindow {
                 Button cancel = new Button();
 
                 //close popup
-                closeButton.setTranslateY(-45);
-                closeButton.setTranslateX(-210);
+                closeButton.setTranslateY(-95);
+                closeButton.setTranslateX(-260);
+                closeButton.setAlignment(Pos.TOP_LEFT);
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
                 });
@@ -213,7 +220,7 @@ public class PopupWindow {
                 layout.getChildren().addAll(closeButton, label, bottomBox2);
                 layout.setSpacing(10);
                 layout.setAlignment(Pos.CENTER);
-                layout.setBackground(new Background(bgFillLightBlue));
+                layout.setBackground(new Background(bgFillYellow));
 
                 return layout;
             case END_GAME:
@@ -232,7 +239,7 @@ public class PopupWindow {
                 returnToMenu.setStyle("-fx-cursor: hand;");
                 restartGame.setStyle("-fx-cursor: hand;");
 
-                layout.setBackground(new Background(bgFillLightBlue));
+                layout.setBackground(new Background(bgFillYellow));
 
                 returnToMenu.setOnAction(event -> {
                     popupWindow.close();
@@ -261,6 +268,51 @@ public class PopupWindow {
                 layout.setAlignment(Pos.CENTER);
                 layout.setSpacing(200);
                 return layout;
+
+            case HISTORY:
+                Label history = new Label(GameScene.movements.toString());
+                history.setFont(Font.font("lobster", 15));
+                history.setWrapText(true);
+
+
+
+
+                Button copy = new Button("Copy !");
+                copy.setBackground(new Background(bgFillGreen));
+                copy.setStyle("-fx-cursor: hand; -fx-padding: 10,10,10,10");
+                copy.setScaleX(2);
+                copy.setScaleY(1.5);
+                copy.setTranslateX(200);
+                copy.setTranslateY(150);
+
+                closeButton.setOnAction(event -> {
+                    popupWindow.close();
+                });
+
+                copy.setOnAction(event -> {
+                    Clipboard clipboard = Clipboard.getSystemClipboard();
+                    ClipboardContent historyToCLip = new ClipboardContent();
+                    String movContent = "";
+                    for (int i = 0; i < history.getText().length(); i++) {
+                        if (Pattern.matches("[zqsd]", history.getText().substring(i,i+1))){
+                            movContent += history.getText().substring(i, i+1);
+                        }
+                    }
+                    historyToCLip.putString(movContent);
+                    clipboard.setContent(historyToCLip);
+
+                });
+
+
+                layout.setBackground(new Background(bgFillYellow));
+                layout.getChildren().addAll(closeButton,label, history, copy);
+
+                popupWindow.setResizable(false);
+                popupWindow.setMaxHeight(400);
+                popupWindow.setMaxWidth(500);
+
+                return layout;
+
             default: throw new IllegalStateException("Not an existing popup");
         }
     }

@@ -48,7 +48,7 @@ public class SceneTool {
             WINDOW.setY(bounds.getMinX());
             WINDOW.setWidth(screenSize.getWidth());
             WINDOW.setHeight(screenSize.getHeight());
-            WINDOW.setResizable(true);
+            WINDOW.setResizable(false);
             WINDOW.setScene(this.scene);
 
             //WINDOW.setMaximized(true);

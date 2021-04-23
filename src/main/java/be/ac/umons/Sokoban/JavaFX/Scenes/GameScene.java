@@ -29,7 +29,7 @@ public class GameScene extends SceneTool {
 
     private static Profile currProfile = null;
 
-    private static ArrayList<String> movements = new ArrayList();
+    public static ArrayList<String> movements = new ArrayList();
     private static TextField nbrMov;
 
     public static void makeScene(){
@@ -124,7 +124,7 @@ public class GameScene extends SceneTool {
         nbrMov.setEditable(false);
         nbrMov.setFocusTraversable(false);
         nbrMov.setBackground(new Background(bgFillYellow));
-        nbrMov.setPrefWidth(42);
+        nbrMov.setPrefHeight(42);
         nbrMov.setPrefWidth(220);
         movBox.setScaleX(1.5);
         movBox.setScaleY(1.6);
@@ -137,6 +137,20 @@ public class GameScene extends SceneTool {
         restartGame.setGraphic(SpriteIcon.getIconImg(IconImg.RESTART));
         restartGame.setBackground(new Background(bgFillDarkOrange));
         restartGame.setStyle("-fx-cursor: hand; -fx-padding: 10, 10, 10, 10;");
+
+        Button history = new Button("History");
+        history.setScaleX(2);
+        history.setScaleY(1.5);
+        history.setBackground(new Background(bgFillRed));
+        history.setMaxHeight(42);
+        history.setTranslateX(500);
+        history.setTranslateY(75);
+        history.setStyle("-fx-cursor: hand; -fx-padding: 10, 10, 10, 10;");
+
+        history.setOnAction(event -> {
+            new PopupWindow(PopupWindow.PopupType.HISTORY);
+        });
+
 
         //TODO this label will display the current lvl playing
         Label title = new Label("Sokoban");
@@ -198,7 +212,7 @@ public class GameScene extends SceneTool {
         restartGame.setTranslateX(522);
         movBox.setTranslateX(550);
         movBox.setTranslateY(75);
-        topSide.getChildren().addAll(titleBox, movBox, restartGame, saveBox);
+        topSide.getChildren().addAll(titleBox, history, movBox, restartGame, saveBox);
         topSide.setSpacing(100);
 
         return topSide;
@@ -212,7 +226,15 @@ public class GameScene extends SceneTool {
     }
     public static void victory(){
         if(WINDOW.getScene() == SceneList.GAME.getScene()){
-            //Profile.setBestMov(movements.size(), )
+            if (currPath == Path.LVL){
+                if(currFileName.startsWith("10", 5)){
+                    currProfile.setBestMov(movements.size(), 10);
+                }
+                else{
+                    currProfile.setBestMov(movements.size(), Integer.parseInt(currFileName.substring(5,6)));
+                }
+
+            }
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }

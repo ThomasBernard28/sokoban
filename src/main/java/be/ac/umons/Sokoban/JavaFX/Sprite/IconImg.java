@@ -9,7 +9,7 @@ public enum IconImg {
     RELOAD(2, 4),
     SAVE(9, 3),
     RESET(4, 2),
-    STAT(2,3),
+    STAT(2,6),
     CROSS(8, 8),
     VALIDATE(0,9),
     RESTART(1,4),

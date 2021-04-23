@@ -93,11 +93,8 @@ public class Profile {
     }
 
     public void setBestMov(int nbrMov, int lvlNbr){
-        if (this.bestMov[lvlNbr] == 0){
-            this.bestMov[lvlNbr] = nbrMov;
-        }
-        else if (this.bestMov[lvlNbr] > nbrMov){
-            this.bestMov[lvlNbr] = nbrMov;
+        if (this.bestMov[lvlNbr-1] == 0 || this.bestMov[lvlNbr-1] > nbrMov){
+            this.bestMov[lvlNbr-1] = nbrMov;
         }
         try{
             writeJsonFile(activeProfile);
