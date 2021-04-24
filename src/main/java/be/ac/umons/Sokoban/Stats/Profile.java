@@ -282,7 +282,7 @@ public class Profile {
 
         for (Profile profileName: profile) {
            int[] bestMoves = profileName.getBestMov();
-           if (currentBestMove == 0 || currentBestMove < bestMoves[lvlNumber]){
+           if ((currentBestMove == 0 || currentBestMove > bestMoves[lvlNumber]) && bestMoves[lvlNumber] != 0){
                currentBestMove = bestMoves[lvlNumber];
            }
         }
@@ -291,18 +291,22 @@ public class Profile {
     public static String getBestProfile(int lvlNumber){
         Profile[] profile = getActiveProfile();
         String bestProfile = "";
+        boolean played = false;
 
         for (Profile profileName: profile) {
             int[] bestMoves = profileName.getBestMov();
-            if (getBestMovForLvl(lvlNumber) == 0){
-                bestProfile += "NOT PLAYED";
-                break;
-            }
-            else if(getBestMovForLvl(lvlNumber) == bestMoves[lvlNumber]){
-                bestProfile += profileName.getUsername();
+
+            if(getBestMovForLvl(lvlNumber) == bestMoves[lvlNumber] && getBestMovForLvl(lvlNumber) != 0){
+                played = true;
+                bestProfile = profileName.getUsername();
             }
         }
-        return bestProfile;
+        if(played){
+            return bestProfile;
+        }
+        else{
+            return "NOT PLAYED";
+        }
     }
 
 
