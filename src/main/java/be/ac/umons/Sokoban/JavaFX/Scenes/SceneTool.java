@@ -28,7 +28,8 @@ public class SceneTool {
         MENU,
         PLAY_MENU,
         LVL_SELECTION,
-        PROFILE;
+        PROFILE,
+        STATS;
 
         private Scene scene = null;
 
@@ -48,7 +49,7 @@ public class SceneTool {
             WINDOW.setY(bounds.getMinX());
             WINDOW.setWidth(screenSize.getWidth());
             WINDOW.setHeight(screenSize.getHeight());
-            WINDOW.setResizable(false);
+            WINDOW.setResizable(true);
             WINDOW.setScene(this.scene);
 
             //WINDOW.setMaximized(true);

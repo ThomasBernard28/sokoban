@@ -44,6 +44,7 @@ public class MyWindow extends Application
         GameModeScene.makeScene();
         MenuScene.makeScene();
         ProfileScene.makeScene();
+        StatScene.makeScene();
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
             if(GameScene.getCurrProfile() != null) {

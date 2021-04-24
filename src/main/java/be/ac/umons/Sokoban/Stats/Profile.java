@@ -276,6 +276,34 @@ public class Profile {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new File(Path.PROFILE.getPath() + "/" + filename), profile);
     }
+    public static int getBestMovForLvl(int lvlNumber){
+        Profile[] profile = getActiveProfile();
+        int currentBestMove = 0;
+
+        for (Profile profileName: profile) {
+           int[] bestMoves = profileName.getBestMov();
+           if (currentBestMove == 0 || currentBestMove < bestMoves[lvlNumber]){
+               currentBestMove = bestMoves[lvlNumber];
+           }
+        }
+        return currentBestMove;
+    }
+    public static String getBestProfile(int lvlNumber){
+        Profile[] profile = getActiveProfile();
+        String bestProfile = "";
+
+        for (Profile profileName: profile) {
+            int[] bestMoves = profileName.getBestMov();
+            if (getBestMovForLvl(lvlNumber) == 0){
+                bestProfile += "NOT PLAYED";
+                break;
+            }
+            else if(getBestMovForLvl(lvlNumber) == bestMoves[lvlNumber]){
+                bestProfile += profileName.getUsername();
+            }
+        }
+        return bestProfile;
+    }
 
 
 

@@ -13,7 +13,8 @@ public enum IconImg {
     CROSS(8, 8),
     VALIDATE(0,9),
     RESTART(1,4),
-    LOCKED(0, 6);
+    LOCKED(0, 6),
+    TROPHY(3,2);
 
     private final static int cellSize = 50;
 

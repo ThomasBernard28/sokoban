@@ -58,7 +58,9 @@ public class ProfileScene extends SceneTool {
         statsButton.setBackground(new Background(bgFillDarkOrange));
         statsButton.setStyle("-fx-padding: 10, 10, 10, 10 ; -fx-cursor: hand;");
 
-        //TODO SET ACTION FOR STAT BUTTON
+        statsButton.setOnAction(event -> {
+            SceneList.STATS.setOnActive();
+        });
 
         titleBox.getChildren().addAll(exitButton, title);
         titleBox.setAlignment(Pos.CENTER_LEFT);
