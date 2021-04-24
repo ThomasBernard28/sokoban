@@ -61,16 +61,25 @@ public class UnitTest {
             if (Pattern.matches("[zqsd]", listMov.substring(i, i+1))){
                 switch (listMov.substring(i,i+1)) {
                     case ("z"):
-                        testGrid.getGridFromPlayer().move(testGrid, Direction.UP);
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.UP)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.UP);
+                        }
                         break;
                     case ("q"):
-                        testGrid.getGridFromPlayer().move(testGrid, Direction.LEFT);
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.LEFT)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.LEFT);
+                        }
                         break;
                     case ("s"):
-                        testGrid.getGridFromPlayer().move(testGrid, Direction.DOWN);
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.DOWN)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.DOWN);
+                        }
                         break;
                     case ("d"):
-                        testGrid.getGridFromPlayer().move(testGrid, Direction.RIGHT);
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.RIGHT)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.RIGHT);
+                        }
+
                         break;
                     default: throw new IllegalStateException("Not an agreed movement");
                 }

@@ -3,14 +3,18 @@ package be.ac.umons.Sokoban.JavaFX;
 import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.*;
 import javafx.application.Application;
+import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
 import java.net.URL;
 
+import static javafx.application.ConditionalFeature.FXML;
+
 public class MyWindow extends Application
 {
+
 
     public static void main(String[] args)
     {
@@ -33,6 +37,7 @@ public class MyWindow extends Application
 
         final Image imageHead = new Image("images/Head.png");
         theStage.getIcons().add(imageHead);
+
 
         LevelGenScene.makeScene();
         //LevelSelectionScene.makeScene();
