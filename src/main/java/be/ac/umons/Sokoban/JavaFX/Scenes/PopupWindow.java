@@ -1,31 +1,18 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
-import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
-import be.ac.umons.Sokoban.Stats.Profile;
-import com.sun.javafx.util.Utils;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
 import javafx.geometry.*;
-import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
-import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
-import java.util.Locale;
-import java.awt.*;
-import java.security.Key;
+
 import java.util.regex.Pattern;
 
 import static be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool.*;
@@ -105,7 +92,6 @@ public class PopupWindow {
         closeButton.setScaleY(1);
 
         VBox layout = new VBox(10);
-        HBox choice = new HBox(50);
 
         layout.getChildren().addAll(label, closeButton);
         layout.setAlignment(Pos.CENTER);
@@ -156,9 +142,9 @@ public class PopupWindow {
                 closeButton.setTranslateX(-210);
                 closeButton.setTranslateY(-95);
                 closeButton.setAlignment(Pos.TOP_LEFT);
-                closeButton.setOnAction(event -> {
-                    popupWindow.close();
-                });
+                closeButton.setOnAction(event ->
+                    popupWindow.close());
+
 
                 //Validate the creation of a profile
                 validate.setOnAction(event -> {
@@ -185,9 +171,9 @@ public class PopupWindow {
                 closeButton.setTranslateY(-95);
                 closeButton.setTranslateX(-260);
                 closeButton.setAlignment(Pos.TOP_LEFT);
-                closeButton.setOnAction(event -> {
-                    popupWindow.close();
-                });
+                closeButton.setOnAction(event ->
+                    popupWindow.close());
+
 
                 validate2.setBackground(new Background(bgFillGreen));
                 cancel.setBackground(new Background(bgFillRed));
@@ -210,9 +196,8 @@ public class PopupWindow {
                 });
 
                 //Does nothing and comeback to profile selection
-                cancel.setOnAction(event -> {
-                    popupWindow.close();
-                });
+                cancel.setOnAction(event ->
+                    popupWindow.close());
 
                 bottomBox2.getChildren().addAll(validate2, cancel);
                 bottomBox2.setAlignment(Pos.CENTER);
@@ -285,9 +270,9 @@ public class PopupWindow {
                 copy.setTranslateX(200);
                 copy.setTranslateY(150);
 
-                closeButton.setOnAction(event -> {
-                    popupWindow.close();
-                });
+                closeButton.setOnAction(event ->
+                    popupWindow.close());
+
 
                 copy.setOnAction(event -> {
                     Clipboard clipboard = Clipboard.getSystemClipboard();
