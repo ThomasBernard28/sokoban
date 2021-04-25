@@ -1,37 +1,22 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
-import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.Save.Path;
-import be.ac.umons.Sokoban.Save.Save;
-import be.ac.umons.Sokoban.Stats.Profile;
-import com.sun.javafx.util.Utils;
-import javafx.event.ActionEvent;
-import javafx.event.Event;
-import javafx.event.EventHandler;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.*;
 import javafx.scene.*;
 import javafx.scene.layout.*;
-import javafx.scene.control.*;
 import javafx.geometry.*;
-import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
-import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Locale;
-import java.awt.*;
-import java.security.Key;
 import java.util.regex.Pattern;
 
 import static be.ac.umons.Sokoban.JavaFX.Scenes.SceneTool.*;
@@ -266,6 +251,9 @@ public class PopupWindow {
                     GameScene.makeTheGame(GameScene.currPath, GameScene.currFileName);
 
                 });
+                label.setAlignment(Pos.CENTER);
+                label.setTextFill(Color.web("#1EA7E1"));
+
                 choice.getChildren().addAll(restartGame, returnToMenu);
                 choice.setAlignment(Pos.CENTER);
                 choice.setSpacing(150);
@@ -298,8 +286,6 @@ public class PopupWindow {
                 copy.setStyle("-fx-cursor: hand; -fx-padding: 10,10,10,10");
                 copy.setScaleX(2);
                 copy.setScaleY(1.5);
-                copy.setTranslateX(200);
-                copy.setTranslateY(150);
 
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
@@ -346,6 +332,7 @@ public class PopupWindow {
                 saveCopy.getChildren().addAll(copy, input, save);
                 saveCopy.setAlignment(Pos.CENTER);
                 saveCopy.setTranslateY(150);
+                saveCopy.setTranslateX(10);
 
                 label.setTextFill(Color.web("black"));
 
