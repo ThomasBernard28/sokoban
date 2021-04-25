@@ -154,7 +154,7 @@ public class PopupWindow {
                 //Validate the creation of a profile
                 validate.setOnAction(event -> {
                     //method to set the username entered in the textfield
-                    GameScene.getCurrProfile().setUsername(input.getCharacters().toString());
+                    GameScene2.getCurrProfile().setUsername(input.getCharacters().toString());
                     //clearing textfield
                     input.clear();
                     //end popup
@@ -235,7 +235,7 @@ public class PopupWindow {
                 returnToMenu.setOnAction(event -> {
                     popupWindow.close();
                     //Switch made to know on wich scene we have to go back
-                    switch(GameScene.currPath){
+                    switch(GameScene2.currPath){
                         case LVL:
                             SceneList.LVL_SELECTION.setOnActive();
                             break;
@@ -248,7 +248,7 @@ public class PopupWindow {
                 //Restarting the game
                 restartGame.setOnAction(event -> {
                     popupWindow.close();
-                    GameScene.makeTheGame(GameScene.currPath, GameScene.currFileName);
+                    GameScene2.makeTheGame(GameScene2.currPath, GameScene2.currFileName);
 
                 });
                 label.setAlignment(Pos.CENTER);
@@ -266,7 +266,7 @@ public class PopupWindow {
             case HISTORY:
                 HBox saveCopy = new HBox(30);
 
-                Label history = new Label(GameScene.movements.toString());
+                Label history = new Label(GameScene2.movements.toString());
                 history.setFont(Font.font("lobster", 15));
                 history.setWrapText(true);
 

@@ -347,6 +347,8 @@ class LevelButton extends StackPane {
         });
     }
 
+
+
     public void unlock(){
         this.getChildren().clear();
 

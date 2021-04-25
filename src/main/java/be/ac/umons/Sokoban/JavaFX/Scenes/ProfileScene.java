@@ -241,11 +241,11 @@ class ProfileButton extends StackPane{
 
         this.setOnMouseClicked(event -> {
             if(linkedProfile.thisIsANewProfile()){
-                GameScene.setCurrProfile(linkedProfile);
+                GameScene2.setCurrProfile(linkedProfile);
                 new PopupWindow(PopupWindow.PopupType.NEW_PROFILE);
                 btnTxt.setText(linkedProfile.getUsername());
             }else{
-               GameScene.setCurrProfile(linkedProfile);
+               GameScene2.setCurrProfile(linkedProfile);
                SceneTool.SceneList.PLAY_MENU.setOnActive();
             }
         });

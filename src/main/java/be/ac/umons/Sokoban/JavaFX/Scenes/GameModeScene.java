@@ -93,7 +93,7 @@ public class GameModeScene extends SceneTool{
             fc.setInitialDirectory(fileToload);
             File fileChosen = fc.showOpenDialog(null);
             if(fileChosen != null){
-                GameScene.makeTheGame(Path.SAVE, fileChosen.getName());
+                GameScene2.makeTheGame(Path.SAVE, fileChosen.getName());
             }
         });
         centerSide.getChildren().addAll(LvlSelectButton, GeneratorButton, LoadSavedGameButton);
@@ -135,7 +135,7 @@ public class GameModeScene extends SceneTool{
 
         Button exitButton = makeExitButton();
         exitButton.setOnAction(event -> {
-            GameScene.setCurrProfile(null);
+            GameScene2.setCurrProfile(null);
             SceneList.PROFILE.setOnActive();
         });
         exitButton.setScaleX(1);

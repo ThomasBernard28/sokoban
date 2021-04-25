@@ -1,6 +1,7 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
+import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.MapGeneration.Grid;
@@ -41,7 +42,7 @@ public class GameScene2 extends SceneTool{
         root.setMinWidth(1280);
         root.setMinHeight(720);
 
-        root.setGridLinesVisible(true);
+        root.setGridLinesVisible(false);
 
         topLeftGenesis(root);
         topCenterGenesis(root);
@@ -166,7 +167,7 @@ public class GameScene2 extends SceneTool{
 
 
         restartGame.setOnAction(event -> {
-            GameScene2.makeTheGame(GameScene.currPath, GameScene.currFileName);
+            GameScene2.makeTheGame(GameScene2.currPath, GameScene2.currFileName);
         });
 
         history.setOnAction(event -> {
@@ -189,14 +190,29 @@ public class GameScene2 extends SceneTool{
     public static void centerGenesis(GridPane root, Grid grid){
         VBox V_ROOT = new VBox();
 
-        V_ROOT.getChildren().addAll(displayGame(grid));
-        V_ROOT.setPrefSize(1280, 720);
+        GamePane gamePane = new GamePane(grid);
+        currentGrid = grid;
+        gamePane.initiate();
 
-        root.add(V_ROOT, 1,1);
+        gamePane.setOnMouseClicked(event -> {
+            gamePane.requestFocus();
+        });
+        V_ROOT.getChildren().add(gamePane);
+        V_ROOT.setPrefSize(1280, 720);
+        V_ROOT.setAlignment(Pos.CENTER);
+        V_ROOT.setTranslateX(-350);
+
+
+        root.add(V_ROOT, 1, 1, 2, 1);
+
+        playerEvent = new PlayerEvent(gamePane);
+        System.out.println(playerEvent);
+        //SceneList.GAME2.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
+
 
 
     }
-
+    /*
     private static GamePane displayGame(Grid grid){
         // TODO change the resize factor of initiate method
         GamePane gamePane = new GamePane(grid);
@@ -208,13 +224,11 @@ public class GameScene2 extends SceneTool{
         });
 
         playerEvent = new PlayerEvent(gamePane);
-        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
+        SceneList.GAME2.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
     }
 
-
-
-
+     */
 
 
     public static GamePane createGamePane(Grid gameFile){
@@ -245,7 +259,7 @@ public class GameScene2 extends SceneTool{
 
         try{
             Grid gameFile = Load.loadFile(path, fileName);
-            GameScene.makeScene(gameFile);
+            GameScene2.makeScene(gameFile);
             SceneList.GAME2.setOnActive();
 
         }catch (IOException e){

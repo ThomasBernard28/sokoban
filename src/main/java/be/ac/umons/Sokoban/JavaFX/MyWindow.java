@@ -47,8 +47,8 @@ public class MyWindow extends Application
         StatScene.makeScene();
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if(GameScene.getCurrProfile() != null) {
-                System.out.println(GameScene.getCurrProfile().getUsername());
+            if(GameScene2.getCurrProfile() != null) {
+                System.out.println(GameScene2.getCurrProfile().getUsername());
             }else{
                 System.out.println("null");
             }

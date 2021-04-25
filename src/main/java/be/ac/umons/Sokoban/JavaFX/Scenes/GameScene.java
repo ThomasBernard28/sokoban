@@ -1,4 +1,4 @@
-/*
+
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.MapGeneration.Grid;
@@ -112,8 +112,8 @@ public class GameScene extends SceneTool {
         SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
         return gamePane;
     }
-*/
-/*
+
+ */
     private static HBox topRowGenesis(){
         HBox topSide = new HBox();
         HBox titleBox = new HBox();
@@ -275,4 +275,3 @@ public class GameScene extends SceneTool {
 
 }
 
- */
