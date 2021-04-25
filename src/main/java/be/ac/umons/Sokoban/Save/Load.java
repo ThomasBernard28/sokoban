@@ -32,8 +32,7 @@ public class Load {
         //Call the method find size to know th size of the grid
         Size size = findSize(file);
         loadGrid = new Grid(size);
-        
-        
+
 
         //Scanning the file we open
         Scanner scanner = new Scanner(file);

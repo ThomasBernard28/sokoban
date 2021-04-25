@@ -150,6 +150,7 @@ public class Profile {
         this.username = "New Profile";
         this.lvlCompleted = 0;
         this.bestMov = new int[10];
+        System.out.println("ok");
     }
 
     public boolean thisIsANewProfile(){
@@ -193,6 +194,7 @@ public class Profile {
         toDel.reset();
         try{
             writeJsonFile(activeProfile);
+            System.out.println("catched");
         }catch (IOException e){
             throw new IndexOutOfBoundsException("File is missing");
         }

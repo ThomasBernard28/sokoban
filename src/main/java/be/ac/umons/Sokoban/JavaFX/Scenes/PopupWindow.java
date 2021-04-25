@@ -3,6 +3,8 @@ package be.ac.umons.Sokoban.JavaFX.Scenes;
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
+import be.ac.umons.Sokoban.Save.Path;
+import be.ac.umons.Sokoban.Save.Save;
 import be.ac.umons.Sokoban.Stats.Profile;
 import com.sun.javafx.util.Utils;
 import javafx.event.ActionEvent;
@@ -23,6 +25,10 @@ import javafx.scene.control.*;
 import javafx.geometry.*;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Locale;
 import java.awt.*;
 import java.security.Key;
@@ -270,20 +276,28 @@ public class PopupWindow {
                 return layout;
 
             case HISTORY:
+                HBox saveCopy = new HBox(30);
+
                 Label history = new Label(GameScene.movements.toString());
                 history.setFont(Font.font("lobster", 15));
                 history.setWrapText(true);
 
+                Button save = new Button();
+                save.setBackground(new Background(bgFillDarkOrange));
+                save.setGraphic(SpriteIcon.getIconImg(IconImg.SAVE));
+                save.setScaleX(1);
+                save.setScaleY(0.8);
+                save.setStyle("-fx-cursor: hand; -fx-padding: 10,10,10,10");
 
-
+                input.setScaleX(0.8);
+                input.setScaleY(1.2);
+                input.setTranslateX(30);
 
                 Button copy = new Button("Copy !");
                 copy.setBackground(new Background(bgFillGreen));
                 copy.setStyle("-fx-cursor: hand; -fx-padding: 10,10,10,10");
                 copy.setScaleX(2);
                 copy.setScaleY(1.5);
-                copy.setTranslateX(200);
-                copy.setTranslateY(150);
 
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
@@ -303,9 +317,38 @@ public class PopupWindow {
 
                 });
 
+                save.setOnAction(event -> {
+                    if (Pattern.matches("^(\\w|_)+$", input.getCharacters().toString())){
+                        try{
+                            String movContent = "";
+                            for (int i = 0; i < history.getText().length(); i++) {
+                                if (Pattern.matches("[zqsd]", history.getText().substring(i,i+1))){
+                                    movContent += history.getText().substring(i, i+1);
+                                }
+                            }
+                            File file = new File(Path.UNIT_TEST_IN.getPath() + input.getCharacters().toString() + ".mov");
+                            boolean success = file.createNewFile();
+                            if(success){
+                                FileWriter writer = new FileWriter(file);
+                                writer.write(movContent);
+                                writer.flush();
+                                writer.close();
+                            }
+                        }catch (IOException e){
+                            e.printStackTrace();
+                        }
+                    }
+                    input.clear();
+                });
+
+                saveCopy.getChildren().addAll(copy, input, save);
+                saveCopy.setAlignment(Pos.CENTER);
+                saveCopy.setTranslateY(150);
+
+                label.setTextFill(Color.web("black"));
 
                 layout.setBackground(new Background(bgFillYellow));
-                layout.getChildren().addAll(closeButton,label, history, copy);
+                layout.getChildren().addAll(closeButton,label, history, saveCopy);
 
                 popupWindow.setResizable(false);
                 popupWindow.setMaxHeight(400);

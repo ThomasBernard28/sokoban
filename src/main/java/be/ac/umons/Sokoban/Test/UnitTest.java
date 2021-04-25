@@ -36,7 +36,7 @@ public class UnitTest {
             e.printStackTrace();
         }
 
-        return movString.toString();
+        return movString;
     }
 
     /**
@@ -53,8 +53,6 @@ public class UnitTest {
         /*
         Load the files as a Grid and a char[] and apply the movements
          */
-        System.out.println(testIN);
-        System.out.println(testFileOUT);
         Grid testGrid = Load.loadFile(Path.UNIT_TEST_IN, testIN);
         String listMov = loadMov(Path.UNIT_TEST_IN, movFile);
         for (int i = 0; i < listMov.length(); i++) {

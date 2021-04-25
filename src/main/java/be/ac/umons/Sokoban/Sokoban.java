@@ -2,10 +2,7 @@
 
 package be.ac.umons.Sokoban;
 
-import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.MyWindow;
-import be.ac.umons.Sokoban.Save.Path;
-import be.ac.umons.Sokoban.Save.Save;
 import be.ac.umons.Sokoban.Test.UnitTest;
 
 import java.io.IOException;
