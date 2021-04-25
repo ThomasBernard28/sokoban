@@ -240,6 +240,7 @@ public class GameScene extends SceneTool {
                 }
 
             }
+            currProfile.setLvlCompleted();
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }

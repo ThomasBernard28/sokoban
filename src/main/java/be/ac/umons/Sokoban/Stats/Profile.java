@@ -88,6 +88,15 @@ public class Profile {
         return lvlCompleted;
     }
 
+    public void setLvlCompleted(){
+         this.lvlCompleted += 1;
+         try{
+             writeJsonFile(activeProfile);
+         }catch (IOException e){
+             throw new IndexOutOfBoundsException("File is missing");
+         }
+    }
+
     public int[] getBestMov() {
         return bestMov;
     }

@@ -298,6 +298,8 @@ public class PopupWindow {
                 copy.setStyle("-fx-cursor: hand; -fx-padding: 10,10,10,10");
                 copy.setScaleX(2);
                 copy.setScaleY(1.5);
+                copy.setTranslateX(200);
+                copy.setTranslateY(150);
 
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
