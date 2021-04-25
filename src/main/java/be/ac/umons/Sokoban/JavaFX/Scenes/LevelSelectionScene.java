@@ -143,41 +143,41 @@ public class LevelSelectionScene extends SceneTool{
         level10Button.setStyle("-fx-cursor: hand;");
 
         level1Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level1_0.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level1_0.xsb");
         });
 
         level2Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level2_0.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level2_0.xsb");
         });
 
         level3Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level3_0.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level3_0.xsb");
         });
 
         level4Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level4_1.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level4_1.xsb");
         });
 
         level5Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level5_1.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level5_1.xsb");
         });
 
         level6Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level6_1.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level6_1.xsb");
         });
 
         level7Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level7_1.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level7_1.xsb");
         });
 
         level8Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level8_2.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level8_2.xsb");
         });
         level9Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level9_2.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level9_2.xsb");
         });
         level10Button.setOnMouseClicked(event -> {
-                GameScene.makeTheGame(Path.LVL, "level10_2.xsb");
+                GameScene2.makeTheGame(Path.LVL, "level10_2.xsb");
         });
 
 
@@ -212,7 +212,7 @@ public class LevelSelectionScene extends SceneTool{
             lvlButtons[i] = new LevelButton(i + 1);
         }
 
-        final int lvlCompleted = GameScene.getCurrProfile().getLvlCompleted();
+        final int lvlCompleted = GameScene2.getCurrProfile().getLvlCompleted();
         for (int i = 0; i < lvlCompleted; i++) {
             lvlButtons[i].unlock();
         }
@@ -261,7 +261,7 @@ public class LevelSelectionScene extends SceneTool{
             fc.setInitialDirectory(fileToload);
             File fileChosen = fc.showOpenDialog(null);
             if(fileChosen != null){
-                GameScene.makeTheGame(Path.LVL, fileChosen.getName());
+                GameScene2.makeTheGame(Path.LVL, fileChosen.getName());
             }
         });
 
@@ -343,7 +343,7 @@ class LevelButton extends StackPane {
         this.getChildren().addAll(btnImg, btnText);
 
         this.setOnMouseClicked(event -> {
-            GameScene.makeTheGame(Path.LVL, filename);
+            GameScene2.makeTheGame(Path.LVL, filename);
         });
     }
 
@@ -360,7 +360,7 @@ class LevelButton extends StackPane {
         this.getChildren().addAll(btnImg, btnText);
 
         this.setOnMouseClicked(event -> {
-            GameScene.makeTheGame(Path.LVL, filename);
+            GameScene2.makeTheGame(Path.LVL, filename);
         });
     }
 

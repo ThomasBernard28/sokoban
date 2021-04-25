@@ -1,3 +1,4 @@
+/*
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.MapGeneration.Grid;
@@ -112,6 +113,7 @@ public class GameScene extends SceneTool {
         return gamePane;
     }
 */
+/*
     private static HBox topRowGenesis(){
         HBox topSide = new HBox();
         HBox titleBox = new HBox();
@@ -272,3 +274,5 @@ public class GameScene extends SceneTool {
     }
 
 }
+
+ */

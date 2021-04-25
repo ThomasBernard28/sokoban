@@ -29,7 +29,8 @@ public class SceneTool {
         PLAY_MENU,
         LVL_SELECTION,
         PROFILE,
-        STATS;
+        STATS,
+        GAME2;
 
         private Scene scene = null;
 
