@@ -29,7 +29,7 @@ public class Grid {
     private final Tile[][] grid;
     private final boolean[][] walkable;
 
-    private final Size size;
+    protected final Size size;
 
     private final int [] player = new int[2];
 
@@ -193,7 +193,7 @@ public class Grid {
      *
      */
 
-    private final Random rnd = new Random();
+    protected final Random rnd = new Random();
 
     /**
      * Tells whether the direction is in range of the array
@@ -202,7 +202,7 @@ public class Grid {
      * @param dir direction to check
      * @return boolean indicating if it's within range
      */
-    private boolean inIndexRange(int startX, int startY, Direction dir){
+    protected boolean inIndexRange(int startX, int startY, Direction dir){
         return (0 <= startX + dir.x && startX + dir.x < size.getCol()) &&
                 (0 <= startY + dir.y && startY + dir.y < size.getRow());
     }
@@ -211,7 +211,7 @@ public class Grid {
      * Set the walkable grid according to the tile grid
      * Every wall will correspond to a false and empty will be true
      */
-    private void resetWalkable(){
+    protected void resetWalkable(){
         for (int i = 0; i < size.getRow(); i++) {
             for (int j = 0; j < size.getCol(); j++) {
                 walkable[i][j] = !grid[i][j].isWall() && !grid[i][j].hasBox();
@@ -226,7 +226,7 @@ public class Grid {
      * @param startY y coordinate of the tile
      * @return ArrayList of Direction that aren't yet explored
      */
-    private ArrayList<Direction> unexploredNeighbour(int startX, int startY){
+    protected ArrayList<Direction> unexploredNeighbour(int startX, int startY){
         ArrayList<Direction> res = new ArrayList<>();
         int i = 0;
         for (Direction dir : Direction.values()){
@@ -249,7 +249,7 @@ public class Grid {
      * @param setY y coordinate of the top left corner of where the pattern will be implemented
      * @param matrix pattern which is a matrix of char either 'w' or 'e'
      */
-    private void patternIntegration(int setX, int setY, char[][] matrix){
+    protected void patternIntegration(int setX, int setY, char[][] matrix){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[0].length; j++) {
                 if (matrix[i][j] == 'e') {
@@ -269,7 +269,7 @@ public class Grid {
      * @param startX x coordinate of the start of the pathfinding
      * @param startY y coordinate of the start of the pathfinding
      */
-    private void explorer(int startX, int startY){
+    protected void explorer(int startX, int startY){
         //
         walkable[startY][startX] = false;
         for (Direction dir : unexploredNeighbour(startX, startY)){
@@ -285,7 +285,7 @@ public class Grid {
      * @param playerY y coordinate of the start of the pathfinding
      * @return boolean telling whether a grid is solvable
      */
-    private boolean solvable(int playerX, int playerY){
+    protected boolean solvable(int playerX, int playerY){
         resetWalkable();
         explorer(playerX, playerY);
         for (boolean[] line : walkable){
@@ -328,7 +328,7 @@ public class Grid {
      * @param startY y coordinate of the tile
      * @return ArrayList of Direction that aren't yet explored
      */
-    private ArrayList<Direction> explorableNeighbours(int startX, int startY){
+    protected ArrayList<Direction> explorableNeighbours(int startX, int startY){
         ArrayList<Direction> res = new ArrayList<>();
         int i = 0;
         for (Direction dir : Direction.values()){
@@ -344,14 +344,14 @@ public class Grid {
 
 
 
-    private int[][] currBoxes;
-    private ShuffledBox[] shuffledBoxes;
+    protected int[][] currBoxes;
+    protected ShuffledBox[] shuffledBoxes;
 
     /**
      * This function randomly place a player and n boxes in the grid
      * @param n number of boxes that will be placed
      */
-    public void placeRandomBox(int n){
+    protected void placeRandomBox(int n){
         currBoxes = new int[n][2];
 
         resetWalkable();
@@ -523,7 +523,7 @@ public class Grid {
         }
     }
 
-    private static class ShuffledBox{
+    protected static class ShuffledBox{
         private final static Random rnd = new Random();
 
         private final int[] initialPos = new int[2];
@@ -574,9 +574,9 @@ public class Grid {
         }
 
         private boolean moveToRandom(Grid grid){
-            //Direction dir = suitors.get(rnd.nextInt(suitors.size()));
+            Direction dir = suitors.get(rnd.nextInt(suitors.size()));
             //Direction dir = pickFarAwaySuitor();
-            Direction dir = pickMostProbableSuitor();
+            //Direction dir = pickMostProbableSuitor();
 
             // we move the player to the correct position
             //(needs to be done beforehand so that the player doesn't get deleted)

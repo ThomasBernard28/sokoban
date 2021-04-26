@@ -93,7 +93,7 @@ public class GameModeScene extends SceneTool{
             fc.setInitialDirectory(fileToload);
             File fileChosen = fc.showOpenDialog(null);
             if(fileChosen != null){
-                GameScene2.makeTheGame(Path.SAVE, fileChosen.getName());
+                GameScene2.loadLevel(Path.SAVE, fileChosen.getName());
             }
         });
         centerSide.getChildren().addAll(LvlSelectButton, GeneratorButton, LoadSavedGameButton);

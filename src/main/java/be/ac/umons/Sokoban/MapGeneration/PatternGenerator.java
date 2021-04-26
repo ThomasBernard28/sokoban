@@ -8,13 +8,8 @@ enum PatternType {
     I,
     E
 }
-
-public class PatternGenerator {
-    private final Pattern[] patterns;
-    private final double[] weights;
-
-    public PatternGenerator(){
-        patterns = new Pattern[] {
+/*
+patterns = new Pattern[] {
                 Pattern.EMPTY,
                 Pattern.CENTER_LINE,
                 Pattern.SQUARE,
@@ -22,13 +17,26 @@ public class PatternGenerator {
                 Pattern.SIDE_LINE,
                 Pattern.DOUBLE_LINE
         };
+ */
+
+public class PatternGenerator {
+    private final Pattern[] patterns;
+    private final double[] weights;
+
+    public PatternGenerator(){
+        patterns = new Pattern[] {
+                Pattern.CENTER_LINE,
+                Pattern.SQUARE,
+                Pattern.SIDE_LINE,
+                Pattern.CORNER_3,
+                Pattern.EMPTY
+        };
         weights = new double[]{
                 1,
+                0.2,
                 1,
-                1,
-                1,
-                1,
-                1
+                0.2,
+                0.1
         };
     }
 
@@ -48,7 +56,7 @@ public class PatternGenerator {
                 return patterns[i].getPattern();
             }
         }
-        return new char[][] {{'x'}, {'D'}};
+        throw new IllegalStateException("Not supposed to be here");
     }
 
     public enum Pattern{

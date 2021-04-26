@@ -1,7 +1,6 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.JavaFX.Event.PlayerEvent;
-import be.ac.umons.Sokoban.JavaFX.Size;
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.Sokoban.MapGeneration.Grid;
@@ -9,6 +8,7 @@ import be.ac.umons.Sokoban.Save.Load;
 import be.ac.umons.Sokoban.Save.Path;
 import be.ac.umons.Sokoban.Save.Save;
 import be.ac.umons.Sokoban.Stats.Profile;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 
 public class GameScene2 extends SceneTool{
 
-    public static GridPane root = new GridPane();
+    public static GridPane root = null;
 
     private static Grid currentGrid = null;
     private static PlayerEvent playerEvent = null;
@@ -35,29 +35,25 @@ public class GameScene2 extends SceneTool{
 
     private static Profile currProfile = null;
 
-    public static ArrayList<String> movements = new ArrayList();
+    public final static ArrayList<String> movements = new ArrayList<>();
     private static TextField nbrMov;
 
     public static void makeScene(Grid grid){
-        root.setMinWidth(1280);
-        root.setMinHeight(720);
-
-        root.setGridLinesVisible(false);
-
-        topLeftGenesis(root);
-        topCenterGenesis(root);
-        topRightGenesis(root);
-
-        centerGenesis(root, grid);
-
-        root.setBackground(new Background(bgFillLightBlue));
+        root = new GridPane();
         Scene scene = new Scene(root);
-
         SceneList.GAME2.setScene(scene);
 
+        root.setMinWidth(1280);
+        root.setMinHeight(720);
+        root.setBackground(new Background(bgFillLightBlue));
+
+        root.add(topLeftGenesis(), 0, 0);
+        root.add(topCenterGenesis(), 1, 0);
+        root.add(topRightGenesis(), 2,0);
+        root.add(centerGenesis(grid), 1, 1, 2, 1);
     }
 
-    public static void topLeftGenesis(GridPane root){
+    public static HBox topLeftGenesis(){
         HBox exitBox = new HBox();
 
         Button exitButton = makeExitButton();
@@ -73,16 +69,17 @@ public class GameScene2 extends SceneTool{
                 case SAVE:
                     SceneList.PLAY_MENU.setOnActive();
                     break;
-                default: throw new IllegalStateException("The file doesn't come from an correct path");
+                default:
+                    throw new IllegalStateException("The file doesn't come from an correct path");
             }
         });
 
         exitBox.getChildren().add(exitButton);
         exitBox.setPrefSize(690, 200);
-        root.add(exitBox, 0, 0);
+        return exitBox;
     }
 
-    public static void topCenterGenesis(GridPane root){
+    public static HBox topCenterGenesis(){
         HBox titleBox = new HBox();
 
         Label title = new Label("Sokoban");
@@ -93,11 +90,11 @@ public class GameScene2 extends SceneTool{
         titleBox.getChildren().add(title);
         titleBox.setAlignment(Pos.CENTER);
         titleBox.setPrefSize(540, 200);
+        return titleBox;
 
-        root.add(titleBox, 1, 0);
     }
 
-    public static void topRightGenesis(GridPane root){
+    public static VBox topRightGenesis(){
         //contains both Hboxes.
         VBox elements = new VBox(5);
 
@@ -167,7 +164,7 @@ public class GameScene2 extends SceneTool{
 
 
         restartGame.setOnAction(event -> {
-            GameScene2.makeTheGame(GameScene2.currPath, GameScene2.currFileName);
+            GameScene2.loadLevel(GameScene2.currPath, GameScene2.currFileName);
         });
 
         history.setOnAction(event -> {
@@ -183,34 +180,28 @@ public class GameScene2 extends SceneTool{
         elements.setAlignment(Pos.CENTER_RIGHT);
         elements.setTranslateX(30);
 
-        root.add(elements, 2,0);
+
+        return elements;
 
     }
 
-    public static void centerGenesis(GridPane root, Grid grid){
+    public static VBox centerGenesis(Grid grid){
         VBox V_ROOT = new VBox();
 
         GamePane gamePane = new GamePane(grid);
         currentGrid = grid;
         gamePane.initiate();
+        gamePane.setOnMouseClicked( event -> gamePane.requestFocus() );
 
-        gamePane.setOnMouseClicked(event -> {
-            gamePane.requestFocus();
-        });
         V_ROOT.getChildren().add(gamePane);
         V_ROOT.setPrefSize(1280, 720);
         V_ROOT.setAlignment(Pos.CENTER);
         V_ROOT.setTranslateX(-350);
 
-
-        root.add(V_ROOT, 1, 1, 2, 1);
-
         playerEvent = new PlayerEvent(gamePane);
-        System.out.println(playerEvent);
-        //SceneList.GAME2.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
+        SceneList.GAME2.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
 
-
-
+        return V_ROOT;
     }
     /*
     private static GamePane displayGame(Grid grid){
@@ -237,6 +228,7 @@ public class GameScene2 extends SceneTool{
 
         return gamePane;
     }
+
     public static void victory(){
         if(WINDOW.getScene() == SceneList.GAME2.getScene()){
             if (currPath == Path.LVL){
@@ -252,20 +244,31 @@ public class GameScene2 extends SceneTool{
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }
-    public static void makeTheGame(Path path, String fileName){
+
+    public static void loadLevel(Path path, String fileName){
         movements.clear();
         currFileName = fileName;
         currPath = path;
-
         try{
             Grid gameFile = Load.loadFile(path, fileName);
             GameScene2.makeScene(gameFile);
             SceneList.GAME2.setOnActive();
+            System.out.println(gameFile.getPlayerX() + "," + gameFile.getPlayerY());
 
         }catch (IOException e){
-            e.printStackTrace();
+            throw new IllegalStateException("File is missing");
         }
     }
+
+    protected static void resetScene(){
+        currentGrid = null;
+        playerEvent = null;
+        currFileName = null;
+        currPath = null;
+        movements.clear();
+        nbrMov.clear();
+    }
+
     public static void history(String letters){
         movements.add(letters);
         nbrMov.setText("Movements : "+ movements.size());

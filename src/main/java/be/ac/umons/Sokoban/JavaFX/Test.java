@@ -14,22 +14,18 @@ public class Test extends Application {
 
     public void _start(Stage theStage){
         Grid testGrid = new Grid(Size.MEDIUM);
-
-        GamePane gamePane = new GamePane(testGrid);
-
         testGrid.set_default_walls();
         testGrid.generateRandomWalls();
-        testGrid.placeRandomBox(5);
+
+
+        GamePane gamePane = new GamePane(testGrid);
         gamePane.initiate();
-        testGrid.suitableNextBoxX(gamePane);
 
         gamePane.setOnMouseClicked(event -> {
             testGrid.resetGrid();
             testGrid.set_default_walls();
             testGrid.generateRandomWalls();
-            testGrid.placeRandomBox(5);
             gamePane.initiate();
-            testGrid.suitableNextBoxX(gamePane);
         });
 
         theStage.setScene(new Scene(gamePane));
@@ -37,19 +33,18 @@ public class Test extends Application {
     }
 
     public void start(Stage theStage) {
-        Grid testGrid = new Grid(Size.MEDIUM);
+        Grid testGrid = new Grid(Size.LARGE);
 
         GamePane gamePane = new GamePane(testGrid);
 
-        testGrid.constructMovables(5, 100);
+        testGrid.constructMovables(10, 1000);
         gamePane.initiate();
 
         gamePane.setOnMouseClicked(event -> {
-            testGrid.constructMovables(5, 100);
+            testGrid.constructMovables(10, 1000);
             gamePane.initiate();
         });
         Scene myScene = new Scene(gamePane);
-        //myScene.setOnKeyPressed(event -> gamePane.initiate());
         theStage.setScene(myScene);
         theStage.show();
     }

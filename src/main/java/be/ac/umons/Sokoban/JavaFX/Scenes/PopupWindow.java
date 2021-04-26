@@ -248,7 +248,7 @@ public class PopupWindow {
                 //Restarting the game
                 restartGame.setOnAction(event -> {
                     popupWindow.close();
-                    GameScene2.makeTheGame(GameScene2.currPath, GameScene2.currFileName);
+                    GameScene2.loadLevel(GameScene2.currPath, GameScene2.currFileName);
 
                 });
                 label.setAlignment(Pos.CENTER);

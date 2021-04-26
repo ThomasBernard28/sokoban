@@ -18,7 +18,7 @@ public enum MovableContent {
                 return !logicGrid.getGridFromPlayer(dir.x * 2, dir.y * 2).isWall() &&
                         !logicGrid.getGridFromPlayer(dir.x * 2, dir.y * 2).hasBox();
             default:
-                throw new IllegalStateException("Unexpected enum value");
+                throw new IllegalStateException("Unexpected enum value: " + this);
         }
     }
 
