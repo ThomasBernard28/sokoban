@@ -23,13 +23,13 @@ public class SceneTool {
      * This enum contains every scene and allows to switch the current scene
      */
     public enum SceneList{
-        GAME,
         LVL_GEN,
         MENU,
         PLAY_MENU,
         LVL_SELECTION,
         PROFILE,
         STATS,
+        MENU2,
         GAME2;
 
         private Scene scene = null;
@@ -85,7 +85,7 @@ public class SceneTool {
     }
 
     public static void start(){
-        SceneTool.SceneList.MENU.setOnActive();
+        SceneTool.SceneList.MENU2.setOnActive();
         WINDOW.show();
     }
 

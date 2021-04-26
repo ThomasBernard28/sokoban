@@ -1,41 +1,58 @@
 package be.ac.umons.Sokoban.JavaFX.Scenes;
 
-
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
-import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
-public class MenuScene extends SceneTool {
+public class MenuScene extends SceneTool{
 
-    public final static BorderPane root = new BorderPane();
-    private final static int MARGIN = 30;
+    public static GridPane root = new GridPane();
 
 
     public static void makeScene(){
-        root.setTop(topGenesis());
-        root.setCenter(centerGenesis());
-        //root.setLeft(leftGenesis());
-        //root.setRight(rightGenesis());
-        //root.setBottom(bottomGenesis());
 
-        root.setBackground(new Background(bgFillLightBlue));
         root.setMinHeight(720);
         root.setMinWidth(1280);
+        root.setBackground(new Background(bgFillLightBlue));
+
+        root.setGridLinesVisible(false);
+
+        topGenesis(root);
+        centerGenesis(root);
 
         Scene scene = new Scene(root);
+        SceneList.MENU2.setScene(scene);
 
-        SceneList.MENU.setScene(scene);
     }
+    public static void topGenesis(GridPane root){
+        HBox emptyLeftBox = new HBox();
+        HBox emptyRightBox = new HBox();
 
-    private static TilePane centerGenesis(){
-        TilePane centerSide = new TilePane();
+        emptyLeftBox.setPrefSize(640, 150);
+        emptyRightBox.setPrefSize(640,150);
+
+        root.add(emptyLeftBox, 0, 0);
+        root.add(emptyRightBox, 2, 0);
+
+        HBox titleBox = new HBox();
+
+        Label title = new Label("Sokoban");
+        title.setFont(Font.font("impact", 50));
+        title.setAlignment(Pos.CENTER);
+
+        titleBox.getChildren().add(title);
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.setPrefSize(540, 200);
+
+        root.add(titleBox, 1, 0);
+    }
+    public static void centerGenesis(GridPane root){
+        VBox choiceBox = new VBox(100);
 
         StackPane playButton = new StackPane();
         StackPane lvlGenButton = new StackPane();
@@ -77,51 +94,11 @@ public class MenuScene extends SceneTool {
         });
         quitButton.setOnMouseClicked(event -> quit());
 
-        centerSide.getChildren().addAll(playButton, lvlGenButton, quitButton);
-        centerSide.setOrientation(Orientation.VERTICAL);
-        centerSide.setAlignment(Pos.CENTER);
-        centerSide.setVgap(100);
+        choiceBox.getChildren().addAll(playButton, lvlGenButton, quitButton);
+        choiceBox.setAlignment(Pos.CENTER);
+        choiceBox.setPrefSize(640, 780);
 
-        return centerSide;
-
+        root.add(choiceBox, 1, 1);
     }
-
-    private static VBox rightGenesis(){
-        VBox rightSide = new VBox();
-
-        rightSide.setMinWidth(MARGIN);
-
-        return rightSide;
-    }
-
-    private static TilePane bottomGenesis(){
-        TilePane bottomSide = new TilePane();
-
-        bottomSide.setMinHeight(MARGIN);
-
-        return bottomSide;
-    }
-
-    private static VBox leftGenesis(){
-        VBox leftSide = new VBox();
-
-        leftSide.setMinWidth(MARGIN);
-
-        return leftSide;
-    }
-
-    private static HBox topGenesis(){
-        HBox topSide = new HBox();
-
-        Label title = new Label("Menu");
-        title.setFont(Font.font("impact",70));
-        title.setStyle("-fx-padding: 20 20 20 20;");
-
-
-        topSide.getChildren().add(title);
-        topSide.setAlignment(Pos.CENTER);
-        return topSide;
-    }
-
 
 }
