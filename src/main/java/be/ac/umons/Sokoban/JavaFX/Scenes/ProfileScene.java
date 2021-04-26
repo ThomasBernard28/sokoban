@@ -137,7 +137,7 @@ class ProfileButton extends StackPane {
                 btnTxt.setText(linkedProfile.getProfile().getUsername());
             }else{
                 GameScene.setCurrProfile(linkedProfile);
-                SceneTool.SceneList.PLAY_MENU.setOnActive();
+                SceneTool.SceneList.GAME_MODE.setOnActive();
             }
         });
 

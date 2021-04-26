@@ -49,7 +49,7 @@ public class LevelSelectionScene extends SceneTool{
         exitButton.setScaleX(1.0);
         exitButton.setScaleY(1.0);
         exitButton.setOnAction(event -> {
-            SceneList.PLAY_MENU.setOnActive();
+            SceneList.GAME_MODE.setOnActive();
         });
 
         topSide.setStyle("-fx-padding: 60, 50, 20, 50");

@@ -66,7 +66,7 @@ public class GameScene extends SceneTool{
                     SceneList.LVL_SELECTION.setOnActive();
                     break;
                 case SAVE:
-                    SceneList.PLAY_MENU.setOnActive();
+                    SceneList.GAME_MODE.setOnActive();
                     break;
                 default:
                     throw new IllegalStateException("The file doesn't come from an correct path");

@@ -15,33 +15,61 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
-/**
- * This Class display the Game mode chooser scene
- */
-
-
 public class GameModeScene extends SceneTool{
-    public final static BorderPane root = new BorderPane();
-    private final static int MARGIN = 30;
-    private static Button resetButton = null;
+
+    public static GridPane root = new GridPane();
 
     public static void makeScene(){
-        root.setCenter(centerGenesis());
-        root.setTop(topGenesis());
-        root.setBottom(bottomGenesis());
-        root.setLeft(leftGenesis());
-        root.setRight(rightGenesis());
-
-        root.setBackground(new Background(bgFillLightBlue));
         root.setMinHeight(720);
         root.setMinWidth(1280);
+        root.setBackground(new Background(bgFillLightBlue));
 
-        Scene scene  = new Scene(root);
-        SceneList.PLAY_MENU.setScene(scene);
+        topLeftGenesis(root);
+        topCenterGenesis(root);
+        centerGenesis(root);
+
+        Scene scene = new Scene(root);
+        SceneList.GAME_MODE.setScene(scene);
     }
 
-    private static TilePane centerGenesis(){
-        TilePane centerSide = new TilePane();
+    public static void topLeftGenesis(GridPane root){
+        HBox exitBox = new HBox();
+
+
+        Button exitButton = makeExitButton();
+        exitButton.setScaleY(1);
+        exitButton.setScaleX(1);
+        exitButton.setTranslateY(15);
+        exitButton.setTranslateX(15);
+        exitButton.setOnAction(event ->{
+            SceneList.PROFILE.setOnActive();
+        });
+
+        exitBox.getChildren().add(exitButton);
+        exitBox.setPrefSize(590, 150);
+        root.add(exitBox, 0, 0);
+
+    }
+
+    public static void topCenterGenesis(GridPane root){
+        HBox titleBox = new HBox();
+        HBox emptyBox = new HBox();
+
+        Label title = new Label("Game Mode Chooser");
+        title.setFont(Font.font("impact", 70));
+        title.setAlignment(Pos.CENTER);
+
+        titleBox.getChildren().add(title);
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.setPrefSize(740, 150);
+
+        root.add(titleBox, 1, 0);
+
+        emptyBox.setPrefSize(590, 150);
+        root.add(emptyBox, 2, 0);
+    }
+    public static void centerGenesis(GridPane root){
+        VBox centerSide = new VBox(100);
 
         StackPane LvlSelectButton = new StackPane();
         StackPane GeneratorButton = new StackPane();
@@ -97,60 +125,9 @@ public class GameModeScene extends SceneTool{
             }
         });
         centerSide.getChildren().addAll(LvlSelectButton, GeneratorButton, LoadSavedGameButton);
-        centerSide.setOrientation(Orientation.VERTICAL);
         centerSide.setAlignment(Pos.CENTER);
-        centerSide.setVgap(100);
 
-
-    return centerSide;
-
-    }
-    private static VBox rightGenesis(){
-        VBox rightSide = new VBox();
-
-        rightSide.setMinWidth(MARGIN);
-
-        return rightSide;
-    }
-    private static TilePane bottomGenesis(){
-        TilePane bottomSide = new TilePane();
-
-        bottomSide.setMinHeight(MARGIN);
-
-        return bottomSide;
-    }
-    private static VBox leftGenesis(){
-        VBox leftSide = new VBox();
-
-        leftSide.setMinWidth(MARGIN);
-
-        return leftSide;
-    }
-    private static HBox topGenesis(){
-        HBox topSide = new HBox();
-        Label title = new Label("Game Mode Chooser");
-
-        title.setFont(Font.font("impact", 70));
-        title.setStyle("-fx-padding: 20 20 20 20");
-
-        Button exitButton = makeExitButton();
-        exitButton.setOnAction(event -> {
-            GameScene.setCurrProfile(null);
-            SceneList.PROFILE.setOnActive();
-        });
-        exitButton.setScaleX(1);
-        exitButton.setScaleY(1);
-
-        topSide.setStyle("-fx-padding: 70 50 20 50");
-        topSide.setSpacing(50);
-
-        topSide.getChildren().addAll(exitButton, title);
-        topSide.setAlignment(Pos.CENTER);
-
-        return topSide;
-    }
-
-    public static void resetScene() {
-        resetButton.fire();
+        centerSide.setPrefSize(640, 780);
+        root.add(centerSide, 1, 1);
     }
 }
