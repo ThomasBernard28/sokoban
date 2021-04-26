@@ -2,7 +2,7 @@ package be.ac.umons.Sokoban.JavaFX.Scenes;
 
 import be.ac.umons.Sokoban.JavaFX.Sprite.IconImg;
 import be.ac.umons.Sokoban.JavaFX.Sprite.SpriteIcon;
-import be.ac.umons.Sokoban.Stats.Profile;
+import be.ac.umons.Sokoban.Save.ProfileList;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -29,7 +29,6 @@ public class StatScene extends SceneTool{
         root.setBackground(new Background(bgFillLightBlue));
         Scene scene = new Scene(root);
         SceneList.STATS.setScene(scene);
-
     }
 
     public static  void topRowGenesis(GridPane root){
@@ -105,7 +104,7 @@ public class StatScene extends SceneTool{
         profileNames.getChildren().add(spacing);
 
         for (int i = 0; i < 10; i++){
-            Label bestProfile = new Label(Profile.getBestProfile(i));
+            Label bestProfile = new Label(ProfileList.getBestPofileName(i));
             bestProfile.setFont(Font.font("impact", 40));
             bestProfile.setAlignment(Pos.CENTER);
             if (i == 0 || i == 1) {
@@ -137,7 +136,7 @@ public class StatScene extends SceneTool{
         bestMoves.getChildren().add(spacing);
 
         for (int i = 0; i < 10; i++) {
-            Label bestMov = new Label("Best Moves: "+(Profile.getBestMovForLvl(i)));
+            Label bestMov = new Label("Best Moves: " + (ProfileList.getBestMoveForLvl(i)));
             bestMov.setFont(Font.font("impact", 40));
             bestMov.setAlignment(Pos.CENTER);
             if (i == 0 || i == 1) {

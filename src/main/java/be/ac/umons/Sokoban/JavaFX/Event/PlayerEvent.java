@@ -4,12 +4,10 @@ import be.ac.umons.Sokoban.Entities.Direction;
 import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.AnimationPlayerMove;
 import be.ac.umons.Sokoban.JavaFX.Scenes.GamePane;
-import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene2;
+import be.ac.umons.Sokoban.JavaFX.Scenes.GameScene;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
-
-import java.util.ArrayList;
 
 public class PlayerEvent implements EventHandler<KeyEvent> {
     private final Grid logicGrid;
@@ -35,12 +33,12 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 );
                 logicGrid.getGridFromPlayer().move(logicGrid, dir);
                 playerAnimation.play();
-                GameScene2.history(event.getText());
+                GameScene.history(event.getText());
             }
         }
 
         if (logicGrid.checkWin()){
-            GameScene2.victory();
+            GameScene.victory();
         }
     }
 }

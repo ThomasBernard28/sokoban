@@ -2,15 +2,11 @@ package be.ac.umons.Sokoban.JavaFX;
 
 import be.ac.umons.Sokoban.MapGeneration.Grid;
 import be.ac.umons.Sokoban.JavaFX.Scenes.*;
+import be.ac.umons.Sokoban.Save.ProfileList;
 import javafx.application.Application;
-import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-
-import java.net.URL;
-
-import static javafx.application.ConditionalFeature.FXML;
 
 public class MyWindow extends Application
 {
@@ -21,18 +17,13 @@ public class MyWindow extends Application
         launch(args);
     }
 
-    //Method to create an image and ;oad it with absolute path
-    public static Image createImage(Object context, String resourceName)
-    {
-        URL _url = context.getClass().getResource(resourceName);
-        return new Image(_url.toExternalForm());
-    }
 
     public void start(Stage theStage){
         theStage.setResizable(false);
         theStage.setTitle("Sokoban");
         SceneTool.setStage(theStage);
         SceneTool.setCurrSize(Size.MEDIUM);
+        ProfileList.initiateProfileList();
 
 
         final Image imageHead = new Image("images/Head.png");
@@ -48,8 +39,8 @@ public class MyWindow extends Application
 
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if(GameScene2.getCurrProfile() != null) {
-                System.out.println(GameScene2.getCurrProfile().getUsername());
+            if(GameScene.getCurrProfile() != null) {
+                System.out.println(GameScene.getCurrProfile().getProfile().getUsername());
             }else{
                 System.out.println("null");
             }

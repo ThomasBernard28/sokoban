@@ -1,76 +1,22 @@
-package be.ac.umons.Sokoban.Stats;
-import be.ac.umons.Sokoban.Save.Path;
+package be.ac.umons.Sokoban.Save;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.xml.sax.SAXException;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Arrays;
 
-import org.json.simple.JSONObject;
-
 public class Profile {
-    // https://stackabuse.com/reading-and-writing-json-in-java/
-
-    public enum ProfileNumber{
-        PROFILE_1(1),
-        PROFILE_2(2),
-        PROFILE_3(3);
-
-        private final int profileNumber;
-
-        ProfileNumber(int profileNumber) {
-            this.profileNumber = profileNumber;
-        }
-        public int getProfileNumber(){
-            return profileNumber;
-        }
-
-
-    }
-    public Profile(ProfileNumber profileNumber, String profileName){
-        //createProfile(profileNumber, profileName);
-
-    }
-    public void createProfile(ProfileNumber profileNumber, String profileName)  {
-
-
-    }
-
-    /*
-     *
-     *instance part
-     *
-     */
-
-
     private String username;
     private int lvlCompleted = 0;
     private int[] bestMov = new int[10];
-
-    private final static String path = Path.PROFILE.getPath() + "/profileList.json";
-
-    /**
-     * Constructor used to create a profile already save
-     * @param lvlCompleted nb of lvl already completed (int ranging from 0 to 10)
-     * @param bestMov list with the best_mov for every level those not already succeeded will be 0
-     */
-    private Profile(String username, int lvlCompleted, int[] bestMov){
-        this.username = username;
-        this.lvlCompleted = lvlCompleted;
-        this.bestMov = bestMov;
-    }
-
-    private Profile(String username){
-        this.username = username;
-    }
 
     /**
      * Constructor used by the jackson module and to create an empty profile
@@ -88,58 +34,37 @@ public class Profile {
         return lvlCompleted;
     }
 
-    public void setLvlCompleted(){
-         this.lvlCompleted += 1;
-         try{
-             writeJsonFile(activeProfile);
-         }catch (IOException e){
-             throw new IndexOutOfBoundsException("File is missing");
-         }
-    }
-
     public int[] getBestMov() {
         return bestMov;
     }
 
-    public void setBestMov(int nbrMov, int lvlNbr){
+    protected void setBestMov(int nbrMov, int lvlNbr){
         if (this.bestMov[lvlNbr-1] == 0 || this.bestMov[lvlNbr-1] > nbrMov){
             this.bestMov[lvlNbr-1] = nbrMov;
         }
-        try{
-            writeJsonFile(activeProfile);
-        }catch (IOException e){
-            throw new IndexOutOfBoundsException("File is missing");
-        }
     }
 
-    public void setUsername(String username){
+    protected void setUsername(String username){
         this.username = username;
-        try{
-            writeJsonFile(activeProfile);
-        }catch (IOException e){
-            throw new IndexOutOfBoundsException("File is missing");
-        }
     }
-    /**
-     * Save the Profile in the json file
-     * @throws IOException
-     * @throws ParseException
-     */
-    public void register() throws IOException {
-        // we retrieve the profile already saved
-        Profile[] currProfileList = readJsonFile();
 
-        // new list with space for new profile
-        Profile[] newProfileList = new Profile[currProfileList.length + 1];
+    protected void setLvlCompleted (int lvl) {
+        lvlCompleted = lvl;
+    }
 
-        // copy the already existent profile
-        System.arraycopy(currProfileList, 0, newProfileList, 0, currProfileList.length);
+    protected void incrementLvlCompleted() {
+        lvlCompleted ++;
+    }
 
-        // add the new profile
-        newProfileList[currProfileList.length] = this;
-        // save changes into the file
-        writeJsonFile(newProfileList);
+    protected void reset(){
+        this.username = "New Profile";
+        this.lvlCompleted = 0;
+        this.bestMov = new int[10];
+        System.out.println("ok");
+    }
 
+    protected boolean thisIsANewProfile(){
+        return username.equals("New Profile");
     }
 
     @Override
@@ -155,27 +80,13 @@ public class Profile {
         return jsonString;
     }
 
-    private void reset(){
-        this.username = "New Profile";
-        this.lvlCompleted = 0;
-        this.bestMov = new int[10];
-        System.out.println("ok");
-    }
-
-    public boolean thisIsANewProfile(){
-        return username.equals("New Profile");
-    }
-
     /*
      *
      *static part
      *
      */
-    /**
-     * List of active profile that is initiate at the start of the program by reading the json file
-     * and saved in that file at every modification
-     */
-    private static Profile[] activeProfile = new Profile[3];
+
+    private final static String path = Path.PROFILE.getPath() + "/profileList.json";
 
     /**
      * Read the json file located in resources/profileInfo
@@ -193,29 +104,15 @@ public class Profile {
      * Write an array of Profile in a json file located in resources/profileInfo
      * @throws IOException file is missing
      */
-    private static void writeJsonFile(Profile[] activeProfile) throws IOException {
+    protected static void writeJsonFile(Profile[] activeProfile) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new File(path), activeProfile);
     }
 
-
-    public static void deleteProfile(Profile toDel){
-        toDel.reset();
-        try{
-            writeJsonFile(activeProfile);
-            System.out.println("catched");
-        }catch (IOException e){
-            throw new IndexOutOfBoundsException("File is missing");
-        }
-    }
-
-
-    /**
-     * update the activeProfile by copying the info contained in the json file
-     * @return the active profile updated
-     */
-    public static Profile[] getActiveProfile() {
+    // copy of active but for enum
+    protected static Profile[] loadProfiles() {
         Profile[] saved = new Profile[3];
+        Profile[] sorted = new Profile[3];
         try {
             saved = readJsonFile();
         } catch (IOException e){
@@ -229,15 +126,16 @@ public class Profile {
         int k = 1;
         for (Profile profile: saved){
             if(profile.thisIsANewProfile()){
-                activeProfile[saved.length - k] = profile;
+                sorted[saved.length - k] = profile;
                 k++;
             }else{
-                activeProfile[i] = profile;
+                sorted[i] = profile;
                 i++;
             }
         }
-        return activeProfile;
+        return sorted;
     }
+
 
     /*
      *
@@ -246,18 +144,19 @@ public class Profile {
      *
      *
      */
+
     public static void main(String[] args) throws IOException, ParseException {
         Profile[] defaultProfile = {
                 new Profile(),
                 new Profile(),
                 new Profile()
         };
-        writeFileJackson("profileList.json", defaultProfile);
+        writeJsonFile(defaultProfile);
         defaultProfile = readJsonFile();
         System.out.println(Arrays.toString(defaultProfile));
     }
 
-
+    /*
     public static void writeJsonFile(String filename) throws IOException{
         JSONObject profiles = new JSONObject();
         profiles.put("name", "Augustin");
@@ -287,15 +186,17 @@ public class Profile {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.writeValue(new File(Path.PROFILE.getPath() + "/" + filename), profile);
     }
+    */
+    /*
     public static int getBestMovForLvl(int lvlNumber){
         Profile[] profile = getActiveProfile();
         int currentBestMove = 0;
 
         for (Profile profileName: profile) {
-           int[] bestMoves = profileName.getBestMov();
-           if ((currentBestMove == 0 || currentBestMove > bestMoves[lvlNumber]) && bestMoves[lvlNumber] != 0){
-               currentBestMove = bestMoves[lvlNumber];
-           }
+            int[] bestMoves = profileName.getBestMov();
+            if ((currentBestMove == 0 || currentBestMove > bestMoves[lvlNumber]) && bestMoves[lvlNumber] != 0){
+                currentBestMove = bestMoves[lvlNumber];
+            }
         }
         return currentBestMove;
     }
@@ -318,8 +219,6 @@ public class Profile {
         else{
             return "NOT PLAYED";
         }
-    }
-
-
+    }*/
 
 }
