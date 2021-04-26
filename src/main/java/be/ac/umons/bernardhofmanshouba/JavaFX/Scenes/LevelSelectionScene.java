@@ -18,23 +18,26 @@ import java.io.File;
 
 public class LevelSelectionScene extends SceneTool{
 
-    public static GridPane root = new GridPane();
+    public static GridPane root = null;
 
     public static void makeScene(){
+        root = new GridPane();
+        Scene scene = new Scene(root);
+        SceneList.LVL_SELECTION.setScene(scene);
+
         root.setMinWidth(1280);
         root.setMinHeight(720);
         root.setBackground(new Background(bgFillLightBlue));
 
-        topLeftGenesis(root);
-        topGenesis(root);
-        centerGenesis(root);
-        bottomGenesis(root);
+        root.add(topLeftGenesis(), 0, 0);
+        root.add(topCenterGenesis(), 1, 0);
+        root.add(topRightGenesis(), 2, 0);
+        root.add(centerGenesis(), 1, 1);
+        root.add(bottomGenesis(), 1, 2);
 
-        Scene scene = new Scene(root);
-        SceneList.LVL_SELECTION.setScene(scene);
     }
 
-    public static void topLeftGenesis(GridPane root){
+    public static HBox topLeftGenesis(){
         HBox exitBox = new HBox();
 
 
@@ -44,17 +47,16 @@ public class LevelSelectionScene extends SceneTool{
         exitButton.setTranslateY(15);
         exitButton.setTranslateX(15);
         exitButton.setOnAction(event ->{
-            SceneList.PROFILE.setOnActive();
+            SceneList.GAME_MODE.setOnActive();
         });
 
         exitBox.getChildren().add(exitButton);
         exitBox.setPrefSize(590, 150);
-        root.add(exitBox, 0, 0);
+        return exitBox;
     }
 
-    public static void topGenesis(GridPane root){
+    public static HBox topCenterGenesis(){
         HBox titleBox = new HBox();
-        HBox emptyBox = new HBox();
 
         Label title = new Label("Choose your level");
         title.setFont(Font.font("impact", 70));
@@ -65,13 +67,17 @@ public class LevelSelectionScene extends SceneTool{
         titleBox.setPrefSize(740, 150);
         titleBox.setTranslateY(50);
 
-        root.add(titleBox, 1, 0);
-
-        emptyBox.setPrefSize(590, 150);
-        root.add(emptyBox, 2, 0);
+        return titleBox;
     }
 
-    public static void centerGenesis(GridPane root){
+    public static HBox topRightGenesis(){
+        HBox emptyBox = new HBox();
+        emptyBox.setPrefSize(590, 150);
+
+        return emptyBox;
+    }
+
+    public static GridPane centerGenesis(){
         GridPane centerSide = new GridPane();
 
         LevelButton[] lvlButtons = new LevelButton[10];
@@ -108,9 +114,9 @@ public class LevelSelectionScene extends SceneTool{
         centerSide.setAlignment(Pos.CENTER);
         centerSide.setPrefSize(1000, 780);
 
-        root.add(centerSide, 1, 1);
+        return centerSide;
     }
-    public static void bottomGenesis(GridPane root){
+    public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
         StackPane customLevelButton = new StackPane();
@@ -140,7 +146,7 @@ public class LevelSelectionScene extends SceneTool{
 
         bottomSide.setPrefSize(640, 150);
 
-        root.add(bottomSide, 1, 2);
+        return bottomSide;
     }
 }
 class LevelButton extends StackPane {
