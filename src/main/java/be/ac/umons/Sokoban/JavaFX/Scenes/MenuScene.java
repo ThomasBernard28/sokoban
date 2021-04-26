@@ -26,7 +26,7 @@ public class MenuScene extends SceneTool{
         centerGenesis(root);
 
         Scene scene = new Scene(root);
-        SceneList.MENU2.setScene(scene);
+        SceneList.MENU.setScene(scene);
 
     }
     public static void topGenesis(GridPane root){

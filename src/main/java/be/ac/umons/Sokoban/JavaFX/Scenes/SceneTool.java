@@ -24,12 +24,11 @@ public class SceneTool {
      */
     public enum SceneList{
         LVL_GEN,
-        MENU,
         PLAY_MENU,
         LVL_SELECTION,
         PROFILE,
         STATS,
-        MENU2,
+        MENU,
         GAME2;
 
         private Scene scene = null;
@@ -85,7 +84,7 @@ public class SceneTool {
     }
 
     public static void start(){
-        SceneTool.SceneList.MENU2.setOnActive();
+        SceneTool.SceneList.MENU.setOnActive();
         WINDOW.show();
     }
 
