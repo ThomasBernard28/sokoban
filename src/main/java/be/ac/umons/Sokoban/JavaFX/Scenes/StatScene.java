@@ -40,12 +40,11 @@ public class StatScene extends SceneTool{
         ImageView trophy2  = SpriteIcon.getIconImg(IconImg.TROPHY);
 
         HBox exitBox = new HBox();
-        Button exitButton = makeExitButton();
-        exitButton.setScaleY(1);
-        exitButton.setScaleX(1);
+
+        ExitButton exitButton = new ExitButton(SceneList.PROFILE);
         exitButton.setTranslateX(15);
         exitButton.setTranslateY(15);
-        exitButton.setOnAction(event -> SceneList.PROFILE.setOnActive());
+
         exitBox.getChildren().add(exitButton);
         exitBox.setPrefSize(640, 150);
         root.add(exitBox, 0, 0);
@@ -61,6 +60,7 @@ public class StatScene extends SceneTool{
         root.add(titleBox, 1, 0);
 
     }
+
     public static void centerLeftGenesis(GridPane root){
         VBox levels = new VBox(20);
         HBox spacing = new HBox();
@@ -128,6 +128,7 @@ public class StatScene extends SceneTool{
         profileNames.setAlignment(Pos.CENTER);
         root.add(profileNames, 1,1);
     }
+
     public static void centerRightGenesis(GridPane root){
         VBox bestMoves = new VBox(20);
         HBox spacing = new HBox();

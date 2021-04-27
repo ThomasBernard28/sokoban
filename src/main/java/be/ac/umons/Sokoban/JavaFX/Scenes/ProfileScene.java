@@ -41,11 +41,7 @@ public class ProfileScene extends SceneTool {
         Label title = new Label("Select Profile");
         title.setFont(Font.font("impact", 70));
 
-        Button exitButton = makeExitButton();
-        exitButton.setScaleY(1.0);
-        exitButton.setScaleX(1.0);
-
-        exitButton.setOnAction(event -> SceneList.MENU.setOnActive());
+        ExitButton exitButton = new ExitButton(SceneList.MENU);
 
         Button statsButton = new Button();
         statsButton.setGraphic(SpriteIcon.getIconImg(IconImg.STAT));

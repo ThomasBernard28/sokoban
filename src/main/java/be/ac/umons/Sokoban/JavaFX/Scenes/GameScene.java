@@ -40,7 +40,7 @@ public class GameScene extends SceneTool{
     public static void makeScene(Grid grid){
         root = new GridPane();
         Scene scene = new Scene(root);
-        SceneList.GAME2.setScene(scene);
+        SceneList.GAME.setScene(scene);
 
         root.setMinWidth(1280);
         root.setMinHeight(720);
@@ -55,9 +55,7 @@ public class GameScene extends SceneTool{
     public static HBox topLeftGenesis(){
         HBox exitBox = new HBox();
 
-        Button exitButton = makeExitButton();
-        exitButton.setScaleY(1);
-        exitButton.setScaleX(1);
+        ExitButton exitButton = new ExitButton();
         exitButton.setTranslateY(15);
         exitButton.setTranslateX(15);
         exitButton.setOnAction(event ->{
@@ -198,13 +196,13 @@ public class GameScene extends SceneTool{
         V_ROOT.setTranslateX(-350);
 
         playerEvent = new PlayerEvent(gamePane);
-        SceneList.GAME2.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
+        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
 
         return V_ROOT;
     }
 
     public static void victory(){
-        if(WINDOW.getScene() == SceneList.GAME2.getScene()){
+        if(WINDOW.getScene() == SceneList.GAME.getScene()){
             if (currPath == Path.LVL){
                 if(currFileName.startsWith("10", 5)){
                     currProfile.setBestMov(movements.size(), 10);
@@ -226,7 +224,7 @@ public class GameScene extends SceneTool{
         try{
             Grid gameFile = Load.loadFile(path, fileName);
             GameScene.makeScene(gameFile);
-            SceneList.GAME2.setOnActive();
+            SceneList.GAME.setOnActive();
             System.out.println(gameFile.getPlayerX() + "," + gameFile.getPlayerY());
 
         }catch (IOException e){

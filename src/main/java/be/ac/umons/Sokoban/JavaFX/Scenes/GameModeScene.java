@@ -133,13 +133,11 @@ public class GameModeScene extends SceneTool{
         title.setFont(Font.font("impact", 70));
         title.setStyle("-fx-padding: 20 20 20 20");
 
-        Button exitButton = makeExitButton();
+        ExitButton exitButton = new ExitButton();
         exitButton.setOnAction(event -> {
             GameScene.setCurrProfile(null);
             SceneList.PROFILE.setOnActive();
         });
-        exitButton.setScaleX(1);
-        exitButton.setScaleY(1);
 
         topSide.setStyle("-fx-padding: 70 50 20 50");
         topSide.setSpacing(50);

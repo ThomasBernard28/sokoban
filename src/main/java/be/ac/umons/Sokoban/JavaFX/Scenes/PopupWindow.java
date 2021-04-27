@@ -237,6 +237,7 @@ public class PopupWindow {
                     //Switch made to know on wich scene we have to go back
                     switch(GameScene.currPath){
                         case LVL:
+                            LevelSelectionScene.makeScene();
                             SceneList.LVL_SELECTION.setOnActive();
                             break;
                         case SAVE:

@@ -23,14 +23,13 @@ public class SceneTool {
      * This enum contains every scene and allows to switch the current scene
      */
     public enum SceneList{
-        GAME,
         LVL_GEN,
         MENU,
         PLAY_MENU,
         LVL_SELECTION,
         PROFILE,
         STATS,
-        GAME2;
+        GAME;
 
         private Scene scene = null;
 
@@ -64,18 +63,11 @@ public class SceneTool {
     }
 
     protected static Stage WINDOW;
-    private  static double windowResizeFactor;
 
     public static void setStage(Stage theStage){
         WINDOW = theStage;
-        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        windowResizeFactor = screenSize.height/1080.0;
-
     }
 
-    public static double getWindowResizeFactor() {
-        return windowResizeFactor;
-    }
 
     /**
      *Close the window
@@ -117,22 +109,6 @@ public class SceneTool {
             new BackgroundFill(redPaint, new CornerRadii(1), null);
     protected final static BackgroundFill bgFillYellow =
             new BackgroundFill(yellowPaint, new CornerRadii(1), null);
-
-    protected static Button makeExitButton(){
-        Button exitButton = new Button();
-        ImageView exit = SpriteIcon.getIconImg(IconImg.EXIT);
-
-        exitButton.setScaleX(0.5);
-        exitButton.setScaleY(0.5);
-
-        exitButton.setGraphic(exit);
-        exitButton.setBackground(new Background(bgFillGray));
-        exitButton.setStyle("-fx-cursor: hand;");
-
-        return exitButton;
-    }
-
-
 
     protected static Size currSize;
 
@@ -193,6 +169,32 @@ public class SceneTool {
             if(txt != null){
                 this.setText(txt);
             }
+        }
+    }
+
+    protected static class ExitButton extends Button{
+        protected ExitButton(SceneList direction){
+            super();
+
+            setGraphic(SpriteIcon.getIconImg(IconImg.EXIT));
+            setBackground(new Background(bgFillGray));
+            setStyle("-fx-cursor: hand;");
+
+            setOnAction(event -> direction.setOnActive());
+
+        }
+
+        protected ExitButton(){
+            super();
+
+            setGraphic(SpriteIcon.getIconImg(IconImg.EXIT));
+            setBackground(new Background(bgFillGray));
+            setStyle("-fx-cursor: hand;");
+        }
+
+        protected void setScale(double s) {
+            setScaleX(s);
+            setScaleY(s);
         }
     }
 }
