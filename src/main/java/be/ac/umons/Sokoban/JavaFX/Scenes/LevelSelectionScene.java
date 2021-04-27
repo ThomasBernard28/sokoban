@@ -7,7 +7,6 @@ import be.ac.umons.Sokoban.JavaFX.Sprite.UIImg;
 import be.ac.umons.Sokoban.Save.Path;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
@@ -16,60 +15,65 @@ import javafx.stage.FileChooser;
 
 import java.io.File;
 
+
 public class LevelSelectionScene extends SceneTool{
-    public static BorderPane root;
-    private static final int MARGIN = 30;
+
+    public static GridPane root = null;
 
     public static void makeScene(){
-        root = new BorderPane();
-        root.setCenter(_centerGenesis());
-        root.setBottom(bottomGenesis());
-        root.setTop(topGenesis());
-        root.setLeft(leftGenesis());
-        root.setRight(rightGenesis());
-
-        root.setBackground(new Background(bgFillLightBlue));
-        root.setMinWidth(1280);
-        root.setMinHeight(720);
-
+        root = new GridPane();
         Scene scene = new Scene(root);
         SceneList.LVL_SELECTION.setScene(scene);
+
+        root.setMinWidth(1280);
+        root.setMinHeight(720);
+        root.setBackground(new Background(bgFillLightBlue));
+
+        root.add(topLeftGenesis(), 0, 0);
+        root.add(topCenterGenesis(), 1, 0);
+        root.add(topRightGenesis(), 2, 0);
+        root.add(centerGenesis(), 1, 1);
+        root.add(bottomGenesis(), 1, 2);
+
+
     }
-    public static HBox topGenesis(){
-        HBox topSide = new HBox();
-        Label title = new Label("Choose your level");
 
-        title.setFont(Font.font("impact", 70));
-        title.setStyle("-fx-padding: 20, 20 ,20 , 20");
-
+    public static HBox topLeftGenesis(){
+        HBox exitBox = new HBox();
         ExitButton exitButton = new ExitButton(SceneList.PLAY_MENU);
 
-        topSide.setStyle("-fx-padding: 60, 50, 20, 50");
-        topSide.setSpacing(50);
+        exitButton.setTranslateX(15);
+        exitButton.setTranslateY(15);
 
-        topSide.getChildren().addAll(exitButton, title);
-        topSide.setAlignment(Pos.CENTER);
+        exitBox.getChildren().add(exitButton);
+        exitBox.setPrefSize(590, 150);
 
-        return topSide;
+        return exitBox;
     }
 
-    public static VBox rightGenesis(){
-        VBox rightSide = new VBox();
+    public static HBox topCenterGenesis(){
+        HBox titleBox = new HBox();
 
-        rightSide.setMinWidth(MARGIN);
+        Label title = new Label("Choose your level");
+        title.setFont(Font.font("impact", 70));
+        title.setAlignment(Pos.CENTER);
 
-        return rightSide;
+        titleBox.getChildren().add(title);
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.setPrefSize(740, 150);
+        titleBox.setTranslateY(50);
+
+        return titleBox;
     }
 
-    public static VBox leftGenesis(){
-        VBox leftSide = new VBox();
+    public static HBox topRightGenesis(){
+        HBox emptyBox = new HBox();
+        emptyBox.setPrefSize(590, 150);
 
-        leftSide.setMinWidth(MARGIN);
-
-        return leftSide;
+        return emptyBox;
     }
 
-    public static GridPane _centerGenesis(){
+    public static GridPane centerGenesis(){
         GridPane centerSide = new GridPane();
 
         LevelButton[] lvlButtons = new LevelButton[10];
@@ -104,10 +108,11 @@ public class LevelSelectionScene extends SceneTool{
 
         centerSide.getChildren().add(levels);
         centerSide.setAlignment(Pos.CENTER);
+        centerSide.setPrefSize(1000, 780);
+        centerSide.setTranslateY(50);
 
         return centerSide;
     }
-
     public static HBox bottomGenesis(){
         HBox bottomSide = new HBox();
 
@@ -137,10 +142,11 @@ public class LevelSelectionScene extends SceneTool{
         bottomSide.setAlignment(Pos.TOP_CENTER);
         bottomSide.setStyle("-fx-padding: 70, 50, 20, 50");
 
+        bottomSide.setPrefSize(640, 150);
+
         return bottomSide;
     }
 }
-
 class LevelButton extends StackPane {
 
     final String filename;
