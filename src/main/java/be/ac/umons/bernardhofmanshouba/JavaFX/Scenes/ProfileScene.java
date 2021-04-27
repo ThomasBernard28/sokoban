@@ -25,9 +25,7 @@ public class ProfileScene extends SceneTool {
         topLeftGenesis(root);
         topCenterGenesis(root);
         topRightGenesis(root);
-        //centerGenesis(root);
-
-        root.setGridLinesVisible(true);
+        centerGenesis(root);
 
         Scene scene = new Scene(root);
         SceneList.PROFILE.setScene(scene);
@@ -98,6 +96,8 @@ public class ProfileScene extends SceneTool {
 
         profilesContainer.setAlignment(Pos.CENTER);
         profilesContainer.setVgap(70);
+        profilesContainer.setHgap(115);
+        profilesContainer.setTranslateX(50);
 
         profilesContainer.setPrefSize(640, 780);
 
