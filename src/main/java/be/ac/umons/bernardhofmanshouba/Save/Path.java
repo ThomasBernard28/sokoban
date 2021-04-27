@@ -8,7 +8,8 @@ public enum Path {
     LVL("src/main/resources/levels/"),
     SAVE("src/main/resources/saves/"),
     UNIT_TEST_IN("src/test/resources/input/"),
-    MOV("src/main/resources/history"),
+    MOV("src/main/resources/history/"),
+    SOLVER("src/main/resources/solver/"),
     PROFILE("src/main/resources/profileInfo");
 
     private final String path;

@@ -81,8 +81,10 @@ public class PopupWindow {
         //Creating the new window to display the popup
         popupWindow.initModality(Modality.APPLICATION_MODAL);
         popupWindow.setTitle(popupType.getTitle());
-        popupWindow.setMinWidth(500);
-        popupWindow.setMinHeight(400);
+        popupWindow.setWidth(500);
+        popupWindow.setMinHeight(500);
+        popupWindow.setMaxHeight(600);
+        popupWindow.setResizable(true);
 
         Label label = new Label();
         label.setText(popupType.getMessage());
@@ -117,7 +119,7 @@ public class PopupWindow {
      */
 
     public VBox createLayout(PopupType popupType, Label label, Stage popupWindow){
-        VBox layout = new VBox(10);
+        VBox layout = new VBox();
         HBox choice = new HBox(50);
         TextField input = new TextField();
         input.setFont(new Font("arial", 20));
@@ -283,7 +285,7 @@ public class PopupWindow {
 
                 Button copy = new Button("Copy !");
                 copy.setBackground(new Background(bgFillGreen));
-                copy.setStyle("-fx-cursor: hand; -fx-padding: 10,10,10,10");
+                copy.setStyle("-fx-cursor: hand;");
                 copy.setScaleX(2);
                 copy.setScaleY(1.5);
 
@@ -314,7 +316,7 @@ public class PopupWindow {
                                     movContent += history.getText().substring(i, i+1);
                                 }
                             }
-                            File file = new File(Path.UNIT_TEST_IN.getPath() + input.getCharacters().toString() + ".mov");
+                            File file = new File(Path.MOV.getPath() + input.getCharacters().toString() + ".mov");
                             boolean success = file.createNewFile();
                             if(success){
                                 FileWriter writer = new FileWriter(file);
@@ -339,8 +341,7 @@ public class PopupWindow {
                 layout.setBackground(new Background(bgFillYellow));
                 layout.getChildren().addAll(closeButton,label, history, saveCopy);
 
-                popupWindow.setResizable(false);
-                popupWindow.setMaxHeight(400);
+                popupWindow.setResizable(true);
                 popupWindow.setMaxWidth(500);
 
                 return layout;
