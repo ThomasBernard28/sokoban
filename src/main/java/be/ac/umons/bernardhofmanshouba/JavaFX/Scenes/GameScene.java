@@ -210,9 +210,8 @@ public class GameScene extends SceneTool{
                 else{
                     currProfile.setBestMov(movements.size(), Integer.parseInt(currFileName.substring(5,6)));
                 }
-
+                currProfile.incrementLvlCompleted();
             }
-            currProfile.incrementLvlCompleted();
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
     }
