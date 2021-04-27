@@ -3,7 +3,7 @@
 package be.ac.umons.bernardhofmanshouba;
 
 import be.ac.umons.bernardhofmanshouba.JavaFX.MyWindow;
-import be.ac.umons.bernardhofmanshouba.Test.UnitTest;
+import be.ac.umons.bernardhofmanshouba.Test.ApplyHistory;
 
 import java.io.IOException;
 
@@ -27,7 +27,7 @@ public class Sokoban
                 break;
             //Run unit Test
             case 3:
-                UnitTest.applyMov(args[0], args[1], args[2]);
+                ApplyHistory.applyMov(args[0], args[1], args[2]);
                 break;
             default : throw new IllegalStateException("Veuillez entrer des arguments valables");
        }

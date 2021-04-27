@@ -83,11 +83,5 @@ public class TestApply {
                 }
             }
         }
-        try{
-            Save.saving(testGrid, Path.UNIT_TEST_OUT, testFileOUT);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
     }
 }

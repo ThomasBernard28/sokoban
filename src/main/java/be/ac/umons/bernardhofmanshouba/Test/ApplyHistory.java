@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  * Class to perform some unitTest
  */
 
-public class UnitTest {
+public class ApplyHistory {
 
     /**
      * Method to load a .mov file type wich contains the movements to apply on a game instance
@@ -53,8 +53,8 @@ public class UnitTest {
         /*
         Load the files as a Grid and a char[] and apply the movements
          */
-        Grid testGrid = Load.loadFile(Path.UNIT_TEST_IN, testIN);
-        String listMov = loadMov(Path.UNIT_TEST_IN, movFile);
+        Grid testGrid = Load.loadFile(Path.LVL, testIN);
+        String listMov = loadMov(Path.MOV, movFile);
         for (int i = 0; i < listMov.length(); i++) {
             if (Pattern.matches("[zqsd]", listMov.substring(i, i+1))){
                 switch (listMov.substring(i,i+1)) {
@@ -84,7 +84,7 @@ public class UnitTest {
             }
         }
         try{
-            Save.saving(testGrid, Path.UNIT_TEST_OUT, testFileOUT);
+            Save.saving(testGrid, Path.SAVE, testFileOUT);
         }catch (IOException e){
             e.printStackTrace();
         }

@@ -101,7 +101,6 @@ public class LevelGenScene extends SceneTool {
         resetButton.fire();
     }
 
-
     private static HBox centerRowGenesis(GamePane gamePane, TilePane tilePane){
         HBox centerRow = new HBox();
 

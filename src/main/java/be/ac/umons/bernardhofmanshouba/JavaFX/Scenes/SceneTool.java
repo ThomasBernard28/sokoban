@@ -22,6 +22,7 @@ public class SceneTool {
      */
     public enum SceneList{
         LVL_GEN,
+        MENU2,
         MENU,
         GAME_MODE,
         LVL_SELECTION,
