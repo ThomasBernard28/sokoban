@@ -34,7 +34,7 @@ public class ProfileScene extends SceneTool {
     public static void topLeftGenesis(GridPane root) {
         HBox exitBox = new HBox();
 
-        ExitButton exitButton = new ExitButton(SceneList.PROFILE);
+        ExitButton exitButton = new ExitButton(SceneList.MENU);
         exitButton.setTranslateX(15);
         exitButton.setTranslateY(15);
 
