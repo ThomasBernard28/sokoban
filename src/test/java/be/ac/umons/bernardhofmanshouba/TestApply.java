@@ -25,16 +25,13 @@ public class TestApply {
      * @param path     the path where we can find it
      * @return return a char array wich contains the different movement in a "z,q,s,d" type
      */
-    public static String loadMov(Path path, String fileName) {
+    public static String loadMov(Path path, String fileName) throws FileNotFoundException {
         File file = new File(path.getPath() + fileName);
         String movString = "";
-        try {
-            Scanner scanner = new Scanner(file);
-            movString += scanner.next();
-            System.out.println(movString);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        Scanner scanner = new Scanner(file);
+        movString += scanner.next();
+        System.out.println(movString);
+
 
         return movString;
     }
@@ -83,5 +80,39 @@ public class TestApply {
             }
         }
         return testGrid;
+    }
+
+    public static void applyMov(Grid testGrid, String listMov) {
+        /*
+        Load the files as a Grid and a char[] and apply the movements
+         */
+
+        for (int i = 0; i < listMov.length(); i++) {
+            if (Pattern.matches("[zqsd]", listMov.substring(i, i+1))){
+                switch (listMov.substring(i,i+1)) {
+                    case ("z"):
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.UP)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.UP);
+                        }
+                        break;
+                    case ("q"):
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.LEFT)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.LEFT);
+                        }
+                        break;
+                    case ("s"):
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.DOWN)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.DOWN);
+                        }
+                        break;
+                    case ("d"):
+                        if (testGrid.getGridFromPlayer().checkMove(testGrid, Direction.RIGHT)){
+                            testGrid.getGridFromPlayer().move(testGrid, Direction.RIGHT);
+                        }
+                        break;
+                    default: throw new IllegalStateException("Not an agreed movement");
+                }
+            }
+        }
     }
 }
