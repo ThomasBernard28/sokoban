@@ -209,8 +209,8 @@ public class GameScene extends SceneTool{
                 }
                 else{
                     currProfile.setBestMov(movements.size(), Integer.parseInt(currFileName.substring(5,6)));
+                    currProfile.incrementLvlCompleted(Integer.parseInt(currFileName.substring(5,6)));
                 }
-                currProfile.incrementLvlCompleted();
             }
             new PopupWindow(PopupWindow.PopupType.END_GAME);
         }
@@ -241,8 +241,10 @@ public class GameScene extends SceneTool{
     }
 
     public static void history(String letters){
-        movements.add(letters);
-        nbrMov.setText("Movements : "+ movements.size());
+        if(currProfile != null) {
+            movements.add(letters);
+            nbrMov.setText("Movements : " + movements.size());
+        }
     }
 
     public static ProfileList getCurrProfile() {

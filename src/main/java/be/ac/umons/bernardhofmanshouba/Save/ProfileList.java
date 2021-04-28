@@ -13,8 +13,8 @@ public enum ProfileList {
         return linkedProfile;
     }
 
-    public void incrementLvlCompleted(){
-        linkedProfile.incrementLvlCompleted();
+    public void incrementLvlCompleted(int lvlNumber){
+        linkedProfile.setLvlCompleted(lvlNumber);
         saveProfileList();
     }
 

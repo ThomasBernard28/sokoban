@@ -46,9 +46,6 @@ public class Profile {
         lvlCompleted = lvl;
     }
 
-    protected void incrementLvlCompleted() {
-        lvlCompleted ++;
-    }
 
     protected void reset(){
         this.username = "New Profile";

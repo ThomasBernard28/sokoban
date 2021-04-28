@@ -375,6 +375,8 @@ public class LevelGenScene extends SceneTool {
 
         });
 
+
+
         sizePicker.setOnMouseClicked(event -> {
             stop.fire();
             containPlayer = false;
@@ -483,6 +485,13 @@ public class LevelGenScene extends SceneTool {
                 }
             }
 
+        });
+
+        generate.setOnAction(event -> {
+            reset.fire();
+            visualGrid.getGrid().constructMovables(5,150);
+            visualGrid.initiateLvlGen();
+            setContainPlayer(true);
         });
 
         sizePicker.setOnMouseClicked(event -> {

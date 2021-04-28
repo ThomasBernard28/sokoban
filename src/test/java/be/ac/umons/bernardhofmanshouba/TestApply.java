@@ -44,12 +44,11 @@ public class TestApply {
      *
      * @param testIN file name of the .xsb (game instance)
      * @param movFile  file name of the .mov (movements to apply)
-     * @param testFileOUT file name of the .xsb w/ .mov apllied
      * @return return a grid with the movements applied
      * @throws FileNotFoundException throw error if the file doesn't exist at the correct location
      */
 
-    public static void applyMov(String testIN, String movFile, String testFileOUT) throws FileNotFoundException {
+    public static Grid applyMov(String testIN, String movFile) throws FileNotFoundException {
         /*
         Load the files as a Grid and a char[] and apply the movements
          */
@@ -83,5 +82,6 @@ public class TestApply {
                 }
             }
         }
+        return testGrid;
     }
 }
