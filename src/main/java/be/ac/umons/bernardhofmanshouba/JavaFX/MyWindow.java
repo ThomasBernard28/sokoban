@@ -30,12 +30,13 @@ public class MyWindow extends Application
         theStage.getIcons().add(imageHead);
 
 
-        LevelGenScene.makeScene();
+        SandBoxScene.makeScene();
         //LevelSelectionScene.makeScene();
         GameModeScene.makeScene();
         MenuScene.makeScene();
         ProfileScene.makeScene();
         StatScene.makeScene();
+        GeneratorScene.makeScene();
 
 
         theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {

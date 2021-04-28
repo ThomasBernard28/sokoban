@@ -29,7 +29,7 @@ import javafx.scene.text.Font;
 import java.io.IOException;
 import java.util.regex.Pattern;
 
-public class LevelGenScene extends SceneTool {
+public class SandBoxScene extends SceneTool {
     /*
         CSS code example:
         generate.setStyle("-fx-background-color: darkslateblue; -fx-text-fill: white; -fx-wrap-text: true;");
@@ -59,7 +59,7 @@ public class LevelGenScene extends SceneTool {
 
     public static void makeScene(){
         Scene scene = new Scene(root); //
-        SceneList.LVL_GEN.setScene(scene);
+        SceneList.SANDBOX.setScene(scene);
         setCurrSize(Size.MEDIUM);
 
         root.setBackground(new Background(bgFillLightBlue)); //
@@ -82,7 +82,7 @@ public class LevelGenScene extends SceneTool {
     }
 
     public static void setCurrModifier(TileImg currModifier) {
-        LevelGenScene.currModifier = currModifier;
+        SandBoxScene.currModifier = currModifier;
     }
 
     public static GamePane getVisualGrid() {
@@ -158,7 +158,7 @@ public class LevelGenScene extends SceneTool {
             }
             boxButton.setStyle(PressedButtonCSS);
             System.out.println(root.getWidth() + "," + root.getHeight());
-            System.out.println(SceneList.LVL_GEN.getScene().getWidth() + "," + SceneList.LVL_GEN.getScene().getHeight());
+            System.out.println(SceneList.SANDBOX.getScene().getWidth() + "," + SceneList.SANDBOX.getScene().getHeight());
             System.out.println(WINDOW.getWidth() + "," + WINDOW.getHeight());
 
         });
@@ -231,7 +231,7 @@ public class LevelGenScene extends SceneTool {
             }
             boxButton.setStyle(StyleBtn.PressedCSS);
             System.out.println(root.getWidth() + "," + root.getHeight());
-            System.out.println(SceneList.LVL_GEN.getScene().getWidth() + "," + SceneList.LVL_GEN.getScene().getHeight());
+            System.out.println(SceneList.SANDBOX.getScene().getWidth() + "," + SceneList.SANDBOX.getScene().getHeight());
             System.out.println(WINDOW.getWidth() + "," + WINDOW.getHeight());
 
         });
@@ -332,8 +332,8 @@ public class LevelGenScene extends SceneTool {
                 eventToTry = new PlayerEvent(gridToTry);
 
                 root.setCenter(centerRowGenesis(gridToTry, centerRightGenesis()));
-                SceneList.LVL_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-                SceneList.LVL_GEN.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                SceneList.SANDBOX.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.SANDBOX.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
 
                 gridToTry.initiate();
             }
@@ -342,8 +342,8 @@ public class LevelGenScene extends SceneTool {
         stop.setOnAction(event -> {
             // if not null then play mode is active
             if(gridToTry != null){
-                SceneList.LVL_GEN.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-                SceneList.LVL_GEN.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                SceneList.SANDBOX.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.SANDBOX.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
                 root.setCenter(centerRowGenesis(visualGrid, centerRightGenesis()));
 
                 gridToTry = null;
@@ -444,8 +444,8 @@ public class LevelGenScene extends SceneTool {
                 eventToTry = new PlayerEvent(gridToTry);
 
                 root.setCenter(centerRowGenesis(gridToTry, centerRightGenesis()));
-                SceneList.LVL_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-                SceneList.LVL_GEN.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                SceneList.SANDBOX.getScene().addEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.SANDBOX.getScene().addEventFilter(MouseEvent.MOUSE_CLICKED, filter);
 
                 gridToTry.initiate();
             }
@@ -454,8 +454,8 @@ public class LevelGenScene extends SceneTool {
         stop.setOnAction(event -> {
             // if not null then play mode is active
             if(gridToTry != null){
-                SceneList.LVL_GEN.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
-                SceneList.LVL_GEN.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
+                SceneList.SANDBOX.getScene().removeEventHandler(KeyEvent.KEY_PRESSED, eventToTry);
+                SceneList.SANDBOX.getScene().removeEventFilter(MouseEvent.MOUSE_CLICKED, filter);
                 root.setCenter(centerRowGenesis(visualGrid, centerRightGenesis()));
 
                 gridToTry = null;

@@ -66,20 +66,16 @@ public class GameModeScene extends SceneTool {
     }
 
     private static void centerGenesis(GridPane root) {
-        VBox centerSide = new VBox(100);
+        VBox centerSide = new VBox(150);
 
         StackPane LvlSelectButton = new StackPane();
-        StackPane GeneratorButton = new StackPane();
         StackPane LoadSavedGameButton = new StackPane();
 
         ImageView LvlSelectButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
-        ImageView GeneratorButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
         ImageView LoadSavedGameButtonImg = SpriteUI.getUIImg(UIImg.RED_BUTTON01);
 
         LvlSelectButtonImg.setScaleX(2);
         LvlSelectButtonImg.setScaleY(2);
-        GeneratorButtonImg.setScaleX(2);
-        GeneratorButtonImg.setScaleY(2);
         LoadSavedGameButtonImg.setScaleX(2);
         LoadSavedGameButtonImg.setScaleY(2);
 
@@ -93,11 +89,9 @@ public class GameModeScene extends SceneTool {
         LoadText.setFont(Font.font("impact", 40));
 
         LvlSelectButton.getChildren().addAll(LvlSelectButtonImg, LvlSelectText);
-        GeneratorButton.getChildren().addAll(GeneratorButtonImg, GeneratorText);
         LoadSavedGameButton.getChildren().addAll(LoadSavedGameButtonImg, LoadText);
 
         LvlSelectButton.setStyle("-fx-cursor: hand;");
-        GeneratorButton.setStyle("-fx-cursor: hand;");
         LoadSavedGameButton.setStyle("-fx-cursor: hand;");
 
         //Switching to the level selection
@@ -105,10 +99,6 @@ public class GameModeScene extends SceneTool {
             LevelSelectionScene.makeScene();
             SceneList.LVL_SELECTION.setOnActive();
 
-        });
-        //Switching to the Generator Scene
-        GeneratorButton.setOnMouseClicked(event -> {
-            //TODO
         });
 
         //Opening a file explorer to load a saved game
@@ -121,7 +111,7 @@ public class GameModeScene extends SceneTool {
                 GameScene.loadLevel(Path.SAVE, fileChosen.getName());
             }
         });
-        centerSide.getChildren().addAll(LvlSelectButton, GeneratorButton, LoadSavedGameButton);
+        centerSide.getChildren().addAll(LvlSelectButton, LoadSavedGameButton);
         centerSide.setAlignment(Pos.CENTER);
 
         centerSide.setPrefSize(640, 780);
