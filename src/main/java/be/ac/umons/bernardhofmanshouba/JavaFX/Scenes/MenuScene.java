@@ -49,46 +49,60 @@ public class MenuScene extends SceneTool{
         VBox choiceBox = new VBox(100);
 
         StackPane playButton = new StackPane();
-        StackPane lvlGenButton = new StackPane();
+        StackPane generatorButton = new StackPane();
+        StackPane sandboxButton = new StackPane();
         StackPane quitButton = new StackPane();
 
         ImageView playButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
-        ImageView lvlGenButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
+        ImageView generatorButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
+        ImageView sandboxButtonImg = SpriteUI.getUIImg(UIImg.YELLOW_BUTTON02);
         ImageView quitButtonImg = SpriteUI.getUIImg(UIImg.RED_BUTTON01);
 
         playButtonImg.setScaleY(2);
         playButtonImg.setScaleX(2);
-        lvlGenButtonImg.setScaleX(2);
-        lvlGenButtonImg.setScaleY(2);
+        generatorButtonImg.setScaleX(2);
+        generatorButtonImg.setScaleY(2);
+        sandboxButtonImg.setScaleX(2);
+        sandboxButtonImg.setScaleY(2);
         quitButtonImg.setScaleY(2);
         quitButtonImg.setScaleX(2);
 
         Label playText = new Label("Play");
-        Label lvlText = new Label("Level Creator");
+        Label generatorText = new Label("Generator");
+        Label sandboxText = new Label("Sandbox");
         Label quitText = new Label("Quit");
 
         playText.setFont(Font.font("impact",40));
-        lvlText.setFont(Font.font("impact",40));
+        generatorText.setFont(Font.font("impact", 40));
+        sandboxText.setFont(Font.font("impact",40));
         quitText.setFont(Font.font("impact",40));
 
         playButton.getChildren().addAll(playButtonImg, playText);
-        lvlGenButton.getChildren().addAll(lvlGenButtonImg, lvlText);
+        generatorButton.getChildren().addAll(generatorButtonImg, generatorText);
+        sandboxButton.getChildren().addAll(sandboxButtonImg, sandboxText);
         quitButton.getChildren().addAll(quitButtonImg, quitText);
 
         playButton.setStyle("-fx-cursor: hand;");
-        lvlGenButton.setStyle("-fx-cursor: hand;");
+        generatorButton.setStyle("-fx-cursor: hand;");
+        sandboxButton.setStyle("-fx-cursor: hand;");
         quitButton.setStyle("-fx-cursor: hand");
 
         playButton.setOnMouseClicked(event -> {
             SceneList.PROFILE.setOnActive();
         });
-        lvlGenButton.setOnMouseClicked(event -> {
-            LevelGenScene.resetScene();
-            SceneList.LVL_GEN.setOnActive();
+
+        generatorButton.setOnMouseClicked(event -> {
+            SceneList.GENERATOR.setOnActive();
         });
+
+        sandboxButton.setOnMouseClicked(event -> {
+            SandBoxScene.resetScene();
+            SceneList.SANDBOX.setOnActive();
+        });
+
         quitButton.setOnMouseClicked(event -> quit());
 
-        choiceBox.getChildren().addAll(playButton, lvlGenButton, quitButton);
+        choiceBox.getChildren().addAll(playButton,generatorButton, sandboxButton, quitButton);
         choiceBox.setAlignment(Pos.CENTER);
 
         choiceBox.setPrefSize(640, 780);

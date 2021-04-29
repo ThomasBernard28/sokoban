@@ -81,9 +81,8 @@ public class PopupWindow {
         //Creating the new window to display the popup
         popupWindow.initModality(Modality.APPLICATION_MODAL);
         popupWindow.setTitle(popupType.getTitle());
-        popupWindow.setWidth(500);
+        popupWindow.setMinWidth(500);
         popupWindow.setMinHeight(500);
-        popupWindow.setMaxHeight(600);
         popupWindow.setResizable(true);
 
         Label label = new Label();
@@ -342,7 +341,6 @@ public class PopupWindow {
                 layout.getChildren().addAll(closeButton,label, history, saveCopy);
 
                 popupWindow.setResizable(true);
-                popupWindow.setMaxWidth(500);
 
                 return layout;
 

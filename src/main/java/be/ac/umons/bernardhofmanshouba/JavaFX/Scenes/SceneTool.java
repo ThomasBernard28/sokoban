@@ -21,7 +21,8 @@ public class SceneTool {
      * This enum contains every scene and allows to switch the current scene
      */
     public enum SceneList{
-        LVL_GEN,
+        SANDBOX,
+        GENERATOR,
         MENU,
         GAME_MODE,
         LVL_SELECTION,
