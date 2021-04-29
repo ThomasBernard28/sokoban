@@ -430,8 +430,8 @@ public class Grid {
 
     /**
      * This function explores the grid and find tiles adjacent of boxes that are explorable
-     * and that doesn't make the following patterns [adjacent box -> concerned tile -> wall]
-     * or [adjacent box -> concerned tile -> other box]
+     * and that doesn't make the following patterns [adjacent box - concerned tile - wall]
+     * or [adjacent box - concerned tile - other box]
      */
     public void _suitableNextBox(){
         resetWalkable();
