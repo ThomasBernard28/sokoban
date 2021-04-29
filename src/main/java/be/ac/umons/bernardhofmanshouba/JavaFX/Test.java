@@ -14,7 +14,7 @@ public class Test extends Application {
 
     public void _start(Stage theStage){
         Grid testGrid = new Grid(Size.MEDIUM);
-        testGrid.set_default_walls();
+        testGrid.setDefaultWalls();
         testGrid.generateRandomWalls();
 
 
@@ -23,7 +23,7 @@ public class Test extends Application {
 
         gamePane.setOnMouseClicked(event -> {
             testGrid.resetGrid();
-            testGrid.set_default_walls();
+            testGrid.setDefaultWalls();
             testGrid.generateRandomWalls();
             gamePane.initiate();
         });
@@ -33,15 +33,17 @@ public class Test extends Application {
     }
 
     public void start(Stage theStage) {
+        int nBox = 6;
+        int nShuffle = 800;
         Grid testGrid = new Grid(Size.LARGE);
 
         GamePane gamePane = new GamePane(testGrid);
 
-        testGrid.constructMovables(10, 1000);
+        testGrid.constructMovables(nBox, nShuffle);
         gamePane.initiate();
 
         gamePane.setOnMouseClicked(event -> {
-            testGrid.constructMovables(10, 1000);
+            testGrid.constructMovables(nBox, nShuffle);
             gamePane.initiate();
         });
         Scene myScene = new Scene(gamePane);

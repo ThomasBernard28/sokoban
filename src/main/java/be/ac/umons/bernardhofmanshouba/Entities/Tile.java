@@ -23,7 +23,7 @@ public class Tile
     }
 
 
-    /* This method is used in ConsoleGrid for the console interface
+    /* This method is used in be.ac.umons.bernardhofmanshouba.Test.ConsoleGrid for the console interface
     The method gives each entity a letter to represent it
      */
     @Override
