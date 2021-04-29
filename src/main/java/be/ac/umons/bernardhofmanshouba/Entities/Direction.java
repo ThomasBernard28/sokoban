@@ -23,6 +23,11 @@ public enum Direction {
                 '}';
     }
 
+    /**
+     * Returns the direction that correspond to the pressed key
+     * @param mov key pressed
+     * @return the direction that match the key
+     */
     public static Direction match(String mov){
         switch (mov) {
             case "z":
@@ -37,6 +42,10 @@ public enum Direction {
         return null;
     }
 
+    /**
+     * @param direction direction to find the opposite of
+     * @return the opposite direction of the one given as a parameter
+     */
     public static Direction getOpposedOf(Direction direction) {
         switch (direction) {
             case UP:

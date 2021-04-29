@@ -682,8 +682,6 @@ public class Grid {
     public static void main(String[] args) {
         Grid myGrid = new Grid(Size.SMALL);
         PatternGenerator patternGiver = new PatternGenerator();
-
-        myGrid.patternIntegration(0, 0, PatternGenerator.Pattern.CROSS.getPattern());
         myGrid.resetWalkable();
         printWalkable(myGrid.walkable);
         myGrid.explorer(6, 6);
