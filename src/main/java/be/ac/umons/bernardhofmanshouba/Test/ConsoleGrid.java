@@ -1,4 +1,5 @@
 package be.ac.umons.bernardhofmanshouba.Test;
+
 import java.util.*;
 
 import be.ac.umons.bernardhofmanshouba.Entities.Direction;
@@ -20,7 +21,7 @@ public class ConsoleGrid
         //grid.setPlayer(1,6);
         //grid.setBox(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
         //grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
-        grid.set_default_walls();
+        grid.setDefaultWalls();
         grid.generateRandomWalls();
         grid.constructMovables(5, 20);
         System.out.println("To exit press 'e'");
@@ -60,10 +61,10 @@ public class ConsoleGrid
                     break;
                 case " ":
                     grid = new Grid(Size.LARGE);
-                    grid.set_default_walls();
+                    grid.setDefaultWalls();
                     grid.setPlayer(1,6);
                     grid.setBox(grid.getSize().getCol()/2, grid.getSize().getRow()/2);
-                    grid.set_flag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
+                    grid.setFlag((grid.getSize().getCol()/2)+1, (grid.getSize().getRow()/2)+1);
                     break;
                 case "e":
                     playing = false;

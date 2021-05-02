@@ -1,13 +1,7 @@
 package be.ac.umons.bernardhofmanshouba.MapGeneration;
 
-import java.util.Arrays;
 import java.util.Random;
 
-enum PatternType {
-    X,
-    I,
-    E
-}
 /*
 patterns = new Pattern[] {
                 Pattern.EMPTY,
@@ -19,6 +13,10 @@ patterns = new Pattern[] {
         };
  */
 
+/**
+ * Class used to generate random pattern among a selection of pattern
+ * each pattern has a probability attached to it
+ */
 public class PatternGenerator {
     private final Pattern[] patterns;
     private final double[] weights;
@@ -40,6 +38,9 @@ public class PatternGenerator {
         };
     }
 
+    /**
+     * @return a random pattern chosen among the selected
+     */
     public char[][] getRandomPattern(){
         double rnd = (new Random()).nextDouble();
 
@@ -59,7 +60,10 @@ public class PatternGenerator {
         throw new IllegalStateException("Not supposed to be here");
     }
 
-    public enum Pattern{
+    /**
+     * Contains patterns that are used in the generation of the walls
+     */
+    private enum Pattern{
         EMPTY (new char[][]{
                 {'e','e','e'},
                 {'e','e','e'},
@@ -139,15 +143,23 @@ public class PatternGenerator {
         },PatternType.E);
 
 
-        private final char[][] pattern;
-        private final PatternType patternType;
+        final char[][] pattern;
+        final PatternType patternType;
 
+        /**
+         * A pattern contains a pattern and its type which indicates its symmetry
+         * @param pattern char[][] array
+         * @param type symmetry of the pattern
+         */
         Pattern(char[][] pattern, PatternType type){
             this.pattern = pattern;
             this.patternType = type;
         }
 
-        public char[][] getPattern() {
+        /**
+         * @return return the pattern randomly rotated
+         */
+        char[][] getPattern() {
             final int i;
             switch (patternType){
                 case E:
@@ -164,13 +176,23 @@ public class PatternGenerator {
         }
     }
 
-    private static char[][] rotation(char[][] pattern, int angle){
-        /*
-         * This method rotate recursively a pattern. The goal behind the rotation
-         * is to find a possible pathway as we assemble the patterns together. If
-         * there is no pathway between two patterns we'll try to rotation the second one.
-         * If after all rotation there is no pathway we take a new pattern.
-         */
+    /**
+     * Used to indicate the symmetry of a pattern
+     * the symmetry is the same as the letter used
+     */
+    private enum PatternType {
+        X,
+        I,
+        E
+    }
+
+    /**
+     * Rotates a pattern clockwise
+     * @param pattern pattern to be rotated
+     * @param angle angle of rotation
+     * @return rotated pattern
+     */
+    protected static char[][] rotation(char[][] pattern, int angle){
         if(angle == 0){
             return pattern;
         }
@@ -190,13 +212,10 @@ public class PatternGenerator {
         }
     }
 
-    public static void main(String[] args) {
-        for (Pattern pattern : Pattern.values()) {
-            System.out.println(Arrays.deepToString(pattern.getPattern()));
-        }
-    }
-
-    public static char[][] getEmpty(){
+    /**
+     * @return the empty pattern
+     */
+    protected static char[][] getEmpty(){
         return Pattern.EMPTY.getPattern();
     }
 }

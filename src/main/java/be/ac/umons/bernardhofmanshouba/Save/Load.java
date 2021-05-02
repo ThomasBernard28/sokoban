@@ -80,7 +80,7 @@ public class Load {
 
     /**
      * Take a file an return the size that the grid needs to be in order to contain it
-     * if the file is too big for the grid (row > 19 or col > 32 : size determined in Size enum) it returns null
+     * if the file is too big for the grid (row &gt; 19 or col &gt; 32 : size determined in Size enum) it returns null
      * @param file xsb file that contains a map of a sokoban level
      * @return Size value of the Grid that must be constructed to contain the lvl or null if the lvl is too big
      */

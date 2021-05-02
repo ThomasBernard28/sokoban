@@ -2,11 +2,20 @@ package be.ac.umons.bernardhofmanshouba.Entities;
 
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
 
+/**
+ * Content that can be loaded into a tile and can be moved
+ */
 public enum MovableContent {
     PLAYER,
     BOX,
     EMPTY;
 
+    /**
+     * Checks whether the direction selected is a valid target
+     * @param logicGrid grid in which the content is
+     * @param dir Direction of the movement
+     * @return true if valid and false if not
+     */
     public boolean checkMove(Grid logicGrid, Direction dir){
         switch(this){
             case PLAYER:
@@ -22,6 +31,11 @@ public enum MovableContent {
         }
     }
 
+    /**
+     * Move the content in the given direction
+     * @param logicGrid grid in which the content is located
+     * @param dir direction of the movement
+     */
     public void move(Grid logicGrid, Direction dir){
         switch (this){
             case PLAYER:

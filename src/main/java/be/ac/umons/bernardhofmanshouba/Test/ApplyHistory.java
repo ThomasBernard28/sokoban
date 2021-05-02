@@ -44,8 +44,7 @@ public class ApplyHistory {
      *
      * @param testIN file name of the .xsb (game instance)
      * @param movFile  file name of the .mov (movements to apply)
-     * @param testFileOUT file name of the .xsb w/ .mov apllied
-     * @return return a grid with the movements applied
+     * @param testFileOUT file name of the .xsb w/ .mov applied
      * @throws FileNotFoundException throw error if the file doesn't exist at the correct location
      */
 
@@ -90,4 +89,6 @@ public class ApplyHistory {
         }
 
     }
+
+
 }

@@ -8,6 +8,9 @@ we want to make is possible.
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.TileImg;
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
 
+/**
+ * Defines a square of the game grid
+ */
 public class Tile
 {
     private ImmovableContent immovableContent = ImmovableContent.EMPTY;
@@ -16,19 +19,19 @@ public class Tile
     private final int x;
     private final int y;
 
-    public Tile(int x, int y)
-    {
+    /**
+     * The tile is initiate empty
+     * (x,y) indicates its position in the grid
+     * @param x x coordinate in the grid
+     * @param y y coordinate in the grid
+     */
+    public Tile(int x, int y) {
         this.x = x;
         this.y = y;
     }
 
-
-    /* This method is used in ConsoleGrid for the console interface
-    The method gives each entity a letter to represent it
-     */
     @Override
-    public String toString()
-    {
+    public String toString() {
         if(this.isWall())
         {
             return "#";
@@ -57,16 +60,13 @@ public class Tile
         return " ";
     }
 
-
     // accessor methods
 
-    public boolean isWall()
-    {
+    public boolean isWall() {
         return immovableContent == ImmovableContent.WALL;
     }
 
-    public boolean isFlag()
-    {
+    public boolean isFlag() {
         return immovableContent == ImmovableContent.FLAG && movableContent == MovableContent.EMPTY;
     }
 
@@ -74,13 +74,11 @@ public class Tile
         return immovableContent == ImmovableContent.FLAG;
     }
 
-    public boolean isBox()
-    {
+    public boolean isBox() {
         return movableContent == MovableContent.BOX && immovableContent == ImmovableContent.EMPTY;
     }
 
-    public boolean isFlaggedBox()
-    {
+    public boolean isFlaggedBox() {
         return movableContent == MovableContent.BOX && immovableContent == ImmovableContent.FLAG;
     }
 
@@ -88,21 +86,22 @@ public class Tile
         return movableContent == MovableContent.BOX;
     }
 
-    public boolean isPlayer()
-    {
+    public boolean isPlayer() {
         return movableContent == MovableContent.PLAYER && immovableContent == ImmovableContent.EMPTY;
     }
 
-    public boolean isFlaggedPlayer()
-    {
+    public boolean isFlaggedPlayer() {
         return movableContent == MovableContent.PLAYER && immovableContent == ImmovableContent.FLAG;
     }
 
-    public boolean isEmpty()
-    {
+    public boolean isEmpty() {
         return movableContent == MovableContent.EMPTY && immovableContent == ImmovableContent.EMPTY;
     }
 
+    /**
+     * Says which image needs to be placed to represent this tile
+     * @return TileImg enum
+     */
     public TileImg getVisualType(){
         if(this.isPlayer()){
             return TileImg.PLAYER;
@@ -149,19 +148,23 @@ public class Tile
 
     // movement methods
 
-    public boolean checkMove(Grid grid, Direction direction)
-    {
+    /**
+     * Checks the validity of the target in the given direction
+     * @param grid grid in which the tile is located
+     * @param direction direction of the target
+     * @return true if valid, false if not
+     */
+    public boolean checkMove(Grid grid, Direction direction) {
         return movableContent.checkMove(grid,direction);
     }
-    public void move(Grid grid, Direction direction)
-    {
+
+    /**
+     * Move the content of this tile in the given direction
+     * @param grid grid in which the tile is located
+     * @param direction direction of the target
+     */
+    public void move(Grid grid, Direction direction) {
         movableContent.move(grid, direction);
         grid.getGridAt(x, y).setMovableContent(MovableContent.EMPTY);
-    }
-
-    public static void main(String[] args) {
-        Tile myTile = new Tile(0, 0);
-        myTile.setMovableContent(MovableContent.PLAYER);
-        System.out.println(myTile);
     }
 }
