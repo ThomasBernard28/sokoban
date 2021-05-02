@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  * Main class of the game whe the is launched
- * You can also start unitTest by using commands line using the args
+ * You can also start console mode by using commands line using the args
  */
 public class Sokoban
 {
@@ -19,13 +19,13 @@ public class Sokoban
      * @throws IOException
      */
     public static void main(String[] args) throws IOException {
-        //Switch used to know if the user wants to play the game or launch a unit test
+        //Switch used to know if the user wants to play the game or launch the console mode
         switch(args.length){
             //Run the game
             case 0:
                 MyWindow.main(args);
                 break;
-            //Run unit Test
+            //Run console mode
             case 3:
                 ApplyHistory.applyMov(args[0], args[1], args[2]);
                 break;

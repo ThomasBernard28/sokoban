@@ -13,7 +13,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 /**
- * Class to perform some unitTest
+ * Class to update a game instance using console mode
  */
 
 public class ApplyHistory {

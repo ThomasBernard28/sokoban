@@ -1,5 +1,6 @@
 package be.ac.umons.bernardhofmanshouba.JavaFX.Scenes;
 
+import be.ac.umons.bernardhofmanshouba.JavaFX.Size;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.SpriteUI;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.UIImg;
 import javafx.geometry.Pos;
@@ -11,6 +12,8 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
+
+import java.util.regex.Pattern;
 
 public class GeneratorScene extends SceneTool{
 
@@ -82,28 +85,32 @@ public class GeneratorScene extends SceneTool{
         generateButton.getChildren().addAll(generateButtonImg, generateButtonText);
         generateButton.setStyle("-fx-cursor: hand;");
 
+    
         generateBox.getChildren().add(generateButton);
         generateBox.setAlignment(Pos.CENTER);
-
+        
 
         //Box to choice the Difficulty
-        VBox difficultyBox = new VBox();
+        VBox difficultyBox = new VBox(20);
 
         Label difficultyText = new Label("Select a difficulty level");
         difficultyText.setFont(Font.font("impact", 35));
 
-        ChoiceBox difficultyChoice = new ChoiceBox();
+        ChoiceBox<String> difficultyChoice = new ChoiceBox<>();
         choicesBox.setScaleY(1.5);
         choicesBox.setTranslateY(50);
 
-        Button easy = new Button("Easy");
-        Button medium = new Button("Medium");
-        Button hard = new Button("Hard");
-
-        difficultyChoice.getItems().addAll(easy, medium, hard);
+        //Differents difficulty levels
+        difficultyChoice.getItems().addAll("Easy", "Medium", "Hard");
+        //default difficulty level
+        difficultyChoice.setValue("Medium");
+        difficultyChoice.setScaleX(3);
+        difficultyChoice.setScaleY(1.5);
 
         difficultyBox.getChildren().addAll(difficultyText, difficultyChoice);
         difficultyBox.setAlignment(Pos.CENTER);
+
+
 
 
         VBox numberOfBox = new VBox();
@@ -114,6 +121,10 @@ public class GeneratorScene extends SceneTool{
         Label nbBoxText = new Label("Please enter the number\n of boxes you want");
         nbBoxText.setFont(Font.font("impact", 35));
         nbBoxText.setAlignment(Pos.CENTER);
+
+        generateBox.setOnMouseClicked(event ->{
+            //TODO IMPLEMENT METHOD TO LOAD THE GAMESCENE
+        });
 
 
         numberOfBox.getChildren().addAll(nbBoxText, boxNumber);
@@ -128,6 +139,29 @@ public class GeneratorScene extends SceneTool{
         root.add(elementsBox, 1, 1);
 
 
+
+    }
+    //Get choice of the difficultyChoice
+    private static Size getDifficulty(ChoiceBox<String> difficultyChoice){
+        String difficulty = difficultyChoice.getValue();
+
+        switch (difficulty) {
+            case ("Easy"):
+                return Size.SMALL;
+            case ("Medium"):
+                return Size.MEDIUM;
+            case ("Hard"):
+                return Size.LARGE;
+            default: throw new IllegalStateException("This is not a valid difficulty level");
+        }
+    }
+
+    private static int getNbBoxes(TextField nbBox){
+
+        if (Pattern.matches("\\d{2}", nbBox.getCharacters())){
+            return Integer.parseInt(nbBox.getCharacters().toString());
+
+        }throw new IllegalStateException("The sequence must be integers only");
 
     }
 }
