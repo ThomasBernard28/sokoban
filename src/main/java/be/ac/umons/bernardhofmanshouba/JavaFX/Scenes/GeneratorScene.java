@@ -134,7 +134,7 @@ public class GeneratorScene extends SceneTool{
         generateBox.setOnMouseClicked(event ->{
            GamePane toGenenerate = new GamePane(new Grid(getDifficulty(difficultyChoice)));
            visualGrid = toGenenerate;
-           visualGrid.getGrid().constructMovables(getNbBoxes(boxNumber), 300);
+           visualGrid.getGrid().constructMovables(getNbBoxes(boxNumber), getNbMix(getDifficulty(difficultyChoice), getNbBoxes(boxNumber)));
            visualGrid.initiateLvlGen();
            GameScene.makeScene(visualGrid.getGrid());
            SceneList.GAME.setOnActive();
@@ -177,5 +177,20 @@ public class GeneratorScene extends SceneTool{
 
         }throw new IllegalStateException("The sequence must be integers only");
 
+    }
+    private static int getNbMix(Size currSize, int nbBox){
+        //if small 50 mix per box
+        //if medium 100 mix per box
+        //if large 125mix per box
+
+        switch (currSize){
+            case SMALL:
+                return nbBox * 50;
+            case MEDIUM:
+                return nbBox * 100;
+            case LARGE:
+                return nbBox * 125;
+            default: throw new IllegalStateException("The currSize is not a valid size ");
+        }
     }
 }
