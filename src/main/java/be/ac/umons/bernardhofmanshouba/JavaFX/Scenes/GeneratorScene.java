@@ -1,8 +1,12 @@
 package be.ac.umons.bernardhofmanshouba.JavaFX.Scenes;
 
+import be.ac.umons.bernardhofmanshouba.JavaFX.Event.LevelGenEvent;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Size;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.SpriteUI;
+import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.TileImg;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.UIImg;
+import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -13,9 +17,14 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import javafx.scene.text.Font;
 
+import java.awt.event.MouseEvent;
 import java.util.regex.Pattern;
 
 public class GeneratorScene extends SceneTool{
+
+    private final static EventHandler<javafx.scene.input.MouseEvent> filter = event -> event.consume();
+    private static GamePane visualGrid = null;
+
 
     public static GridPane root = new GridPane();
 
@@ -123,7 +132,12 @@ public class GeneratorScene extends SceneTool{
         nbBoxText.setAlignment(Pos.CENTER);
 
         generateBox.setOnMouseClicked(event ->{
-            //TODO IMPLEMENT METHOD TO LOAD THE GAMESCENE
+           GamePane toGenenerate = new GamePane(new Grid(getDifficulty(difficultyChoice)));
+           visualGrid = toGenenerate;
+           visualGrid.getGrid().constructMovables(getNbBoxes(boxNumber), 300);
+           visualGrid.initiateLvlGen();
+           GameScene.makeScene(visualGrid.getGrid());
+           SceneList.GAME.setOnActive();
         });
 
 
@@ -158,7 +172,7 @@ public class GeneratorScene extends SceneTool{
 
     private static int getNbBoxes(TextField nbBox){
 
-        if (Pattern.matches("\\d{2}", nbBox.getCharacters())){
+        if (Pattern.matches("\\d", nbBox.getCharacters())){
             return Integer.parseInt(nbBox.getCharacters().toString());
 
         }throw new IllegalStateException("The sequence must be integers only");

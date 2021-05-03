@@ -1,6 +1,7 @@
 package be.ac.umons.bernardhofmanshouba.JavaFX.Scenes;
 
 import be.ac.umons.bernardhofmanshouba.Entities.Direction;
+import be.ac.umons.bernardhofmanshouba.JavaFX.Event.LevelGenEvent;
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
 import be.ac.umons.bernardhofmanshouba.Entities.Tile;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.SpriteTile;
@@ -175,5 +176,4 @@ public class GamePane extends Pane {
             outputClip.setHeight(newValue.getHeight());
         });
     }
-
 }
