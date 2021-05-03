@@ -15,6 +15,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 import java.awt.event.MouseEvent;
@@ -32,8 +33,6 @@ public class GeneratorScene extends SceneTool{
         root.setMinWidth(1280);
         root.setMinHeight(720);
         root.setBackground(new Background(bgFillLightBlue));
-
-        root.setGridLinesVisible(true);
 
         topLeftGenesis(root);
         topGenesis(root);
@@ -104,6 +103,7 @@ public class GeneratorScene extends SceneTool{
 
         Label difficultyText = new Label("Select a difficulty level");
         difficultyText.setFont(Font.font("impact", 35));
+        difficultyText.setTextFill(Color.web("#77D04F"));
 
         ChoiceBox<String> difficultyChoice = new ChoiceBox<>();
         choicesBox.setScaleY(1.5);
@@ -118,6 +118,7 @@ public class GeneratorScene extends SceneTool{
 
         difficultyBox.getChildren().addAll(difficultyText, difficultyChoice);
         difficultyBox.setAlignment(Pos.CENTER);
+        difficultyBox.setTranslateY(10);
 
 
 
@@ -126,8 +127,10 @@ public class GeneratorScene extends SceneTool{
         TextField boxNumber = new TextField();
         boxNumber.setFont(new Font("arial", 30));
         boxNumber.setScaleX(1);
+        boxNumber.setScaleY(0.8);
 
-        Label nbBoxText = new Label("Please enter the number\n of boxes you want");
+        Label nbBoxText = new Label("Please enter the number\n        of boxes you want");
+        nbBoxText.setTextFill(Color.web("gold"));
         nbBoxText.setFont(Font.font("impact", 35));
         nbBoxText.setAlignment(Pos.CENTER);
 
