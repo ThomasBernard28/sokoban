@@ -30,8 +30,6 @@ public class TestApply {
         String movString = "";
         Scanner scanner = new Scanner(file);
         movString += scanner.next();
-        System.out.println(movString);
-
 
         return movString;
     }

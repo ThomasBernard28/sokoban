@@ -5,10 +5,8 @@ import be.ac.umons.bernardhofmanshouba.Save.Load;
 import be.ac.umons.bernardhofmanshouba.Save.Path;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.BeforeEach;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 
 public class Tests {
 
