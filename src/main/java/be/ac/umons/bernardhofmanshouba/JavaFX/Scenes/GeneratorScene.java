@@ -164,11 +164,11 @@ public class GeneratorScene extends SceneTool{
 
         switch (difficulty) {
             case ("Easy"):
-                return Size.SMALL;
+                return Size.LARGE;
             case ("Medium"):
                 return Size.MEDIUM;
             case ("Hard"):
-                return Size.LARGE;
+                return Size.SMALL;
             default: throw new IllegalStateException("This is not a valid difficulty level");
         }
     }
@@ -187,11 +187,11 @@ public class GeneratorScene extends SceneTool{
         //if large 125mix per box
 
         switch (currSize){
-            case SMALL:
+            case LARGE:
                 return nbBox * 50;
             case MEDIUM:
                 return nbBox * 100;
-            case LARGE:
+            case SMALL:
                 return nbBox * 125;
             default: throw new IllegalStateException("The currSize is not a valid size ");
         }
