@@ -7,6 +7,10 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * This class create Profile instance with it's different information
+ */
+
 public class Profile {
     private String username;
     private int lvlCompleted = 0;

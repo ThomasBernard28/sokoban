@@ -89,12 +89,20 @@ public class ApplyHistory {
 
     }
 
+    /**
+     * This method is called with ./gradlew applyMov --args="arg0 arg1 arg2"
+     * The objective is to modify a game instance with a .mov file without using
+     * graphic interface.
+     * @param args arg0 = input.xsb, arg1 = movToApply.mov, arg2 = output.xsb
+     */
     public static void main(String[] args) {
-        try{
-            applyMov(args[0], args[1], args[2]);
-        }catch (IOException e){
-            e.printStackTrace();
-        }
-
+        if (args.length == 3){
+            try{
+                applyMov(args[0], args[1], args[2]);
+            }catch (IOException e){
+                e.printStackTrace();
+            }
+        //if args.length is not 3 throw exception.
+        }throw new IllegalStateException("There must 3 args");
     }
 }

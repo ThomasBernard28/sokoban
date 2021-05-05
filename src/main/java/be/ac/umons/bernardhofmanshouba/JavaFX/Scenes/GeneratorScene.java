@@ -1,20 +1,16 @@
 package be.ac.umons.bernardhofmanshouba.JavaFX.Scenes;
 
-import be.ac.umons.bernardhofmanshouba.JavaFX.Event.LevelGenEvent;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Size;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.SpriteUI;
-import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.TileImg;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.UIImg;
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -23,7 +19,6 @@ import java.util.regex.Pattern;
 
 public class GeneratorScene extends SceneTool{
 
-    private final static EventHandler<javafx.scene.input.MouseEvent> filter = event -> event.consume();
     private static GamePane visualGrid = null;
 
     public static GridPane root = new GridPane();

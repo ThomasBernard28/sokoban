@@ -21,6 +21,9 @@ import java.io.File;
 public class GameModeScene extends SceneTool {
     public final static GridPane root = new GridPane();
 
+    /**
+     * This method generate the specific scene as a GridPane and display it
+     */
     public static void makeScene() {
         root.setBackground(new Background(bgFillLightBlue));
         root.setMinHeight(720);
@@ -35,6 +38,10 @@ public class GameModeScene extends SceneTool {
         SceneList.GAME_MODE.setScene(scene);
     }
 
+    /**
+     * Method used to create the top left side of the Scene
+     * @param root The GridPane where we want to add the top left
+     */
     public static void topLeftGenesis(GridPane root) {
         HBox exitBox = new HBox();
         ExitButton exitButton = new ExitButton(SceneList.PROFILE);
@@ -46,6 +53,12 @@ public class GameModeScene extends SceneTool {
         exitBox.setPrefSize(590, 150);
         root.add(exitBox, 0, 0);
     }
+
+    /**
+     * Method used to create the top center and top right of the window
+     * top center will contain the title of the scene and top right will be empty.
+     * @param root The GridPane where we want to add this
+     */
 
     public static void topGenesis(GridPane root) {
         HBox titleBox = new HBox();
@@ -64,6 +77,11 @@ public class GameModeScene extends SceneTool {
         emptyBox.setPrefSize(590, 150);
         root.add(emptyBox, 2, 0);
     }
+
+    /**
+     * Method to create the center of the window with the different game modes
+     * @param root GridPane where we want to add this
+     */
 
     private static void centerGenesis(GridPane root) {
         VBox centerSide = new VBox(150);
@@ -111,6 +129,7 @@ public class GameModeScene extends SceneTool {
                 GameScene.loadLevel(Path.SAVE, fileChosen.getName());
             }
         });
+
         centerSide.getChildren().addAll(LvlSelectButton, LoadSavedGameButton);
         centerSide.setAlignment(Pos.CENTER);
 

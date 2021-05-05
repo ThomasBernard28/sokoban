@@ -1,8 +1,6 @@
 package be.ac.umons.bernardhofmanshouba.Save;
 
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
-import be.ac.umons.bernardhofmanshouba.JavaFX.MyWindow;
-import be.ac.umons.bernardhofmanshouba.JavaFX.Size;
 
 import java.io.*;
 
@@ -19,6 +17,7 @@ public class Save {
         String gridToTxt = "";
         for(int i = 0; i < logicGrid.getSize().getRow(); i++){
             for (int j = 0; j < logicGrid.getSize().getCol(); j++) {
+                //add every entity symbol to the string
                 gridToTxt += logicGrid.getGridAt(j, i);
                 if(j == logicGrid.getSize().getCol() - 1){
                     gridToTxt += "\n";
@@ -36,17 +35,6 @@ public class Save {
             writer.flush();
             writer.close();
         }
-    }
-
-    public static void main(String[] args) {
-        try {
-            Grid test = MyWindow.logicGridGenesis(Size.SMALL);
-            test.setBox(2,2);
-            saving(test , Path.SAVE, "testBis");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 }
 
