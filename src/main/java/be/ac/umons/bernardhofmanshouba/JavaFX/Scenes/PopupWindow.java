@@ -31,7 +31,7 @@ public class PopupWindow {
     public enum PopupType {
         DELETE_PROFILE("DELETE PROFILE","Are you sure you want to delete this profile"),
         NEW_PROFILE("CREATE PROFILE", "Please enter a profile name"),
-        END_GAME("END OF THE LEVEL", "Congrats you won ! Please make a choice\n You unlocked the next level"),
+        END_GAME("END OF THE LEVEL", "Congrats you won ! Please make a choice"),
         HISTORY("History", "Here is your history");
 
         private final String title;
@@ -236,25 +236,39 @@ public class PopupWindow {
                 returnToMenu.setOnAction(event -> {
                     popupWindow.close();
                     //Switch made to know on wich scene we have to go back
-                    switch(GameScene.currPath){
-                        case LVL:
-                            LevelSelectionScene.makeScene();
-                            SceneList.LVL_SELECTION.setOnActive();
-                            break;
-                        case SAVE:
-                            SceneList.GAME_MODE.setOnActive();
-                            break;
-                        default: throw new IllegalStateException("The file doesn't come from an correct path");
+                    if(WINDOW.getScene() == SceneList.GAME.getScene()){
+                        switch(GameScene.currPath){
+                            case LVL:
+                                LevelSelectionScene.makeScene();
+                                SceneList.LVL_SELECTION.setOnActive();
+                                break;
+                            case SAVE:
+                                SceneList.GAME_MODE.setOnActive();
+                                break;
+                            default: throw new IllegalStateException("The file doesn't come from an correct path");
+                        }
                     }
+                    else{
+                        SceneList.GENERATOR.setOnActive();
+                    }
+
                 });
                 //Restarting the game
                 restartGame.setOnAction(event -> {
-                    popupWindow.close();
-                    GameScene.loadLevel(GameScene.currPath, GameScene.currFileName);
+                    if(WINDOW.getScene() == SceneList.GAME.getScene()){
+                        popupWindow.close();
+                        GameScene.loadLevel(GameScene.currPath, GameScene.currFileName);
+                    }
+                    else{
+                        popupWindow.close();
+                        GameGenScene.makeScene(GameGenScene.getCopyGrid());
+                        SceneList.GAME_GEN.setOnActive();
+                    }
 
                 });
                 label.setAlignment(Pos.CENTER);
                 label.setTextFill(Color.web("red"));
+                label.setTranslateY(15);
 
                 choice.getChildren().addAll(restartGame, returnToMenu);
                 choice.setAlignment(Pos.CENTER);
@@ -266,8 +280,14 @@ public class PopupWindow {
 
             case HISTORY:
                 HBox saveCopy = new HBox(30);
+                Label history;
+                if (WINDOW.getScene() == SceneList.GAME.getScene()){
+                     history = new Label(GameScene.movements.toString());
+                }
+                else{
+                    history = new Label((GameGenScene.movements.toString()));
+                }
 
-                Label history = new Label(GameScene.movements.toString());
                 history.setFont(Font.font("lobster", 15));
                 history.setWrapText(true);
 

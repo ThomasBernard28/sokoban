@@ -135,7 +135,7 @@ public class Profile {
      *
      *
      */
-
+    //To reset the profiles if an error occur
     public static void main(String[] args) throws IOException, ParseException {
         Profile[] defaultProfile = {
                 new Profile(),
@@ -146,70 +146,5 @@ public class Profile {
         defaultProfile = readJsonFile();
         System.out.println(Arrays.toString(defaultProfile));
     }
-
-    /*
-    public static void writeJsonFile(String filename) throws IOException{
-        JSONObject profiles = new JSONObject();
-        profiles.put("name", "Augustin");
-        profiles.put("levelCompleted", 0);
-        profiles.replace("levelCompleted", ((int) profiles.get("levelCompleted") + 1) % 10);
-
-        JSONArray msg = new JSONArray();
-        msg.add("It's me");
-        msg.add("MARIO !");
-
-        profiles.put("msg", msg);
-        Files.write(Paths.get(Path.PROFILE.getPath() +"/" + filename), profiles.toJSONString().getBytes());
-    }
-
-    public static Object readJsonFile(String filename) throws ParseException, IOException {
-        FileReader reader = new FileReader(Path.PROFILE.getPath() +"/" + filename);
-        JSONParser parser = new JSONParser();
-        return parser.parse(reader);
-    }
-
-    public static Profile[] readFileJackson(String filename) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(new File(Path.PROFILE.getPath() + "/" + filename), Profile[].class);
-    }
-
-    public static void writeFileJackson(String filename, Profile[] profile) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.writeValue(new File(Path.PROFILE.getPath() + "/" + filename), profile);
-    }
-    */
-    /*
-    public static int getBestMovForLvl(int lvlNumber){
-        Profile[] profile = getActiveProfile();
-        int currentBestMove = 0;
-
-        for (Profile profileName: profile) {
-            int[] bestMoves = profileName.getBestMov();
-            if ((currentBestMove == 0 || currentBestMove > bestMoves[lvlNumber]) && bestMoves[lvlNumber] != 0){
-                currentBestMove = bestMoves[lvlNumber];
-            }
-        }
-        return currentBestMove;
-    }
-    public static String getBestProfile(int lvlNumber){
-        Profile[] profile = getActiveProfile();
-        String bestProfile = "";
-        boolean played = false;
-
-        for (Profile profileName: profile) {
-            int[] bestMoves = profileName.getBestMov();
-
-            if(getBestMovForLvl(lvlNumber) == bestMoves[lvlNumber] && getBestMovForLvl(lvlNumber) != 0){
-                played = true;
-                bestProfile = profileName.getUsername();
-            }
-        }
-        if(played){
-            return bestProfile;
-        }
-        else{
-            return "NOT PLAYED";
-        }
-    }*/
 
 }

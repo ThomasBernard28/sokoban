@@ -1,10 +1,8 @@
 package be.ac.umons.bernardhofmanshouba.JavaFX.Event;
 
 import be.ac.umons.bernardhofmanshouba.Entities.Direction;
+import be.ac.umons.bernardhofmanshouba.JavaFX.Scenes.*;
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
-import be.ac.umons.bernardhofmanshouba.JavaFX.Scenes.AnimationPlayerMove;
-import be.ac.umons.bernardhofmanshouba.JavaFX.Scenes.GamePane;
-import be.ac.umons.bernardhofmanshouba.JavaFX.Scenes.GameScene;
 import javafx.event.EventHandler;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Duration;
@@ -33,12 +31,24 @@ public class PlayerEvent implements EventHandler<KeyEvent> {
                 );
                 logicGrid.getGridFromPlayer().move(logicGrid, dir);
                 playerAnimation.play();
-                GameScene.history(event.getText());
+                if (SceneTool.getWINDOW().getScene() == SceneTool.SceneList.GAME.getScene()){
+                    GameScene.history(event.getText());
+                }
+                else {
+                    GameGenScene.history(event.getText());
+                }
+
             }
         }
 
         if (logicGrid.checkWin()){
-            GameScene.victory();
+            if (SceneTool.getWINDOW().getScene() == SceneTool.SceneList.GAME.getScene()){
+                GameScene.victory();
+            }
+            else{
+                GameGenScene.victory();
+            }
+
         }
     }
 }

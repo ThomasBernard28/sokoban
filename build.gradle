@@ -40,6 +40,12 @@ task myJavadocs(type: Javadoc) {
     source = sourceSets.main.allJava
     destinationDir = new File("misc/")
 }
+task applyMov(type : JavaExec){
+    description = "Apply a given .mov file to a given .xsb (map) file"
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in // dirige le System.in comme étant la source d'input de l'app
+    main = 'be.ac.umons.bernardhofmanshouba.Test.ApplyHistory'
+}
 
 
 javafx {

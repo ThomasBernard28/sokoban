@@ -1,6 +1,7 @@
 package be.ac.umons.bernardhofmanshouba.JavaFX.Scenes;
 
 import be.ac.umons.bernardhofmanshouba.JavaFX.Event.PlayerEvent;
+import be.ac.umons.bernardhofmanshouba.JavaFX.MyWindow;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.IconImg;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.SpriteIcon;
 import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
@@ -23,16 +24,14 @@ import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 
-public class GameScene extends SceneTool{
+public class GameGenScene extends SceneTool{
 
     public static GridPane root = null;
 
     private static Grid currentGrid = null;
+    private static Grid copyGrid = null;
     private static PlayerEvent playerEvent = null;
-    protected static String currFileName = null;
-    protected static Path currPath = null;
 
-    private static ProfileList currProfile = null;
 
     public final static ArrayList<String> movements = new ArrayList<>();
     private static TextField nbrMov;
@@ -40,7 +39,8 @@ public class GameScene extends SceneTool{
     public static void makeScene(Grid grid){
         root = new GridPane();
         Scene scene = new Scene(root);
-        SceneList.GAME.setScene(scene);
+        SceneList.GAME_GEN.setScene(scene);
+        copyGrid = copyOfGrid(grid);
 
         root.setMinWidth(1280);
         root.setMinHeight(720);
@@ -51,25 +51,17 @@ public class GameScene extends SceneTool{
         root.add(topRightGenesis(), 2,0);
         root.add(centerGenesis(grid), 1, 1, 2, 1);
     }
+    protected static Grid getCopyGrid(){
+        return copyGrid;
+    }
 
     public static HBox topLeftGenesis(){
         HBox exitBox = new HBox();
 
-        ExitButton exitButton = new ExitButton();
+        ExitButton exitButton = new ExitButton(SceneList.GENERATOR);
         exitButton.setTranslateY(15);
         exitButton.setTranslateX(15);
-        exitButton.setOnAction(event ->{
-            switch (GameScene.currPath) {
-                case LVL:
-                    SceneList.LVL_SELECTION.setOnActive();
-                    break;
-                case SAVE:
-                    SceneList.GAME_MODE.setOnActive();
-                    break;
-                default:
-                    throw new IllegalStateException("The file doesn't come from an correct path");
-            }
-        });
+
 
         exitBox.getChildren().add(exitButton);
         exitBox.setPrefSize(690, 200);
@@ -161,7 +153,9 @@ public class GameScene extends SceneTool{
 
 
         restartGame.setOnAction(event -> {
-            GameScene.loadLevel(GameScene.currPath, GameScene.currFileName);
+            movements.clear();
+            GameGenScene.makeScene(copyGrid);
+            SceneList.GAME_GEN.setOnActive();
         });
 
         history.setOnAction(event -> {
@@ -196,64 +190,17 @@ public class GameScene extends SceneTool{
         V_ROOT.setTranslateX(-350);
 
         playerEvent = new PlayerEvent(gamePane);
-        SceneList.GAME.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
+        SceneList.GAME_GEN.getScene().addEventHandler(KeyEvent.KEY_PRESSED, playerEvent);
 
         return V_ROOT;
     }
 
     public static void victory(){
-        if(WINDOW.getScene() == SceneList.GAME.getScene()){
-            if (currPath == Path.LVL){
-                if(currFileName.startsWith("10", 5)){
-                    currProfile.setBestMov(movements.size(), 10);
-                }
-                else{
-                    currProfile.setBestMov(movements.size(), Integer.parseInt(currFileName.substring(5,6)));
-                    currProfile.incrementLvlCompleted(Integer.parseInt(currFileName.substring(5,6)));
-                }
-            }
             new PopupWindow(PopupWindow.PopupType.END_GAME);
-        }
-    }
-
-    public static void loadLevel(Path path, String fileName){
-        movements.clear();
-        currFileName = fileName;
-        currPath = path;
-        try{
-            Grid gameFile = Load.loadFile(path, fileName);
-            GameScene.makeScene(gameFile);
-            SceneList.GAME.setOnActive();
-            System.out.println(gameFile.getPlayerX() + "," + gameFile.getPlayerY());
-
-        }catch (IOException e){
-            throw new IllegalStateException("File is missing");
-        }
-    }
-
-    protected static void resetScene(){
-        currentGrid = null;
-        playerEvent = null;
-        currFileName = null;
-        currPath = null;
-        movements.clear();
-        nbrMov.clear();
     }
 
     public static void history(String letters){
-        if(currProfile != null) {
             movements.add(letters);
             nbrMov.setText("Movements : " + movements.size());
-        }
     }
-
-    public static ProfileList getCurrProfile() {
-        return currProfile;
-    }
-
-    public static void setCurrProfile(ProfileList currProfile) {
-        GameScene.currProfile = currProfile;
-    }
-
 }
-

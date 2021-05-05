@@ -14,18 +14,17 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-import java.awt.event.MouseEvent;
 import java.util.regex.Pattern;
 
 public class GeneratorScene extends SceneTool{
 
     private final static EventHandler<javafx.scene.input.MouseEvent> filter = event -> event.consume();
     private static GamePane visualGrid = null;
-
 
     public static GridPane root = new GridPane();
 
@@ -139,8 +138,8 @@ public class GeneratorScene extends SceneTool{
            visualGrid = toGenenerate;
            visualGrid.getGrid().constructMovables(getNbBoxes(boxNumber), getNbMix(getDifficulty(difficultyChoice), getNbBoxes(boxNumber)));
            visualGrid.initiateLvlGen();
-           GameScene.makeScene(visualGrid.getGrid());
-           SceneList.GAME.setOnActive();
+           GameGenScene.makeScene(visualGrid.getGrid());
+           SceneList.GAME_GEN.setOnActive();
         });
 
 
@@ -175,7 +174,8 @@ public class GeneratorScene extends SceneTool{
 
     private static int getNbBoxes(TextField nbBox){
 
-        if (Pattern.matches("\\d", nbBox.getCharacters())){
+        //You can't set a nb of box above 99
+        if (Pattern.matches("\\d{1,2}", nbBox.getCharacters())){
             return Integer.parseInt(nbBox.getCharacters().toString());
 
         }throw new IllegalStateException("The sequence must be integers only");
@@ -188,11 +188,11 @@ public class GeneratorScene extends SceneTool{
 
         switch (currSize){
             case LARGE:
-                return nbBox * 50;
+                return nbBox * 75;
             case MEDIUM:
-                return nbBox * 100;
+                return nbBox * 115;
             case SMALL:
-                return nbBox * 125;
+                return nbBox * 150;
             default: throw new IllegalStateException("The currSize is not a valid size ");
         }
     }

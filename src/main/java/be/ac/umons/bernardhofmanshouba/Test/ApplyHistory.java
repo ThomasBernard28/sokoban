@@ -31,7 +31,6 @@ public class ApplyHistory {
         try {
             Scanner scanner = new Scanner(file);
             movString += scanner.next();
-            System.out.println(movString);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -90,5 +89,12 @@ public class ApplyHistory {
 
     }
 
+    public static void main(String[] args) {
+        try{
+            applyMov(args[0], args[1], args[2]);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
 
+    }
 }

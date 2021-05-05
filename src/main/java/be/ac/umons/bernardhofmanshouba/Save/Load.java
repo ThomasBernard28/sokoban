@@ -102,15 +102,4 @@ public class Load {
 
         return Size.determineSize(nbRow, nbCol);
     }
-
-
-    public static void main(String[] args) {
-        try {
-            Grid test = loadFile(Path.SAVE,"testBis");
-            Save.saving(test,Path.SAVE,"testBis2");
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-
-    }
 }

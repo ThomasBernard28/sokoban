@@ -2,6 +2,7 @@ package be.ac.umons.bernardhofmanshouba.JavaFX.Scenes;
 
 import be.ac.umons.bernardhofmanshouba.JavaFX.Sprite.*;
 import be.ac.umons.bernardhofmanshouba.JavaFX.Size;
+import be.ac.umons.bernardhofmanshouba.MapGeneration.Grid;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -28,6 +29,7 @@ public class SceneTool {
         LVL_SELECTION,
         PROFILE,
         STATS,
+        GAME_GEN,
         GAME;
 
         private Scene scene = null;
@@ -56,7 +58,7 @@ public class SceneTool {
 
         }
 
-        protected Scene getScene(){
+        public Scene getScene(){
             return scene;
         }
     }
@@ -65,6 +67,10 @@ public class SceneTool {
 
     public static void setStage(Stage theStage){
         WINDOW = theStage;
+    }
+
+    public static Stage getWINDOW(){
+        return WINDOW;
     }
 
 
@@ -195,5 +201,20 @@ public class SceneTool {
             setScaleX(s);
             setScaleY(s);
         }
+    }
+    protected static Grid copyOfGrid(Grid old){
+        Grid copy = new Grid(old.getSize());
+        for (int i = 0; i < old.getSize().getRow(); i++) {
+            for (int j = 0; j < old.getSize().getCol(); j++) {
+                copy.getGridAt(j, i).setMovableContent(old.getGridAt(j, i).getMovableContent());
+                copy.getGridAt(j, i).setImmovableContent(old.getGridAt(j, i).getImmovableContent());
+            }
+        }
+        copy.setPlayer(old.getPlayerX(), old.getPlayerY());
+        return copy;
+    }
+
+    protected static GamePane copyOfSpecialPane(GamePane old){
+        return new GamePane(copyOfGrid(old.getGrid()));
     }
 }
