@@ -174,8 +174,8 @@ public class PopupWindow {
                 Button cancel = new Button();
 
                 //close popup
-                closeButton.setTranslateY(-95);
-                closeButton.setTranslateX(-260);
+                closeButton.setTranslateY(-115);
+                closeButton.setTranslateX(-230);
                 closeButton.setAlignment(Pos.TOP_LEFT);
                 closeButton.setOnAction(event -> {
                     popupWindow.close();
