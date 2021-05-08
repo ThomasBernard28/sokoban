@@ -458,7 +458,7 @@ public class Grid {
 
     public boolean _shuffleBoxes(int s) {
         while (s > 0){
-            System.out.println(s);
+
             _suitableNextBox();
             ShuffledBox chosenOne;
             int iteration = 0;
@@ -471,7 +471,6 @@ public class Grid {
                     // the loop makes sure that the box can be moved
                     iterationBis++;
                     if (iterationBis > 30) {
-                        System.out.println("Stuck1");
                         return false;
                     }
                 } while (chosenOne.nbOfSuitor() < 1);
@@ -479,7 +478,6 @@ public class Grid {
                 correctState = chosenOne.moveToRandom(this);
                 iteration++;
                 if (iteration > 30) {
-                    System.out.println("Stuck");
                     return false;
                 }
             }while (!correctState);
@@ -596,7 +594,6 @@ public class Grid {
             box[0] += dir.x;
             box[1] += dir.y;
             grid.getGridAt(getX(), getY()).setMovableContent(MovableContent.BOX);
-            System.out.println("box moved at" + grid.getGridAt(getX(), getY()));
             return true;
         }
 
@@ -683,23 +680,7 @@ public class Grid {
         Grid myGrid = new Grid(Size.SMALL);
         PatternGenerator patternGiver = new PatternGenerator();
         myGrid.resetWalkable();
-        printWalkable(myGrid.walkable);
         myGrid.explorer(6, 6);
-        printWalkable(myGrid.walkable);
     }
 
-    public static void printWalkable(boolean[][] matrix){
-        for (boolean[] line :
-                matrix) {
-            System.out.println(Arrays.toString(line));
-        }
-        System.out.println();
-    }
-
-    public static void printGrid(Tile[][] matrix){
-        for (Tile[] line:
-             matrix) {
-            System.out.println(Arrays.toString(line));
-        }
-    }
 }

@@ -98,7 +98,6 @@ public class Load {
                 nbCol = line.length();
             }
         }
-        System.out.println( "size : " + nbCol + ','+ nbRow);
 
         return Size.determineSize(nbRow, nbCol);
     }

@@ -119,9 +119,7 @@ public class SandBoxScene extends SceneTool {
                 child.setStyle(StyleBtn.UnpressedCSS);
             }
             boxButton.setStyle(StyleBtn.PressedCSS);
-            System.out.println(root.getWidth() + "," + root.getHeight());
-            System.out.println(SceneList.SANDBOX.getScene().getWidth() + "," + SceneList.SANDBOX.getScene().getHeight());
-            System.out.println(WINDOW.getWidth() + "," + WINDOW.getHeight());
+
 
         });
         flagButton.setOnAction(event -> {

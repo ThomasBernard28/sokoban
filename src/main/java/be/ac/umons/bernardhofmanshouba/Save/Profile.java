@@ -55,7 +55,6 @@ public class Profile {
         this.username = "New Profile";
         this.lvlCompleted = 0;
         this.bestMov = new int[10];
-        System.out.println("ok");
     }
 
     protected boolean thisIsANewProfile(){
@@ -148,7 +147,6 @@ public class Profile {
         };
         writeJsonFile(defaultProfile);
         defaultProfile = readJsonFile();
-        System.out.println(Arrays.toString(defaultProfile));
     }
 
 }

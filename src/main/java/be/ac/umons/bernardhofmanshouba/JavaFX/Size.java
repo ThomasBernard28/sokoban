@@ -35,7 +35,6 @@ public enum Size {
         }else if(row <= SMALL.row && col <= SMALL.col){
             return SMALL;
         }else{
-            System.out.println("null");
             return null;
         }
     }

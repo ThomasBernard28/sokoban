@@ -39,13 +39,7 @@ public class MyWindow extends Application
         GeneratorScene.makeScene();
 
 
-        theStage.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-            if(GameScene.getCurrProfile() != null) {
-                System.out.println(GameScene.getCurrProfile().getProfile().getUsername());
-            }else{
-                System.out.println("null");
-            }
-        });
+
         SceneTool.start();
     }
 

@@ -101,7 +101,6 @@ public class GameGenScene extends SceneTool{
 
         save.setOnAction(event -> {
             CharSequence output = fileOutput.getCharacters();
-            System.out.println(fileOutput.isFocused());
             // https://regex101.com/
             if (Pattern.matches("^(\\w|_)+$", output)){
                 try{

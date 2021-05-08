@@ -134,7 +134,6 @@ public class GameScene extends SceneTool{
 
         save.setOnAction(event -> {
             CharSequence output = fileOutput.getCharacters();
-            System.out.println(fileOutput.isFocused());
             // https://regex101.com/
             if (Pattern.matches("^(\\w|_)+$", output)){
                 try{
@@ -271,7 +270,6 @@ public class GameScene extends SceneTool{
             Grid gameFile = Load.loadFile(path, fileName);
             GameScene.makeScene(gameFile);
             SceneList.GAME.setOnActive();
-            System.out.println(gameFile.getPlayerX() + "," + gameFile.getPlayerY());
 
         }catch (IOException e){
             throw new IllegalStateException("File is missing");
